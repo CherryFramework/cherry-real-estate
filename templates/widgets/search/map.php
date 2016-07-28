@@ -35,12 +35,16 @@ $marker    = is_array( $marker ) ? esc_url( $marker[0] ) : '';
 
 // Data attributes.
 $atts = array(
-	'id'             => $instance,
-	'zoom'           => 15,
-	'scrollwheel'    => false,
-	'draggable'      => wp_is_mobile() ? false : true,
-	'icon'           => $marker,
-	'infowindow'     => true,
+	'id'          => $instance,
+	'zoom'        => 15,
+	'scrollwheel' => false,
+	'draggable'   => wp_is_mobile() ? false : true,
+	'icon'        => $marker,
+	'animation'   => '', // BOUNCE, DROP
+	'infowindow'  => array(
+		'content'  => esc_html__( 'loading...', 'cherry-real-estate' ),
+		'maxWidth' => 200,
+	),
 	'sourceselector' => '.tm-map-pins__item',
 );
 

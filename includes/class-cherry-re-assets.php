@@ -71,7 +71,7 @@ class Cherry_RE_Assets {
 
 		wp_register_script(
 			'cherry-re-locations',
-			plugins_url( 'assets/js/locations.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( 'assets/js/locations.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array( 'jquery' ),
 			CHERRY_REAL_ESTATE_VERSION,
 			true
@@ -87,7 +87,7 @@ class Cherry_RE_Assets {
 
 		wp_register_script(
 			'cherry-re-script',
-			plugins_url( 'assets/js/real-estate.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( 'assets/js/real-estate.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array( 'cherry-js-core' ),
 			CHERRY_REAL_ESTATE_VERSION,
 			true

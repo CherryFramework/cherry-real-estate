@@ -37,7 +37,7 @@
 						saved = {};
 
 					for ( key in obj ) {
-						saved[ key ] = self.galleryInit( $( obj[ key ] ) );
+						saved[ key ] = self.galleryInit( $( obj[ key ], false ) );
 					}
 
 					saved.top.params.control = saved.thumbs;
@@ -50,7 +50,7 @@
 			} );
 		},
 
-		galleryInit: function( $selector, args = false ) {
+		galleryInit: function( $selector, args ) {
 			var galleryId = $selector.data( 'id' );
 
 			args = ( false === args ) ? $selector.data( 'atts' ) : args;

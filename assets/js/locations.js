@@ -4,7 +4,7 @@
 		var $this = $( this ),
 			data = $this.data(),
 			address = null,
-			showInfoWindow = false,
+			dataInfoWindow = false,
 			infowindow = null;
 
 		if ( data.hasOwnProperty( 'address' ) ) {
@@ -16,7 +16,7 @@
 		}
 
 		if ( data.hasOwnProperty( 'infowindow' ) ) {
-			showInfoWindow = data.infowindow;
+			dataInfoWindow = data.infowindow;
 		}
 
 		initMap();
@@ -41,10 +41,8 @@
 			geocoder = new google.maps.Geocoder();
 			bounds = new google.maps.LatLngBounds();
 
-			if ( showInfoWindow ) {
-				infowindow = new google.maps.InfoWindow({
-					content: 'loading...'
-				});
+			if ( false !== dataInfoWindow ) {
+				infowindow = new google.maps.InfoWindow( dataInfoWindow );
 			}
 
 			if ( null === address ) {
@@ -85,20 +83,21 @@
 
 				if ( status === google.maps.GeocoderStatus.OK ) {
 					var position = results[0].geometry.location,
-						marker;
+						marker
+						animationType = data.hasOwnProperty( 'animation' ) ? data.animation : '';
 
 					bounds.extend( position );
 
 					marker = new google.maps.Marker({
 						map: resultsMap,
+						draggable: false,
+						animation: google.maps.Animation[ animationType ],
 						position: position,
 						icon: data.hasOwnProperty( 'icon' ) ? data.icon : '',
-						// title: 'title',
-						// zIndex: 1,
 						html: html
 					});
 
-					if ( showInfoWindow ) {
+					if ( false !== dataInfoWindow ) {
 						google.maps.event.addListener( marker, 'click', function () {
 							infowindow.setContent( this.html );
 							infowindow.open( resultsMap, this );
