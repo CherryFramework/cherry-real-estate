@@ -62,7 +62,6 @@ class Cherry_RE_Options_Page {
 				'capability'   => 'manage_options',
 				'sections'     => $this->get_sections(),
 				'settings'     => $this->get_options(),
-				'button_after' => '<input type="button" class="button-reset" value="' . esc_html__( "Reset all settings", "cherry-real-estate" ) . '">',
 			)
 		);
 	}
