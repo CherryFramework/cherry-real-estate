@@ -1,0 +1,20 @@
+.widget-tm-re-search {
+	overflow: hidden;
+	&__form {
+		float: left;
+		width: 30%;
+		padding: 50px;
+		color: #fff;
+		background-color: #00afff;
+		&__group {
+			margin-bottom: 20px;
+		}
+		input {
+			color: black;
+		}
+	}
+	&__map {
+		float: right;
+		width: 70%;
+	}
+}

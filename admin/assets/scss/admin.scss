@@ -1,0 +1,1891 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:700,600,900);
+
+/* Variables */
+$white-color: 		#ffffff;
+$border-color: 		#e5e5e5;
+$accent-color: 		#298ffc;
+$success-color: 	#48c569;
+$warning-color: 	#e54343;
+$gray-color-1: 		#96989a;
+$gray-color-2: 		#f1f1f1;
+$gray-color-3: 		#495159;
+$gray-color-4: 		#b4b7ba;
+$heading-color: 	#23282d;
+$box-shadow: 		4px 7px 21px 0px rgba(0, 0, 0, 0.1);
+
+/* Mixins */
+@mixin font-awesome-icon() {
+	display: inline-block;
+	font: normal normal normal 14px/1 FontAwesome;
+	font-size: inherit;
+	text-rendering: auto;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale
+}
+@mixin button() {
+	border: none;
+	box-shadow: $box-shadow;
+	text-shadow: none;
+	color: $white-color;
+	font-weight: 900;
+	text-transform: uppercase;
+	font-size: 12px;
+	line-height: 1;
+	padding: 19px 20px;
+	height: auto;
+	background: $accent-color;
+	border-radius: 2px;
+	transition: 300ms all;
+
+	&:hover {
+		background: darken($accent-color, 10%);
+	}
+	&:active,
+	&:focus {
+		margin: 0;
+		top: 0;
+		padding: 19px 20px;
+		font-size: 12px;
+		background: $accent-color;
+		border: none;
+		box-shadow: none;
+		transform: none;
+		font-weight: 900;
+	}
+}
+@mixin form-input() {
+	border: none;
+	box-shadow: none;
+	height: 50px;
+	line-height: 50px;
+	padding: 0 20px;
+	background: $gray-color-2;
+	border-radius: 2px;
+}
+
+/* Styles */
+// Edit page
+.post-type-property {
+	* {
+		box-sizing: border-box;
+	}
+	a {
+		color: $accent-color;
+
+		&:hover {
+			color: $heading-color;
+		}
+		&:hover,
+		&:active,
+		&:focus {
+			border: none;
+			box-shadow: none;
+		}
+	}
+
+	// WP user settings panel on top
+	#screen-meta {
+		margin: 0 0 30px;
+		border-radius: 7px;
+		border: 2px solid $border-color;
+		background: $gray-color-2;
+		padding: 30px;
+	}
+	#screen-meta-links {
+		position: absolute;
+		top: 0;
+		right: 50px;
+		margin: 0;
+
+		.button {
+			@include button();
+			padding: 5px 5px 5px 10px;
+			border-radius: 0 0 2px 2px;
+			background: $gray-color-3;
+			line-height: 1.7;
+
+			&:after {
+				color: $white-color;
+				padding: 0;
+			}
+			&:active,
+			&:focus {
+				background: $gray-color-3;
+				padding: 5px 5px 5px 10px;
+			}
+			&:hover {
+				background: darken($gray-color-3, 10%);
+			}
+		}
+	}
+	#screen-options-wrap {
+		padding: 0;
+		background: $white-color;
+		border-radius: 2px;
+		box-shadow: $box-shadow;
+		padding: 30px;
+
+		.submit {
+			margin: 20px 0 0;
+		}
+		.button {
+			@include button();
+			background: $success-color;
+
+			&:active,
+			&:focus {
+				background: $success-color;
+			}
+			&:hover {
+				background: darken($success-color, 10%);
+			}
+		}
+	}
+
+	// Messages 
+	#message {
+		margin: 30px 0;
+		padding: 10px 15px;
+		border: none;
+		box-shadow: none;
+		background: $gray-color-2;
+
+		p {
+			border: none;
+			padding: 0;
+			margin: 0;
+			color: $heading-color;
+
+			a {
+				color: $heading-color;
+
+				&:hover {
+					color: $gray-color-1;
+				}
+			}
+		}
+		&.updated {
+			background: #ecf9f0;
+
+			p {
+				color: $success-color;
+
+				&:before {
+					@include font-awesome-icon;
+					font-size: 18px;
+					display: inline-block;
+					vertical-align: middle;
+					margin: 0 10px 0 0;
+					content: '\f05a';
+				}
+				a {
+					color: $success-color;
+
+					&:hover {
+						color: $heading-color;
+					}
+				}
+			}
+		}
+		&.error {
+			background: #fbcdcd;
+
+			p {
+				color: $warning-color;
+
+				a {
+					color: $warning-color;
+
+					&:hover {
+						color: $heading-color;
+					}
+				}
+			}
+			.notice-dismiss {
+				&:before {
+					color: $white-color;
+				}
+				&:hover {
+					&:before {
+						color: $heading-color;
+					}
+				}
+			}
+		}
+		&.notice {
+			&.notice-warning {
+				border-left: 5px solid $warning-color;
+			}
+		}
+	}
+
+	// Button after title
+	.page-title-action {
+		@include button();
+		display: inline-block;
+		background: $success-color;
+		top: 0;
+		margin: 0;
+
+		&:before {
+			@include font-awesome-icon;
+			font-size: 16px;
+			display: inline-block;
+			vertical-align: middle;
+			margin: 0 10px 0 0;
+			content: '\f067';
+		}
+		&:hover {
+			background: darken($success-color, 10%);
+		}
+		&:active,
+		&:focus {
+			background: $success-color;
+		}
+	}
+
+	// Tabs on top
+	ul.subsubsub {
+		float: none;
+		border-bottom: 1px solid $border-color;
+
+		li {
+			font-size: 0;
+
+			a {
+				font-size: 14px;
+				font-weight: bold;
+				text-transform: uppercase;
+				color: $gray-color-1;
+				display: inline-block;
+				padding: 0 22px 25px 22px;
+				position: relative;
+
+				& + a {
+					margin-left: 1px;
+				}
+				&:after {
+					content: '';
+					width: 100%;
+					height: 3px;
+					background: $accent-color;
+					position: absolute;
+					bottom: 0;
+					left: 0;
+					transition: 300ms all cubic-bezier(.54,-0.36,.46,1.31);
+					transform: scale(0, 1);
+				}
+				.count {
+					color: inherit;
+					font-weight: bold;
+				}
+				&.current,
+				&:hover {
+					color: $accent-color;
+
+					&:after {
+						transform: scale(1, 1);
+					}
+				}
+				&:active {
+					border: none;
+					box-shadow: none;
+				}
+			}
+		}
+	}
+
+	#posts-filter {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+
+		> .screen-reader-text {
+			flex: 0;
+			display: none;
+		}
+		.wp-list-table,
+		.tablenav.bottom {
+			flex: 1 0 100%;
+			max-width: 100%;
+		}
+		.tablenav.top {
+			order: 1;
+		}
+		.search-box {
+			order: 2;
+		}
+		.wp-list-table {
+			order: 3;
+		}
+		.tablenav.bottom {
+			order: 4;
+		}
+	}
+
+	// Search box
+	.search-box {
+		margin: 30px 0 0;
+
+		input[type="search"] {
+			@include form-input();
+		}
+		.button {
+			@include button();
+			margin: 0 0 0 10px;
+			background: $gray-color-3;
+
+			&:active,
+			&:focus {
+				background: $gray-color-3;
+			}
+			&:hover {
+				background: darken($gray-color-3, 10%);
+			}
+		}
+	}
+
+	// Filters on top
+	.tablenav {
+		height: auto;
+		margin: 30px 0 0;
+
+		select {
+			margin: 0 10px 0 0;
+			padding: 0;
+			@include form-input();
+		}
+		.button {
+			@include button();
+			background: $gray-color-3;
+
+			&:active,
+			&:focus {
+				background: $gray-color-3;
+			}
+			&:hover {
+				background: darken($gray-color-3, 10%);
+			}
+		}
+		.actions {
+			overflow: visible;
+			padding-top: 0;
+			padding-right: 20px;
+		}
+		.tablenav-pages {
+			margin-top: 10px;
+			margin-left: 0;
+			display: flex;
+			align-items: center;
+
+			.displaying-num {
+				color: $gray-color-1;
+				margin: 0 20px 0 0;
+			}
+			.pagination-links {
+				display: flex;
+				align-items: center;
+
+				span {
+					height: auto;
+					border: none;
+					padding: 0;
+
+					&.tablenav-pages-navspan {
+						font-size: 30px;
+						height: 38px;
+						background: none;
+						color: $gray-color-2;
+					}
+				}
+				a {
+					background: none;
+					border: none;
+					padding: 0;
+					color: $gray-color-1;
+
+					&:hover {
+						color: $accent-color;
+					}
+					span {
+						font-size: 30px;
+						height: 38px;
+						display: inline-block;
+					}
+				}
+			}
+		}
+	}
+
+	// Posts list 
+	.wp-list-table {
+		padding: 0;
+		border-spacing: 0;
+		margin: 30px 0 0;
+		border-radius: 7px;
+		border: 2px solid $border-color;
+		background: $gray-color-2;
+		overflow: hidden;
+		display: block;
+
+		thead,
+		tbody,
+		tfoot {
+			display: block;
+			width: 100%;
+		}
+
+		thead,
+		tbody,
+		tfoot {
+			tr {
+				display: flex;
+				justify-content: space-between;
+
+				> * {
+					display: block;
+					width: auto;
+				}
+			}
+		}
+		tbody {
+			padding: 0 30px;
+			margin: 30px 0;
+
+			tr {
+				flex-wrap: wrap;
+				padding: 0 20px 30px;
+				margin: 0 0 30px;
+			}
+
+			.check-column {
+				padding: 20px 0;
+
+				span {
+					left: 0;
+					top: 19px;
+				}
+			}
+			.column-title,
+			.column-name {
+				flex: 1;
+				padding: 20px 0 16px 20px;
+
+				display: flex;
+				align-items: center;
+
+				strong {
+					flex: 1;
+					margin: 0;
+				}
+
+				.row-actions {
+					left: 0;
+					padding: 5px 0 0;
+
+					span {
+						margin: 0 0 0 20px;
+					}
+				}
+			}
+			.column-author,
+			.column-taxonomy-property-type,
+			.column-taxonomy-property-tag,
+			.column-taxonomy-location,
+			.column-comments,
+			.column-date,
+			.column-description,
+			.column-slug,
+			.column-posts {
+				flex: 1 0 100%;
+				position: relative;
+				padding: 0 20px 0 0;
+				color: $gray-color-1;
+				text-align: left;
+
+				display: flex;
+
+				&:not(:empty) {
+					&:before {
+						content: attr(data-colname) ": ";
+						display: inline-block;
+						vertical-align: middle;
+						width: 10%;
+						padding-right: 20px;
+						left: 0;
+						top: 0;
+						position: relative;
+						box-sizing: border-box;
+						text-align: right;
+						color: $heading-color;
+						flex: 1 0 10%;
+						max-width: 10%;
+					}
+				}
+				a {
+					align-self: flex-start;
+					color: $gray-color-1;
+
+					&:hover {
+						color: $accent-color;
+					}
+				}
+				p {
+					margin: 0;
+					color: $gray-color-1;
+				}
+			}
+			.column-author,
+			.column-description {
+				padding-top: 20px;
+
+				&:after {
+					content: '';
+					width: calc(100% + 60px);
+					height: 1px;
+					background: $border-color;
+					position: absolute;
+					top: 0;
+					left: -30px;
+				}
+			}
+			.column-date {
+				abbr {
+					margin-left: 10px;
+				}
+			}
+			.column-comments {
+				.comment-count-approved {
+					background: none;
+					padding: 0;
+					width: auto;
+					height: auto;
+					color: $gray-color-1;
+					font-size: 1em;
+					min-width: inherit;
+
+					&:hover {
+						color: $accent-color;
+					}
+				}
+				a {
+					margin: 0;
+
+					&:after {
+						display: none;
+					}
+				}
+			}
+		}
+
+		thead,
+		tfoot {
+			background: $white-color;
+
+			td,
+			th {
+				border: none;
+			}
+			.check-column {
+				padding: 20px 0 20px 20px;
+
+				span {
+					top: 19px;
+					left: 19px;
+				}
+			}
+			.column-title,
+			.column-author,
+			.column-taxonomy-property-type,
+			.column-taxonomy-property-tag,
+			.column-taxonomy-location,
+			.column-comments,
+			.column-date,
+			.column-name,
+			.column-description,
+			.column-slug,
+			.column-posts {
+				display: none;
+			}
+		}
+		tbody {
+			tr {
+				box-shadow: $box-shadow;
+				background: $white-color;
+				border-radius: 5px;
+
+				&.hidden {
+					margin: 0;
+					padding: 0;
+				}
+				&.inline-editor {
+					padding: 20px;
+				}
+				&.no-items {
+					padding: 20px;
+				}
+			}
+			.row-title {
+				font-weight: bold;
+			}
+		}
+		.check-column {
+			width: 26px;
+			height: 26px;
+			padding: 10px 0 10px 10px;
+			position: relative;
+			box-sizing: content-box;
+
+			label {
+				display: block;
+				position: relative;
+				z-index: 100;
+				width: 26px;
+				height: 26px;
+				text-indent: -9999px;
+			}
+			span {
+				position: absolute;
+				top: 10px;
+				left: 10px;
+				width: 26px;
+				height: 26px;
+				border-radius: 2px;
+				background: $gray-color-2;
+				display: inline-block;
+				vertical-align: middle;
+				text-align: center;
+				margin: 0 10px 0 0;
+				overflow: hidden;
+
+				&:after {
+					@include font-awesome-icon();
+					content: '\f00c';
+					color: $white-color;
+					line-height: 26px;
+					opacity: 0;
+					transform: scale(2);
+					transition: 300ms all;
+				}
+			}
+			[type="checkbox"] {
+				&:not(:checked) {
+					position: absolute;
+					opacity: 0;
+				}
+
+				&:checked {
+					position: absolute;
+					opacity: 0;
+
+					& + span {
+						background: $success-color;
+
+						&:after {
+							opacity: 1;
+							transform: scale(1);
+						}
+					}
+				}
+			}
+		}
+
+		.row-actions {
+			span {
+				/*font-size: 0;
+				margin: 0 0 0 10px;*/
+
+				margin: 0 !important;
+
+				a {
+					color: $gray-color-1;
+
+					&:before {
+						@include font-awesome-icon();
+						color: $gray-color-1;
+						line-height: 1;
+						transition: 300ms all;
+						font-size: 15px;
+						margin: 0 5px 0 0;
+						display: inline-block;
+						vertical-align: middle;
+					}
+					&:active,
+					&:focus {
+						border: none;
+						box-shadow: none;
+					}
+					&:hover {
+						color: $accent-color;
+
+						&:before {
+							color: $accent-color;
+						}
+					}
+				}
+				&.edit {
+					a {
+						&:before {
+							content: '\f040';
+						}
+					}
+				}
+				&.inline  {
+					a {
+						&:before {
+							content: '\f044';
+						}
+					}
+				}
+				&.trash,
+				&.delete {
+					a {
+						&:before {
+							content: '\f1f8';
+						}
+					}
+				}
+				&.view {
+					a {
+						&:before {
+							content: '\f06e';
+						}
+					}
+				}
+				&.clone {
+					a {
+						&:before {
+							content: '\f0c5';
+						}
+					}
+				}
+				&.edit_as_new_draft {
+					a {
+						&:before {
+							content: '\f0ea';
+						}
+					}
+				}
+			}
+		}
+
+		.inline-editor {
+			.colspanchange {
+				display: flex;
+				flex-wrap: wrap;
+				width: 100%;
+
+				.inline-edit-col-left,
+				.inline-edit-col-right {
+					flex: 1 0 40%;
+				}
+				.inline-edit-col-center {
+					flex: 1 0 20%;
+				}
+				.inline-edit-save {
+					flex: 1 0 100%;
+				}
+			}
+			select,
+			textarea,
+			input[type="text"] {
+				@include form-input();
+				padding: 10px;
+				height: 40px;
+				line-height: 40px;
+				width: auto;
+			}
+			textarea {
+				width: 100%;
+				height: 100px;
+			}
+			button {
+				@include button();
+
+				&.cancel {
+					background: $warning-color;
+
+					&:active,
+					&:focus {
+						background: $warning-color;
+					}
+					&:hover {
+						background: darken($warning-color, 10%);
+					}
+				}
+				&.save {
+					background: $success-color;
+
+					&:active,
+					&:focus {
+						background: $success-color;
+					}
+					&:hover {
+						background: darken($success-color, 10%);
+					}
+				}
+			}
+			.timestamp-wrap {
+				input[name="hh"], 
+				input[name="jj"], 
+				input[name="mn"] {
+
+				}
+			}
+			.inline-edit-private,
+			.inline-edit-col-right .inline-edit-group label {
+				input {
+					display: none;
+					height: 50px;
+
+					&[type="checkbox"]:checked {
+						& + span.checkbox-box {
+							background: $success-color;
+
+							&:after {
+								opacity: 1;
+								transform: scale(1);
+							}
+						}
+					}
+				}
+				span.checkbox-box {
+					width: 26px;
+					height: 26px;
+					border-radius: 2px;
+					background: $gray-color-2;
+					display: inline-block;
+					vertical-align: middle;
+					text-align: center;
+					margin: 0 10px 0 0;
+					overflow: hidden;
+
+					&:after {
+						@include font-awesome-icon();
+						content: '\f00c';
+						color: $white-color;
+						line-height: 26px;
+						opacity: 0;
+						transform: scale(2);
+						transition: 300ms all;
+						vertical-align: top;
+					}
+				}
+			}
+		}
+	}
+
+	#wpbody-content {
+		background: $white-color;
+		margin: 20px 0 50px;
+		border: 1px solid $border-color;
+		border-right: none;
+		padding: 40px 50px 50px;
+		box-sizing: border-box;
+		position: relative;
+
+		.wrap {
+			margin: 0;
+
+			> h1 {
+				padding: 0 0 10px;
+				font-size: 30px;
+				font-weight: bold;
+				display: flex;
+				justify-content: space-between;
+			}
+			> form {
+				&:not(#posts-filter):not([method="get"]) {
+					padding: 30px 30px 38px;
+					margin: 30px 0 0;
+					border-radius: 7px;
+					border: 2px solid $border-color;
+					background: $gray-color-2;
+				}
+			}
+		}
+
+		.meta-box-sortables {
+			.postbox {
+				box-shadow: $box-shadow;
+				border: none;
+				border-radius: 5px;
+				overflow: hidden;
+
+				h2.hndle {
+					font-weight: 600;
+					font-size: 16px;
+					padding: 14px 20px;
+				}
+				.inside {
+					padding: 30px;
+					margin: 0;
+
+					// Submit box
+					.submitbox {
+						#minor-publishing {
+							#minor-publishing-actions {
+								padding: 20px 30px 0;
+							}
+							#misc-publishing-actions {
+								padding: 20px 0;
+
+								> div {
+									padding-left: 30px;
+									padding-right: 30px;
+								}
+							}
+						}
+						#major-publishing-actions {
+							padding: 20px 30px;
+						}
+					}
+				}
+			}
+		}
+
+		#post-body-content,
+		.postbox-container {
+			.button,
+			.submitdelete {
+				@include button();				
+
+				&:hover {
+					background: darken($accent-color, 10%);
+				}
+				&.button-primary {
+					background: $success-color;
+
+					&:active,
+					&:focus {
+						background: $success-color;
+					}
+					&:hover {
+						background: darken($success-color, 10%);
+					}
+				}
+				&.edit-slug {
+					padding: 8px 10px;
+				}
+				&.edit-slug,
+				&.insert-media {
+					background: $gray-color-3;
+
+					&:active,
+					&:focus {
+						background: $gray-color-3;
+					}
+					.wp-media-buttons-icon:before {
+						color: $white-color;
+					}
+					&:hover {
+						background: darken($gray-color-3, 10%);
+					}
+				}
+			}
+			#delete-action {
+				.submitdelete {
+					display: inline-block !important;
+					background: $warning-color;
+
+					&:hover {
+						background: darken($warning-color, 10%);
+					}
+				}
+			}
+
+			// Add comment
+			#replyrow {
+				padding: 20px;
+
+				td {
+					border: none;
+					box-shadow: none;
+				}
+			}
+			#replycontainer {
+				.quicktags-toolbar {
+					.button {
+						padding: 5px 10px;
+						background: $gray-color-3;
+						margin: 5px;
+
+						&:active {
+							margin: 5px;
+						}
+						&:hover {
+							background: darken($gray-color-3, 10%);
+						}
+					}
+				}
+			}
+			#replysubmit {
+				.button-primary {
+					@include button();
+					background: $success-color;
+
+					&:active,
+					&:focus {
+						background: $success-color;
+					}
+					&:hover {
+						background: darken($success-color, 10%);
+					}
+				}
+				.button-secondary {
+					@include button();
+					background: $warning-color;
+
+					&:active,
+					&:focus {
+						background: $warning-color;
+					}
+					&:hover {
+						background: darken($warning-color, 10%);
+					}
+				}
+			}
+
+			// Comment 
+			#the-comment-list {
+				tr {
+					padding: 20px;
+
+					td {
+						display: block;
+
+						&:before,
+						&:after {
+							display: none;
+						}
+					}
+					.column-comment {
+						width: 100%;
+					}
+					.row-actions {
+						span {
+							font-size: 1em;
+							margin: 0;
+
+							a {
+								&:after {
+									display: none;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		.postbox {
+			.handlediv {
+				width: 50px;
+				height: 50px;
+			}
+		}
+
+		#submitdiv {
+			#duplicate-action {
+				margin: 0 0 20px;
+			}
+			.spinner {
+				margin-top: 16px;
+			}
+		}
+
+		#titlediv {
+			background: $white-color;
+			padding: 30px;
+			box-shadow: $box-shadow;
+			border-radius: 5px;
+			margin: 0 0 30px;
+
+			#title {
+				@include form-input();
+			}
+			#title-prompt-text {
+				padding: 16px 20px;
+			}
+			#edit-slug-box {
+				min-height: inherit;
+				margin: 0;
+
+				&:not(:empty) {
+					margin-top: 5px;
+				}
+			}
+		}
+
+		#postdivrich {
+			background: $white-color;
+			padding: 30px;
+			box-shadow: $box-shadow;
+			border-radius: 5px;
+
+			#wp-content-editor-tools {
+				background: none;
+				padding: 0;
+				display: flex;
+				justify-content: space-between;
+				width: 100%;
+				align-items: flex-end;
+
+				.wp-media-buttons {
+					padding: 0 0 50px;
+					flex: 1;
+				}
+				.wp-editor-tabs {
+				}
+			}
+		}
+
+		#postexcerpt {
+			textarea {
+				background: $gray-color-2;
+				border-radius: 2px;
+				box-shadow: none;
+				border: none;
+				margin: 0;
+				padding: 15px 20px;
+				height: 6em;
+			}
+		}
+
+		#commentstatusdiv {
+			.meta-options {
+				margin: 0;
+			}
+		}
+
+		#tagsdiv-property-tag {
+			input.newtag {
+				@include form-input();
+			}
+			.button {
+				margin-left: 10px;
+				background: $gray-color-3;
+
+				&:hover {
+					background: darken($gray-color-3, 10%);
+				}
+			}
+			.tagchecklist {
+				margin: 10px 0 0;
+
+				span {
+					display: inline-block;
+					vertical-align: middle;
+					border: 2px solid $gray-color-2;
+					color: $heading-color;
+					text-transform: uppercase;
+					font-weight: bold;
+					padding: 10px 20px 12px;
+					margin-right: 10px;
+
+					a {
+						position: relative;
+						margin: 0;
+					}
+				}
+			}
+		}
+
+		#authordiv {
+			select {
+				@include form-input();
+			}
+		}
+
+		#slugdiv {
+			input {
+				@include form-input();
+			}
+		}
+
+		#locationdiv {
+			#location-adder {
+				#newlocation,
+				#newlocation_parent {
+					@include form-input();
+				}
+			}
+		}
+
+		#property-typediv {
+			#newproperty-type,
+			#newproperty-type_parent {
+				@include form-input();
+			}
+		}
+
+		#submitpost {
+			#post_status,
+			#post_password {
+				@include form-input();
+			}
+			.timestamp-wrap {
+				select,
+				input {
+					@include form-input();
+				}
+				#hh, #jj, #mn, #aa {
+					width: auto;
+					text-align: center;
+					padding: 19px 10px;
+				}
+			}
+		}
+
+		.selectit {
+			padding: 5px 0;
+			display: inline-block;
+
+			input {
+				display: none;
+
+				&[type="checkbox"]:checked {
+					& + span {
+						background: $success-color;
+
+						&:after {
+							opacity: 1;
+							transform: scale(1);
+						}
+					}
+				}
+			}
+			span {
+				width: 26px;
+				height: 26px;
+				border-radius: 2px;
+				background: $gray-color-2;
+				display: inline-block;
+				vertical-align: middle;
+				text-align: center;
+				margin: 0 10px 0 0;
+				overflow: hidden;
+
+				&:after {
+					@include font-awesome-icon();
+					content: '\f00c';
+					color: $white-color;
+					line-height: 26px;
+					opacity: 0;
+					transform: scale(2);
+					transition: 300ms all;
+				}
+			}
+		}
+
+		#cherry-post-metabox {
+			.inside {
+				.form-table {
+					th {
+						vertical-align: middle;
+					}
+					td {
+						.cherry-ui-container {
+							margin: 0;
+						}
+					}
+					tbody {
+						tr {
+							th,
+							td {
+								padding-top: 10px;
+								padding-bottom: 10px;
+							}
+						}
+					}
+					.cherry-ui-text,
+					.cherry-ui-select {
+						@include form-input();
+					}
+					.cherry-infinite-container {
+						.cherry-infinite {
+							background: none;
+							display: block;
+
+							.cherry-infinite-row {
+								border: none;
+								display: inline-block;
+								background: none;
+								padding: 10px 10px 10px 0;
+
+								.cherry-infinite-order {
+									border: none;
+									background: none;
+									display: block;
+									padding: 0;
+									width: 100%;
+									text-align: left;
+
+									span {
+										padding: 0;
+										font-weight: normal;
+										color: $heading-color;
+									}
+								}
+								.cherry-infinite-inner {
+									background: none;
+									box-shadow: none;
+									padding: 0 !important;
+
+									table {
+										display: block;
+
+										tbody {
+											tr:first-child {
+												display: none;
+											}
+											tr {
+												th,
+												td {
+													display: block;
+													padding: 0;
+													width: auto;
+
+													label {
+														display: none;
+													}
+												}
+											}
+										}
+									}
+									.cherry-image-wrap {
+										.inner {
+											margin: 0;
+											border: none;
+
+											.cherry-remove-image {
+												display: none;
+											}
+											.title {
+												display: none;
+											}
+										}
+									}
+									.upload-button {
+										@include button();
+									}
+								}
+								.cherry-infinite-options {
+									border: none;
+									padding: 0;
+									vertical-align: top;
+									text-align: left;
+									width: auto !important;
+
+									.cherry-infinite-remove {
+										background: none;
+										margin: 5px 0 0 10px;
+
+										&:after {
+											@include font-awesome-icon();
+											font-size: 20px;
+											content: '\f1f8';
+											color: $gray-color-4;
+										}
+										&:hover {
+											&:after {
+												color: $accent-color;
+											}
+										}
+									}
+									.cherry-infinite-add {
+										visibility: hidden;
+										display: none;
+									}
+								}
+							}
+						}
+						.cherry-infinite-add-field-container {
+							.button-primary {
+								@include button();
+								background: $gray-color-3;
+
+								&:active,
+								&:focus {
+									background: $gray-color-3;
+								}
+								&:hover {
+									background: darken($gray-color-3, 10%);
+								}
+							}
+						}
+					}
+
+					.cherry-ui-container {
+						.cherry-upload-preview {
+							.cherry-all-images-wrap {
+								.cherry-image-wrap {
+									width: 150px;
+
+									.inner {
+										border: none;
+										display: flex;
+										width: 140px;
+										overflow: hidden;
+
+										.title {
+											display: none;
+										}
+										.cherry-remove-image {
+											position: relative;
+											border: none;
+											border-radius: 0;
+											background: none;
+											top: 0;
+											left: 0;
+											margin: 0 0 0 5px;
+
+											&:after {
+												@include font-awesome-icon();
+												font-size: 20px;
+												content: '\f1f8';
+												color: $gray-color-4;
+											}
+											i {
+												display: none;
+											}
+											&:hover {
+												&:after {
+													color: $warning-color;
+												}
+											}
+										}
+									}
+								}
+							} 
+						}
+						.upload-button {
+							@include button();
+							background: $gray-color-3;
+
+							&:active,
+							&:focus {
+								background: $gray-color-3;
+							}
+							&:hover {
+								background: darken($gray-color-3, 10%);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// If 2nd column 
+	#post-body.columns-2 {
+		#postbox-container-1 {
+			#delete-action {
+				float: none;
+			}
+			#publishing-action {
+				display: flex;
+				float: none;
+				margin: 20px 0 0;
+				text-align: left;
+
+				.button {
+					order: 1;
+				}
+				.spinner {
+					order: 2;
+					float: none;
+				}
+			}
+
+			#tagsdiv-property-tag .button {
+				margin-left: 0;
+			}
+		}
+	}
+
+	// Margins beside blocks
+	.postbox-container {
+		.meta-box-sortables {
+			> div {
+				margin: 0;
+
+				&:not(:first-child) {
+					margin: 30px 0 0;
+				}
+			}
+		}
+		&#postbox-container-1 {
+			.meta-box-sortables {
+				margin: 0 0 30px;
+			}
+		}
+	}
+}
+
+.taxonomy-property-type,
+.taxonomy-property-tag,
+.taxonomy-location {
+	// Type edit page
+	#col-container {
+		display: flex;
+		flex-wrap: wrap;
+
+		> div {
+			width: 100%;
+			flex: 1 0 100%;
+			float: none;
+
+			&#col-right {
+				order: 2;
+			}
+			&#col-left {
+				order: 1;
+			}
+		}
+	}
+	#posts-filter {
+		.tablenav {
+			width: 100%;
+		}
+	}
+	.form-wrap {
+		> h2 {
+			font-size: 1.8em;
+		}
+		form {
+			padding: 30px;
+			border-spacing: 0 30px;
+			margin: 30px 0 0;
+			border-radius: 7px;
+			border: 2px solid $border-color;
+			background: $gray-color-2;
+
+			.form-field {
+				background: $white-color;
+				box-shadow: $box-shadow;
+				padding: 0 0 30px;
+				margin: 0 0 30px;
+				border-radius: 5px;
+
+				input,
+				select,
+				textarea {
+					@include form-input();
+					margin: 30px 30px 0 30px;
+					width: calc(100% - 60px);
+				}
+				textarea {
+					padding-top: 20px;
+					padding-bottom: 20px;
+					height: 110px;
+					line-height: 1.3;
+				}
+				p {
+					margin: 20px 30px 0;
+					font-style: normal;
+				}
+			}
+			.submit {
+				padding: 0;
+				margin: 0;
+			}
+			.button {
+				@include button();
+				display: inline-block;
+				background: $success-color;
+
+				&:active,
+				&:focus {
+					background: $success-color;
+				}
+				&:hover {
+					background: darken($success-color, 10%);
+				}
+			}
+			label {
+				font-size: 1.3em;
+				font-weight: 600;
+				margin: 0;
+				padding: 14px 20px;	
+				border-bottom: 1px solid $border-color;
+			}
+		}
+	}
+
+	.tagcloud {
+		width: 100%;
+
+		h2 {
+			font-size: 1.8em;
+			line-height: 1.2;
+			margin: 0 0 20px;
+		}
+		a {
+			display: inline-block;
+			vertical-align: middle;
+			border: 2px solid $gray-color-2;
+			color: $heading-color;
+			text-transform: uppercase;
+			font-weight: bold;
+			padding: 10px 20px 12px;
+			margin-right: 10px;
+			text-decoration: none;
+
+			&:hover {
+				border-color: $accent-color;
+			}
+		}
+	}
+
+	// Edit tag
+	.form-table {
+		border-collapse: separate;
+		border-spacing: 0 30px;
+
+		.form-field {
+			background: $white-color;
+			box-shadow: $box-shadow;
+			border-radius: 5px;
+
+			th {
+				display: block;
+				width: 100%;
+				padding: 0;
+
+				label {
+					font-size: 1.3em;
+					font-weight: 600;
+					margin: 0;
+					padding: 14px 20px;	
+					border-bottom: 1px solid $border-color;
+					width: 100%;
+					display: block;
+				}
+			}
+			td {
+				padding: 30px;
+				display: block;
+				width: 100%;
+				margin: 0;
+			}
+			input[type="text"],
+			select,
+			textarea {
+				@include form-input();
+				margin: 0 0 20px;
+				width: 100%;
+			}
+			textarea {
+				padding-top: 20px;
+				padding-bottom: 20px;
+				height: 110px;
+				line-height: 1.3;
+			}
+			select {
+				margin: 0;
+			}
+			p {
+				font-style: normal;
+			}
+		}
+	}
+	.submit {
+		padding: 0;
+		margin: 0 0 30px;
+	}
+	.button {
+		@include button();
+		display: inline-block;
+		background: $success-color;
+
+		&:active,
+		&:focus {
+			background: $success-color;
+		}
+		&:hover {
+			background: darken($success-color, 10%);
+		}
+	}
+}
+
+.post-type-property.taxonomy-property-type,
+.post-type-property.taxonomy-property-tag,
+.post-type-property.taxonomy-location {
+	#wpbody-content .wrap {
+		> form#edittag {
+			padding-top: 0;
+			padding-bottom: 0;
+		}
+	}
+}
+
+// Settings
+.property_page_cherry-property-settings {
+	a {
+		&:focus,
+		&:active {
+			border: none;
+			box-shadow: none;
+		}
+	}
+	.cherry-settings-page {
+		> h2 {
+			padding: 0 0 20px;
+			font-weight: bold;
+			font-size: 30px;
+		}
+
+		.cherry-settings-tabs {
+			.tabs-section {
+				padding: 20px 0 0;
+				border-bottom: 1px solid $border-color;
+
+				a {
+					margin: 0 0 -1px;
+					padding: 0 22px 25px 22px;
+					border: none;
+					background: none;
+					text-transform: uppercase;
+					color: $gray-color-1;
+					font-weight: bold;
+					position: relative;
+					display: inline-block;
+
+					& + a {
+						margin-left: 1px;
+					}
+					&:after {
+						content: '';
+						width: 100%;
+						height: 3px;
+						background: $accent-color;
+						position: absolute;
+						bottom: 0;
+						left: 0;
+						transition: 300ms all cubic-bezier(.54,-0.36,.46,1.31);
+						transform: scale(0, 1);
+					}
+					&.nav-tab-active,
+					&:hover {
+						color: $accent-color;
+
+						&:after {
+							transform: scale(1, 1);
+						}
+					}
+				}
+			}
+
+			> div {
+				padding: 30px 30px 38px;
+				margin: 30px 0 0;
+				border-radius: 7px;
+				border: 2px solid $border-color;
+				background: $gray-color-2;
+
+				form {
+					> h2 {
+						margin: 0;
+						padding: 14px 20px;
+						background: $white-color;
+						border-radius: 5px 5px 0 0;
+						border-bottom: 1px solid $border-color;
+						box-shadow: $box-shadow;
+					}
+					.form-table {
+						margin: 0 0 30px;
+						background: $white-color;
+						border-radius: 0 0 5px 5px;
+						padding: 0 0 30px;
+						box-shadow: $box-shadow;
+
+						th {
+							padding: 0 20px 0 30px;
+							vertical-align: middle;
+						}
+						td {
+							padding: 0 30px 0 0;
+
+							.cherry-ui-container {
+								margin: 0;
+							}
+						}
+						tbody {
+							tr {
+								th,
+								td {
+									padding-top: 10px;
+									padding-bottom: 10px;
+								}
+							}
+							tr:first-child {
+								th,
+								td {
+									padding-top: 30px;
+								}
+							}
+							tr:last-child {
+								th,
+								td {
+									padding-bottom: 30px;
+								}
+							}
+						}
+						.cherry-ui-text,
+						.cherry-ui-select {
+							border: none;
+							box-shadow: none;
+							height: 50px;
+							line-height: 50px;
+							padding: 0 20px;
+							background: $gray-color-2;
+							border-radius: 2px;
+						}
+					}
+					p.submit,
+					.block-reset {
+						margin: 0;
+						padding: 0;
+						display: inline-block;
+						vertical-align: top;
+
+						.button {
+							@include button();
+						}
+					}
+					p.submit {
+						.button {
+							background: $success-color;
+
+							&:active,
+							&:focus {
+								background: $success-color;
+							}
+							&:hover {
+								background: darken($success-color, 10%);
+							}
+						}
+						& + .block-reset {
+							margin-left: 25px;
+						}
+					}
+					.block-reset {
+						.button {
+							width: auto;
+							background: $warning-color;
+
+							&:active,
+							&:focus {
+								background: $warning-color;
+							}
+							&:hover {
+								background: darken($warning-color, 10%);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

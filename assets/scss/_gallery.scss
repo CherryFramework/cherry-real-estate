@@ -1,0 +1,15 @@
+.tm-property-gallery {
+	&__item {}
+	&__thumbs-item {
+		width: 18%;
+		opacity: 0.4;
+		&.swiper-slide-active {
+			opacity: 1;
+		}
+	}
+	&--top {}
+	&--thumbs {
+		padding: 10px 0;
+		box-sizing: border-box;
+	}
+}
