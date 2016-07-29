@@ -11,17 +11,19 @@
  * @copyright  2002-2016, Template Monster
  */
 
-$data   = Cherry_RE_Property_Data::get_instance();
-$params = $data->prepare_search_args();
-$args   = apply_filters( 'cherry_re_search_map_pins_args', array(
+$defaults = apply_filters( 'cherry_re_search_map_pins_args', array(
 	'wrap_class'      => 'tm-map-pins__wrap tm-re-hidden',
 	'item_class'      => 'tm-map-pins__item',
 	'show_pagination' => false,
 	'template'        => 'infowindow.tmpl',
 	'echo'            => false,
 ) );
-$args = wp_parse_args( $args, $params );
-$pins = $data->the_property( $args );
+$args = wp_parse_args( $args, $defaults );
+
+$data   = Cherry_RE_Property_Data::get_instance();
+$params = $data->prepare_search_args();
+$args   = wp_parse_args( $args, $params );
+$pins   = $data->the_property( $args );
 
 if ( empty( $pins ) ) {
 	cherry_re_get_template( 'search/no-properties-found' );
