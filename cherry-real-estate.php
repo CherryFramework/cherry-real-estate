@@ -113,7 +113,11 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			// Title on search properties page.
 			add_filter( 'document_title_parts', array( $this, 'search_title' ), 11 );
 
+			// Breacrumbs on search properties page.
 			add_filter( 'cherry_breadcrumbs_items', array( $this, 'search_breadcrumbs' ), 11, 2 );
+
+			// Enable use shortcodes in text widget.
+			add_filter( 'widget_text', 'do_shortcode', 11 );
 
 			// Register activation and deactivation hook.
 			register_activation_hook( __FILE__, array( $this, 'activation' ) );
@@ -510,10 +514,36 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			return $title;
 		}
 
+		/**
+		 * Customize the breadcrumbs on search properties page.
+		 *
+		 * @since  1.0.0
+		 * @param  array $items
+		 * @param  array $args
+		 * @return array
+		 */
 		public function search_breadcrumbs( $items, $args ) {
 
 			if ( cherry_re_is_property_search() ) {
-				return array( $items[0], __( 'Properties search results', 'cherry-real-estate' ) );
+
+				$defaults = array(
+					'css_namespace' => array(
+						'item'   => 'breadcrumbs__item',
+						'target' => 'breadcrumbs__item-target',
+					),
+				);
+
+				$args = wp_parse_args( $args, $defaults );
+
+				return array(
+					$items[0],
+					sprintf(
+						'<div class="%s"><span class="%s">%s</span></div>',
+						esc_attr( $args['css_namespace']['item'] ),
+						esc_attr( $args['css_namespace']['target'] ),
+						esc_html__( 'Properties search results', 'cherry-real-estate' )
+					)
+				);
 			}
 
 			return $items;
