@@ -37,7 +37,7 @@
 						saved = {};
 
 					for ( key in obj ) {
-						saved[ key ] = self.galleryInit( $( obj[ key ], false ) );
+						saved[ key ] = self.galleryInit( $( obj[ key ] ) );
 					}
 
 					saved.top.params.control = saved.thumbs;
@@ -53,7 +53,7 @@
 		galleryInit: function( $selector, args ) {
 			var galleryId = $selector.data( 'id' );
 
-			args = ( false === args ) ? $selector.data( 'atts' ) : args;
+			args = args || $selector.data( 'atts' );
 
 			return new Swiper( '#' + galleryId, args );
 		}
