@@ -452,7 +452,7 @@ class Cherry_RE_Property_Data {
 			$args['meta_query'][] = array(
 				'key'     =>  $prefix . 'location',
 				'value'   => (string) $atts['property_location'],
-				'compare' => '=',
+				'compare' => 'LIKE',
 			);
 		}
 
