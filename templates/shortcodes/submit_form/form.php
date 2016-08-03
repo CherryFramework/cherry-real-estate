@@ -20,22 +20,22 @@ $post_meta = cherry_real_estate()->get_meta_prefix();
 
 	<div class="tm-re-submit-form__group">
 		<label for="tm-re-submitform__title"><?php esc_html_e( 'Title', 'cherry-real-estate' ); ?></label>
-		<input type="text" id="tm-re-submitform__title" name="<?php echo $post_type; ?>[post_title]" value="" required="required">
-	</div>
-
-	<div class="tm-re-submit-form__group">
-		<label for="ptm-re-submitform__price"><?php esc_html_e( 'Price', 'cherry-real-estate' ); ?></label>
-		<input type="text" id="tm-re-submitform__price" name="<?php echo $post_meta; ?>[price]" value="">
+		<input type="text" id="tm-re-submitform__title" name="property_title" value="" required="required">
 	</div>
 
 	<div class="tm-re-submit-form__group">
 		<label for="tm-re-submitform__desc"><?php esc_html_e( 'Description', 'cherry-real-estate' ); ?></label>
-		<textarea id="tm-re-submitform__desc" name="<?php echo $post_type; ?>[post_content]"></textarea>
+		<textarea id="tm-re-submitform__desc" name="property_description" required="required"></textarea>
+	</div>
+
+	<div class="tm-re-submit-form__group">
+		<label for="ptm-re-submitform__price"><?php esc_html_e( 'Price', 'cherry-real-estate' ); ?></label>
+		<input type="text" id="tm-re-submitform__price" name="property_price" value="">
 	</div>
 
 	<?php $select_status = Cherry_RE_Tools::select_form( Model_Properties::get_allowed_property_statuses(), array(
 			'id'      => 'tm-re-submitform__status',
-			'name'    => "{$post_meta}[status]",
+			'name'    => 'property_status',
 			'default' => esc_html__( 'Choose', 'cherry-real-estate' ),
 			'echo'    => false,
 		) ); ?>
@@ -49,9 +49,9 @@ $post_meta = cherry_real_estate()->get_meta_prefix();
 
 	<?php } ?>
 
-	<?php $select_types = Cherry_RE_Tools::select_form( Model_Properties::get_property_types( 'slug' ), array(
+	<?php $select_types = Cherry_RE_Tools::select_form( Model_Properties::get_property_types( 'id' ), array(
 			'id'      => 'tm-re-submitform__type',
-			'name'    => "{$post_meta}[type]",
+			'name'    => 'property_type',
 			'default' => esc_html__( 'Choose', 'cherry-real-estate' ),
 			'echo'    => false,
 		) ); ?>
@@ -66,39 +66,39 @@ $post_meta = cherry_real_estate()->get_meta_prefix();
 	<?php } ?>
 
 	<div class="tm-re-submit-form__group">
-		<label for="tm-re-submitform__bathrooms"><?php esc_html_e( 'Bathrooms', 'cherry-real-estate' ); ?></label>
-		<input type="text" id="tm-re-submitform__bathrooms" name="<?php echo $post_meta; ?>[bathrooms]" value="">
+		<label for="tm-re-submitform__bedrooms"><?php esc_html_e( 'Bedrooms', 'cherry-real-estate' ); ?></label>
+		<input type="text" id="tm-re-submitform__bedrooms" name="property_bedrooms" value="">
 	</div>
 
 	<div class="tm-re-submit-form__group">
-		<label for="tm-re-submitform__bedrooms"><?php esc_html_e( 'Bedrooms', 'cherry-real-estate' ); ?></label>
-		<input type="text" id="tm-re-submitform__bedrooms" name="<?php echo $post_meta; ?>[bedrooms]" value="">
+		<label for="tm-re-submitform__bathrooms"><?php esc_html_e( 'Bathrooms', 'cherry-real-estate' ); ?></label>
+		<input type="text" id="tm-re-submitform__bathrooms" name="property_bathrooms" value="">
 	</div>
 
 	<div class="tm-re-submit-form__group">
 		<label for="tm-re-submitform__area"><?php esc_html_e( 'Area', 'cherry-real-estate' ); ?></label>
-		<input type="text" id="tm-re-submitform__area" name="<?php echo $post_meta; ?>[area]" value="">
+		<input type="text" id="tm-re-submitform__area" name="property_area" value="">
 	</div>
 
 	<div class="tm-re-submit-form__group">
 		<label for="tm-re-submitform__parking"><?php esc_html_e( 'Parking places', 'cherry-real-estate' ); ?></label>
-		<input type="text" id="tm-re-submitform__parking" name="<?php echo $post_meta; ?>[parking_places]" value="">
+		<input type="text" id="tm-re-submitform__parking" name="property_parking_places" value="">
 	</div>
 
 	<div class="tm-re-submit-form__group">
 		<label for="tm-re-submitform__address"><?php esc_html_e( 'Address', 'cherry-real-estate' ) ?></label>
-		<input type="text" id="tm-re-submitform__address" name="<?php echo $post_meta; ?>[address]" value="">
+		<input type="text" id="tm-re-submitform__address" name="property_address" value="">
 	</div>
 
 	<?php if ( ! current_user_can( 'manage_properties' ) ) : ?>
 		<div class="tm-re-submit-form__group">
 			<label for="tm-re-submitform__email"><?php esc_html_e( 'Your e-mail', 'cherry-real-estate' ) ?></label>
-			<input type="email" id="tm-re-submitform__email" name="agent[email]" value="" required="required">
+			<input type="email" id="tm-re-submitform__email" name="agent_email" value="" required="required">
 		</div>
 
 		<div class="tm-re-submit-form__group">
 			<label for="tm-re-submitform__phone"><?php esc_html_e( 'Your phone', 'cherry-real-estate' ) ?></label>
-			<input type="text" id="tm-re-submitform__phone" name="agent[phone]" value="" required="required">
+			<input type="text" id="tm-re-submitform__phone" name="agent_phone" value="" required="required">
 		</div>
 
 	<?php endif; ?>

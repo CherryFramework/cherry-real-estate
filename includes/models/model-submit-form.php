@@ -85,36 +85,39 @@ class Model_Submit_Form {
 			wp_send_json_error( array( 'message' => self::get_errors( 'nonce' ) ) );
 		}
 
-		$post_type = cherry_real_estate()->get_post_type_name();
-		$post_meta = cherry_real_estate()->get_meta_prefix();
-		$data      = array();
-		$fields    = array();
-		$meta      = array();
-
-		if ( ! empty( $_POST['property'] ) ) {
-			$data = $_POST['property'];
+		if ( empty( $_POST['property'] ) ) {
+			wp_send_json_error( array( 'message' => self::get_errors( 'internal' ) ) );
 		}
 
-		foreach ( $data as $p ) {
+		$post_type   = cherry_real_estate()->get_post_type_name();
+		$meta_prefix = cherry_real_estate()->get_meta_prefix();
+		$data        = wp_list_pluck( $_POST['property'], 'value', 'name' );
 
-			if ( ! array_key_exists( 'name', $p ) ) {
-				continue;
-			}
+		// Prepare data array for new property.
+		$property_arr = array(
+			'post_type'    => cherry_real_estate()->get_post_type_name(),
+			'post_title'   => wp_strip_all_tags( $data['property_title'] ),
+			'post_content' => $data['property_description'],
+			'post_status'  => current_user_can( 'manage_properties' ) ? 'publish' : 'draft',
+			'tax_input'    => array(
+				$post_type . '_type' => array( $data['property_type'] ),
+			),
+			'meta_input'   => array(
+				$meta_prefix . 'price'          => $data['property_price'],
+				$meta_prefix . 'status'         => $data['property_status'],
+				$meta_prefix . 'bathrooms'      => $data['property_bathrooms'],
+				$meta_prefix . 'bedrooms'       => $data['property_bedrooms'],
+				$meta_prefix . 'area'           => $data['property_area'],
+				$meta_prefix . 'parking_places' => $data['property_parking_places'],
+				$meta_prefix . 'location'       => $data['property_address'],
+			),
+		);
 
-			if ( false !== strpos( $p['name'], $post_meta ) ) {
-				// $key          = self::_prepare_key( $p['name'], $post_meta );
-				$key          = '';
-				$meta[ $key ] = $p['value'];
+		$property_arr = apply_filters( 'cherry_re_before_insert_post', $property_arr );
+		$property_ID  = wp_insert_post( $property_arr, false );
 
-			} elseif ( false !== strpos( $p['name'], $post_type ) ) {
-				$fields[] = $p['value'];
-			} else {
-				continue;
-			}
-
-			// $key = explode( $post_type, $p['name'] );
-
-			// $data[] = $p['value'];
+		if ( 0 == $property_ID ) {
+			wp_send_json_error( array( 'message' => self::get_errors( 'internal' ) ) );
 		}
 
 		// var_dump( $property_data );
@@ -128,7 +131,7 @@ class Model_Submit_Form {
 		// );
 
 		// if ( $result ) {
-			wp_send_json_success( $data );
+			wp_send_json_success( $property_ID );
 		// } else {
 			// wp_send_json_error( array( 'message' => self::get_errors( 'internal' ) ) );
 		// }
@@ -375,9 +378,9 @@ class Model_Submit_Form {
 		return $errors[ $code ];
 	}
 
-	// public static function _prepare_key( $subject, $search ) {
-	// 	$result = str_replace( $search, '', $subject, 1 );
+	public static function _prepare_key( $subject, $search ) {
+		$result = str_replace( $search, '', $subject );
 
-	// 	return $result;
-	// }
+		return trim(str);
+	}
 }
