@@ -59,9 +59,9 @@ class Cherry_RE_Options_Page {
 			'edit.php?post_type=' . cherry_real_estate()->get_post_type_name()
 		)->set(
 			array(
-				'capability'   => 'manage_options',
-				'sections'     => $this->get_sections(),
-				'settings'     => $this->get_options(),
+				'capability' => 'manage_options',
+				'sections'   => $this->get_sections(),
+				'settings'   => $this->get_options(),
 			)
 		);
 	}
@@ -81,6 +81,10 @@ class Cherry_RE_Options_Page {
 			'cherry-re-options-map' => array(
 				'slug' => 'cherry-re-options-map',
 				'name' => esc_html__( 'Map', 'cherry-real-estate' ),
+			),
+			'cherry-re-options-confirn-email' => array(
+				'slug' => 'cherry-re-options-confirn-email',
+				'name' => esc_html__( 'Confirmation E-mail', 'cherry-real-estate' ),
 			),
 		) );
 	}
@@ -186,6 +190,26 @@ class Cherry_RE_Options_Page {
 						'value'              => '',
 						'multi_upload'       => false,
 						'upload_button_text' => esc_html__( 'Upload', 'cherry-real-estate' ),
+					),
+				),
+			),
+			'cherry-re-options-confirn-email' => array(
+				'subject' => array(
+					'slug'  => 'subject',
+					'title' => esc_html__( 'Subject', 'cherry-real-estate' ),
+					'type'  => 'text',
+					'field' => array(
+						'id'    => 'subject',
+						'value' => esc_html__( 'Confirmation email', 'cherry-real-estate' ),
+					),
+				),
+				'message' => array(
+					'slug'  => 'message',
+					'title' => esc_html__( 'Message', 'cherry-real-estate' ),
+					'type'  => 'textarea',
+					'field' => array(
+						'id'    => 'message',
+						'value' => esc_html__( 'Hello. You submit new property. Please, to confirm your ads go to the link ', 'cherry-real-estate' ),
 					),
 				),
 			),

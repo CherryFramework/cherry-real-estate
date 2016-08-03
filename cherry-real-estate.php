@@ -122,6 +122,9 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			// Register activation and deactivation hook.
 			register_activation_hook( __FILE__, array( $this, 'activation' ) );
 			register_deactivation_hook( __FILE__, array( $this, 'deactivation' ) );
+
+			add_action( 'wp_ajax_nopriv_submit_form', array( 'Model_Submit_Form', 'submit_form_callback' ) );
+			add_action( 'wp_ajax_submit_form', array( 'Model_Submit_Form', 'submit_form_callback' ) );
 		}
 
 		/**
@@ -347,6 +350,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			// Models.
 			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/models/model-properties.php' );
 			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/models/model-agents.php' );
+			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/models/model-submit-form.php' );
 			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/models/model-settings.php' );
 
 			// Classes.

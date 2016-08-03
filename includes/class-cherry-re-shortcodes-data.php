@@ -400,6 +400,14 @@ class Cherry_RE_Shortcodes_Data {
 						),
 					),
 				),
+
+				// [submit_form]
+				'submit_form' => array(
+					'title' => esc_html__( 'Submit Form', 'cherry-real-estate' ),
+					'icon'  => '',
+					'body'  => array(
+					),
+				),
 			)
 		);
 
@@ -539,6 +547,45 @@ class Cherry_RE_Shortcodes_Data {
 
 		$data   = Cherry_RE_Property_Data::get_instance();
 		$output = $data->the_property( $atts );
+
+		return apply_filters( 'cherry_re_shortcodes_output', $output, $atts, $shortcode );
+	}
+
+	/**
+	 * Builds the Submit Form shortcode output.
+	 *
+	 * @since  1.0.0
+	 * @param  array  $atts    Shortcode attributes.
+	 * @param  string $content Shortcode content.
+	 * @return string
+	 */
+	public function submit_form( $atts = null, $content = null ) {
+		$defaults = apply_filters( 'cherry_re_submit_form_shortcode_defaults', array(
+			'number'           => 5,
+			'orderby'          => 'date',
+			'order'            => 'desc',
+			'show_title'       => 'yes',
+			'show_image'       => 'yes',
+			'image_size'       => 'thumbnail',
+			'show_status'      => 'yes',
+			'show_area'        => 'yes',
+			'show_bedrooms'    => 'yes',
+			'show_bathrooms'   => 'yes',
+			'show_price'       => 'yes',
+			'show_location'    => 'yes',
+			'show_excerpt'     => 'yes',
+			'excerpt_length'   => 15,
+			'show_more_button' => 'yes',
+			'more_button_text' => esc_html__( 'read more', 'cherry-real-estate' ),
+			'show_pagination'  => 'no',
+			'template'         => 'default.tmpl',
+			'color_scheme'     => 'regular',
+			'css_class'        => '',
+		), $atts );
+
+		$shortcode = 'submit_form';
+		$atts      = shortcode_atts( $defaults, $atts, $shortcode );
+		$output    = cherry_re_get_template_html( 'shortcodes/' . $shortcode . '/form' );
 
 		return apply_filters( 'cherry_re_shortcodes_output', $output, $atts, $shortcode );
 	}

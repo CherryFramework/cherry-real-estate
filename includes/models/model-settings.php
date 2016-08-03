@@ -48,6 +48,16 @@ class Model_Settings {
 	}
 
 	/**
+	 * Get settings from Confirmation E-mail settings.
+	 *
+	 * @since 1.0.0
+	 * @return mixed
+	 */
+	public static function get_confirn_settings() {
+		return get_option( 'cherry-re-options-confirn-email' );
+	}
+
+	/**
 	 * Get are unit.
 	 *
 	 * @since 1.0.0
@@ -231,6 +241,30 @@ class Model_Settings {
 		$map_settings = self::get_map_settings();
 
 		return ! empty( $map_settings['marker'] ) ? $map_settings['marker'] : '';
+	}
+
+	/**
+	 * Get confirn subject.
+	 *
+	 * @since 1.0.0
+	 * @return string
+	 */
+	public static function get_confirn_subject() {
+		$confirn = self::get_confirn_settings();
+
+		return ! empty( $confirn['subject'] ) ? $confirn['subject'] : '';
+	}
+
+	/**
+	 * Get confirn message.
+	 *
+	 * @since 1.0.0
+	 * @return string
+	 */
+	public static function get_confirn_message() {
+		$confirn = self::get_confirn_settings();
+
+		return ! empty( $confirn['message'] ) ? $confirn['message'] : '';
 	}
 
 	/**

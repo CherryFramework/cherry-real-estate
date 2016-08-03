@@ -87,11 +87,17 @@ class Cherry_RE_Assets {
 
 		wp_register_script(
 			'cherry-re-script',
-			plugins_url( 'assets/js/real-estate.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( 'assets/js/real-estate.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array( 'cherry-js-core' ),
 			CHERRY_REAL_ESTATE_VERSION,
 			true
 		);
+
+		$data = apply_filters( 'cherry_re_data_script', array(
+			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+		) );
+
+		wp_localize_script( 'cherry-re-script', 'CherryREData', $data );
 
 		/**
 		 * Hook to deregister the javascripts or add custom.
