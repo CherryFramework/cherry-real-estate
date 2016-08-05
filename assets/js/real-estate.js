@@ -61,7 +61,10 @@
 		},
 
 		submit_form: function( self ) {
-			CherryJsCore.variable.$document.on( 'click', '.tm-re-submit-form__btn', init );
+
+			$( "#tm-re-submitform" ).validate();
+
+			// CherryJsCore.variable.$document.on( 'click', '.tm-re-submit-form__btn', init );
 
 			function init( event ) {
 				event.preventDefault();
@@ -72,48 +75,49 @@
 					nonce      = form.find( 'input[name="tm-re-submitform-nonce"]' ).val(),
 					error      = form.find( '.tm-re-submit-form__error' ),
 					success    = form.find( '.tm-re-submit-form__success' ),
-					hidden     = 'tm-re-hidden';
+					hidden     = 'tm-re-hidden',
+					error_free = true;
 
-				if ( $this.hasClass( 'processing' ) ) {
-					return !1;
-				}
+				// if ( $this.hasClass( 'processing' ) ) {
+				// 	return !1;
+				// }
 
-				$this.addClass( 'processing' );
-				error.empty();
+				// $this.addClass( 'processing' );
+				// error.empty();
 
-				if ( ! error.hasClass( hidden ) ) {
-					error.addClass( hidden );
-				}
+				// if ( ! error.hasClass( hidden ) ) {
+				// 	error.addClass( hidden );
+				// }
 
-				if ( ! success.hasClass( hidden ) ) {
-					success.addClass( hidden );
-				}
+				// if ( ! success.hasClass( hidden ) ) {
+				// 	success.addClass( hidden );
+				// }
 
-				$.ajax({
-					url: CherryREData.ajaxurl,
-					type: 'post',
-					dataType: 'json',
-					data: {
-						action: 'submit_form',
-						nonce: nonce,
-						property: formData
-					},
-					error: function( jqXHR, textStatus, errorThrown ) {
-						$this.removeClass( 'processing' );
-					}
-				}).done( function( response ) {
-					console.log( response );
+				// $.ajax({
+				// 	url: CherryREData.ajaxurl,
+				// 	type: 'post',
+				// 	dataType: 'json',
+				// 	data: {
+				// 		action: 'submit_form',
+				// 		nonce: nonce,
+				// 		property: formData
+				// 	},
+				// 	error: function( jqXHR, textStatus, errorThrown ) {
+				// 		$this.removeClass( 'processing' );
+				// 	}
+				// }).done( function( response ) {
+				// 	console.log( response );
 
-					$this.removeClass( 'processing' );
+				// 	$this.removeClass( 'processing' );
 
-					if ( true === response.success ) {
-						success.removeClass( hidden );
-						return 1;
-					}
+				// 	if ( true === response.success ) {
+				// 		success.removeClass( hidden );
+				// 		return 1;
+				// 	}
 
-					error.removeClass( hidden ).html( response.data.message );
-					return !1;
-				});
+				// 	error.removeClass( hidden ).html( response.data.message );
+				// 	return !1;
+				// });
 			}
 		}
 	};

@@ -86,6 +86,14 @@ class Cherry_RE_Assets {
 		);
 
 		wp_register_script(
+			'jquery-validate',
+			plugins_url( 'assets/js/validate/jquery.validate.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			array(),
+			'1.3.0',
+			true
+		);
+
+		wp_register_script(
 			'cherry-re-script',
 			plugins_url( 'assets/js/real-estate.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array( 'cherry-js-core' ),

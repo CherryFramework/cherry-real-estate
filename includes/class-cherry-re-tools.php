@@ -153,27 +153,4 @@ class Cherry_RE_Tools {
 			return $html;
 		}
 	}
-
-	/**
-	 * Retrieve a set of all pages (key - page slug, value - page title).
-	 *
-	 * @since  1.0.0
-	 * @return array
-	 */
-	public static function get_pages() {
-		$all_pages = get_pages( apply_filters( 'cherry_re_get_pages_args', array(
-				'hierarchical' => 1,
-				'parent'       => -1,
-				'post_status'  => 'publish',
-			)
-		) );
-
-		$pages = array( esc_attr__( '&mdash;&nbsp;Select&nbsp;&mdash;', 'cherry-real-estate' ) );
-
-		foreach ( $all_pages as $page ) {
-			$pages[ $page->post_name ] = $page->post_title;
-		}
-
-		return $pages;
-	}
 }

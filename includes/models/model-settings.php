@@ -53,8 +53,8 @@ class Model_Settings {
 	 * @since 1.0.0
 	 * @return mixed
 	 */
-	public static function get_confirn_settings() {
-		return get_option( 'cherry-re-options-confirn' );
+	public static function get_emails_settings() {
+		return get_option( 'cherry-re-options-emails' );
 	}
 
 	/**
@@ -244,39 +244,75 @@ class Model_Settings {
 	}
 
 	/**
-	 * Get confirn subject.
+	 * Get confirm subject.
 	 *
 	 * @since 1.0.0
 	 * @return string
 	 */
-	public static function get_confirn_subject() {
-		$confirn = self::get_confirn_settings();
+	public static function get_confirm_subject() {
+		$emails = self::get_emails_settings();
 
-		return ! empty( $confirn['subject'] ) ? $confirn['subject'] : '';
+		return ! empty( $emails['confirm-subject'] ) ? $emails['confirm-subject'] : '';
 	}
 
 	/**
-	 * Get confirn message.
+	 * Get confirm message.
 	 *
 	 * @since 1.0.0
 	 * @return string
 	 */
-	public static function get_confirn_message() {
-		$confirn = self::get_confirn_settings();
+	public static function get_confirm_message() {
+		$emails = self::get_emails_settings();
 
-		return ! empty( $confirn['message'] ) ? $confirn['message'] : '';
+		return ! empty( $emails['confirm-message'] ) ? $emails['confirm-message'] : '';
 	}
 
 	/**
-	 * Get confirn page.
+	 * Get notification subject.
 	 *
 	 * @since 1.0.0
 	 * @return string
 	 */
-	public static function get_confirn_page() {
-		$confirn = self::get_confirn_settings();
+	public static function get_notification_subject() {
+		$emails = self::get_emails_settings();
 
-		return ! empty( $confirn['page'] ) ? $confirn['page'] : '';
+		return ! empty( $emails['notification-subject'] ) ? $emails['notification-subject'] : '';
+	}
+
+	/**
+	 * Get notification message.
+	 *
+	 * @since 1.0.0
+	 * @return string
+	 */
+	public static function get_notification_message() {
+		$emails = self::get_emails_settings();
+
+		return ! empty( $emails['notification-message'] ) ? $emails['notification-message'] : '';
+	}
+
+	/**
+	 * Get congratulate subject.
+	 *
+	 * @since 1.0.0
+	 * @return string
+	 */
+	public static function get_congratulate_subject() {
+		$emails = self::get_emails_settings();
+
+		return ! empty( $emails['congratulate-subject'] ) ? $emails['congratulate-subject'] : '';
+	}
+
+	/**
+	 * Get congratulate message.
+	 *
+	 * @since 1.0.0
+	 * @return string
+	 */
+	public static function get_congratulate_message() {
+		$emails = self::get_emails_settings();
+
+		return ! empty( $emails['congratulate-message'] ) ? $emails['congratulate-message'] : '';
 	}
 
 	/**

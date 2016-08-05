@@ -115,4 +115,4 @@ $post_meta = cherry_real_estate()->get_meta_prefix();
 </form>
 
 <?php // Enqueue a script.
-cherry_re_enqueue_script( array( 'cherry-re-script' ) ); ?>
+cherry_re_enqueue_script( array( 'jquery-validate', 'cherry-re-script' ) ); ?>

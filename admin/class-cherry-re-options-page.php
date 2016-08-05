@@ -82,9 +82,9 @@ class Cherry_RE_Options_Page {
 				'slug' => 'cherry-re-options-map',
 				'name' => esc_html__( 'Map', 'cherry-real-estate' ),
 			),
-			'cherry-re-options-confirn' => array(
-				'slug' => 'cherry-re-options-confirn',
-				'name' => esc_html__( 'Confirmation', 'cherry-real-estate' ),
+			'cherry-re-options-emails' => array(
+				'slug' => 'cherry-re-options-emails',
+				'name' => esc_html__( 'E-mails', 'cherry-real-estate' ),
 			),
 		) );
 	}
@@ -193,34 +193,59 @@ class Cherry_RE_Options_Page {
 					),
 				),
 			),
-			'cherry-re-options-confirn' => array(
-				'subject' => array(
-					'slug'  => 'subject',
-					'title' => esc_html__( 'E-mail subject', 'cherry-real-estate' ),
+			'cherry-re-options-emails' => array(
+				'confirm-subject' => array(
+					'slug'  => 'confirm-subject',
+					'title' => esc_html__( 'Confirm E-mail subject', 'cherry-real-estate' ),
 					'type'  => 'text',
 					'field' => array(
-						'id'    => 'subject',
-						'value' => esc_html__( 'Confirmation email', 'cherry-real-estate' ),
+						'id'    => 'confirm-subject',
+						'value' => esc_html__( 'Confirmation e-mail', 'cherry-real-estate' ),
 					),
 				),
-				'message' => array(
-					'slug'  => 'message',
-					'title' => esc_html__( 'E-mail message', 'cherry-real-estate' ),
+				'confirm-message' => array(
+					'slug'  => 'confirm-message',
+					'title' => esc_html__( 'Confirm E-mail message', 'cherry-real-estate' ),
 					'type'  => 'textarea',
 					'field' => array(
-						'id'    => 'message',
+						'id'    => 'confirm-message',
 						'value' => esc_html__( 'Hi. You submit a new property. Please, to confirm your ads go to the link ', 'cherry-real-estate' ),
 					),
 				),
-				'page' => array(
-					'slug'  => 'page',
-					'title' => esc_html__( 'Page', 'cherry-real-estate' ),
-					'type'  => 'select',
+				'notification-subject' => array(
+					'slug'  => 'notification-subject',
+					'title' => esc_html__( 'Notification E-mail subject', 'cherry-real-estate' ),
+					'type'  => 'text',
 					'field' => array(
-						'id'      => 'page',
-						'size'    => 1,
-						'value'   => '',
-						'options' => Cherry_RE_Tools::get_pages(),
+						'id'    => 'notification-subject',
+						'value' => esc_html__( 'Notification e-mail', 'cherry-real-estate' ),
+					),
+				),
+				'notification-message' => array(
+					'slug'  => 'notification-message',
+					'title' => esc_html__( 'Notification E-mail message', 'cherry-real-estate' ),
+					'type'  => 'textarea',
+					'field' => array(
+						'id'    => 'notification-message',
+						'value' => esc_html__( 'Your request has been successfully queued for moderation. Expect an e-mail on the publication of your propery.', 'cherry-real-estate' ),
+					),
+				),
+				'congratulate-subject' => array(
+					'slug'  => 'congratulate-subject',
+					'title' => esc_html__( 'Congratulation E-mail subject', 'cherry-real-estate' ),
+					'type'  => 'text',
+					'field' => array(
+						'id'    => 'congratulate-subject',
+						'value' => esc_html__( 'Congratulation e-mail', 'cherry-real-estate' ),
+					),
+				),
+				'congratulate-message' => array(
+					'slug'  => 'congratulate-message',
+					'title' => esc_html__( 'Congratulation E-mail message', 'cherry-real-estate' ),
+					'type'  => 'textarea',
+					'field' => array(
+						'id'    => 'congratulate-message',
+						'value' => esc_html__( 'Congratulations! Your property has been published.', 'cherry-real-estate' ),
 					),
 				),
 			),
