@@ -68,6 +68,7 @@ class Cherry_RE_Search_Widget extends Cherry_Abstract_Widget {
 		$title          = $this->widget_start( $args, $instance );
 		$map_visibility = ! empty( $instance['map_visibility'] ) ? $instance['map_visibility'] : $this->settings['map_visibility']['value'];
 		$map_visibility = filter_var( $map_visibility, FILTER_VALIDATE_BOOLEAN );
+		$map_visibility = $map_visibility && ! cherry_re_is_property_search();
 		$number         = ! empty( $instance['marker_number'] ) ? $instance['marker_number'] : $this->settings['marker_number']['value'];
 
 		$data     = Cherry_RE_Property_Data::get_instance();
@@ -80,7 +81,7 @@ class Cherry_RE_Search_Widget extends Cherry_Abstract_Widget {
 			'values' => $values,
 		) );
 
-		if ( $map_visibility ) {
+		if ( true === apply_filters( 'cherry_re_map_visibility', $map_visibility ) ) {
 
 			// Map template.
 			cherry_re_get_template( 'widgets/search/map', array(
