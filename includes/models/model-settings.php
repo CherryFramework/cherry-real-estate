@@ -54,7 +54,7 @@ class Model_Settings {
 	 * @return mixed
 	 */
 	public static function get_confirn_settings() {
-		return get_option( 'cherry-re-options-confirn-email' );
+		return get_option( 'cherry-re-options-confirn' );
 	}
 
 	/**
@@ -265,6 +265,18 @@ class Model_Settings {
 		$confirn = self::get_confirn_settings();
 
 		return ! empty( $confirn['message'] ) ? $confirn['message'] : '';
+	}
+
+	/**
+	 * Get confirn page.
+	 *
+	 * @since 1.0.0
+	 * @return string
+	 */
+	public static function get_confirn_page() {
+		$confirn = self::get_confirn_settings();
+
+		return ! empty( $confirn['page'] ) ? $confirn['page'] : '';
 	}
 
 	/**

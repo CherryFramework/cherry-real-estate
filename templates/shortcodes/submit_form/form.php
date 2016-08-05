@@ -98,7 +98,7 @@ $post_meta = cherry_real_estate()->get_meta_prefix();
 
 		<div class="tm-re-submit-form__group">
 			<label for="tm-re-submitform__phone"><?php esc_html_e( 'Your phone', 'cherry-real-estate' ) ?></label>
-			<input type="text" id="tm-re-submitform__phone" name="agent_phone" value="" required="required">
+			<input type="text" id="tm-re-submitform__phone" name="agent_phone" value="">
 		</div>
 
 	<?php endif; ?>

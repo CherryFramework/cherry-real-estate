@@ -360,6 +360,10 @@ class Cherry_RE_Template_Callbacks {
 	 */
 	public function get_agent_permalink() {
 
+		if ( ! $this->agent_data ) {
+			return;
+		}
+
 		if ( ! isset( $this->agent_data->agent_permalink ) ) {
 			$this->agent_data->agent_permalink = get_author_posts_url( $this->agent_data->ID );
 		}
