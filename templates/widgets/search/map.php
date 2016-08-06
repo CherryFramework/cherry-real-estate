@@ -47,7 +47,20 @@ $atts = array(
 		'content'  => esc_html__( 'loading...', 'cherry-real-estate' ),
 		'maxWidth' => 200,
 	),
-	'sourceselector' => '.tm-map-pins__item',
+	'sourceselector'        => '.tm-map-pins__item',
+	'mapTypeControl'        => true,
+	'zoomControl'           => true,
+	'streetViewControl'     => true,
+	'mapTypeControlOptions' => array(
+		'style'    => 'HORIZONTAL_BAR',
+		'position' => 'TOP_CENTER',
+	),
+	'zoomControlOptions' => array(
+		'position' => 'LEFT_CENTER',
+	),
+	'streetViewControlOptions' => array(
+		'position' => 'LEFT_TOP',
+	),
 );
 
 $map_style = Model_Settings::get_map_style();
@@ -58,7 +71,7 @@ if ( ! empty( $map_style ) ) {
 
 $atts = apply_filters( 'cherry_re_search_map_data_atts', $atts ); ?>
 
-<div id="<?php echo esc_attr( $instance ); ?>" class="widget-tm-re-search__map tm-re-map" <?php cherry_re_print_data_atts( $atts ); ?>></div>
+<div id="<?php echo esc_attr( $instance ); ?>" class="widget-tm-re-search__map tm-re-map" <?php cherry_re_print_data_atts( $atts, true ); ?>></div>
 
 <?php echo $pins; ?>
 

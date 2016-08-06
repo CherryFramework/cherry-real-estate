@@ -1,24 +1,16 @@
 (function( $ ) {
 
-	$.fn.RELocations = function() {
+	$.fn.RELocations = function( options ) {
 		var $this = $( this ),
-			data = $this.data(),
-			address = null,
-			dataInfoWindow = false,
-			infowindow = null;
+			infowindow = null,
+			data = {
+				zoom : 5,
+				infowindow : null,
+				address : null
+			};
 
-		if ( data.hasOwnProperty( 'address' ) ) {
-			address = data.address;
-		}
-
-		if ( ! data.hasOwnProperty( 'zoom' ) ) {
-			data.zoom = 15;
-		}
-
-		if ( data.hasOwnProperty( 'infowindow' ) ) {
-			dataInfoWindow = data.infowindow;
-		}
-
+		$.extend( data, options );
+		prepareControlOptions();
 		initMap();
 
 		/**
@@ -26,14 +18,14 @@
 		 */
 		function initMap() {
 
-			if ( null === address && ! data.hasOwnProperty( 'sourceselector' ) ) {
-				return null;
+			if ( null === data.address && ! data.hasOwnProperty( 'sourceselector' ) ) {
+				return !1;
 			}
 
 			var $selector = $( data.sourceselector ),
 				map, geocoder, bounds;
 
-			if ( null === address && ! $selector.length ) {
+			if ( null === data.address && ! $selector.length ) {
 				return !1;
 			}
 
@@ -41,15 +33,15 @@
 			geocoder = new google.maps.Geocoder();
 			bounds = new google.maps.LatLngBounds();
 
-			map.addListener( 'click', function(e) {
+			map.addListener( 'click', function( e ) {
 				mapPanTo( e.latLng, map );
 			});
 
-			if ( false !== dataInfoWindow ) {
-				infowindow = new google.maps.InfoWindow( dataInfoWindow );
+			if ( null !== data.infowindow ) {
+				infowindow = new google.maps.InfoWindow( data.infowindow );
 			}
 
-			if ( null === address ) {
+			if ( null === data.address ) {
 
 				$selector.each( function() {
 					geocodeAddress( map, geocoder, bounds, $(this) );
@@ -57,15 +49,53 @@
 
 			} else {
 
-				for ( key in address ) {
-					geocodeAddress( map, geocoder, bounds, address[ key ] );
+				for ( key in data.address ) {
+					geocodeAddress( map, geocoder, bounds, data.address[ key ] );
 				}
 			}
 		};
 
-		function mapPanTo( latLng, map ) {
-			map.panTo( latLng );
-		}
+		/**
+		 * Callback function on click-event.
+		 *
+		 * @param  object LatLng
+		 * @param  ojject map
+		 * @return void
+		 */
+		function mapPanTo( LatLng, map ) {
+			map.panTo( LatLng );
+		};
+
+		/**
+		 * Prepare options for Map Controls in javascript-format.
+		 */
+		function prepareControlOptions() {
+
+			if ( data.hasOwnProperty( 'mapTypeControlOptions' ) ) {
+				var mapTypeControlOptions = {
+					style: google.maps.MapTypeControlStyle[ data.mapTypeControlOptions.style ],
+					position: google.maps.ControlPosition[ data.mapTypeControlOptions.position ]
+				};
+
+				data.mapTypeControlOptions = mapTypeControlOptions;
+			}
+
+			if ( data.hasOwnProperty( 'zoomControlOptions' ) ) {
+				var zoomControlOptions = {
+					position: google.maps.ControlPosition[ data.zoomControlOptions.position ]
+				};
+
+				data.zoomControlOptions = zoomControlOptions;
+			}
+
+			if ( data.hasOwnProperty( 'streetViewControlOptions' ) ) {
+				var streetViewControlOptions = {
+					position: google.maps.ControlPosition[ data.streetViewControlOptions.position ]
+				};
+
+				data.streetViewControlOptions = streetViewControlOptions;
+			}
+		};
 
 		/**
 		 * Geocoding.
@@ -91,7 +121,7 @@
 
 				if ( status === google.maps.GeocoderStatus.OK ) {
 					var position = results[0].geometry.location,
-						marker
+						marker,
 						animationType = data.hasOwnProperty( 'animation' ) ? data.animation : '';
 
 					bounds.extend( position );
@@ -105,7 +135,7 @@
 						html: html
 					});
 
-					if ( false !== dataInfoWindow ) {
+					if ( null !== data.infowindow ) {
 						google.maps.event.addListener( marker, 'click', function () {
 							infowindow.setContent( this.html );
 							infowindow.open( resultsMap, this );
@@ -122,14 +152,24 @@
 
 	// Let's Go.
 	$( '.tm-re-map' ).each( function() {
-		var mapId = $( this ).data( 'id' ),
-			$map = $( '#' + mapId );
+		var data = $( this ).data( 'atts' ),
+			$map;
+
+		if ( 'object' != typeof data ) {
+			return !1;
+		}
+
+		if ( ! data.hasOwnProperty( 'id' ) ) {
+			return !1;
+		}
+
+		$map = $( '#' + data.id );
 
 		if ( ! $.isFunction( jQuery.fn.RELocations ) || ! $map.length ) {
 			return !1;
 		}
 
-		$map.RELocations();
+		$map.RELocations( data );
 	} );
 
 })( jQuery );

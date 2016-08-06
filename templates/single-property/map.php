@@ -29,12 +29,25 @@ $marker    = is_array( $marker ) ? esc_url( $marker[0] ) : '';
 
 // Data attributes.
 $atts = array(
-	'id'          => $instance,
-	'address'     => array( $location ),
-	'zoom'        => 15,
-	'scrollwheel' => false,
-	'draggable'   => wp_is_mobile() ? false : true,
-	'icon'        => $marker,
+	'id'                    => $instance,
+	'address'               => array( $location ),
+	'zoom'                  => 15,
+	'scrollwheel'           => false,
+	'draggable'             => wp_is_mobile() ? false : true,
+	'icon'                  => $marker,
+	'mapTypeControl'        => true,
+	'zoomControl'           => true,
+	'streetViewControl'     => true,
+	'mapTypeControlOptions' => array(
+		'style'    => 'HORIZONTAL_BAR',
+		'position' => 'TOP_CENTER',
+	),
+	'zoomControlOptions' => array(
+		'position' => 'LEFT_CENTER',
+	),
+	'streetViewControlOptions' => array(
+		'position' => 'LEFT_TOP',
+	),
 );
 
 $map_style = Model_Settings::get_map_style();
@@ -51,7 +64,7 @@ $atts = apply_filters( 'cherry_re_single_property_map_data_atts', $atts ); ?>
 		<h2 class="tm-property__subtitle"><?php echo $heading; ?></h2>
 	<?php endif; ?>
 
-	<div id="<?php echo esc_attr( $instance ); ?>" class="tm-property__map tm-re-map" <?php cherry_re_print_data_atts( $atts ); ?>></div>
+	<div id="<?php echo esc_attr( $instance ); ?>" class="tm-property__map tm-re-map" <?php cherry_re_print_data_atts( $atts, true ); ?>></div>
 </div>
 
 <?php cherry_re_enqueue_script( array(
