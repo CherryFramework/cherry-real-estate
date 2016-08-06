@@ -62,7 +62,7 @@
 
 		submit_form: function( self ) {
 
-			$( "#tm-re-submitform" ).validate();
+			// $( "#tm-re-submitform" ).validate();
 
 			// CherryJsCore.variable.$document.on( 'click', '.tm-re-submit-form__btn', init );
 

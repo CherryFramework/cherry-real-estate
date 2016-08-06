@@ -41,6 +41,10 @@
 			geocoder = new google.maps.Geocoder();
 			bounds = new google.maps.LatLngBounds();
 
+			map.addListener( 'click', function(e) {
+				mapPanTo( e.latLng, map );
+			});
+
 			if ( false !== dataInfoWindow ) {
 				infowindow = new google.maps.InfoWindow( dataInfoWindow );
 			}
@@ -58,6 +62,10 @@
 				}
 			}
 		};
+
+		function mapPanTo( latLng, map ) {
+			map.panTo( latLng );
+		}
 
 		/**
 		 * Geocoding.
