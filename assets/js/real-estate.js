@@ -67,47 +67,46 @@
 				return !1;
 			}
 
-			$form
-				.submit( function( event ) {
-					event.preventDefault();
-				} )
-				.validate({
-					rules: {
-						property_price: {
-							number: true
-						},
-						property_area: {
-							number: true
-						},
-						property_bedrooms: {
-							digits: true
-						},
-						property_bathrooms: {
-							digits: true
-						},
-						property_parking_places: {
-							digits: true
-						}
+			$form.validate({
+				debug: true, // disabled submit event
+				rules: {
+					property_price: {
+						number: true
 					},
-					messages: {
-						required: '*',
-						property_price: "Enter price",
+					property_area: {
+						number: true
 					},
-					submitHandler: function( form ) {
-						$( form ).init();
+					property_bedrooms: {
+						digits: true
+					},
+					property_bathrooms: {
+						digits: true
+					},
+					property_parking_places: {
+						digits: true
 					}
-				});
+				},
+				// validClass: 'tm-re-submit-form__valid',
+				// errorClass: 'tm-re-submit-form__error',
+				// errorElement: 'span',
+				// messages: {
+				// 	required: '*',
+				// 	property_price: "Enter price",
+				// },
+				success: "valid",
+				submitHandler: function( form ) {
+					alert("Submitted!")
+					// init( $( form ) );
+				}
+			});
 
-			function init() {
-				var form       = $( this ),
-					formData   = form.serializeArray(),
+			function init( form ) {
+				var formData   = form.serializeArray(),
 					nonce      = form.find( 'input[name="tm-re-submitform-nonce"]' ).val(),
 					error      = form.find( '.tm-re-submit-form__error' ),
 					success    = form.find( '.tm-re-submit-form__success' ),
 					hidden     = 'tm-re-hidden',
 					error_free = true;
-
-				console.log(form);
 
 				// if ( form.hasClass( 'processing' ) ) {
 				// 	return !1;
@@ -132,14 +131,11 @@
 						action: 'submit_form',
 						nonce: nonce,
 						property: formData
-					},
-					error: function( jqXHR, textStatus, errorThrown ) {
-						form.removeClass( 'processing' );
 					}
 				}).done( function( response ) {
 					console.log( response );
 
-					form.removeClass( 'processing' );
+					// form.removeClass( 'processing' );
 
 					if ( true === response.success ) {
 						success.removeClass( hidden );

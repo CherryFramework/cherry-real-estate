@@ -106,10 +106,10 @@ $post_meta = cherry_real_estate()->get_meta_prefix(); ?>
 		<button type="submit" class="tm-re-submit-form__btn" <?php disabled( is_user_logged_in(), false, true ); ?>><?php esc_html_e( 'Submit', 'cherry-real-estate' ); ?></button>
 	</div>
 
-	<div class="tm-re-submit-form__messages">
+	<!-- <div class="tm-re-submit-form__messages">
 		<div class="tm-re-submit-form__success tm-re-hidden">Success</div>
 		<div class="tm-re-submit-form__error tm-re-hidden"></div>
-	</div>
+	</div> -->
 
 </form>
 
