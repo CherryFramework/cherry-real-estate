@@ -61,16 +61,45 @@
 		},
 
 		submit_form: function( self ) {
+			var $form = $( '#tm-re-submitform' );
 
-			// $( "#tm-re-submitform" ).validate();
+			if ( ! $.isFunction( jQuery.fn.validate ) || ! $form.length ) {
+				return !1;
+			}
 
-			// CherryJsCore.variable.$document.on( 'click', '.tm-re-submit-form__btn', init );
+			$form
+				.submit( function( event ) {
+					event.preventDefault();
+				} )
+				.validate({
+					rules: {
+						property_price: {
+							number: true
+						},
+						property_area: {
+							number: true
+						},
+						property_bedrooms: {
+							digits: true
+						},
+						property_bathrooms: {
+							digits: true
+						},
+						property_parking_places: {
+							digits: true
+						}
+					},
+					messages: {
+						required: '*',
+						property_price: "Enter price",
+					},
+					submitHandler: function( form ) {
+						$( form ).init();
+					}
+				});
 
-			function init( event ) {
-				event.preventDefault();
-
-				var $this      = $(this),
-					form       = $this.parents( 'form' ),
+			function init() {
+				var form       = $( this ),
 					formData   = form.serializeArray(),
 					nonce      = form.find( 'input[name="tm-re-submitform-nonce"]' ).val(),
 					error      = form.find( '.tm-re-submit-form__error' ),
@@ -78,11 +107,13 @@
 					hidden     = 'tm-re-hidden',
 					error_free = true;
 
-				// if ( $this.hasClass( 'processing' ) ) {
+				console.log(form);
+
+				// if ( form.hasClass( 'processing' ) ) {
 				// 	return !1;
 				// }
 
-				// $this.addClass( 'processing' );
+				// form.addClass( 'processing' );
 				// error.empty();
 
 				// if ( ! error.hasClass( hidden ) ) {
@@ -93,31 +124,31 @@
 				// 	success.addClass( hidden );
 				// }
 
-				// $.ajax({
-				// 	url: CherryREData.ajaxurl,
-				// 	type: 'post',
-				// 	dataType: 'json',
-				// 	data: {
-				// 		action: 'submit_form',
-				// 		nonce: nonce,
-				// 		property: formData
-				// 	},
-				// 	error: function( jqXHR, textStatus, errorThrown ) {
-				// 		$this.removeClass( 'processing' );
-				// 	}
-				// }).done( function( response ) {
-				// 	console.log( response );
+				$.ajax({
+					url: CherryREData.ajaxurl,
+					type: 'post',
+					dataType: 'json',
+					data: {
+						action: 'submit_form',
+						nonce: nonce,
+						property: formData
+					},
+					error: function( jqXHR, textStatus, errorThrown ) {
+						form.removeClass( 'processing' );
+					}
+				}).done( function( response ) {
+					console.log( response );
 
-				// 	$this.removeClass( 'processing' );
+					form.removeClass( 'processing' );
 
-				// 	if ( true === response.success ) {
-				// 		success.removeClass( hidden );
-				// 		return 1;
-				// 	}
+					if ( true === response.success ) {
+						success.removeClass( hidden );
+						return 1;
+					}
 
-				// 	error.removeClass( hidden ).html( response.data.message );
-				// 	return !1;
-				// });
+					error.removeClass( hidden ).html( response.data.message );
+					return !1;
+				});
 			}
 		}
 	};

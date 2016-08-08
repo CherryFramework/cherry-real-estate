@@ -86,10 +86,26 @@ class Cherry_RE_Assets {
 		);
 
 		wp_register_script(
-			'jquery-validate',
+			'jquery-validate-core',
 			plugins_url( 'assets/js/validate/jquery.validate.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
-			array(),
-			'1.3.0',
+			array( 'jquery' ),
+			'1.15.0',
+			true
+		);
+
+		wp_register_script(
+			'jquery-validate-methods',
+			plugins_url( 'assets/js/validate/additional-methods.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			array( 'jquery' ),
+			'1.15.0',
+			true
+		);
+
+		wp_register_script(
+			'jquery-validate',
+			false,
+			array( 'jquery-validate-core', 'jquery-validate-methods' ),
+			'1.15.0',
 			true
 		);
 
