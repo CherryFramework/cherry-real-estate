@@ -2,7 +2,6 @@
 
 	$.fn.RELocations = function( options ) {
 		var $this = $( this ),
-			infowindow = null,
 			data = {
 				zoom : 5,
 				infowindow : null,
@@ -10,24 +9,24 @@
 			};
 
 		$.extend( data, options );
-		prepareControlOptions();
 		initMap();
 
 		/**
 		 * Initialize map.
 		 */
 		function initMap() {
-
-			if ( null === data.address && ! data.hasOwnProperty( 'sourceselector' ) ) {
-				return !1;
-			}
-
-			var $selector = $( data.sourceselector ),
+			var $selector = [],
 				map, geocoder, bounds;
+
+			if ( data.hasOwnProperty( 'sourceselector' ) ) {
+				$selector = $( data.sourceselector );
+			}
 
 			if ( null === data.address && ! $selector.length ) {
 				return !1;
 			}
+
+			prepareControlOptions();
 
 			map = new google.maps.Map( $this[0], data );
 			geocoder = new google.maps.Geocoder();
@@ -44,7 +43,7 @@
 			if ( null === data.address ) {
 
 				$selector.each( function() {
-					geocodeAddress( map, geocoder, bounds, $(this) );
+					geocodeAddress( map, geocoder, bounds, $( this ) );
 				} );
 
 			} else {
@@ -115,8 +114,12 @@
 				html     = _data.html();
 			}
 
+			if ( undefined === location ) {
+				return !1;
+			}
+
 			geocoder.geocode({
-				'address': location
+				'address': String( location )
 			}, function( results, status ) {
 
 				if ( status === google.maps.GeocoderStatus.OK ) {
