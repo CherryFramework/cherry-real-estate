@@ -21,7 +21,7 @@
 			var self = self;
 
 			self.gallery( self );
-			self.submit_form( self );
+			self.submission_form( self );
 		},
 
 		gallery: function( self ) {
@@ -60,8 +60,8 @@
 			};
 		},
 
-		submit_form: function( self ) {
-			var $form = $( '#tm-re-submitform' );
+		submission_form: function( self ) {
+			var $form = $( '#tm-re-submissionform' );
 
 			if ( ! $.isFunction( jQuery.fn.validate ) || ! $form.length ) {
 				return !1;
@@ -70,20 +70,19 @@
 			$form.validate({
 				debug: true, // disabled submit event
 				messages: {
-					required: '*',
-					email: "foo",
-					property_title: {
-						required: CherryREData.messages.required
-					},
-					property_description: {
-						required: CherryREData.messages.required
-					},
-					property_price: {
-						number: CherryREData.messages.number
-					},
-					property_address: {
-						required: CherryREData.messages.required
-					},
+					property_title: CherryREData.messages,
+					property_description: CherryREData.messages,
+					property_price: CherryREData.messages,
+					property_status: CherryREData.messages,
+					property_type: CherryREData.messages,
+					property_address: CherryREData.messages,
+					property_bedrooms: CherryREData.messages,
+					property_bathrooms: CherryREData.messages,
+					property_area: CherryREData.messages,
+					property_parking_places: CherryREData.messages,
+					property_address: CherryREData.messages,
+					agent_email: CherryREData.messages,
+					agent_phone: CherryREData.messages,
 				},
 				rules: {
 					property_price: {
@@ -102,65 +101,68 @@
 						digits: true
 					}
 				},
-				errorClass: 'tm-re-submit-form__error',
-				pendingClass: 'tm-re-submit-form__pending',
-				validClass: 'tm-re-submit-form__valid',
+				errorClass: 'tm-re-submission-form__error',
+				pendingClass: 'tm-re-submission-form__pending',
+				validClass: 'tm-re-submission-form__valid',
 				errorElement: 'span',
-				errorContainer: '#error, #success',
 				highlight: function( element, errorClass ) {
 					$( element ).fadeOut( function() {
 						$( element ).fadeIn();
 					} );
 				},
 				submitHandler: function( form ) {
-					alert("Submitted!")
-					// init( $( form ) );
+					init( $( form ) );
 				}
 			});
 
-			function init( form ) {
-				var formData   = form.serializeArray(),
-					nonce      = form.find( 'input[name="tm-re-submitform-nonce"]' ).val(),
-					error      = form.find( '.tm-re-submit-form__error' ),
-					success    = form.find( '.tm-re-submit-form__success' ),
-					hidden     = 'tm-re-hidden',
-					error_free = true;
+			function init( $form ) {
+				var formData   = $form.serializeArray(),
+					nonce      = $form.find( 'input[name="tm-re-submissionform-nonce"]' ).val(),
+					$error     = $form.find( '.tm-re-submission-form__error' ),
+					$success   = $form.find( '.tm-re-submission-form__success' ),
+					processing = 'processing',
+					hidden     = 'tm-re-hidden';
 
-				// if ( form.hasClass( 'processing' ) ) {
-				// 	return !1;
-				// }
+				console.log(formData);
 
-				// form.addClass( 'processing' );
-				// error.empty();
+				if ( $form.hasClass( processing ) ) {
+					return !1;
+				}
 
-				// if ( ! error.hasClass( hidden ) ) {
-				// 	error.addClass( hidden );
-				// }
+				$form.addClass( processing );
+				$error.empty();
 
-				// if ( ! success.hasClass( hidden ) ) {
-				// 	success.addClass( hidden );
-				// }
+				if ( ! $error.hasClass( hidden ) ) {
+					$error.addClass( hidden );
+				}
+
+				if ( ! $success.hasClass( hidden ) ) {
+					$success.addClass( hidden );
+				}
 
 				$.ajax({
 					url: CherryREData.ajaxurl,
 					type: 'post',
 					dataType: 'json',
 					data: {
-						action: 'submit_form',
+						action: 'submission_form',
 						nonce: nonce,
 						property: formData
+					},
+					error: function() {
+						$form.removeClass( processing );
 					}
 				}).done( function( response ) {
 					console.log( response );
 
-					// form.removeClass( 'processing' );
+					$form.removeClass( processing );
 
 					if ( true === response.success ) {
-						success.removeClass( hidden );
+						$success.removeClass( hidden );
 						return 1;
 					}
 
-					error.removeClass( hidden ).html( response.data.message );
+					$error.removeClass( hidden ).html( response.data.message );
 					return !1;
 				});
 			}

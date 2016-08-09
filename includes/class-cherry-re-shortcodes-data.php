@@ -401,9 +401,9 @@ class Cherry_RE_Shortcodes_Data {
 					),
 				),
 
-				// [submit_form]
-				'submit_form' => array(
-					'title' => esc_html__( 'Submit Form', 'cherry-real-estate' ),
+				// [submission_form]
+				'submission_form' => array(
+					'title' => esc_html__( 'Submission Form', 'cherry-real-estate' ),
 					'icon'  => '',
 					'body'  => array(
 					),
@@ -559,8 +559,8 @@ class Cherry_RE_Shortcodes_Data {
 	 * @param  string $content Shortcode content.
 	 * @return string
 	 */
-	public function submit_form( $atts = null, $content = null ) {
-		$defaults = apply_filters( 'cherry_re_submit_form_shortcode_defaults', array(
+	public function submission_form( $atts = null, $content = null ) {
+		$defaults = apply_filters( 'cherry_re_submission_form_shortcode_defaults', array(
 			'number'           => 5,
 			'orderby'          => 'date',
 			'order'            => 'desc',
@@ -583,7 +583,7 @@ class Cherry_RE_Shortcodes_Data {
 			'css_class'        => '',
 		), $atts );
 
-		$shortcode = 'submit_form';
+		$shortcode = 'submission_form';
 		$atts      = shortcode_atts( $defaults, $atts, $shortcode );
 		$output    = cherry_re_get_template_html( 'shortcodes/' . $shortcode . '/form' );
 

@@ -2,7 +2,7 @@
 /**
  * Submission Form view.
  *
- * This template can be overridden by copying it to yourtheme/real-estate/shortcodes/submit_form/form.php.
+ * This template can be overridden by copying it to yourtheme/real-estate/shortcodes/submission_form/form.php.
  *
  * @package    Cherry_Real_Estate
  * @subpackage Templates
@@ -12,20 +12,20 @@
  */
 ?>
 
-<form method="post" id="tm-re-submitform" class="tm-re-submit-form" action="#">
-	<?php wp_nonce_field( '_tm-re-submit-form', 'tm-re-submitform-nonce' ); ?>
+<form method="post" id="tm-re-submissionform" class="tm-re-submission-form" action="#">
+	<?php wp_nonce_field( '_tm-re-submission-form', 'tm-re-submissionform-nonce' ); ?>
 
-	<div class="tm-re-submit-form__group">
+	<div class="tm-re-submission-form__group">
 		<label for="property_title"><?php esc_html_e( 'Title', 'cherry-real-estate' ); ?></label>
 		<input type="text" id="property_title" name="property_title" value="" required="required">
 	</div>
 
-	<div class="tm-re-submit-form__group">
+	<div class="tm-re-submission-form__group">
 		<label for="property_description"><?php esc_html_e( 'Description', 'cherry-real-estate' ); ?></label>
 		<textarea id="property_description" name="property_description" required="required"></textarea>
 	</div>
 
-	<div class="tm-re-submit-form__group">
+	<div class="tm-re-submission-form__group">
 		<label for="property_price"><?php esc_html_e( 'Price', 'cherry-real-estate' ); ?></label>
 		<input type="text" id="property_price" name="property_price" value="">
 	</div>
@@ -62,55 +62,52 @@
 
 	<?php } ?>
 
-	<!-- <div class="tm-re-submit-form__group">
+	<!-- <div class="tm-re-submission-form__group">
 		<label for="property_bedrooms"><?php esc_html_e( 'Bedrooms', 'cherry-real-estate' ); ?></label>
 		<input type="text" id="property_bedrooms" name="property_bedrooms" value="">
 	</div>
 
-	<div class="tm-re-submit-form__group">
+	<div class="tm-re-submission-form__group">
 		<label for="property_bathrooms"><?php esc_html_e( 'Bathrooms', 'cherry-real-estate' ); ?></label>
 		<input type="text" id="property_bathrooms" name="property_bathrooms" value="">
 	</div>
 
-	<div class="tm-re-submit-form__group">
+	<div class="tm-re-submission-form__group">
 		<label for="property_area"><?php esc_html_e( 'Area', 'cherry-real-estate' ); ?></label>
 		<input type="text" id="property_area" name="property_area" value="">
 	</div>
 
-	<div class="tm-re-submit-form__group">
+	<div class="tm-re-submission-form__group">
 		<label for="property_parking_places"><?php esc_html_e( 'Parking places', 'cherry-real-estate' ); ?></label>
 		<input type="text" id="property_parking_places" name="property_parking_places" value="">
 	</div> -->
 
-	<div class="tm-re-submit-form__group">
+	<div class="tm-re-submission-form__group">
 		<label for="property_address"><?php esc_html_e( 'Address', 'cherry-real-estate' ) ?></label>
 		<input type="text" id="property_address" name="property_address" value="" required="required">
 	</div>
 
 	<?php if ( ! current_user_can( 'manage_properties' ) ) : ?>
-		<div class="tm-re-submit-form__group">
+		<div class="tm-re-submission-form__group">
 			<label for="agent_email"><?php esc_html_e( 'Your e-mail', 'cherry-real-estate' ) ?></label>
 			<input type="email" id="agent_email" name="agent_email" value="" required="required">
 		</div>
 
-		<div class="tm-re-submit-form__group">
+		<div class="tm-re-submission-form__group">
 			<label for="agent_phone"><?php esc_html_e( 'Your phone', 'cherry-real-estate' ) ?></label>
 			<input type="tel" id="agent_phone" name="agent_phone" value="">
 		</div>
 
 	<?php endif; ?>
 
-	<div class="tm-re-submit-form__group">
-		<button type="submit" class="tm-re-submit-form__btn" <?php disabled( is_user_logged_in(), false, true ); ?>><?php esc_html_e( 'Submit', 'cherry-real-estate' ); ?></button>
+	<div class="tm-re-submission-form__group">
+		<button type="submission" class="tm-re-submission-form__btn" <?php disabled( is_user_logged_in(), false, true ); ?>><?php esc_html_e( 'Submit', 'cherry-real-estate' ); ?></button>
 	</div>
 
-	<div id="error">error</div>
-	<div id="success">success</div>
-
-	<!-- <div class="tm-re-submit-form__messages">
-		<div class="tm-re-submit-form__success tm-re-hidden">Success</div>
-		<div class="tm-re-submit-form__error tm-re-hidden"></div>
-	</div> -->
+	<div class="tm-re-submission-form__messages">
+		<div class="tm-re-submission-form__success tm-re-hidden"><?php esc_html_e( 'Success', 'cherry-real-estate' ) ?></div>
+		<div class="tm-re-submission-form__error tm-re-hidden"></div>
+	</div>
 
 </form>
 

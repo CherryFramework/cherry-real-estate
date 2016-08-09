@@ -1,6 +1,6 @@
 <?php
 /**
- * Model for submite form.
+ * Model for submission form.
  *
  * @package    Cherry_Framework
  * @subpackage Model
@@ -26,8 +26,8 @@ class Model_Submit_Form {
 	public static $errors = array();
 
 	private function __construct() {
-		add_action( 'wp_ajax_nopriv_submit_form', array( __CLASS__, 'step1' ) );
-		add_action( 'wp_ajax_submit_form', array( __CLASS__, 'step1' ) );
+		add_action( 'wp_ajax_nopriv_submission_form', array( __CLASS__, 'step1' ) );
+		add_action( 'wp_ajax_submission_form', array( __CLASS__, 'step1' ) );
 
 		add_action( 'wp_footer', array( $this, 'step2' ), 99 );
 
@@ -37,7 +37,7 @@ class Model_Submit_Form {
 	/**
 	 * Step 1:
 	 *
-	 * - secirity check
+	 * - security check
 	 * - create request (new property with `draft` status)* or publish property
 	 * - send confirm e-mail*
 	 *
@@ -48,7 +48,7 @@ class Model_Submit_Form {
 	public static function step1() {
 
 		// Check a nonce.
-		$security = check_ajax_referer( '_tm-re-submit-form', 'nonce', false );
+		$security = check_ajax_referer( '_tm-re-submission-form', 'nonce', false );
 
 		if ( false === $security ) {
 			wp_send_json_error( array( 'message' => self::get_errors( 'nonce' ) ) );
@@ -140,7 +140,7 @@ class Model_Submit_Form {
 	/**
 	 * Step 2*:
 	 *
-	 * - secirity check
+	 * - security check
 	 * - change property status to the `pending`
 	 * - output popup
 	 * - send e-mail with notification
