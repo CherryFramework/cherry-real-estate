@@ -93,6 +93,9 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			// Load all required files.
 			$this->includes();
 
+			// Internationalize the text strings used.
+			add_action( 'plugins_loaded', array( $this, 'i18n' ) );
+
 			// Set up a Cherry core.
 			add_action( 'after_setup_theme', require( trailingslashit( __DIR__ ) . 'cherry-framework/setup.php' ), 0 );
 			add_action( 'after_setup_theme', array( $this, 'get_core' ), 1 );
@@ -375,6 +378,15 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			if ( is_admin() ) {
 				include_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-cherry-re-options-page.php' );
 			}
+		}
+
+		/**
+		 * Loads the translation files.
+		 *
+		 * @since 1.0.0
+		 */
+		public function i18n() {
+			load_plugin_textdomain( 'cherry-real-estate', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 		}
 
 		/**

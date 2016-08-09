@@ -118,7 +118,94 @@ class Cherry_RE_Assets {
 		);
 
 		$data = apply_filters( 'cherry_re_data_script', array(
-			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+			'ajaxurl'  => admin_url( 'admin-ajax.php' ),
+			'messages' => array(
+				'required' => esc_html__(
+					'This field is required',
+					'Submission Form messages (Cherry RE plugin)',
+					'cherry-real-estate'
+				),
+				'remote' => esc_html__(
+					'Please fix this field',
+					'Submission Form messages (Cherry RE plugin)',
+					'cherry-real-estate'
+				),
+				'email' => esc_html__(
+					'Please enter a valid email address',
+					'Submission Form messages (Cherry RE plugin)',
+					'cherry-real-estate'
+				),
+				'url' => esc_html__(
+					'Please enter a valid URL',
+					'Submission Form messages (Cherry RE plugin)',
+					'cherry-real-estate'
+				),
+				'date' => esc_html__(
+					'Please enter a valid date',
+					'Submission Form messages (Cherry RE plugin)',
+					'cherry-real-estate'
+				),
+				'dateISO' => esc_html__(
+					'Please enter a valid date ( ISO )',
+					'Submission Form messages (Cherry RE plugin)',
+					'cherry-real-estate'
+				),
+				'dateISO' => esc_html__(
+					'Please enter a valid date ( ISO )',
+					'Submission Form messages (Cherry RE plugin)',
+					'cherry-real-estate'
+				),
+				'number' => esc_html__(
+					'Please enter a valid number',
+					'Submission Form messages (Cherry RE plugin)',
+					'cherry-real-estate'
+				),
+				'digits' => esc_html__(
+					'Please enter only digits',
+					'Submission Form messages (Cherry RE plugin)',
+					'cherry-real-estate'
+				),
+				'equalTo' => esc_html__(
+					'Please enter the same value again',
+					'Submission Form messages (Cherry RE plugin)',
+					'cherry-real-estate'
+				),
+				'maxlength' => esc_html__(
+					'Please enter no more than {0} characters',
+					'Submission Form messages (Cherry RE plugin)',
+					'cherry-real-estate'
+				),
+				'minlength' => esc_html__(
+					'Please enter at least {0} characters',
+					'Submission Form messages (Cherry RE plugin)',
+					'cherry-real-estate'
+				),
+				'rangelength' => esc_html__(
+					'Please enter a value between {0} and {1} characters long',
+					'Submission Form messages (Cherry RE plugin)',
+					'cherry-real-estate'
+				),
+				'range' => esc_html__(
+					'Please enter a value between {0} and {1}',
+					'Submission Form messages (Cherry RE plugin)',
+					'cherry-real-estate'
+				),
+				'max' => esc_html__(
+					'Please enter a value less than or equal to {0}',
+					'Submission Form messages (Cherry RE plugin)',
+					'cherry-real-estate'
+				),
+				'min' => esc_html__(
+					'Please enter a value greater than or equal to {0}',
+					'Submission Form messages (Cherry RE plugin)',
+					'cherry-real-estate'
+				),
+				'step' => esc_html__(
+					'Please enter a multiple of {0}',
+					'Submission Form messages (Cherry RE plugin)',
+					'cherry-real-estate'
+				),
+			),
 		) );
 
 		wp_localize_script( 'cherry-re-script', 'CherryREData', $data );

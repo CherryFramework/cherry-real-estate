@@ -10,9 +10,7 @@
  * @license    GPL-3.0+
  * @copyright  2002-2016, Template Monster
  */
-
-$post_type = cherry_real_estate()->get_post_type_name();
-$post_meta = cherry_real_estate()->get_meta_prefix(); ?>
+?>
 
 <form method="post" id="tm-re-submitform" class="tm-re-submit-form" action="#">
 	<?php wp_nonce_field( '_tm-re-submit-form', 'tm-re-submitform-nonce' ); ?>
@@ -64,7 +62,7 @@ $post_meta = cherry_real_estate()->get_meta_prefix(); ?>
 
 	<?php } ?>
 
-	<div class="tm-re-submit-form__group">
+	<!-- <div class="tm-re-submit-form__group">
 		<label for="property_bedrooms"><?php esc_html_e( 'Bedrooms', 'cherry-real-estate' ); ?></label>
 		<input type="text" id="property_bedrooms" name="property_bedrooms" value="">
 	</div>
@@ -82,7 +80,7 @@ $post_meta = cherry_real_estate()->get_meta_prefix(); ?>
 	<div class="tm-re-submit-form__group">
 		<label for="property_parking_places"><?php esc_html_e( 'Parking places', 'cherry-real-estate' ); ?></label>
 		<input type="text" id="property_parking_places" name="property_parking_places" value="">
-	</div>
+	</div> -->
 
 	<div class="tm-re-submit-form__group">
 		<label for="property_address"><?php esc_html_e( 'Address', 'cherry-real-estate' ) ?></label>
@@ -105,6 +103,9 @@ $post_meta = cherry_real_estate()->get_meta_prefix(); ?>
 	<div class="tm-re-submit-form__group">
 		<button type="submit" class="tm-re-submit-form__btn" <?php disabled( is_user_logged_in(), false, true ); ?>><?php esc_html_e( 'Submit', 'cherry-real-estate' ); ?></button>
 	</div>
+
+	<div id="error">error</div>
+	<div id="success">success</div>
 
 	<!-- <div class="tm-re-submit-form__messages">
 		<div class="tm-re-submit-form__success tm-re-hidden">Success</div>

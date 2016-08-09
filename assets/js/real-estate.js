@@ -69,6 +69,22 @@
 
 			$form.validate({
 				debug: true, // disabled submit event
+				messages: {
+					required: '*',
+					email: "foo",
+					property_title: {
+						required: CherryREData.messages.required
+					},
+					property_description: {
+						required: CherryREData.messages.required
+					},
+					property_price: {
+						number: CherryREData.messages.number
+					},
+					property_address: {
+						required: CherryREData.messages.required
+					},
+				},
 				rules: {
 					property_price: {
 						number: true
@@ -86,14 +102,16 @@
 						digits: true
 					}
 				},
-				// validClass: 'tm-re-submit-form__valid',
-				// errorClass: 'tm-re-submit-form__error',
-				// errorElement: 'span',
-				// messages: {
-				// 	required: '*',
-				// 	property_price: "Enter price",
-				// },
-				success: "valid",
+				errorClass: 'tm-re-submit-form__error',
+				pendingClass: 'tm-re-submit-form__pending',
+				validClass: 'tm-re-submit-form__valid',
+				errorElement: 'span',
+				errorContainer: '#error, #success',
+				highlight: function( element, errorClass ) {
+					$( element ).fadeOut( function() {
+						$( element ).fadeIn();
+					} );
+				},
 				submitHandler: function( form ) {
 					alert("Submitted!")
 					// init( $( form ) );
