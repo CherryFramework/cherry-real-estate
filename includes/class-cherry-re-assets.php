@@ -71,7 +71,7 @@ class Cherry_RE_Assets {
 
 		wp_register_script(
 			'cherry-re-locations',
-			plugins_url( 'assets/js/locations.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( 'assets/js/locations.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array( 'jquery' ),
 			CHERRY_REAL_ESTATE_VERSION,
 			true
@@ -87,7 +87,7 @@ class Cherry_RE_Assets {
 
 		wp_register_script(
 			'jquery-validate-core',
-			plugins_url( 'assets/js/validate/jquery.validate.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( 'assets/js/validate/jquery.validate.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array( 'jquery' ),
 			'1.15.0',
 			true
@@ -95,7 +95,7 @@ class Cherry_RE_Assets {
 
 		wp_register_script(
 			'jquery-validate-methods',
-			plugins_url( 'assets/js/validate/additional-methods.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( 'assets/js/validate/additional-methods.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array( 'jquery' ),
 			'1.15.0',
 			true
@@ -106,6 +106,14 @@ class Cherry_RE_Assets {
 			false,
 			array( 'jquery-validate-core', 'jquery-validate-methods' ),
 			'1.15.0',
+			true
+		);
+
+		wp_register_script(
+			'jquery-magnific-popup',
+			plugins_url( 'assets/js/magnific-popup/jquery.magnific-popup.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			array( 'jquery' ),
+			'1.1.0',
 			true
 		);
 
@@ -264,6 +272,14 @@ class Cherry_RE_Assets {
 			plugins_url( 'assets/css/swiper.css', CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array(),
 			'1.1.5',
+			'all'
+		);
+
+		wp_register_style(
+			'jquery-magnific-popup',
+			plugins_url( 'assets/css/magnific-popup.css', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			array(),
+			'1.1.0',
 			'all'
 		);
 

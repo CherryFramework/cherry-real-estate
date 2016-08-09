@@ -1,0 +1,65 @@
+.tm-re-auth-popup {
+	position: relative;
+	max-width: 500px;
+	margin: 40px auto;
+	padding: 20px 30px;
+	text-align: left;
+	background: #666;
+}
+
+.tabs {
+    width: 650px;
+    float: none;
+    list-style: none;
+    padding: 0;
+    margin: 75px auto;
+}
+
+.tabs li {
+	display: block;
+}
+
+.labels:after {
+	content: '';
+	display: table;
+	clear: both;
+}
+
+.tabs label {
+	display: inline-block;
+	float: left;
+    padding: 10px 20px;
+    color: #FFFFFF;
+    font-size: 24px;
+    font-weight: normal;
+    background: #2c3e50;
+    cursor: pointer;
+}
+
+.tabs label:hover {
+    background: #3498db;
+}
+
+.tab-content {
+    display: none;
+    width: 100%;
+    padding: 15px;
+
+    border:1px solid #ccc;
+    border-top: 10px solid #08C;
+    background-color:#ffffff;
+}
+
+
+.tabs input[type=radio] {
+    display:none;
+}
+
+[id^=tab]:checked ~ div[id^=tab-content] {
+    display: block;
+}
+
+[id^=tab]:checked ~ [id^=label]  {
+    background: #08C;
+    color: white;
+}

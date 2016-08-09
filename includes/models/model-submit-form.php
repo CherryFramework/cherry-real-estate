@@ -29,9 +29,41 @@ class Model_Submit_Form {
 		add_action( 'wp_ajax_nopriv_submission_form', array( __CLASS__, 'step1' ) );
 		add_action( 'wp_ajax_submission_form', array( __CLASS__, 'step1' ) );
 
+		add_action( 'wp_ajax_nopriv_login_form', array( __CLASS__, 'login_callback' ) );
+		add_action( 'wp_ajax_login_form', array( __CLASS__, 'login_callback' ) );
+
 		add_action( 'wp_footer', array( $this, 'step2' ), 99 );
 
 		add_action( 'publish_tm-property', array( $this, 'step3' ), 10, 2 );
+
+		add_action( 'cherry_re_before_submission_form', array( $this, 'popup_link' ) );
+		add_action( 'cherry_re_before_submission_form_btn', array( $this, 'popup_link' ) );
+	}
+
+	public function popup_link() {
+
+		if ( is_user_logged_in() ) {
+			return;
+		}
+
+		$args = array(
+			'class' => 'tm-re-popup',
+			'href'  => $this->get_popup_id(),
+			'text'  => __( 'Please log in or register to create a new listing', 'cherry-real-estate' ),
+		);
+
+		$link_format = apply_filters( 'cherry_re_popup_link_format', '<a class="%s" href="#%s">%s</a>', $args );
+
+		printf(
+			$link_format,
+			esc_attr( $args['class'] ),
+			esc_attr( $args['href'] ),
+			esc_html( $args['text'] )
+		);
+	}
+
+	public static function get_popup_id() {
+		return apply_filters( 'cherry_re_get_popup_html_id', 'tm-re-loginform' );
 	}
 
 	/**
@@ -343,6 +375,59 @@ class Model_Submit_Form {
 		}
 
 		return $errors[ $code ];
+	}
+
+	/**
+	 * Step 1:
+	 *
+	 * - security check
+	 * - create request (new property with `draft` status)* or publish property
+	 * - send confirm e-mail*
+	 *
+	 * (*) - if it's a new or not approved agent
+	 *
+	 * @since 1.0.0
+	 */
+	public static function login_callback() {
+
+		// Check a nonce.
+		$security = check_ajax_referer( '_tm-re-login-form', 'nonce', false );
+
+		if ( false === $security ) {
+			wp_send_json_error( array(
+				'message' => esc_html__( 'Internal error. Please, try again later.', 'cherry-real-estate' ),
+			) );
+		}
+
+		if ( empty( $_POST['access'] ) ) {
+			wp_send_json_error( array(
+				'message' => esc_html__( 'The username and password fields must not be empty.', 'cherry-real-estate' ),
+			) );
+		}
+
+		$access = $_POST['access'];
+
+		if ( ! array_key_exists( 'login', $access ) || ! array_key_exists( 'pass', $access ) ) {
+			wp_send_json_error( array(
+				'message' => esc_html__( 'The username and password fields must not be empty.', 'cherry-real-estate' ),
+			) );
+		}
+
+		$creds = array(
+			'user_login'    => $access['login'],
+			'user_password' => $access['pass'],
+			'remember'      => true,
+		);
+
+		$user = wp_signon( $creds, false );
+
+		if ( is_wp_error( $user ) ) {
+			wp_send_json_error( array(
+				'message' => $user->get_error_message(),
+			) );
+		}
+
+		wp_send_json_success( $user );
 	}
 
 	/**

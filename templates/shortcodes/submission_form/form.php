@@ -10,9 +10,10 @@
  * @license    GPL-3.0+
  * @copyright  2002-2016, Template Monster
  */
-?>
 
-<form method="post" id="tm-re-submissionform" class="tm-re-submission-form" action="#">
+do_action( 'cherry_re_before_submission_form' ); ?>
+
+<form method="post" id="tm-re-submissionform" class="tm-re-submission-form" action="#" enctype="multipart/form-data">
 	<?php wp_nonce_field( '_tm-re-submission-form', 'tm-re-submissionform-nonce' ); ?>
 
 	<div class="tm-re-submission-form__group">
@@ -100,9 +101,13 @@
 
 	<?php endif; ?>
 
+	<?php do_action( 'cherry_re_before_submission_form_btn' ); ?>
+
 	<div class="tm-re-submission-form__group">
-		<button type="submission" class="tm-re-submission-form__btn" <?php disabled( is_user_logged_in(), false, true ); ?>><?php esc_html_e( 'Submit', 'cherry-real-estate' ); ?></button>
+		<button type="submit" class="tm-re-submission-form__btn" <?php disabled( is_user_logged_in(), false, true ); ?>><?php esc_html_e( 'Submit', 'cherry-real-estate' ); ?></button>
 	</div>
+
+	<?php do_action( 'cherry_re_after_submission_form_btn' ); ?>
 
 	<div class="tm-re-submission-form__messages">
 		<div class="tm-re-submission-form__success tm-re-hidden"><?php esc_html_e( 'Success', 'cherry-real-estate' ) ?></div>
@@ -111,5 +116,6 @@
 
 </form>
 
-<?php // Enqueue a script.
+<?php // Enqueue a popup assets.
+wp_enqueue_style( 'jquery-magnific-popup' );
 cherry_re_enqueue_script( array( 'jquery-validate', 'cherry-re-script' ) ); ?>

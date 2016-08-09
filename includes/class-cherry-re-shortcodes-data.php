@@ -585,7 +585,17 @@ class Cherry_RE_Shortcodes_Data {
 
 		$shortcode = 'submission_form';
 		$atts      = shortcode_atts( $defaults, $atts, $shortcode );
-		$output    = cherry_re_get_template_html( 'shortcodes/' . $shortcode . '/form' );
+
+		$output = '';
+
+		// if ( ! is_user_logged_in() ) {
+			$output .= cherry_re_get_template_html( 'auth/popup', array(
+				'login_form'    => cherry_re_get_template_html( 'auth/login' ),
+				'register_form' => cherry_re_get_template_html( 'auth/register' ),
+			) );
+		// }
+
+		$output .= cherry_re_get_template_html( 'shortcodes/' . $shortcode . '/form' );
 
 		return apply_filters( 'cherry_re_shortcodes_output', $output, $atts, $shortcode );
 	}

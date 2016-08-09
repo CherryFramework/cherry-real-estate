@@ -2,26 +2,25 @@
 (function( $ ) {
 	'use strict';
 
-	CherryJsCore.utilites.namespace( 'real_estate' );
+	CherryJsCore.utilites.namespace( 'cherryRealEstate' );
 
-	CherryJsCore.real_estate = {
+	CherryJsCore.cherryRealEstate = {
 
 		start: function() {
 			var self = this;
 
-			// Document ready event.
 			if ( CherryJsCore.status.is_ready ) {
-				self.document_ready( self );
+				self.documentReady( self );
 			} else {
-				CherryJsCore.variable.$document.on( 'ready', self.document_ready( self ) );
+				CherryJsCore.variable.$document.on( 'ready', self.documentReady( self ) );
 			}
 		},
 
-		document_ready: function( self ) {
-			var self = self;
-
+		documentReady: function( self ) {
 			self.gallery( self );
-			self.submission_form( self );
+			self.submissionForm( self );
+			self.loginForm( self );
+			self.popup( self );
 		},
 
 		gallery: function( self ) {
@@ -60,7 +59,7 @@
 			};
 		},
 
-		submission_form: function( self ) {
+		submissionForm: function( self ) {
 			var $form = $( '#tm-re-submissionform' );
 
 			if ( ! $.isFunction( jQuery.fn.validate ) || ! $form.length ) {
@@ -107,23 +106,21 @@
 				errorElement: 'span',
 				highlight: function( element, errorClass ) {
 					$( element ).fadeOut( function() {
-						$( element ).fadeIn();
+						$( element ).fadeIn().addClass( 'error' );
 					} );
 				},
 				submitHandler: function( form ) {
-					init( $( form ) );
+					ajaxSubmit( $( form ) );
 				}
 			});
 
-			function init( $form ) {
+			function ajaxSubmit( $form ) {
 				var formData   = $form.serializeArray(),
 					nonce      = $form.find( 'input[name="tm-re-submissionform-nonce"]' ).val(),
 					$error     = $form.find( '.tm-re-submission-form__error' ),
 					$success   = $form.find( '.tm-re-submission-form__success' ),
 					processing = 'processing',
 					hidden     = 'tm-re-hidden';
-
-				console.log(formData);
 
 				if ( $form.hasClass( processing ) ) {
 					return !1;
@@ -166,9 +163,120 @@
 					return !1;
 				});
 			}
+		},
+
+		loginForm: function( self ) {
+			CherryJsCore.variable.$document.on( 'click', '.tm-re-login-form__btn', init );
+
+			function init( event ) {
+				event.preventDefault();
+
+				var $this       = $( this ),
+					$form       = $this.parents( 'form' ),
+					$error      = $form.find( '.tm-re-login-form__error' ),
+					$success    = $form.find( '.tm-re-login-form__success' ),
+					login_input = $form.find( 'input[name="tm-re-user-login"]' ),
+					pass_input  = $form.find( 'input[name="tm-re-user-pass"]' ),
+					login       = login_input.val(),
+					pass        = pass_input.val(),
+					nonce       = $form.find( 'input[name="tm-re-loginform-nonce"]' ).val(),
+					processing  = 'processing',
+					hidden      = 'tm-re-hidden';
+
+				if ( $form.hasClass( processing ) ) {
+					return !1;
+				}
+
+				if ( '' == login ) {
+					login_input.addClass( 'error' );
+					return !1;
+				} else {
+					login_input.removeClass( 'error' );
+				}
+
+				if ( '' == pass ) {
+					pass_input.addClass( 'error' );
+					return !1;
+				} else {
+					pass_input.removeClass( 'error' );
+				}
+
+				$form.addClass( processing );
+				$error.empty();
+
+				if ( ! $error.hasClass( hidden ) ) {
+					$error.addClass( hidden );
+				}
+
+				if ( ! $success.hasClass( hidden ) ) {
+					$success.addClass( hidden );
+				}
+
+				$.ajax({
+					url: CherryREData.ajaxurl,
+					type: 'post',
+					dataType: 'json',
+					data: {
+						action: 'login_form',
+						nonce: nonce,
+						access: {
+							login : login,
+							pass: pass
+						}
+					},
+					error: function() {
+						$form.removeClass( processing );
+					}
+				}).done( function( response ) {
+					console.log( response );
+
+					$form.removeClass( processing );
+
+					if ( true === response.success ) {
+						$success.removeClass( hidden );
+
+						if ( $.isFunction( jQuery.fn.magnificPopup ) ) {
+							$.magnificPopup.close();
+						}
+
+						return 1;
+					}
+
+					$error.removeClass( hidden ).html( response.data.message );
+					return !1;
+				});
+
+			};
+		},
+
+		popup: function( self ) {
+			var $link = $( '.tm-re-popup' );
+
+			if ( ! $.isFunction( jQuery.fn.magnificPopup ) || ! $link.length ) {
+				return !1;
+			}
+
+			$link.magnificPopup({
+				type: 'inline',
+				preloader: false,
+				focus: '#tm-re-user-login',
+
+				// When elemened is focused, some mobile browsers in some cases zoom in
+				// It looks not nice, so we disable it:
+				callbacks: {
+					beforeOpen: function() {
+						if ( $( window ).width() < 700 ) {
+							this.st.focus = false;
+						} else {
+							this.st.focus = '#tm-re-user-login';
+						}
+					}
+				}
+			});
 		}
+
 	};
 
-	CherryJsCore.real_estate.start();
+	CherryJsCore.cherryRealEstate.start();
 
 })( jQuery );

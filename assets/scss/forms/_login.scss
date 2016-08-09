@@ -1,0 +1,7 @@
+.tm-re-login-form {
+	&__group {
+		+ .tm-re-login-form__group {
+			margin-top: 15px;
+		}
+	}
+}
