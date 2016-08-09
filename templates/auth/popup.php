@@ -14,27 +14,18 @@
 
 <!-- <div id="tm-re-auth-popup" class="tm-re-auth-popup mfp-hide"> -->
 <div id="tm-re-auth-popup" class="tm-re-auth-popup">
-	<ul class="tabs">
-		<li class="labels">
-			<label for="tab1" id="label1">Log In</label>
-			<label for="tab2" id="label2">Register</label>
-		</li>
-		<li>
-			<input type="radio" checked name="tabs" id="tab1">
-			<div id="tab-content1" class="tab-content">
-				<h3>Login Form</h3>
-				<?php echo $login_form; ?>
-			</div>
-		</li>
-		<li>
-			<input type="radio" name="tabs" id="tab2">
-			<div id="tab-content2" class="tab-content">
-				<h3>Register Form</h3>
-				<?php echo $register_form; ?>
-			</div>
-		</li>
+	<ul>
+		<li><a href="#tabs-1">Log In</a></li>
+		<li><a href="#tabs-2">Register</a></li>
 	</ul>
+	<div id="tabs-1">
+		<h3>Login Form</h3>
+		<?php echo $login_form; ?>
+	</div>
+	<div id="tabs-2">
+		<?php echo $register_form; ?>
+	</div>
 </div>
 
 <?php // Enqueue a script.
-cherry_re_enqueue_script( array( 'jquery-magnific-popup', 'cherry-re-script' ) ); ?>
+cherry_re_enqueue_script( array( 'jquery-magnific-popup', 'jquery-ui-tabs', 'cherry-re-script' ) ); ?>

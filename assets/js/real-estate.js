@@ -19,8 +19,9 @@
 		documentReady: function( self ) {
 			self.gallery( self );
 			self.submissionForm( self );
-			self.loginForm( self );
+			self.tabs( self );
 			self.popup( self );
+			self.loginForm( self );
 		},
 
 		gallery: function( self ) {
@@ -273,6 +274,16 @@
 					}
 				}
 			});
+		},
+
+		tabs: function( self ) {
+			var $target = $( '#tm-re-auth-popup' );
+
+			if ( ! $.isFunction( jQuery.fn.tabs ) || ! $target.length ) {
+				return !1;
+			}
+
+			$target.tabs();
 		}
 
 	};
