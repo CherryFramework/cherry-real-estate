@@ -31,5 +31,4 @@
 		<div class="tm-re-login-form__success tm-re-hidden"><?php esc_html_e( 'Success', 'cherry-real-estate' ) ?></div>
 		<div class="tm-re-login-form__error tm-re-hidden"></div>
 	</div>
-
 </form>

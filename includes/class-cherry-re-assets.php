@@ -127,6 +127,7 @@ class Cherry_RE_Assets {
 
 		$data = apply_filters( 'cherry_re_data_script', array(
 			'ajaxurl'  => admin_url( 'admin-ajax.php' ),
+			'popupid'  => Model_Submit_Form::get_popup_id(),
 			'messages' => array(
 				'required' => esc_html__(
 					'This field is required',

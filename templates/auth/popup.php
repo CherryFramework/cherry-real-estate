@@ -2,7 +2,7 @@
 /**
  * Authorization Popup.
  *
- * This template can be overridden by copying it to yourtheme/real-estate/misc/auth-popup.php.
+ * This template can be overridden by copying it to yourtheme/real-estate/auth/popup.php.
  *
  * @package    Cherry_Real_Estate
  * @subpackage Templates
@@ -10,22 +10,23 @@
  * @license    GPL-3.0+
  * @copyright  2002-2016, Template Monster
  */
-?>
 
-<!-- <div id="tm-re-auth-popup" class="tm-re-auth-popup mfp-hide"> -->
-<div id="tm-re-auth-popup" class="tm-re-auth-popup">
+do_action( 'cherry_re_before_auth_popup' ); ?>
+
+<div id="<?php echo esc_attr( $popup_id ); ?>" class="tm-re-auth-popup mfp-with-anim mfp-hide" data-anim-effect="tm-re-mfp-move-from-top">
 	<ul>
-		<li><a href="#tabs-1">Log In</a></li>
-		<li><a href="#tabs-2">Register</a></li>
+		<li><a href="#tm-re-login-form"><?php esc_html_e( 'Log In', 'cherry-real-estate' ); ?></a></li>
+		<li><a href="#tm-re-register-form"><?php esc_html_e( 'Register', 'cherry-real-estate' ); ?></a></li>
 	</ul>
-	<div id="tabs-1">
-		<h3>Login Form</h3>
+	<div id="tm-re-login-form">
 		<?php echo $login_form; ?>
 	</div>
-	<div id="tabs-2">
+	<div id="tm-re-register-form">
 		<?php echo $register_form; ?>
 	</div>
 </div>
 
+<?php do_action( 'cherry_re_after_auth_popup' ); ?>
+
 <?php // Enqueue a script.
-cherry_re_enqueue_script( array( 'jquery-magnific-popup', 'jquery-ui-tabs', 'cherry-re-script' ) ); ?>
+cherry_re_enqueue_script( array( 'jquery-magnific-popup', 'jquery-ui-tabs' ) ); ?>

@@ -88,19 +88,6 @@ do_action( 'cherry_re_before_submission_form' ); ?>
 		<input type="text" id="property_address" name="property_address" value="" required="required">
 	</div>
 
-	<?php if ( ! current_user_can( 'manage_properties' ) ) : ?>
-		<div class="tm-re-submission-form__group">
-			<label for="agent_email"><?php esc_html_e( 'Your e-mail', 'cherry-real-estate' ) ?></label>
-			<input type="email" id="agent_email" name="agent_email" value="" required="required">
-		</div>
-
-		<div class="tm-re-submission-form__group">
-			<label for="agent_phone"><?php esc_html_e( 'Your phone', 'cherry-real-estate' ) ?></label>
-			<input type="tel" id="agent_phone" name="agent_phone" value="">
-		</div>
-
-	<?php endif; ?>
-
 	<?php do_action( 'cherry_re_before_submission_form_btn' ); ?>
 
 	<div class="tm-re-submission-form__group">
@@ -115,6 +102,8 @@ do_action( 'cherry_re_before_submission_form' ); ?>
 	</div>
 
 </form>
+
+<?php do_action( 'cherry_re_after_submission_form' ); ?>
 
 <?php // Enqueue a popup assets.
 wp_enqueue_style( 'jquery-magnific-popup' );

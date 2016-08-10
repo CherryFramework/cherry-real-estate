@@ -4,62 +4,81 @@
 	margin: 40px auto;
 	padding: 20px 30px;
 	text-align: left;
-	background: #666;
+	background: #fff;
 }
 
-.tabs {
-    width: 650px;
-    float: none;
-    list-style: none;
-    padding: 0;
-    margin: 75px auto;
+/*
+====== Zoom effect ======
+*/
+.tm-re-mfp-zoom-in {
+	/* start state */
+	.mfp-with-anim {
+		opacity: 0;
+		transition: all 0.2s ease-in-out;
+		transform: scale(0.8);
+	}
+	&.mfp-bg {
+		opacity: 0;
+		transition: all 0.3s ease-out;
+	}
+	/* animate in */
+	&.mfp-ready {
+		.mfp-with-anim {
+			opacity: 1;
+			transform: scale(1);
+		}
+		&.mfp-bg {
+			opacity: 0.8;
+		}
+	}
+
+	/* animate out */
+	&.mfp-removing {
+		.mfp-with-anim {
+			transform: scale(0.8);
+			opacity: 0;
+		}
+		&.mfp-bg {
+			opacity: 0;
+		}
+	}
 }
 
-.tabs li {
-	display: block;
-}
-
-.labels:after {
-	content: '';
-	display: table;
-	clear: both;
-}
-
-.tabs label {
-	display: inline-block;
-	float: left;
-    padding: 10px 20px;
-    color: #FFFFFF;
-    font-size: 24px;
-    font-weight: normal;
-    background: #2c3e50;
-    cursor: pointer;
-}
-
-.tabs label:hover {
-    background: #3498db;
-}
-
-.tab-content {
-    display: none;
-    width: 100%;
-    padding: 15px;
-
-    border:1px solid #ccc;
-    border-top: 10px solid #08C;
-    background-color:#ffffff;
-}
-
-
-.tabs input[type=radio] {
-    display:none;
-}
-
-[id^=tab]:checked ~ div[id^=tab-content] {
-    display: block;
-}
-
-[id^=tab]:checked ~ [id^=label]  {
-    background: #08C;
-    color: white;
+/*
+====== Move-from-top effect ======
+*/
+.tm-re-mfp-move-from-top {
+	.mfp-content {
+		vertical-align:top;
+	}
+	/* start state */
+	.mfp-with-anim {
+		opacity: 0;
+		transition: all 0.2s;
+		transform: translateY(-100px);
+	}
+	&.mfp-bg {
+		opacity: 0;
+		transition: all 0.2s;
+	}
+	/* animate in */
+	&.mfp-ready {
+		.mfp-with-anim {
+			opacity: 1;
+			transform: translateY(0);
+		}
+		&.mfp-bg {
+			opacity: 0.8;
+		}
+	}
+	/* animate out */
+	&.mfp-removing {
+		.mfp-with-anim {
+			transform: translateY(-50px);
+			opacity: 0;
+		}
+		&.mfp-bg {
+			opacity: 0;
+		}
+	}
 }

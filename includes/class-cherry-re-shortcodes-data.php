@@ -590,6 +590,7 @@ class Cherry_RE_Shortcodes_Data {
 
 		// if ( ! is_user_logged_in() ) {
 			$output .= cherry_re_get_template_html( 'auth/popup', array(
+				'popup_id'      => Model_Submit_Form::get_popup_id(),
 				'login_form'    => cherry_re_get_template_html( 'auth/login' ),
 				'register_form' => cherry_re_get_template_html( 'auth/register' ),
 			) );
