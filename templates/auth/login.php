@@ -16,11 +16,11 @@
 	<?php wp_nonce_field( '_tm-re-login-form', 'tm-re-loginform-nonce' ); ?>
 
 	<div class="tm-re-login-form__group">
-		<input type="text" id="tm-re-user-login" name="tm-re-user-login" placeholder="<?php esc_html_e( 'Username', 'cherry-real-estate' ); ?>">
+		<input type="text" id="tm-re-user-login" name="user_login" placeholder="<?php esc_html_e( 'Username', 'cherry-real-estate' ); ?>" required="required">
 	</div>
 
 	<div class="tm-re-login-form__group">
-		<input type="password" id="tm-re-user-pass" name="tm-re-user-pass" placeholder="<?php esc_html_e( 'Password', 'cherry-real-estate' ); ?>">
+		<input type="password" id="tm-re-user-pass" name="user_pass" placeholder="<?php esc_html_e( 'Password', 'cherry-real-estate' ); ?>" required="required">
 	</div>
 
 	<div class="tm-re-login-form__group">

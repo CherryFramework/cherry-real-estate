@@ -167,39 +167,43 @@
 		},
 
 		loginForm: function( self ) {
-			CherryJsCore.variable.$document.on( 'click', '.tm-re-login-form__btn', init );
+			var $form = $( '#tm-re-loginform' );
 
-			function init( event ) {
-				event.preventDefault();
+			if ( ! $.isFunction( jQuery.fn.validate ) || ! $form.length ) {
+				return !1;
+			}
 
-				var $this       = $( this ),
-					$form       = $this.parents( 'form' ),
-					$error      = $form.find( '.tm-re-login-form__error' ),
-					$success    = $form.find( '.tm-re-login-form__success' ),
-					login_input = $form.find( 'input[name="tm-re-user-login"]' ),
-					pass_input  = $form.find( 'input[name="tm-re-user-pass"]' ),
-					login       = login_input.val(),
-					pass        = pass_input.val(),
-					nonce       = $form.find( 'input[name="tm-re-loginform-nonce"]' ).val(),
-					processing  = 'processing',
-					hidden      = 'tm-re-hidden';
+			$form.validate({
+				debug: true, // disabled submit event
+				messages: {
+					user_login: CherryREData.messages,
+					user_pass: CherryREData.messages
+				},
+				errorElement: 'span',
+				highlight: function( element, errorClass, validClass ) {
+					$( element ).fadeOut( function() {
+						$( element ).fadeIn().addClass( errorClass ).removeClass( validClass );
+					} );
+				},
+				unhighlight: function( element, errorClass, validClass ) {
+					$( element ).removeClass( errorClass ).addClass( validClass );
+				},
+				submitHandler: function( form ) {
+					ajaxLogin( $( form ) );
+				}
+			});
+
+			function ajaxLogin( $form ) {
+				var $error     = $form.find( '.tm-re-login-form__error' ),
+					$success   = $form.find( '.tm-re-login-form__success' ),
+					login      = $form.find( 'input[name="user_login"]' ).val(),
+					pass       = $form.find( 'input[name="user_pass"]' ).val(),
+					nonce      = $form.find( 'input[name="tm-re-loginform-nonce"]' ).val(),
+					processing = 'processing',
+					hidden     = 'tm-re-hidden';
 
 				if ( $form.hasClass( processing ) ) {
 					return !1;
-				}
-
-				if ( '' == login ) {
-					login_input.addClass( 'error' );
-					return !1;
-				} else {
-					login_input.removeClass( 'error' );
-				}
-
-				if ( '' == pass ) {
-					pass_input.addClass( 'error' );
-					return !1;
-				} else {
-					pass_input.removeClass( 'error' );
 				}
 
 				$form.addClass( processing );
@@ -240,7 +244,6 @@
 							self.magnificPopup.close();
 						}
 
-						$form[0].reset();
 						$( '.tm-re-submission-form__btn' ).prop( 'disabled', false );
 						$( '.tm-re-auth-message' ).hide();
 
@@ -255,57 +258,53 @@
 		},
 
 		registerForm: function( self ) {
-			CherryJsCore.variable.$document.on( 'click', '.tm-re-register-form__btn', init );
+			var $form = $( '#tm-re-registerform' );
 
-			function init( event ) {
-				event.preventDefault();
+			if ( ! $.isFunction( jQuery.fn.validate ) || ! $form.length ) {
+				return !1;
+			}
 
-				var $this       = $( this ),
-					$form       = $this.parents( 'form' ),
-					$error      = $form.find( '.tm-re-register-form__error' ),
+			$form.validate({
+				debug: true, // disabled submit event
+				messages: {
+					user_login: CherryREData.messages,
+					user_email: CherryREData.messages,
+					user_pass: CherryREData.messages,
+					user_cpass: CherryREData.messages
+				},
+				rules: {
+					user_pass: 'required',
+					user_cpass: {
+						equalTo: '#user_pass'
+					}
+				},
+				errorElement: 'span',
+				highlight: function( element, errorClass, validClass ) {
+					$( element ).fadeOut( function() {
+						$( element ).fadeIn().addClass( errorClass ).removeClass( validClass );
+					} );
+				},
+				unhighlight: function( element, errorClass, validClass ) {
+					$( element ).removeClass( errorClass ).addClass( validClass );
+				},
+				submitHandler: function( form ) {
+					ajaxRegister( $( form ) );
+				}
+			});
+
+			function ajaxRegister( $form ) {
+				var $error      = $form.find( '.tm-re-register-form__error' ),
 					$success    = $form.find( '.tm-re-register-form__success' ),
-					login_input = $form.find( 'input[name="tm-re-user-login"]' ),
-					email_input = $form.find( 'input[name="tm-re-user-email"]' ),
-					pass_input  = $form.find( 'input[name="tm-re-user-pass"]' ),
-					cpass_input = $form.find( 'input[name="tm-re-user-confirm-pass"]' ),
-					login       = login_input.val(),
-					email       = email_input.val(),
-					pass        = pass_input.val(),
-					cpass       = cpass_input.val(),
+					login       = $form.find( 'input[name="user_login"]' ).val(),
+					email       = $form.find( 'input[name="user_email"]' ).val(),
+					pass        = $form.find( 'input[name="user_pass"]' ).val(),
+					cpass       = $form.find( 'input[name="user_cpass"]' ).val(),
 					nonce       = $form.find( 'input[name="tm-re-registerform-nonce"]' ).val(),
 					processing  = 'processing',
 					hidden      = 'tm-re-hidden';
 
 				if ( $form.hasClass( processing ) ) {
 					return !1;
-				}
-
-				if ( '' == login ) {
-					login_input.addClass( 'error' ).focus();
-					return !1;
-				} else {
-					login_input.removeClass( 'error' );
-				}
-
-				if ( '' == email ) {
-					email_input.addClass( 'error' ).focus();
-					return !1;
-				} else {
-					email_input.removeClass( 'error' );
-				}
-
-				if ( '' == pass ) {
-					pass_input.addClass( 'error' ).focus();
-					return !1;
-				} else {
-					pass_input.removeClass( 'error' );
-				}
-
-				if ( '' == cpass ) {
-					cpass_input.addClass( 'error' ).focus();
-					return !1;
-				} else {
-					cpass_input.removeClass( 'error' );
 				}
 
 				$form.addClass( processing );
@@ -347,8 +346,6 @@
 						if ( $.isFunction( jQuery.fn.magnificPopup ) && null !== self.magnificPopup ) {
 							self.magnificPopup.close();
 						}
-
-						$form[0].reset();
 
 						return 1;
 					}
@@ -393,6 +390,15 @@
 					mainClass: effect,
 					callbacks: {
 						beforeOpen: function() {
+
+							var $forms = $( src ).find( 'form' );
+
+							if ( $forms.length ) {
+								$forms.each( function( i, form ) {
+									form.reset();
+								})
+							}
+
 
 							if ( $( window ).width() < 700 ) {
 								this.st.focus = false;
