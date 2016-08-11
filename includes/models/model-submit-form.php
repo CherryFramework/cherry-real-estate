@@ -38,9 +38,9 @@ class Model_Submit_Form {
 
 	public function popup_link() {
 
-		// if ( is_user_logged_in() ) {
-		// 	return;
-		// }
+		if ( is_user_logged_in() ) {
+			return;
+		}
 
 		$args = array(
 			'class' => 'tm-re-popup',

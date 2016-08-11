@@ -588,7 +588,7 @@ class Cherry_RE_Shortcodes_Data {
 
 		$output = '';
 
-		// if ( ! is_user_logged_in() ) {
+		if ( ! is_user_logged_in() ) {
 
 			$register_form = '';
 
@@ -603,7 +603,7 @@ class Cherry_RE_Shortcodes_Data {
 				'login_form'    => cherry_re_get_template_html( 'auth/login' ),
 				'register_form' => $register_form,
 			) );
-		// }
+		}
 
 		$output .= cherry_re_get_template_html( 'shortcodes/' . $shortcode . '/form' );
 

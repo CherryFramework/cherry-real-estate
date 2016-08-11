@@ -63,7 +63,7 @@ do_action( 'cherry_re_before_submission_form' ); ?>
 
 	<?php } ?>
 
-	<!-- <div class="tm-re-submission-form__group">
+	<div class="tm-re-submission-form__group">
 		<label for="property_bedrooms"><?php esc_html_e( 'Bedrooms', 'cherry-real-estate' ); ?></label>
 		<input type="text" id="property_bedrooms" name="property_bedrooms" value="">
 	</div>
@@ -81,7 +81,7 @@ do_action( 'cherry_re_before_submission_form' ); ?>
 	<div class="tm-re-submission-form__group">
 		<label for="property_parking_places"><?php esc_html_e( 'Parking places', 'cherry-real-estate' ); ?></label>
 		<input type="text" id="property_parking_places" name="property_parking_places" value="">
-	</div> -->
+	</div>
 
 	<div class="tm-re-submission-form__group">
 		<label for="property_address"><?php esc_html_e( 'Address', 'cherry-real-estate' ) ?></label>
