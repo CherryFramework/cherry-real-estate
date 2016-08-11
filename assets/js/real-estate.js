@@ -145,7 +145,8 @@
 					data: {
 						action: 'submission_form',
 						nonce: nonce,
-						property: formData
+						property: formData,
+						gallery: $( '#tm-re-property-gallery' ).val()
 					},
 					error: function() {
 						$form.removeClass( processing );

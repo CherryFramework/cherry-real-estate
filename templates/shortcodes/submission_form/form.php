@@ -88,6 +88,11 @@ do_action( 'cherry_re_before_submission_form' ); ?>
 		<input type="text" id="property_address" name="property_address" value="" required="required" placeholder="<?php esc_html_e( 'Enter your property address', 'cherry-real-estate' ); ?>">
 	</div>
 
+	<div class="tm-re-submission-form__group">
+		<label for="property_gallery"><?php esc_html_e( 'Media', 'cherry-real-estate' ) ?></label>
+		<input type="file" id="tm-re-property-gallery" name="property_gallery" multiple="multiple">
+	</div>
+
 	<?php do_action( 'cherry_re_before_submission_form_btn' ); ?>
 
 	<div class="tm-re-submission-form__group">

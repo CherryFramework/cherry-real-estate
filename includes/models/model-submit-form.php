@@ -111,7 +111,6 @@ class Model_Submit_Form {
 
 		$data = wp_parse_args( $data, $defaults );
 
-
 		// Prepare data array for new property.
 		$property_arr = array(
 			'post_type'    => cherry_real_estate()->get_post_type_name(),
@@ -166,6 +165,25 @@ class Model_Submit_Form {
 					'message' => esc_html__( 'Internal error. Please, try again later', 'cherry-real-estate' ),
 				) );
 			}
+		}
+
+		if ( ! empty( $_POST['gallery'] ) ) {
+
+			// These files need to be included as dependencies when on the front end.
+			require_once( ABSPATH . 'wp-admin/includes/image.php' );
+			require_once( ABSPATH . 'wp-admin/includes/file.php' );
+			require_once( ABSPATH . 'wp-admin/includes/media.php' );
+
+			// Let WordPress handle the upload.
+			// Remember, 'my_image_upload' is the name of our file input in our form above.
+			$attachment_id = media_handle_upload( 'property_gallery', $property_ID );
+
+			if ( is_wp_error( $attachment_id ) ) {
+				wp_send_json_error( array(
+					'message' => $attachment_id->get_error_message(),
+				) );
+			}
+
 		}
 
 		wp_send_json_success( $property_ID );
