@@ -18,7 +18,7 @@ do_action( 'cherry_re_before_submission_form' ); ?>
 
 	<div class="tm-re-submission-form__group">
 		<label for="property_title"><?php esc_html_e( 'Title', 'cherry-real-estate' ); ?></label>
-		<input type="text" id="property_title" name="property_title" value="" required="required">
+		<input type="text" id="property_title" name="property_title" value="" placeholder="<?php esc_html_e( 'Enter your property title', 'cherry-real-estate' ); ?>" required="required">
 	</div>
 
 	<div class="tm-re-submission-form__group">
@@ -28,7 +28,7 @@ do_action( 'cherry_re_before_submission_form' ); ?>
 
 	<div class="tm-re-submission-form__group">
 		<label for="property_price"><?php esc_html_e( 'Price', 'cherry-real-estate' ); ?></label>
-		<input type="text" id="property_price" name="property_price" value="">
+		<input type="text" id="property_price" name="property_price" value="" placeholder="<?php esc_html_e( 'Enter price', 'cherry-real-estate' ); ?>" required="required">
 	</div>
 
 	<?php $select_status = Cherry_RE_Tools::select_form( Model_Properties::get_allowed_property_statuses(), array(
@@ -65,27 +65,27 @@ do_action( 'cherry_re_before_submission_form' ); ?>
 
 	<div class="tm-re-submission-form__group">
 		<label for="property_bedrooms"><?php esc_html_e( 'Bedrooms', 'cherry-real-estate' ); ?></label>
-		<input type="text" id="property_bedrooms" name="property_bedrooms" value="">
+		<input type="text" id="property_bedrooms" name="property_bedrooms" value="" placeholder="<?php esc_html_e( 'Enter number of bedrooms', 'cherry-real-estate' ); ?>">
 	</div>
 
 	<div class="tm-re-submission-form__group">
 		<label for="property_bathrooms"><?php esc_html_e( 'Bathrooms', 'cherry-real-estate' ); ?></label>
-		<input type="text" id="property_bathrooms" name="property_bathrooms" value="">
+		<input type="text" id="property_bathrooms" name="property_bathrooms" value="" placeholder="<?php esc_html_e( 'Enter number of bathrooms', 'cherry-real-estate' ); ?>">
 	</div>
 
 	<div class="tm-re-submission-form__group">
-		<label for="property_area"><?php esc_html_e( 'Area', 'cherry-real-estate' ); ?></label>
-		<input type="text" id="property_area" name="property_area" value="">
+		<label for="property_area"><?php printf( esc_html__( 'Area Size (in %s)', 'cherry-real-estate' ), Model_Settings::get_area_unit_title() ); ?></label>
+		<input type="text" id="property_area" name="property_area" value="" placeholder="<?php esc_html_e( 'Enter property area size', 'cherry-real-estate' ); ?>">
 	</div>
 
 	<div class="tm-re-submission-form__group">
 		<label for="property_parking_places"><?php esc_html_e( 'Parking places', 'cherry-real-estate' ); ?></label>
-		<input type="text" id="property_parking_places" name="property_parking_places" value="">
+		<input type="text" id="property_parking_places" name="property_parking_places" value="" placeholder="<?php esc_html_e( 'Enter number of parking places', 'cherry-real-estate' ); ?>">
 	</div>
 
 	<div class="tm-re-submission-form__group">
 		<label for="property_address"><?php esc_html_e( 'Address', 'cherry-real-estate' ) ?></label>
-		<input type="text" id="property_address" name="property_address" value="" required="required">
+		<input type="text" id="property_address" name="property_address" value="" required="required" placeholder="<?php esc_html_e( 'Enter your property address', 'cherry-real-estate' ); ?>">
 	</div>
 
 	<?php do_action( 'cherry_re_before_submission_form_btn' ); ?>
