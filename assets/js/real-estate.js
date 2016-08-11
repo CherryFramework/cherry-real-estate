@@ -263,16 +263,7 @@
 				messages: {
 					user_login: CherryREData.messages,
 					user_email: CherryREData.messages
-					/*,
-					user_pass: CherryREData.messages,
-					user_cpass: CherryREData.messages*/
 				},
-				/*rules: {
-					user_pass: 'required',
-					user_cpass: {
-						equalTo: '#user_pass'
-					}
-				},*/
 				errorElement: 'span',
 				highlight: function( element, errorClass, validClass ) {
 					$( element ).fadeOut( function() {
@@ -292,8 +283,6 @@
 					$success    = $form.find( '.tm-re-register-form__success' ),
 					login       = $form.find( 'input[name="user_login"]' ).val(),
 					email       = $form.find( 'input[name="user_email"]' ).val(),
-					// pass        = $form.find( 'input[name="user_pass"]' ).val(),
-					// cpass       = $form.find( 'input[name="user_cpass"]' ).val(),
 					nonce       = $form.find( 'input[name="tm-re-registerform-nonce"]' ).val(),
 					processing  = 'processing',
 					hidden      = 'tm-re-hidden';
@@ -323,9 +312,6 @@
 						access: {
 							login: login,
 							email: email
-							/*,
-							pass: pass,
-							cpass: cpass*/
 						}
 					},
 					error: function() {
