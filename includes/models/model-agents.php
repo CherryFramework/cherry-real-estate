@@ -379,6 +379,28 @@ class Model_Agents {
 	}
 
 	/**
+	 * Get all agents.
+	 *
+	 * @since  1.0.0
+	 * @return array all agents.
+	 */
+	public static function get_list() {
+		$agents = get_users( array(
+			'role__in' => apply_filters( 'cherry_re_get_agent_list_args', array( 'administrator', 're_agent' ) ),
+		) );
+
+		$result = array();
+
+		if ( is_array( $agents ) ) {
+			foreach ( $agents as $agent ) {
+				$result[ $agent->data->ID ] = $agent->data->display_name;
+			}
+		}
+
+		return $result;
+	}
+
+	/**
 	 * Returns the instance.
 	 *
 	 * @since  1.0.0

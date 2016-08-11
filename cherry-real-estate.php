@@ -250,6 +250,17 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 				'title'  => esc_html__( 'Property Data', 'cherry-real-estate' ),
 				'page'   => array( $this->get_post_type_name() ),
 				'fields' => array(
+					$prefix . 'agent' => array(
+						'type'       => 'select',
+						'id'         => $prefix . 'agent',
+						'name'       => $prefix . 'agent',
+						'value'      => '',
+						'left_label' => esc_html__( 'Agent', 'cherry-real-estate' ),
+						'options'    => array_merge(
+							array( 0 => esc_html__( 'Select agent', 'cherry-real-estate' ) ),
+							Model_Agents::get_list()
+						),
+					),
 					$prefix . 'state' => array(
 						'type'       => 'select',
 						'id'         => $prefix . 'state',

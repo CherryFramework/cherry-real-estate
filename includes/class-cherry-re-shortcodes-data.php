@@ -589,10 +589,19 @@ class Cherry_RE_Shortcodes_Data {
 		$output = '';
 
 		// if ( ! is_user_logged_in() ) {
+
+			$register_form = '';
+
+			if ( get_option('users_can_register') ) {
+				$register_form = cherry_re_get_template_html( 'auth/register' );
+			} else {
+				$register_form = esc_html__( 'User registration is currently not allowed.', 'cherry-real-estate' );
+			}
+
 			$output .= cherry_re_get_template_html( 'auth/popup', array(
 				'popup_id'      => Model_Submit_Form::get_popup_id(),
 				'login_form'    => cherry_re_get_template_html( 'auth/login' ),
-				'register_form' => cherry_re_get_template_html( 'auth/register' ),
+				'register_form' => $register_form,
 			) );
 		// }
 

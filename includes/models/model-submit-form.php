@@ -26,13 +26,11 @@ class Model_Submit_Form {
 	public static $errors = array();
 
 	private function __construct() {
-		add_action( 'wp_ajax_submission_form',      array( __CLASS__, 'step1' ) );
 		add_action( 'wp_ajax_nopriv_login_form',    array( __CLASS__, 'login_callback' ) );
 		add_action( 'wp_ajax_nopriv_register_form', array( __CLASS__, 'register_callback' ) );
 
-		// add_action( 'wp_footer', array( $this, 'step2' ), 99 );
-
-		add_action( 'publish_tm-property', array( $this, 'step3' ), 10, 2 );
+		add_action( 'wp_ajax_submission_form', array( __CLASS__, 'submission_callback' ) );
+		add_action( 'transition_post_status', array( $this, 'publish_property' ), 10, 3 );
 
 		add_action( 'cherry_re_before_submission_form', array( $this, 'popup_link' ) );
 		add_action( 'cherry_re_before_submission_form_btn', array( $this, 'popup_link' ) );
@@ -65,29 +63,31 @@ class Model_Submit_Form {
 	}
 
 	/**
-	 * Step 1:
+	 * Callback for submission form:
 	 *
 	 * - security check
-	 * - create request (new property with `draft` status)* or publish property
-	 * - send confirm e-mail*
+	 * - create request (new property with `pending` status) or publish property
+	 * - send notification e-mail*
 	 *
 	 * (*) - if it's a new or not approved agent
 	 *
 	 * @since 1.0.0
 	 */
-	public static function step1() {
+	public static function submission_callback() {
 
 		// Check a nonce.
 		$security = check_ajax_referer( '_tm-re-submission-form', 'nonce', false );
 
 		if ( false === $security ) {
-			wp_send_json_error( array( 'message' => self::get_errors( 'nonce' ) ) );
+			wp_send_json_error( array(
+				'message' => esc_html__( 'Security validation failed', 'cherry-real-estate' ),
+			) );
 		}
 
-		// wp_send_json_success( $_POST['property'] );
-
 		if ( empty( $_POST['property'] ) ) {
-			wp_send_json_error( array( 'message' => self::get_errors( 'internal' ) ) );
+			wp_send_json_error( array(
+				'message' => esc_html__( 'Internal error. Please, try again later', 'cherry-real-estate' ),
+			) );
 		}
 
 		$need_confirm = current_user_can( 'manage_properties' ) ? false : true;
@@ -107,10 +107,10 @@ class Model_Submit_Form {
 			'property_area'           => '',
 			'property_parking_places' => '',
 			'property_address'        => '',
-			// 'agent_email'             => '',
 		), $_POST['property'] );
 
 		$data = wp_parse_args( $data, $defaults );
+
 
 		// Prepare data array for new property.
 		$property_arr = array(
@@ -118,9 +118,6 @@ class Model_Submit_Form {
 			'post_title'   => wp_strip_all_tags( $data['property_title'] ),
 			'post_content' => $data['property_description'],
 			'post_status'  => $need_confirm ? 'pending' : 'publish',
-			'tax_input'    => array(
-				$post_type . '_type' => array( $data['property_type'] ),
-			),
 			'meta_input'   => array(
 				$meta_prefix . 'price'          => $data['property_price'],
 				$meta_prefix . 'status'         => $data['property_status'],
@@ -129,7 +126,6 @@ class Model_Submit_Form {
 				$meta_prefix . 'area'           => $data['property_area'],
 				$meta_prefix . 'parking_places' => $data['property_parking_places'],
 				$meta_prefix . 'location'       => $data['property_address'],
-				// $meta_prefix . 'agent_email'    => $agent_email,
 			),
 		);
 
@@ -139,34 +135,25 @@ class Model_Submit_Form {
 		$property_ID = wp_insert_post( $property_arr, false );
 
 		if ( 0 == $property_ID || is_wp_error( $property_ID ) ) {
-			wp_send_json_error( array( 'message' => self::get_errors( 'internal' ) ) );
+			wp_send_json_error( array(
+				'message' => esc_html__( 'Internal error. Please, try again later', 'cherry-real-estate' ),
+			) );
 		}
+
+		// Set types for a property.
+		$type_id = intval( $data['property_type'] );
+		$term_taxonomy_id = wp_set_object_terms( $property_ID, $type_id, $post_type . '_type');
 
 		// Retrieve the current user object (WP_User).
 		$current_user = wp_get_current_user();
 		$user_email   = false;
 
-		if ( isset( $current_user->user_email ) ) {
+		if ( ! empty( $current_user->user_email ) ) {
 			$user_email = sanitize_email( $current_user->user_email );
 		}
 
 		// Send notification e-mail.
 		if ( $need_confirm && is_email( $user_email ) ) {
-
-			// $bare_url = add_query_arg( array(
-			// 	'property_id' => $property_ID,
-			// 	'from'        => $agent_email,
-			// ), home_url() );
-
-			// $confirm_url = wp_nonce_url( $bare_url, 'confirm-property_' . $property_ID );
-
-			// $message = sprintf(
-			// 	'%s <a href="%s" target="_blank">&#8690;</a>',
-			// 	Model_Settings::get_confirm_message(),
-			// 	$confirm_url
-			// );
-
-			// $result = self::send_mail( $agent_email, Model_Settings::get_confirm_subject(), $message );
 
 			$result = self::send_mail(
 				$user_email,
@@ -174,10 +161,10 @@ class Model_Submit_Form {
 				Model_Settings::get_notification_message()
 			);
 
-			wp_send_json_success( $result );
-
 			if ( ! $result ) {
-				wp_send_json_error( array( 'message' => self::get_errors( 'internal' ) ) );
+				wp_send_json_error( array(
+					'message' => esc_html__( 'Internal error. Please, try again later', 'cherry-real-estate' ),
+				) );
 			}
 		}
 
@@ -185,219 +172,50 @@ class Model_Submit_Form {
 	}
 
 	/**
-	 * Step 2*:
-	 *
-	 * - security check
-	 * - change property status to the `pending`
-	 * - output popup
-	 * - send e-mail with notification
-	 *
-	 * (*) - if it's a new or not approved agent
+	 * When property are published - send e-mail with congratulations.
 	 *
 	 * @since 1.0.0
+	 * @param string  $new_status New post status.
+	 * @param string  $old_status Old post status.
+	 * @param WP_Post $post       Post object.
 	 */
-	// public function step2() {
+	public function publish_property( $new_status, $old_status, $post ) {
 
-	// 	// Check a property ID.
-	// 	if ( empty( $_GET['property_id'] ) ) {
-	// 		return;
-	// 	}
+		if ( $new_status == $old_status ) {
+			return;
+		}
 
-	// 	$property_ID = absint( $_GET['property_id'] );
+		if ( 'publish' !== $new_status ) {
+			return;
+		}
 
-	// 	// Check a nonce.
-	// 	if ( empty( $_GET['_wpnonce'] )
-	// 		|| ! wp_verify_nonce( $_GET['_wpnonce'], 'confirm-property_' . $property_ID )
-	// 	) {
-	// 		return;
-	// 	}
+		$post_type = cherry_real_estate()->get_post_type_name();
 
-	// 	$property_status = get_post_status( $property_ID );
+		if ( $post_type !== $post->post_type ) {
+			return;
+		}
 
-	// 	// Check a property status.
-	// 	if ( in_array( $property_status, array( 'pending', 'publish' ) ) ) {
-	// 		return;
-	// 	}
-
-	// 	// Update property status.
-	// 	$updated = wp_update_post( array(
-	// 		'ID'          => $property_ID,
-	// 		'post_status' => 'pending',
-	// 	), false );
-
-	// 	if ( 0 == $updated || is_wp_error( $updated ) ) {
-	// 		return;
-	// 	}
-
-	// 	// Include a popup template.
-	// 	cherry_re_get_template( 'misc/confirm-popup' );
-
-	// 	// Check e-mail.
-	// 	if ( empty( $_GET['from'] ) ) {
-	// 		return;
-	// 	}
-
-	// 	$email = sanitize_email( $_GET['from'] );
-
-	// 	if ( ! is_email( $email ) ) {
-	// 		return;
-	// 	}
-
-	// 	// Send e-mail.
-	// 	return self::send_mail(
-	// 		$email,
-	// 		Model_Settings::get_notification_subject(),
-	// 		Model_Settings::get_notification_message()
-	// 	);
-	// }
-
-	/**
-	 * Step 3*:
-	 *
-	 * - create new agent, if that not exists
-	 * - update property author
-	 * - send e-mail with congratulations
-	 *
-	 * (*) - if it's a new or not approved agent
-	 *
-	 * @since 1.0.0
-	 * @param int     $post_id Post ID.
-	 * @param WP_Post $post    Post object.
-	 */
-	public function step3( $property_id, $post ) {
-		$user_id    = $post->post_author;
-		$user_data  = get_userdata( $user_id );
-		$user_email = false;
+		$property_id = $post->ID;
+		$user_id     = $post->post_author;
+		$user_data   = get_userdata( $user_id );
+		$user_email  = false;
 
 		if ( false !== $user_data ) {
 			$user_email = isset( $user_data->user_email ) ? $user_data->user_email : false;
 		}
 
-		// $meta_prefix  = cherry_real_estate()->get_meta_prefix();
-		// $agent_email  = get_post_meta( $property_id, $meta_prefix . 'agent_email', true );
-		// $agent_email  = sanitize_email( $agent_email );
-		// $agent_id     = email_exists( $agent_email );
-		$agent_access = array();
-
-		// if ( false === $agent_id ) {
-		// 	$agent_access = self::create_agent( $agent_email, $property_id );
-		// }
-
-		// $agent_id = ! empty( $agent_access['id'] ) ? $agent_access['id'] : 0;
-
-		// if ( $agent_id != $post->post_author ) {
-
-		// 	// Unhook this function so it doesn't loop infinitely.
-		// 	remove_action( 'publish_tm-property', array( $this, 'step3' ) );
-
-		// 	$property_id = wp_update_post( array(
-		// 		'ID'          => $property_id,
-		// 		'post_author' => $agent_id,
-		// 	), false );
-
-		// 	// Re-hook this function.
-		// 	add_action( 'publish_tm-property', array( $this, 'step3' ) );
-
-		// 	if ( 0 == $property_id || is_wp_error( $property_id ) ) {
-		// 		return;
-		// 	}
-		// }
-
-		$title     = $post->post_title;
-		$permalink = get_permalink( $property_id );
-
 		$message = Model_Settings::get_congratulate_message();
-		$message .= sprintf( __( '<br>View: %s<br><br>', 'cherry-real-estate' ), $permalink );
+		$message .= sprintf( __( '<br>View: %s<br><br>', 'cherry-real-estate' ), get_permalink( $property_id ) );
 
-		if ( ! empty( $agent_access['login'] ) && ! empty( $agent_access['pass'] ) ) {
+		$meta_prefix    = cherry_real_estate()->get_meta_prefix();
+		$agent_id       = get_post_meta( $property_id, $meta_prefix . 'agent', true );
+		$agent_contacts = $this->_prepare_agent_contacts_to_mail( $agent_id );
 
-			$access_message = sprintf(
-				__( 'Dashboard: <a href="%1$s" target="_blank">%1$s</a><br><br>', 'cherry-real-estate' ),
-				esc_url( get_edit_post_link( $property_id ) )
-			);
-
-			// $access_message .= sprintf(
-			// 	__( 'Login: %s <br> Password: %s', 'cherry-real-estate' ),
-			// 	$agent_access['login'],
-			// 	$agent_access['pass']
-			// );
-
-			$stop_access = apply_filters( 'cherry_re_stop_send_agent_access', false );
-
-			if ( false === $stop_access ) {
-				$message .= $access_message;
-			}
+		if ( ! empty( $agent_contacts ) ) {
+			$message .= $agent_contacts;
 		}
 
 		return self::send_mail( $user_email, Model_Settings::get_congratulate_subject(), $message );
-	}
-
-	/**
-	 * Create new agent, if there not exists.
-	 *
-	 * @since  1.0.0
-	 * @param  string     $email       Agent e-mail.
-	 * @param  init       $property_id Property ID.
-	 * @return bool|array Retrieve a new agent access data (login and password) or false - if agent are exists.
-	 */
-	public static function create_agent( $email, $property_id ) {
-
-		// Generate the password and create the user.
-		$password = wp_generate_password( 12, false );
-		$agent_id = wp_insert_user( array(
-			'user_login' => $email,
-			'user_pass'  => $password,
-			'user_email' => $email,
-			'role'       => 're_agent',
-		) );
-
-		if ( is_wp_error( $agent_id ) ) {
-			return false;
-		}
-
-		return array(
-			'id'    => $agent_id,
-			'login' => $email,
-			'pass'  => $password,
-		);
-	}
-
-	/**
-	 * Wrapper-function for `wp_mail`.
-	 *
-	 * @since  1.0.0
-	 * @param  string|array $to          Array or comma-separated list of email addresses to send message.
-	 * @param  string       $subject     Email subject
-	 * @param  string       $message     Message contents
-	 * @param  string|array $headers     Optional. Additional headers.
-	 * @param  string|array $attachments Optional. Files to attach.
-	 * @return bool Whether the email contents were sent successfully.
-	 */
-	public static function send_mail( $to, $subject, $message ) {
-		$headers = apply_filters( 'cherry_re_mail_headers', array( 'Content-type: text/html; charset=utf-8' ) );
-
-		return wp_mail( $to, $subject, $message, $headers );
-	}
-
-	/**
-	 * Retrieve a error message by code.
-	 *
-	 * @since  1.0.0
-	 * @param  string $code
-	 * @return string
-	 */
-	public static function get_errors( $code ) {
-		$errors = apply_filters( 'cherry_re_get_errors', array(
-			'nonce'    => esc_html__( 'Security validation failed', 'cherry-real-estate' ),
-			'internal' => esc_html__( 'Internal error. Please, try again later', 'cherry-real-estate' ),
-		), $code );
-
-		if ( ! array_key_exists( $code, $errors ) ) {
-			reset( $errors );
-			return current( $errors );
-		}
-
-		return $errors[ $code ];
 	}
 
 	/**
@@ -422,11 +240,12 @@ class Model_Submit_Form {
 			) );
 		}
 
-		$access = $_POST['access'];
+		$need_keys = array( 'login', 'pass' );
+		$access    = wp_array_slice_assoc( $_POST['access'], $need_keys );
 
-		if ( ! array_key_exists( 'login', $access ) || ! array_key_exists( 'pass', $access ) ) {
+		if ( 2 != count( $access ) ) {
 			wp_send_json_error( array(
-				'message' => esc_html__( 'The username and password fields must not be empty.', 'cherry-real-estate' ),
+				'message' => esc_html__( 'All fields must not be empty.', 'cherry-real-estate' ),
 			) );
 		}
 
@@ -439,8 +258,11 @@ class Model_Submit_Form {
 		$user = wp_signon( $creds, false );
 
 		if ( is_wp_error( $user ) ) {
+
+			$message = ! empty( $user->get_error_message() ) ? $user->get_error_message() : esc_html__( 'Authorization error. Please, check your personal data and try again.', 'cherry-real-estate' );
+
 			wp_send_json_error( array(
-				'message' => $user->get_error_message(),
+				'message' => $message,
 			) );
 		}
 
@@ -469,55 +291,95 @@ class Model_Submit_Form {
 			) );
 		}
 
-		$need_keys = array( 'login', 'email', 'pass', 'cpass' );
+		// $need_keys = array( 'login', 'email', 'pass', 'cpass' );
+		$need_keys = array( 'login', 'email' );
 		$access    = wp_array_slice_assoc( $_POST['access'], $need_keys );
 
-		if ( 4 != count( $access ) ) {
+		if ( 2 != count( $access ) ) {
 			wp_send_json_error( array(
 				'message' => esc_html__( 'All fields must not be empty.', 'cherry-real-estate' ),
 			) );
 		}
 
-		if ( false !== username_exists( $access['login'] ) ) {
+		$user_login = sanitize_text_field( $access['login'] );
+		$user_email = sanitize_email( $access['email'] );
+		$user       = register_new_user( $user_login, $user_email );
+
+		if ( is_wp_error( $user ) ) {
 			wp_send_json_error( array(
-				'message' => esc_html__( 'Username already exists.', 'cherry-real-estate' ),
+				'message' => $user->get_error_message(),
 			) );
 		}
 
-		$email = sanitize_email( $access['email'] );
+		if ( 're_agent' !== get_option( 'default_role' ) ) {
 
-		if ( false === is_email( $email ) ) {
-			wp_send_json_error( array(
-				'message' => esc_html__( 'Please, provide valid email.', 'cherry-real-estate' ),
-			) );
+			// Change user role.
+			$u = new WP_User( $user );
+
+			// Remove role
+			$u->remove_role( get_option( 'default_role' ) );
+
+			// Add role
+			$u->add_role( 're_agent' );
 		}
 
-		if ( false !== email_exists( $email ) ) {
-			wp_send_json_error( array(
-				'message' => esc_html__( 'Email already exists.', 'cherry-real-estate' ),
-			) );
+		wp_send_json_success( $user );
+	}
+
+	/**
+	 * Collect an info about agent.
+	 *
+	 * @since  1.0.0
+	 * @param  int $agent_id
+	 * @return string
+	 */
+	public function _prepare_agent_contacts_to_mail( $agent_id ) {
+		$mail_message = '';
+		$data         = get_userdata( $agent_id );
+		$contacts     = Model_Agents::get_agent_contacts( $agent_id );
+		$socials      = Model_Agents::get_agent_socials( $agent_id );
+
+		if ( false !== $data ) {
+			$info   = array();
+			$info[] = ! empty( $data->first_name ) ? $data->first_name : '';
+			$info[] = ! empty( $data->last_name ) ? $data->last_name : '';
+
+			if ( ! empty( $info ) ) {
+				$mail_message .= __( '<br>Your personal agent:<br><br>', 'cherry-real-estate' );
+				$mail_message .= join( $info, ' ' );
+			};
 		}
 
-		if ( $access['pass'] !== $access['cpass'] ) {
-			wp_send_json_error( array(
-				'message' => esc_html__( 'Passwords do not match. Please, enter the password values again.', 'cherry-real-estate' ),
-			) );
+		if ( ! empty( $contacts ) ) {
+			foreach ( $contacts as $data ) {
+				$mail_message .= sprintf( '<br><strong>%s</strong>: %s', esc_attr( $data['label'] ), esc_attr( $data['value'] ) );
+			}
 		}
 
-		$user_id = wp_insert_user( array(
-			'user_login' => $access['login'],
-			'user_pass'  => $access['pass'],
-			'user_email' => $email,
-			'role'       => 'subscriber',
-		) );
-
-		if ( is_wp_error( $user_id ) ) {
-			wp_send_json_error( array(
-				'message' => $user_id->get_error_message(),
-			) );
+		if ( ! empty( $socials ) ) {
+			foreach ( $socials as $data ) {
+				$mail_message .= sprintf( '<br><strong>%s</strong>: %s', esc_attr( $data['label'] ), esc_attr( $data['value'] ) );
+			}
 		}
 
-		wp_send_json_success( $user_id );
+		return $mail_message;
+	}
+
+	/**
+	 * Wrapper-function for `wp_mail`.
+	 *
+	 * @since  1.0.0
+	 * @param  string|array $to          Array or comma-separated list of email addresses to send message.
+	 * @param  string       $subject     Email subject
+	 * @param  string       $message     Message contents
+	 * @param  string|array $headers     Optional. Additional headers.
+	 * @param  string|array $attachments Optional. Files to attach.
+	 * @return bool Whether the email contents were sent successfully.
+	 */
+	public static function send_mail( $to, $subject, $message ) {
+		$headers = apply_filters( 'cherry_re_mail_headers', array( 'Content-type: text/html; charset=utf-8' ) );
+
+		return wp_mail( $to, $subject, $message, $headers );
 	}
 
 	/**

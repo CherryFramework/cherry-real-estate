@@ -227,7 +227,7 @@ class Cherry_RE_Options_Page {
 					'type'  => 'textarea',
 					'field' => array(
 						'id'    => 'notification-message',
-						'value' => esc_html__( 'Your request has been successfully queued for moderation. Expect an e-mail on the publication of your propery.', 'cherry-real-estate' ),
+						'value' => esc_html__( 'Your request has been successfully queued for moderation. Expect an e-mail on the publication of your property.', 'cherry-real-estate' ),
 					),
 				),
 				'congratulate-subject' => array(

@@ -157,6 +157,7 @@
 
 					if ( true === response.success ) {
 						$success.removeClass( hidden );
+						$form[0].reset();
 						return 1;
 					}
 
@@ -239,14 +240,7 @@
 
 					if ( true === response.success ) {
 						$success.removeClass( hidden );
-
-						if ( $.isFunction( jQuery.fn.magnificPopup ) && null !== self.magnificPopup ) {
-							self.magnificPopup.close();
-						}
-
-						$( '.tm-re-submission-form__btn' ).prop( 'disabled', false );
-						$( '.tm-re-auth-message' ).hide();
-
+						CherryJsCore.variable.$document[0].location.reload( true );
 						return 1;
 					}
 
@@ -268,16 +262,17 @@
 				debug: true, // disabled submit event
 				messages: {
 					user_login: CherryREData.messages,
-					user_email: CherryREData.messages,
+					user_email: CherryREData.messages
+					/*,
 					user_pass: CherryREData.messages,
-					user_cpass: CherryREData.messages
+					user_cpass: CherryREData.messages*/
 				},
-				rules: {
+				/*rules: {
 					user_pass: 'required',
 					user_cpass: {
 						equalTo: '#user_pass'
 					}
-				},
+				},*/
 				errorElement: 'span',
 				highlight: function( element, errorClass, validClass ) {
 					$( element ).fadeOut( function() {
@@ -297,8 +292,8 @@
 					$success    = $form.find( '.tm-re-register-form__success' ),
 					login       = $form.find( 'input[name="user_login"]' ).val(),
 					email       = $form.find( 'input[name="user_email"]' ).val(),
-					pass        = $form.find( 'input[name="user_pass"]' ).val(),
-					cpass       = $form.find( 'input[name="user_cpass"]' ).val(),
+					// pass        = $form.find( 'input[name="user_pass"]' ).val(),
+					// cpass       = $form.find( 'input[name="user_cpass"]' ).val(),
 					nonce       = $form.find( 'input[name="tm-re-registerform-nonce"]' ).val(),
 					processing  = 'processing',
 					hidden      = 'tm-re-hidden';
@@ -327,9 +322,10 @@
 						nonce: nonce,
 						access: {
 							login: login,
-							email: email,
+							email: email
+							/*,
 							pass: pass,
-							cpass: cpass
+							cpass: cpass*/
 						}
 					},
 					error: function() {
@@ -341,7 +337,7 @@
 					$form.removeClass( processing );
 
 					if ( true === response.success ) {
-						// $success.removeClass( hidden );
+						$success.removeClass( hidden );
 
 						if ( $.isFunction( jQuery.fn.magnificPopup ) && null !== self.magnificPopup ) {
 							self.magnificPopup.close();
