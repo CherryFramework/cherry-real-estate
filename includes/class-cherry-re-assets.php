@@ -117,6 +117,51 @@ class Cherry_RE_Assets {
 			true
 		);
 
+		if ( apply_filters( 'job_manager_ajax_file_upload_enabled', true ) ) {
+			wp_register_script(
+				'jquery-iframe-transport',
+				plugins_url( 'assets/js/file-upload/jquery.iframe-transport.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+				array( 'jquery' ),
+				'9.12.5',
+				true
+			);
+
+			wp_register_script(
+				'jquery-fileupload',
+				plugins_url( 'assets/js/file-upload/jquery.fileupload.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+				array( 'jquery', 'jquery-iframe-transport', 'jquery-ui-widget' ),
+				'9.12.5',
+				true
+			);
+
+			wp_register_script(
+				'wp-job-manager-ajax-file-upload',
+				plugins_url( 'assets/js/ajax-file-upload.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+				array( 'jquery', 'jquery-fileupload' ),
+				CHERRY_REAL_ESTATE_VERSION,
+				true
+			);
+
+			$js_field_html_img = cherry_re_get_template_html( 'form-fields/uploaded-file-html', array(
+				'name'      => '',
+				'value'     => '',
+				'extension' => 'jpg',
+			) );
+
+			$js_field_html = cherry_re_get_template_html( 'form-fields/uploaded-file-html', array(
+				'name'      => '',
+				'value'     => '',
+				'extension' => 'zip',
+			) );
+
+			wp_localize_script( 'wp-job-manager-ajax-file-upload', 'job_manager_ajax_file_upload', array(
+				'ajax_url'               => admin_url( 'admin-ajax.php' ),
+				'js_field_html_img'      => esc_js( str_replace( "\n", "", $js_field_html_img ) ),
+				'js_field_html'          => esc_js( str_replace( "\n", "", $js_field_html ) ),
+				'i18n_invalid_file_type' => esc_html__( 'Invalid file type. Accepted types:', 'cherry-real-estate' )
+			) );
+		}
+
 		wp_register_script(
 			'cherry-re-script',
 			plugins_url( 'assets/js/real-estate.js', CHERRY_REAL_ESTATE_MAIN_FILE ),

@@ -10,7 +10,6 @@
  * @license    GPL-3.0+
  * @copyright  2002-2016, Template Monster
  */
-
 do_action( 'cherry_re_before_submission_form' ); ?>
 
 <form method="post" id="tm-re-submissionform" class="tm-re-submission-form" action="#" enctype="multipart/form-data">
@@ -89,8 +88,24 @@ do_action( 'cherry_re_before_submission_form' ); ?>
 	</div>
 
 	<div class="tm-re-submission-form__group">
-		<label for="property_gallery"><?php esc_html_e( 'Media', 'cherry-real-estate' ) ?></label>
-		<input type="file" id="tm-re-property-gallery" name="property_gallery" multiple="multiple">
+		<?php cherry_re_get_template( 'form-fields/file-field', array(
+			'field' => array(
+				'label'              => __( 'Logo', 'wp-job-manager' ),
+				'type'               => 'file',
+				'required'           => false,
+				'placeholder'        => '',
+				'priority'           => 6,
+				'ajax'               => true,
+				'multiple'           => true,
+				'allowed_mime_types' => array(
+					'jpg'  => 'image/jpeg',
+					'jpeg' => 'image/jpeg',
+					'gif'  => 'image/gif',
+					'png'  => 'image/png',
+				),
+				'value' => '',
+			),
+		) ); ?>
 	</div>
 
 	<?php do_action( 'cherry_re_before_submission_form_btn' ); ?>

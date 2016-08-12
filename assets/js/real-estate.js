@@ -145,11 +145,12 @@
 					data: {
 						action: 'submission_form',
 						nonce: nonce,
-						property: formData,
-						gallery: $( '#tm-re-property-gallery' ).val()
+						property: formData
+						// gallery: $( '#property_gallery' ).val()
 					},
-					error: function() {
+					error: function( jqXHR, textStatus, errorThrown ) {
 						$form.removeClass( processing );
+						$error.removeClass( hidden ).html( textStatus );
 					}
 				}).done( function( response ) {
 					console.log( response );
@@ -367,26 +368,17 @@
 						src: src
 					},
 					type: 'inline',
-					focus: '#tm-re-user-login',
 					preloader: false,
 					removalDelay: 500,
 					mainClass: effect,
 					callbacks: {
 						beforeOpen: function() {
-
 							var $forms = $( src ).find( 'form' );
 
 							if ( $forms.length ) {
 								$forms.each( function( i, form ) {
 									form.reset();
 								})
-							}
-
-
-							if ( $( window ).width() < 700 ) {
-								this.st.focus = false;
-							} else {
-								this.st.focus = '#tm-re-user-login';
 							}
 
 							self.tabs( self, tab );

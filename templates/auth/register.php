@@ -16,11 +16,11 @@
 	<?php wp_nonce_field( '_tm-re-register-form', 'tm-re-registerform-nonce' ); ?>
 
 	<div class="tm-re-register-form__group">
-		<input type="text" id="tm-re-user-login" name="user_login" placeholder="<?php esc_html_e( 'Username', 'cherry-real-estate' ); ?>" required="required">
+		<input type="text" id="tm-re-user-reg-login" name="user_login" placeholder="<?php esc_html_e( 'Username', 'cherry-real-estate' ); ?>" required="required">
 	</div>
 
 	<div class="tm-re-register-form__group">
-		<input type="email" id="tm-re-user-email" name="user_email" placeholder="<?php esc_html_e( 'Email', 'cherry-real-estate' ); ?>" required="required">
+		<input type="email" id="tm-re-user-reg-email" name="user_email" placeholder="<?php esc_html_e( 'Email', 'cherry-real-estate' ); ?>" required="required">
 	</div>
 
 	<div class="tm-re-register-form__group">

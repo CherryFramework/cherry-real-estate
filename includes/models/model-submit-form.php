@@ -32,6 +32,8 @@ class Model_Submit_Form {
 		add_action( 'wp_ajax_submission_form', array( __CLASS__, 'submission_callback' ) );
 		add_action( 'transition_post_status', array( $this, 'publish_property' ), 10, 3 );
 
+		add_action( 'wp_ajax_baz', array( __CLASS__, 'upload_file' ) );
+
 		add_action( 'cherry_re_before_submission_form', array( $this, 'popup_link' ) );
 		add_action( 'cherry_re_before_submission_form_btn', array( $this, 'popup_link' ) );
 	}
@@ -131,7 +133,8 @@ class Model_Submit_Form {
 		$property_arr = apply_filters( 'cherry_re_before_insert_post', $property_arr, $data );
 
 		// Create new property.
-		$property_ID = wp_insert_post( $property_arr, false );
+		// $property_ID = wp_insert_post( $property_arr, false );
+		$property_ID = 1;
 
 		if ( 0 == $property_ID || is_wp_error( $property_ID ) ) {
 			wp_send_json_error( array(
@@ -167,26 +170,86 @@ class Model_Submit_Form {
 			}
 		}
 
-		if ( ! empty( $_POST['gallery'] ) ) {
+		// if ( ! empty( $_POST['gallery'] ) ) {
+		// 	$result = self::baz( $_POST['gallery'] );
 
-			// These files need to be included as dependencies when on the front end.
-			require_once( ABSPATH . 'wp-admin/includes/image.php' );
-			require_once( ABSPATH . 'wp-admin/includes/file.php' );
-			require_once( ABSPATH . 'wp-admin/includes/media.php' );
-
-			// Let WordPress handle the upload.
-			// Remember, 'my_image_upload' is the name of our file input in our form above.
-			$attachment_id = media_handle_upload( 'property_gallery', $property_ID );
-
-			if ( is_wp_error( $attachment_id ) ) {
-				wp_send_json_error( array(
-					'message' => $attachment_id->get_error_message(),
-				) );
-			}
-
-		}
+		// 	if ( is_wp_error( $result ) ) {
+		// 		wp_send_json_error( array(
+		// 			'message' => $result->get_error_message(),
+		// 		) );
+		// 	}
+		// }
 
 		wp_send_json_success( $property_ID );
+	}
+
+	/**
+	 * Upload file via ajax
+	 *
+	 * No nonce field since the form may be statically cached.
+	 */
+	public static function upload_file() {
+		$data = array(
+			'files'   => array(),
+			'message' => '',
+		);
+
+		// Check a nonce.
+		$security = check_ajax_referer( '_tm-re-submission-form', 'nonce', false );
+
+		if ( false === $security ) {
+			$data['message'] = esc_html__( 'Security validation failed', 'cherry-real-estate' );
+			wp_send_json_error( $data );
+		}
+
+		if ( empty( $_POST['name'] ) ) {
+			$data['message'] = esc_html__( 'Internal error. Please, try again later', 'cherry-real-estate' );
+			wp_send_json_error( $data );
+		}
+
+		$name = sanitize_text_field( $_POST['name'] );
+		$name = explode( '[]', $name, 2 );
+		$name = $name[0];
+
+		if ( empty( $_FILES[ $name ] ) ) {
+			$data['message'] = esc_html__( 'Internal error. Please, try again later', 'cherry-real-estate' );
+			wp_send_json_error( $data );
+		}
+
+		$files = $_FILES[ $name ];
+
+		if ( ! empty( $files['name'] ) && is_array( $files['name'] ) ) {
+			foreach ( $files as $key => $value ) {
+				$data['files'][ $key ] = current( $value );
+			}
+		}
+
+		$_FILES[ $name ] = $data['files'];
+
+		$attachments_id = self::media_handle_upload( $name );
+
+		if ( is_wp_error( $attachments_id ) ) {
+			$data['message'] = $attachments_id->get_error_message();
+			wp_send_json_error( $data );
+		}
+
+		$data['message'] = $attachments_id;
+
+		wp_send_json_success( $data );
+	}
+
+
+	public static function media_handle_upload( $file_id, $post_id = 0 ) {
+
+		error_log(var_export( $_FILES[ $file_id ], true ));
+
+		// These files need to be included as dependencies when on the front end.
+		require_once( ABSPATH . 'wp-admin/includes/image.php' );
+		require_once( ABSPATH . 'wp-admin/includes/file.php' );
+		require_once( ABSPATH . 'wp-admin/includes/media.php' );
+
+		// Let WordPress handle the upload.
+		return media_handle_upload( $file_id, $post_id );
 	}
 
 	/**
@@ -277,7 +340,8 @@ class Model_Submit_Form {
 
 		if ( is_wp_error( $user ) ) {
 
-			$message = ! empty( $user->get_error_message() ) ? $user->get_error_message() : esc_html__( 'Authorization error. Please, check your personal data and try again.', 'cherry-real-estate' );
+			$error   = $user->get_error_message();
+			$message = ! empty( $error ) ? $error : esc_html__( 'Authorization error. Please, check your personal data and try again.', 'cherry-real-estate' );
 
 			wp_send_json_error( array(
 				'message' => $message,
@@ -309,7 +373,6 @@ class Model_Submit_Form {
 			) );
 		}
 
-		// $need_keys = array( 'login', 'email', 'pass', 'cpass' );
 		$need_keys = array( 'login', 'email' );
 		$access    = wp_array_slice_assoc( $_POST['access'], $need_keys );
 
