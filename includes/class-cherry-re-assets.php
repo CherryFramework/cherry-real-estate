@@ -117,50 +117,21 @@ class Cherry_RE_Assets {
 			true
 		);
 
-		if ( apply_filters( 'job_manager_ajax_file_upload_enabled', true ) ) {
-			wp_register_script(
-				'jquery-iframe-transport',
-				plugins_url( 'assets/js/file-upload/jquery.iframe-transport.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
-				array( 'jquery' ),
-				'9.12.5',
-				true
-			);
+		wp_register_script(
+			'jquery-iframe-transport',
+			plugins_url( 'assets/js/file-upload/jquery.iframe-transport.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			array( 'jquery' ),
+			'9.12.5',
+			true
+		);
 
-			wp_register_script(
-				'jquery-fileupload',
-				plugins_url( 'assets/js/file-upload/jquery.fileupload.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
-				array( 'jquery', 'jquery-iframe-transport', 'jquery-ui-widget' ),
-				'9.12.5',
-				true
-			);
-
-			wp_register_script(
-				'wp-job-manager-ajax-file-upload',
-				plugins_url( 'assets/js/ajax-file-upload.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
-				array( 'jquery', 'jquery-fileupload' ),
-				CHERRY_REAL_ESTATE_VERSION,
-				true
-			);
-
-			$js_field_html_img = cherry_re_get_template_html( 'form-fields/uploaded-file-html', array(
-				'name'      => '',
-				'value'     => '',
-				'extension' => 'jpg',
-			) );
-
-			$js_field_html = cherry_re_get_template_html( 'form-fields/uploaded-file-html', array(
-				'name'      => '',
-				'value'     => '',
-				'extension' => 'zip',
-			) );
-
-			wp_localize_script( 'wp-job-manager-ajax-file-upload', 'job_manager_ajax_file_upload', array(
-				'ajax_url'               => admin_url( 'admin-ajax.php' ),
-				'js_field_html_img'      => esc_js( str_replace( "\n", "", $js_field_html_img ) ),
-				'js_field_html'          => esc_js( str_replace( "\n", "", $js_field_html ) ),
-				'i18n_invalid_file_type' => esc_html__( 'Invalid file type. Accepted types:', 'cherry-real-estate' )
-			) );
-		}
+		wp_register_script(
+			'jquery-fileupload',
+			plugins_url( 'assets/js/file-upload/jquery.fileupload.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			array( 'jquery', 'jquery-iframe-transport', 'jquery-ui-widget' ),
+			'9.12.5',
+			true
+		);
 
 		wp_register_script(
 			'cherry-re-script',
@@ -170,92 +141,100 @@ class Cherry_RE_Assets {
 			true
 		);
 
+		$js_field_html_img = cherry_re_get_template_html( 'form-fields/uploaded-file-html' );
+
 		$data = apply_filters( 'cherry_re_data_script', array(
-			'ajaxurl'  => admin_url( 'admin-ajax.php' ),
-			'popupid'  => Model_Submit_Form::get_popup_id(),
-			'messages' => array(
-				'required' => esc_html__(
+			'ajaxurl'           => admin_url( 'admin-ajax.php' ),
+			'popupid'           => Model_Submit_Form::get_popup_id(),
+			'js_field_html_img' => esc_js( str_replace( "\n", "", $js_field_html_img ) ),
+			'messages'          => array(
+				'required' => esc_html_x(
 					'This field is required',
 					'validation messages (Cherry RE plugin)',
 					'cherry-real-estate'
 				),
-				'remote' => esc_html__(
+				'remote' => esc_html_x(
 					'Please fix this field',
 					'validation messages (Cherry RE plugin)',
 					'cherry-real-estate'
 				),
-				'email' => esc_html__(
+				'email' => esc_html_x(
 					'Please enter a valid email address',
 					'validation messages (Cherry RE plugin)',
 					'cherry-real-estate'
 				),
-				'url' => esc_html__(
+				'url' => esc_html_x(
 					'Please enter a valid URL',
 					'validation messages (Cherry RE plugin)',
 					'cherry-real-estate'
 				),
-				'date' => esc_html__(
+				'date' => esc_html_x(
 					'Please enter a valid date',
 					'validation messages (Cherry RE plugin)',
 					'cherry-real-estate'
 				),
-				'dateISO' => esc_html__(
+				'dateISO' => esc_html_x(
 					'Please enter a valid date ( ISO )',
 					'validation messages (Cherry RE plugin)',
 					'cherry-real-estate'
 				),
-				'dateISO' => esc_html__(
+				'dateISO' => esc_html_x(
 					'Please enter a valid date ( ISO )',
 					'validation messages (Cherry RE plugin)',
 					'cherry-real-estate'
 				),
-				'number' => esc_html__(
+				'number' => esc_html_x(
 					'Please enter a valid number',
 					'validation messages (Cherry RE plugin)',
 					'cherry-real-estate'
 				),
-				'digits' => esc_html__(
+				'digits' => esc_html_x(
 					'Please enter only digits',
 					'validation messages (Cherry RE plugin)',
 					'cherry-real-estate'
 				),
-				'equalTo' => esc_html__(
+				'equalTo' => esc_html_x(
 					'Please enter the password again',
 					'validation messages (Cherry RE plugin)',
 					'cherry-real-estate'
 				),
-				'maxlength' => esc_html__(
+				'maxlength' => esc_html_x(
 					'Please enter no more than {0} characters',
 					'validation messages (Cherry RE plugin)',
 					'cherry-real-estate'
 				),
-				'minlength' => esc_html__(
+				'minlength' => esc_html_x(
 					'Please enter at least {0} characters',
 					'validation messages (Cherry RE plugin)',
 					'cherry-real-estate'
 				),
-				'rangelength' => esc_html__(
+				'rangelength' => esc_html_x(
 					'Please enter a value between {0} and {1} characters long',
 					'validation messages (Cherry RE plugin)',
 					'cherry-real-estate'
 				),
-				'range' => esc_html__(
+				'range' => esc_html_x(
 					'Please enter a value between {0} and {1}',
 					'validation messages (Cherry RE plugin)',
 					'cherry-real-estate'
 				),
-				'max' => esc_html__(
+				'max' => esc_html_x(
 					'Please enter a value less than or equal to {0}',
 					'validation messages (Cherry RE plugin)',
 					'cherry-real-estate'
 				),
-				'min' => esc_html__(
+				'min' => esc_html_x(
 					'Please enter a value greater than or equal to {0}',
 					'validation messages (Cherry RE plugin)',
 					'cherry-real-estate'
 				),
-				'step' => esc_html__(
+				'step' => esc_html_x(
 					'Please enter a multiple of {0}',
+					'validation messages (Cherry RE plugin)',
+					'cherry-real-estate'
+				),
+				'invalid_file_type' => esc_html_x(
+					'Invalid file type. Accepted types:',
 					'validation messages (Cherry RE plugin)',
 					'cherry-real-estate'
 				),

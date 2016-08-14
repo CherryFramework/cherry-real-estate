@@ -32,7 +32,7 @@ class Model_Submit_Form {
 		add_action( 'wp_ajax_submission_form', array( __CLASS__, 'submission_callback' ) );
 		add_action( 'transition_post_status', array( $this, 'publish_property' ), 10, 3 );
 
-		add_action( 'wp_ajax_baz', array( __CLASS__, 'upload_file' ) );
+		add_action( 'wp_ajax_upload_file', array( __CLASS__, 'upload_file_callback' ) );
 
 		add_action( 'cherry_re_before_submission_form', array( $this, 'popup_link' ) );
 		add_action( 'cherry_re_before_submission_form_btn', array( $this, 'popup_link' ) );
@@ -109,9 +109,16 @@ class Model_Submit_Form {
 			'property_area'           => '',
 			'property_parking_places' => '',
 			'property_address'        => '',
+			'property_gallery'        => '',
 		), $_POST['property'] );
 
-		$data = wp_parse_args( $data, $defaults );
+		$data    = wp_parse_args( $data, $defaults );
+		$gallery = '';
+
+		if ( ! empty( $_POST['gallery'] ) ) {
+			$gallery = array_map( 'intval', $_POST['gallery'] );
+			$gallery = join( ',', $gallery );
+		}
 
 		// Prepare data array for new property.
 		$property_arr = array(
@@ -127,14 +134,15 @@ class Model_Submit_Form {
 				$meta_prefix . 'area'           => $data['property_area'],
 				$meta_prefix . 'parking_places' => $data['property_parking_places'],
 				$meta_prefix . 'location'       => $data['property_address'],
+				$meta_prefix . 'gallery'        => $gallery,
 			),
 		);
 
 		$property_arr = apply_filters( 'cherry_re_before_insert_post', $property_arr, $data );
 
 		// Create new property.
-		// $property_ID = wp_insert_post( $property_arr, false );
-		$property_ID = 1;
+		$property_ID = wp_insert_post( $property_arr, false );
+		// $property_ID = 1;
 
 		if ( 0 == $property_ID || is_wp_error( $property_ID ) ) {
 			wp_send_json_error( array(
@@ -170,16 +178,6 @@ class Model_Submit_Form {
 			}
 		}
 
-		// if ( ! empty( $_POST['gallery'] ) ) {
-		// 	$result = self::baz( $_POST['gallery'] );
-
-		// 	if ( is_wp_error( $result ) ) {
-		// 		wp_send_json_error( array(
-		// 			'message' => $result->get_error_message(),
-		// 		) );
-		// 	}
-		// }
-
 		wp_send_json_success( $property_ID );
 	}
 
@@ -188,7 +186,7 @@ class Model_Submit_Form {
 	 *
 	 * No nonce field since the form may be statically cached.
 	 */
-	public static function upload_file() {
+	public static function upload_file_callback() {
 		$data = array(
 			'files'   => array(),
 			'message' => '',
@@ -217,31 +215,33 @@ class Model_Submit_Form {
 		}
 
 		$files = $_FILES[ $name ];
+		// wp_send_json_success( $files );
 
 		if ( ! empty( $files['name'] ) && is_array( $files['name'] ) ) {
+			$_files = array();
+
 			foreach ( $files as $key => $value ) {
-				$data['files'][ $key ] = current( $value );
+				$_files[ $key ] = current( $value );
 			}
+
+			// $data['files'][] = $_files;
+			$_FILES[ $name ] = $_files;
 		}
 
-		$_FILES[ $name ] = $data['files'];
+		$upload = self::media_handle_upload( $name );
 
-		$attachments_id = self::media_handle_upload( $name );
-
-		if ( is_wp_error( $attachments_id ) ) {
+		if ( is_wp_error( $upload ) ) {
 			$data['message'] = $attachments_id->get_error_message();
 			wp_send_json_error( $data );
 		}
 
-		$data['message'] = $attachments_id;
-
+		// $data['files'] = $_files;
+		$data['files'][] = $upload;
 		wp_send_json_success( $data );
 	}
 
 
 	public static function media_handle_upload( $file_id, $post_id = 0 ) {
-
-		error_log(var_export( $_FILES[ $file_id ], true ));
 
 		// These files need to be included as dependencies when on the front end.
 		require_once( ABSPATH . 'wp-admin/includes/image.php' );
@@ -249,7 +249,24 @@ class Model_Submit_Form {
 		require_once( ABSPATH . 'wp-admin/includes/media.php' );
 
 		// Let WordPress handle the upload.
-		return media_handle_upload( $file_id, $post_id );
+		$upload = media_handle_upload( $file_id, $post_id );
+
+		if ( is_wp_error( $upload ) ) {
+			return $upload;
+		} else {
+			$attachemnt_atts = wp_get_attachment_image_src( $upload );
+			$attachment_type = wp_check_filetype( basename( $_FILES[ $file_id ]['name'] ) );
+
+			$uploaded_file = array();
+			$uploaded_file['id']        = $upload;
+			$uploaded_file['url']       = is_array( $attachemnt_atts ) ? esc_url( $attachemnt_atts[0] ) : false;
+			// $uploaded_file['file']      = $_FILES[ $file_id ]['file'];
+			$uploaded_file['name']      = basename( $_FILES[ $file_id ]['name'] );
+			$uploaded_file['type']      = $_FILES[ $file_id ]['type'];
+			$uploaded_file['size']      = $_FILES[ $file_id ]['size'];
+			$uploaded_file['extension'] = is_array( $attachment_type ) ? $attachment_type['ext'] : false;
+			return $uploaded_file;
+		}
 	}
 
 	/**
@@ -461,6 +478,16 @@ class Model_Submit_Form {
 		$headers = apply_filters( 'cherry_re_mail_headers', array( 'Content-type: text/html; charset=utf-8' ) );
 
 		return wp_mail( $to, $subject, $message, $headers );
+	}
+
+	public static function allowed_image_types() {
+		return apply_filters( 'cherry_re_allowed_image_types', array(
+			'jpg'  => 'image/jpeg',
+			'jpeg' => 'image/jpeg',
+			'jpe'  => 'image/jpeg',
+			'gif'  => 'image/gif',
+			'png'  => 'image/png',
+		) );
 	}
 
 	/**

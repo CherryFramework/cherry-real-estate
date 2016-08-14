@@ -28,5 +28,6 @@ do_action( 'cherry_re_before_auth_popup' ); ?>
 
 <?php do_action( 'cherry_re_after_auth_popup' ); ?>
 
-<?php // Enqueue a script.
+<?php // Enqueue a popup assets.
+wp_enqueue_style( 'jquery-magnific-popup' );
 cherry_re_enqueue_script( array( 'jquery-magnific-popup', 'jquery-ui-tabs' ) ); ?>

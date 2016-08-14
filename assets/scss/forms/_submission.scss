@@ -2,4 +2,14 @@
 	span.error {
 		font-size: .75rem;
 	}
+	&.processing {
+		* {
+			cursor: wait;
+		}
+	}
+	.tm-re-uploaded-image__remove {
+		&:before {
+			content: '\00D7';
+		}
+	}
 }

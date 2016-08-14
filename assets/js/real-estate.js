@@ -24,6 +24,7 @@
 			self.submissionForm( self );
 			self.loginForm( self );
 			self.registerForm( self );
+			self.uploadImages( self );
 		},
 
 		gallery: function( self ) {
@@ -116,12 +117,13 @@
 			});
 
 			function ajaxSubmit( $form ) {
-				var formData   = $form.serializeArray(),
-					nonce      = $form.find( 'input[name="tm-re-submissionform-nonce"]' ).val(),
-					$error     = $form.find( '.tm-re-submission-form__error' ),
-					$success   = $form.find( '.tm-re-submission-form__success' ),
-					processing = 'processing',
-					hidden     = 'tm-re-hidden';
+				var formData    = $form.serializeArray(),
+					gallery_ids = $form.find( '.tm-re-uploaded-ids' ).data( 'ids' ),
+					nonce       = $form.find( 'input[name="tm-re-submissionform-nonce"]' ).val(),
+					$error      = $form.find( '.tm-re-submission-form__error' ),
+					$success    = $form.find( '.tm-re-submission-form__success' ),
+					processing  = 'processing',
+					hidden      = 'tm-re-hidden';
 
 				if ( $form.hasClass( processing ) ) {
 					return !1;
@@ -145,8 +147,8 @@
 					data: {
 						action: 'submission_form',
 						nonce: nonce,
-						property: formData
-						// gallery: $( '#property_gallery' ).val()
+						property: formData,
+						gallery: gallery_ids
 					},
 					error: function( jqXHR, textStatus, errorThrown ) {
 						$form.removeClass( processing );
@@ -160,6 +162,7 @@
 					if ( true === response.success ) {
 						$success.removeClass( hidden );
 						$form[0].reset();
+						$form.find( '.tm-re-uploaded-image' ).remove()
 						return 1;
 					}
 
@@ -398,6 +401,129 @@
 			$target.tabs({
 				collapsible: false,
 				active: activeTab
+			});
+		},
+
+		uploadImages: function( self ) {
+			$( '.tm-re-image-upload' ).each( function() {
+				var $this = $( this );
+
+				if ( ! $.isFunction( jQuery.fn.fileupload ) || ! $this.length ) {
+					return !1;
+				}
+
+				var $form           = $this.parents( 'form' ),
+					$uploaded_files = $form.find( '.tm-re-uploaded-images' ),
+					$submit_button  = $form.find( ':button[type="submit"]' ),
+					$files_ids      = $form.find( '.tm-re-uploaded-ids' ),
+					nonce           = $form.find( 'input[name="tm-re-submissionform-nonce"]' ).val(),
+					name            = $this.attr( 'name' ),
+					multiple        = $this.attr( 'multiple' ) ? 1 : 0,
+					allowed_types   = $this.data( 'file_types' ),
+					processing      = 'processing';
+
+				if ( $form.hasClass( processing ) ) {
+					return !1;
+				}
+
+				$this.fileupload({
+					url: CherryREData.ajaxurl,
+					type: 'post',
+					dataType: 'json',
+					singleFileUploads: true,
+					dropZone: $this,
+					formData: {
+						nonce: nonce,
+						name: name,
+						action: 'upload_file',
+						script: true
+					},
+					add: function ( e, data ) {
+						var uploadErrors = [];
+
+						if ( allowed_types ) {
+							var acceptFileTypes = new RegExp( "(\.|\/)(" + allowed_types + ")$", "i" );
+
+							if ( data.files[0]['name'].length && ! acceptFileTypes.test( data.files[0]['name'] ) ) {
+								uploadErrors.push( CherryREData.messages.invalid_file_type + ' ' + allowed_types );
+							}
+						}
+
+						if ( uploadErrors.length > 0 ) {
+							alert( uploadErrors.join( "\n" ) );
+						} else {
+							$submit_button.attr( 'disabled', 'disabled' );
+							data.context = $( '<progress value="" max="100"></progress>' ).appendTo( $uploaded_files );
+							data.submit();
+						}
+					},
+					progress: function ( e, data ) {
+						var progress = parseInt( data.loaded / data.total * 100, 10 );
+
+						data.context.val( progress );
+						$form.addClass( processing );
+					},
+					fail: function ( e, data ) {
+
+						if ( data.errorThrown ) {
+							alert( data.errorThrown );
+						}
+
+						data.context.remove();
+						$submit_button.removeAttr( 'disabled' );
+						$form.removeClass( processing );
+					},
+					done: function ( e, data ) {
+						var image_types = allowed_types.split( '|' ),
+							response    = data.result;
+
+						data.context.remove();
+						$submit_button.removeAttr( 'disabled' );
+						$form.removeClass( processing );
+
+						if ( false === response.success ) {
+							alert( response.data.message );
+							return !1;
+						}
+
+						$.each( response.data.files, function( index, file ) {
+
+							if ( file.error ) {
+
+								alert( file.error );
+								return -1;
+
+							} else {
+								var ids  = $files_ids.data( 'ids' ),
+									html = '';
+
+								if ( -1 == $.inArray( file.extension, image_types ) ) {
+									return -1;
+								}
+
+								html = $.parseHTML( CherryREData.js_field_html_img );
+								$( html ).find( '.tm-re-uploaded-image__preview img' ).attr( 'src', file.url );
+
+								ids.push( file.id );
+								$files_ids.data( 'ids', ids );
+
+								if ( multiple ) {
+									$uploaded_files.append( html );
+								} else {
+									$uploaded_files.html( html );
+								}
+							}
+						});
+					}
+				});
+
+				CherryJsCore.variable.$document.on( 'click', '.tm-re-uploaded-image__remove', remove );
+
+				function remove( event ) {
+					event.preventDefault();
+					jQuery( this ).closest( '.tm-re-uploaded-image' ).remove();
+				};
+
 			});
 		}
 

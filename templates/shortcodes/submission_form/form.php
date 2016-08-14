@@ -39,7 +39,7 @@ do_action( 'cherry_re_before_submission_form' ); ?>
 
 	<?php if ( ! empty( $select_status ) ) { ?>
 
-		<div class="tm-re-search-form__group">
+		<div class="tm-re-submission-form__group">
 			<label for="property_status"><?php esc_html_e( 'Status', 'cherry-real-estate' ); ?></label>
 			<?php echo $select_status; ?>
 		</div>
@@ -55,7 +55,7 @@ do_action( 'cherry_re_before_submission_form' ); ?>
 
 	<?php if ( ! empty( $select_types ) ) { ?>
 
-		<div class="tm-re-search-form__group">
+		<div class="tm-re-submission-form__group">
 			<label for="property_type"><?php esc_html_e( 'Type', 'cherry-real-estate' ); ?></label>
 			<?php echo $select_types; ?>
 		</div>
@@ -87,26 +87,21 @@ do_action( 'cherry_re_before_submission_form' ); ?>
 		<input type="text" id="property_address" name="property_address" value="" required="required" placeholder="<?php esc_html_e( 'Enter your property address', 'cherry-real-estate' ); ?>">
 	</div>
 
-	<div class="tm-re-submission-form__group">
-		<?php cherry_re_get_template( 'form-fields/file-field', array(
-			'field' => array(
-				'label'              => __( 'Logo', 'wp-job-manager' ),
-				'type'               => 'file',
-				'required'           => false,
-				'placeholder'        => '',
-				'priority'           => 6,
-				'ajax'               => true,
-				'multiple'           => true,
-				'allowed_mime_types' => array(
-					'jpg'  => 'image/jpeg',
-					'jpeg' => 'image/jpeg',
-					'gif'  => 'image/gif',
-					'png'  => 'image/png',
-				),
-				'value' => '',
-			),
-		) ); ?>
-	</div>
+	<?php $file_field = cherry_re_get_template_html( 'form-fields/file-field', array(
+		'field' => array(
+			'label'              => esc_html__( 'Gallery', 'cherry-real-estate' ),
+			'name'               => 'property_gallery',
+			'multiple'           => true,
+			'allowed_mime_types' => Model_Submit_Form::allowed_image_types(),
+			'value'              => '',
+		),
+	) );
+
+	if ( ! empty( $file_field ) ) { ?>
+		<div class="tm-re-submission-form__group">
+			<?php echo $file_field; ?>
+		</div>
+	<?php } ?>
 
 	<?php do_action( 'cherry_re_before_submission_form_btn' ); ?>
 
@@ -125,6 +120,5 @@ do_action( 'cherry_re_before_submission_form' ); ?>
 
 <?php do_action( 'cherry_re_after_submission_form' ); ?>
 
-<?php // Enqueue a popup assets.
-wp_enqueue_style( 'jquery-magnific-popup' );
+<?php // Enqueue a scripts.
 cherry_re_enqueue_script( array( 'jquery-validate', 'cherry-re-script' ) ); ?>
