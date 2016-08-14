@@ -103,6 +103,7 @@
 					}
 				},
 				errorElement: 'span',
+				onkeyup: false,
 				highlight: function( element, errorClass, validClass ) {
 					$( element ).fadeOut( function() {
 						$( element ).fadeIn().addClass( errorClass ).removeClass( validClass );
@@ -186,6 +187,7 @@
 					user_pass: CherryREData.messages
 				},
 				errorElement: 'span',
+				onkeyup: false,
 				highlight: function( element, errorClass, validClass ) {
 					$( element ).fadeOut( function() {
 						$( element ).fadeIn().addClass( errorClass ).removeClass( validClass );
@@ -235,8 +237,9 @@
 							pass: pass
 						}
 					},
-					error: function() {
+					error: function( jqXHR, textStatus, errorThrown ) {
 						$form.removeClass( processing );
+						$error.removeClass( hidden ).html( textStatus );
 					}
 				}).done( function( response ) {
 					console.log( response );
@@ -270,6 +273,7 @@
 					user_email: CherryREData.messages
 				},
 				errorElement: 'span',
+				onkeyup: false,
 				highlight: function( element, errorClass, validClass ) {
 					$( element ).fadeOut( function() {
 						$( element ).fadeIn().addClass( errorClass ).removeClass( validClass );
@@ -319,8 +323,9 @@
 							email: email
 						}
 					},
-					error: function() {
+					error: function( jqXHR, textStatus, errorThrown ) {
 						$form.removeClass( processing );
+						$error.removeClass( hidden ).html( textStatus );
 					}
 				}).done( function( response ) {
 					console.log( response );
