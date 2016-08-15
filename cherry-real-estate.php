@@ -125,9 +125,6 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			// Register activation and deactivation hook.
 			register_activation_hook( __FILE__, array( $this, 'activation' ) );
 			register_deactivation_hook( __FILE__, array( $this, 'deactivation' ) );
-
-			// add_action( 'wp_ajax_nopriv_submit_form', array( 'Model_Submit_Form', 'submit_form_callback' ) );
-			// add_action( 'wp_ajax_submit_form', array( 'Model_Submit_Form', 'submit_form_callback' ) );
 		}
 
 		/**
@@ -256,10 +253,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 						'name'       => $prefix . 'agent',
 						'value'      => '',
 						'left_label' => esc_html__( 'Agent', 'cherry-real-estate' ),
-						'options'    => array_merge(
-							array( 0 => esc_html__( 'Select agent', 'cherry-real-estate' ) ),
-							Model_Agents::get_list()
-						),
+						'options'    => array( 0 => esc_html__( 'Select agent', 'cherry-real-estate' ) ) + Model_Agents::get_list(),
 					),
 					$prefix . 'state' => array(
 						'type'       => 'select',
@@ -452,26 +446,39 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		 * @since 1.0.0
 		 */
 		public function add_user_role() {
+			$capability_type = $this->get_post_type_name();
 
-			// Define property capabilities.
-			$capabilities = apply_filters( 'cherry_re_agent_capabilities', array(
-				'create_properties' => true,
-				'edit_properties'   => true,
-				'manage_properties' => true,
-				'upload_files'      => true,
-				'edit_posts'        => true, // `save_post` action callback check `edit_posts` capability.
-				'read'              => true,
+			// Define `RE Agent` capabilities.
+			$cap_agent = apply_filters( 'cherry_re_agent_capabilities', array(
+				"delete_{$capability_type}s"           => true,
+				"delete_private_{$capability_type}s"   => true,
+				"delete_published_{$capability_type}s" => true,
+				"publish_{$capability_type}s"          => true,
+				"edit_private_{$capability_type}s"     => true,
+				"edit_published_{$capability_type}s"   => true,
+				"edit_{$capability_type}s"             => true,
+				'edit_posts'                           => true, // `save_post` action-callback check `edit_posts` capability.
+				'read'                                 => true,
+				'upload_files'                         => true,
 			) );
 
-			// Create `RE Agent` role and assign the capabilities to it.
-			add_role(
-				're_agent',
-				esc_html__( 'RE Agent', 'cherry-real-estate' ),
-				$capabilities
-			);
+			// Define `RE Contributor` capabilities.
+			$cap_contributor = apply_filters( 'cherry_re_contributor_capabilities', array(
+				"edit_published_{$capability_type}s"   => true,
+				"edit_{$capability_type}s"             => true,
+				'edit_posts'                           => true, // `save_post` action-callback check `edit_posts` capability.
+				'read'                                 => true,
+				'upload_files'                         => true,
+			) );
 
-			// Add property capabilities to Admin and Editor Roles.
-			$roles = apply_filters( 'cherry_re_update_roles_list', array( 'administrator' ) );
+			// Create `RE Agent` and `RE Contributor` roles.
+			add_role( 're_agent', esc_html__( 'RE Agent', 'cherry-real-estate' ), $cap_agent );
+			add_role( 're_contributor', esc_html__( 'RE Contributor', 'cherry-real-estate' ), $cap_contributor );
+
+			// Add property capabilities to Admin Role.
+			$roles        = apply_filters( 'cherry_re_update_roles_list', array( 'administrator' ) );
+			$capabilities = wp_parse_args( $cap_agent, array( "edit_others_{$capability_type}s" => true ) );
+			$capabilities = apply_filters( 'cherry_re_admin_property_capabilities', $capabilities );
 
 			foreach ( (array) $roles as $name ) {
 				$role = get_role( $name );

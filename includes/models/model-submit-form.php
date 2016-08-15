@@ -92,9 +92,9 @@ class Model_Submit_Form {
 			) );
 		}
 
-		$need_confirm = current_user_can( 'manage_properties' ) ? false : true;
 		$post_type    = cherry_real_estate()->get_post_type_name();
 		$meta_prefix  = cherry_real_estate()->get_meta_prefix();
+		$need_confirm = current_user_can( "publish_{$post_type}s" ) ? false : true;
 		$data         = wp_list_pluck( $_POST['property'], 'value', 'name' );
 
 		// Prepare defaults array for new property.
@@ -409,7 +409,7 @@ class Model_Submit_Form {
 			) );
 		}
 
-		if ( 're_agent' !== get_option( 'default_role' ) ) {
+		if ( 're_contributor' !== get_option( 'default_role' ) ) {
 
 			// Change user role.
 			$u = new WP_User( $user );
@@ -418,7 +418,7 @@ class Model_Submit_Form {
 			$u->remove_role( get_option( 'default_role' ) );
 
 			// Add role
-			$u->add_role( 're_agent' );
+			$u->add_role( 're_contributor' );
 		}
 
 		wp_send_json_success( $user );

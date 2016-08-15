@@ -381,10 +381,12 @@
 					mainClass: effect,
 					callbacks: {
 						beforeOpen: function() {
-							var $forms = $( src ).find( 'form' );
+							var $forms = $( src ).find( 'form' ),
+								hidden = 'tm-re-hidden';
 
 							if ( $forms.length ) {
 								$forms.each( function( i, form ) {
+									$( form ).find( '.tm-re-messages span' ).addClass( hidden );
 									form.reset();
 								})
 							}

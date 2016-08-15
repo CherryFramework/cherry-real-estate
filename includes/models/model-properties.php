@@ -39,7 +39,7 @@ class Model_Properties {
 		return apply_filters( 'cherry_re_allowed_property_states', array(
 			'inactive' => esc_html__( 'Inactive', 'cherry-real-estate' ),
 			'active'   => esc_html__( 'Active', 'cherry-real-estate' ),
-			'finished' => esc_html__( 'Finished', 'cherry-real-estate' ),
+			'sold'     => esc_html__( 'Sold', 'cherry-real-estate' ),
 		) );
 	}
 

@@ -20,7 +20,7 @@ class Cherry_RE_Property_Data {
 	 * A reference to an instance of this class.
 	 *
 	 * @since 1.0.0
-	 * @var   object
+	 * @var object
 	 */
 	private static $instance = null;
 
@@ -28,7 +28,7 @@ class Cherry_RE_Property_Data {
 	 * The array of arguments for query.
 	 *
 	 * @since 1.0.0
-	 * @var   array
+	 * @var array
 	 */
 	private $query_args = array();
 
@@ -36,10 +36,16 @@ class Cherry_RE_Property_Data {
 	 * Holder for the main query object.
 	 *
 	 * @since 1.0.0
-	 * @var   object
+	 * @var object
 	 */
 	private $wp_query = null;
 
+	/**
+	 * Defaults param for search.
+	 *
+	 * @since 1.0.0
+	 * @var array
+	 */
 	private $search_defaults = array(
 		's'                 => '',
 		'property_status'   => '',
@@ -203,10 +209,11 @@ class Cherry_RE_Property_Data {
 	 */
 	public function get_properties( $args = array() ) {
 		$defaults = array(
-			'number'  => 5,
-			'orderby' => 'date',
-			'order'   => 'desc',
-			'ids'     => 0,
+			'number'   => 5,
+			'orderby'  => 'date',
+			'order'    => 'desc',
+			'ids'      => 0,
+			'state'    => 'active',
 		);
 
 		$args = wp_parse_args( $args, $defaults );
@@ -262,11 +269,27 @@ class Cherry_RE_Property_Data {
 			$this->query_args = array_merge( $this->query_args, $tax_args );
 		}
 
-		// Meta Query.
-		if ( ! empty( $args['meta_query'] ) ) {
-			$this->query_args['meta_query'] = $args['meta_query'];
+		// State param.
+		if ( ! array_key_exists( $args['state'], Model_Properties::get_allowed_property_states() ) ) {
+			$args['state'] = 'active';
 		}
 
+		$state_query = array(
+			array(
+				'key'     => cherry_real_estate()->get_meta_prefix() . 'state',
+				'value'   => $args['state'],
+				'compare' => '=',
+			),
+		);
+
+		// Meta Query.
+		$this->query_args['meta_query'] = $state_query;
+
+		if ( ! empty( $args['meta_query'] ) ) {
+			$this->query_args['meta_query'] = array_merge( $this->query_args['meta_query'], $args['meta_query'] );
+		}
+
+		// Pagination.
 		if ( isset( $args['show_pagination'] ) && ( true == $args['show_pagination'] ) ) :
 
 			if ( get_query_var( 'paged' ) ) {
@@ -315,6 +338,10 @@ class Cherry_RE_Property_Data {
 		 * @param array The array of arguments to be passed to the query.
 		 */
 		$this->query_args = apply_filters( 'cherry_re_get_properties_query_args', $this->query_args, $args );
+
+		echo "<pre>";
+		var_dump($this->query_args);
+		echo "</pre>";
 
 		// The Query.
 		$query = new WP_Query( $this->query_args );
@@ -410,10 +437,22 @@ class Cherry_RE_Property_Data {
 		return $this->wp_query;
 	}
 
+	/**
+	 * Retrieve a defaults search params.
+	 *
+	 * @since 1.0.0
+	 * @return array
+	 */
 	public function get_search_defaults() {
 		return apply_filters( 'cherry_re_get_search_defaults', $this->search_defaults );
 	}
 
+	/**
+	 * Prepare search arguments.
+	 *
+	 * @since 1.0.0
+	 * @return array
+	 */
 	public function prepare_search_args() {
 		$post_type = cherry_real_estate()->get_post_type_name();
 		$prefix    = cherry_real_estate()->get_meta_prefix();
@@ -432,8 +471,6 @@ class Cherry_RE_Property_Data {
 		if ( ! empty( $atts['s'] ) ) {
 			$args['s'] = $atts['s'];
 		}
-
-		$args['meta_query']['relation'] = 'AND';
 
 		if ( ! empty( $atts['property_status'] ) ) {
 			$args['meta_query'][] = array(

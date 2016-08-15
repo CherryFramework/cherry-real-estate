@@ -81,30 +81,6 @@ class Cherry_RE_Registration {
 			'ep_mask'    => EP_PERMALINK,
 		);
 
-		/* Capabilities. */
-		$capabilities = array(
-			'create_posts'           => 'create_properties',
-			'edit_posts'             => 'edit_properties',
-			'publish_posts'          => 'manage_properties',
-			'read_private_posts'     => 'read',
-			'read'                   => 'read',
-			'delete_posts'           => 'manage_properties',
-			'delete_private_posts'   => 'manage_properties',
-			'delete_published_posts' => 'manage_properties',
-			'delete_others_posts'    => 'manage_properties',
-			'edit_private_posts'     => 'edit_properties',
-			'edit_published_posts'   => 'edit_properties',
-			// meta caps (don't assign these to roles)
-			'edit_post'              => 'edit_property',
-			'read_post'              => 'read_property',
-			'delete_post'            => 'delete_property',
-		);
-
-		if ( current_user_can( 'administrator' ) ) {
-			// Show all properties for `administrator`.
-			$capabilities = wp_parse_args( $capabilities, array( 'edit_others_posts' => 'manage_properties' ) );
-		}
-
 		$args = array(
 			'labels'              => $labels,
 			'supports'            => $supports,
@@ -125,7 +101,6 @@ class Cherry_RE_Registration {
 			'query_var'           => $post_type,
 			'capability_type'     => $post_type,
 			'map_meta_cap'        => true,
-			'capabilities'        => $capabilities,
 			'rewrite'             => $rewrite,
 		);
 
@@ -155,13 +130,6 @@ class Cherry_RE_Registration {
 				'show_admin_column' => true,
 				'hierarchical'      => true,
 				'query_var'         => $post_type . '_type',
-				/* Capabilities. */
-				'capabilities' => array(
-					'manage_terms' => 'manage_properties',
-					'edit_terms'   => 'manage_properties',
-					'delete_terms' => 'manage_properties',
-					'assign_terms' => 'edit_properties',
-				),
 				/* The rewrite handles the URL structure. */
 				'rewrite' => array(
 					'slug'         => $post_type . '/type',
@@ -205,13 +173,6 @@ class Cherry_RE_Registration {
 				'show_admin_column' => true,
 				'hierarchical'      => false,
 				'query_var'         => $post_type . '_tag',
-				/* Capabilities. */
-				'capabilities' => array(
-					'manage_terms' => 'manage_properties',
-					'edit_terms'   => 'manage_properties',
-					'delete_terms' => 'manage_properties',
-					'assign_terms' => 'edit_properties',
-				),
 				/* The rewrite handles the URL structure. */
 				'rewrite' => array(
 					'slug'         => $post_type . '/tag',
@@ -255,13 +216,6 @@ class Cherry_RE_Registration {
 				'show_admin_column' => true,
 				'hierarchical'      => false,
 				'query_var'         => $post_type . '_feature',
-				/* Capabilities. */
-				'capabilities' => array(
-					'manage_terms' => 'manage_properties',
-					'edit_terms'   => 'manage_properties',
-					'delete_terms' => 'manage_properties',
-					'assign_terms' => 'edit_properties',
-				),
 				/* The rewrite handles the URL structure. */
 				'rewrite' => array(
 					'slug'         => $post_type . '/feature',

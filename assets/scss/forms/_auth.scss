@@ -6,4 +6,9 @@
 			margin-top: 15px;
 		}
 	}
+	&.processing {
+		* {
+			cursor: wait;
+		}
+	}
 }

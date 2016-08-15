@@ -27,8 +27,8 @@
 		<button type="submit" class="tm-re-login-form__btn"><?php esc_html_e( 'Log In', 'cherry-real-estate' ); ?></button>
 	</div>
 
-	<div class="tm-re-login-form__messages">
-		<div class="tm-re-login-form__success tm-re-hidden"><?php esc_html_e( 'Success', 'cherry-real-estate' ) ?></div>
-		<div class="tm-re-login-form__error tm-re-hidden"></div>
+	<div class="tm-re-login-form__messages tm-re-messages">
+		<span class="tm-re-login-form__success tm-re-hidden"><?php esc_html_e( 'Success', 'cherry-real-estate' ) ?></span>
+		<span class="tm-re-login-form__error tm-re-hidden"></span>
 	</div>
 </form>

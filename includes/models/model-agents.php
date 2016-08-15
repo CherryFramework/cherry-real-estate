@@ -28,13 +28,27 @@ class Model_Agents {
 		add_action( 'show_user_profile', array( $this, 'add_profile_fields' ) );
 		add_action( 'edit_user_profile', array( $this, 'add_profile_fields' ) );
 
-		add_action( 'personal_options_update', array( $this, 'save_profile_fields' ) );
+		add_action( 'personal_options_update',  array( $this, 'save_profile_fields' ) );
 		add_action( 'edit_user_profile_update', array( $this, 'save_profile_fields' ) );
 
 		// Add Properties to Author Archives Page.
 		add_action( 'pre_get_posts', array( $this, 'author_archive' ) );
 
+		// Hide a avatar option in profile page.
 		add_filter( 'option_show_avatars', array( $this, 'hide_avatar_option' ), 10, 2 );
+
+		// Correcting the author meta box drop-down.
+		add_action( 'load-post.php',     array( $this, 'load_user_dropdown_filter' ) );
+		add_action( 'load-post-new.php', array( $this, 'load_user_dropdown_filter' ) );
+
+		add_action( 'admin_menu' , array( $this, 'foo' ), 99999999999 );
+	}
+
+	public function foo() {
+		$post_type_name = cherry_real_estate()->get_post_type_name();
+
+		remove_meta_box( 'authordiv', array( $post_type_name ), 'normal' );
+		add_meta_box( 'authordiv', __( 'Foo' ), 'post_author_meta_box', $post_type_name, 'side' );
 	}
 
 	/**
@@ -305,6 +319,91 @@ class Model_Agents {
 		$classes[] = 'tm-agent';
 
 		return $classes;
+	}
+
+	/**
+	 * Correcting the author meta box drop-down.
+	 *
+	 * @author Justin Tadlock <justin@justintadlock.com>
+	 * @author Template Monster
+	 * @since  1.0.0
+	 */
+	public function load_user_dropdown_filter() {
+		$current_screen = get_current_screen();
+		$post_type_name = cherry_real_estate()->get_post_type_name();
+
+		if ( empty( $current_screen->post_type ) || $post_type_name !== $current_screen->post_type ) {
+			return;
+		}
+
+		add_filter( 'wp_dropdown_users_args', array( $this, 'dropdown_users_args' ), 10, 2 );
+	}
+
+	/**
+	 * Filtering the author drop-down.
+	 *
+	 * @author Justin Tadlock <justin@justintadlock.com>
+	 * @author Template Monster
+	 * @since  1.0.0
+	 * @param  array $args
+	 * @param  array $r
+	 * @return array
+	 */
+	public function dropdown_users_args( $args, $r ) {
+		global $post;
+
+		$post_type_name = cherry_real_estate()->get_post_type_name();
+
+		// Check that this is the correct drop-down.
+		if ( 'post_author_override' === $r['name'] && $post_type_name === $post->post_type ) {
+
+			$roles = $this->get_roles_for_post_type( $post->post_type );
+
+			// If we have roles, change the args to only get users of those roles.
+			if ( $roles ) {
+				$args['who']      = '';
+				$args['role__in'] = $roles;
+			}
+		}
+
+		return $args;
+	}
+
+	/**
+	 * Getting roles with permission.
+	 *
+	 * @author Justin Tadlock <justin@justintadlock.com>
+	 * @author Template Monster
+	 * @since  1.0.0
+	 * @param  array $post_type
+	 * @return array
+	 */
+	public function get_roles_for_post_type( $post_type ) {
+		global $wp_roles;
+
+		$roles = array();
+		$type  = get_post_type_object( $post_type );
+		$cap   = "publish_{$post_type}s";
+
+		// Get the post type object caps.
+		$caps = array( $type->cap->$cap );
+		$caps = apply_filters( 'cherry_re_get_roles_for_author_meta_box', $caps, $post_type );
+		$caps = array_unique( $caps );
+
+		// Loop through the available roles.
+		foreach ( $wp_roles->roles as $name => $role ) {
+
+			foreach ( $caps as $cap ) {
+
+				// If the role is granted the cap, add it.
+				if ( isset( $role['capabilities'][ $cap ] ) && true === $role['capabilities'][ $cap ] ) {
+					$roles[] = $name;
+					break;
+				}
+			}
+		}
+
+		return $roles;
 	}
 
 	/**
