@@ -120,6 +120,9 @@ class Model_Submit_Form {
 			$gallery = join( ',', $gallery );
 		}
 
+		// Retrieve the current user object (WP_User).
+		$current_user = wp_get_current_user();
+
 		// Prepare data array for new property.
 		$property_arr = array(
 			'post_type'    => cherry_real_estate()->get_post_type_name(),
@@ -135,6 +138,7 @@ class Model_Submit_Form {
 				$meta_prefix . 'parking_places' => $data['property_parking_places'],
 				$meta_prefix . 'location'       => $data['property_address'],
 				$meta_prefix . 'gallery'        => $gallery,
+				$meta_prefix . 'author'         => isset( $current_user->ID ) ? (int) $current_user->ID : 0,
 			),
 		);
 
@@ -142,7 +146,6 @@ class Model_Submit_Form {
 
 		// Create new property.
 		$property_ID = wp_insert_post( $property_arr, false );
-		// $property_ID = 1;
 
 		if ( 0 == $property_ID || is_wp_error( $property_ID ) ) {
 			wp_send_json_error( array(
@@ -154,9 +157,8 @@ class Model_Submit_Form {
 		$type_id = intval( $data['property_type'] );
 		$term_taxonomy_id = wp_set_object_terms( $property_ID, $type_id, $post_type . '_type');
 
-		// Retrieve the current user object (WP_User).
-		$current_user = wp_get_current_user();
-		$user_email   = false;
+		// Retrieve the current user e-mail.
+		$user_email = false;
 
 		if ( ! empty( $current_user->user_email ) ) {
 			$user_email = sanitize_email( $current_user->user_email );

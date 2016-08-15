@@ -41,14 +41,8 @@ class Model_Agents {
 		add_action( 'load-post.php',     array( $this, 'load_user_dropdown_filter' ) );
 		add_action( 'load-post-new.php', array( $this, 'load_user_dropdown_filter' ) );
 
-		add_action( 'admin_menu' , array( $this, 'foo' ), 99999999999 );
-	}
-
-	public function foo() {
-		$post_type_name = cherry_real_estate()->get_post_type_name();
-
-		remove_meta_box( 'authordiv', array( $post_type_name ), 'normal' );
-		add_meta_box( 'authordiv', __( 'Foo' ), 'post_author_meta_box', $post_type_name, 'side' );
+		// Changed position to the athor metabox.
+		add_action( 'do_meta_boxes' , array( $this, 'relocate_author_metabox' ) );
 	}
 
 	/**
@@ -383,10 +377,9 @@ class Model_Agents {
 
 		$roles = array();
 		$type  = get_post_type_object( $post_type );
-		$cap   = "publish_{$post_type}s";
 
 		// Get the post type object caps.
-		$caps = array( $type->cap->$cap );
+		$caps = array( $type->cap->publish_posts );
 		$caps = apply_filters( 'cherry_re_get_roles_for_author_meta_box', $caps, $post_type );
 		$caps = array_unique( $caps );
 
@@ -404,6 +397,18 @@ class Model_Agents {
 		}
 
 		return $roles;
+	}
+
+	/**
+	 * Changed position to the athor metabox.
+	 *
+	 * @since 1.0.0
+	 */
+	public function relocate_author_metabox() {
+		$post_type_name = cherry_real_estate()->get_post_type_name();
+
+		remove_meta_box( 'authordiv', array( $post_type_name ), 'normal' );
+		add_meta_box( 'authordiv', esc_html__( 'Agent', 'cherry-real-estate' ), 'post_author_meta_box', $post_type_name, 'side', 'default' );
 	}
 
 	/**
@@ -475,28 +480,6 @@ class Model_Agents {
 		$prefix = cherry_real_estate()->get_meta_prefix();
 
 		return get_the_author_meta( $prefix . 'agent_socials', $agent_id );
-	}
-
-	/**
-	 * Get all agents.
-	 *
-	 * @since  1.0.0
-	 * @return array all agents.
-	 */
-	public static function get_list() {
-		$agents = get_users( array(
-			'role__in' => apply_filters( 'cherry_re_get_agent_list_args', array( 'administrator', 're_agent' ) ),
-		) );
-
-		$result = array();
-
-		if ( is_array( $agents ) ) {
-			foreach ( $agents as $agent ) {
-				$result[ $agent->data->ID ] = $agent->data->display_name;
-			}
-		}
-
-		return $result;
 	}
 
 	/**
