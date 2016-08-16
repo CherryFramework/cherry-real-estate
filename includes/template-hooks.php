@@ -20,7 +20,8 @@ add_action( 'cherry_re_after_main_content',  'cherry_real_estate_output_content_
 /**
  * Sidebar.
  */
-add_action( 'cherry_re_sidebar', 'cherry_real_estate_get_sidebar', 10 );
+add_action( 'cherry_re_property_sidebar', 'cherry_real_estate_get_property_sidebar', 10 );
+add_action( 'cherry_re_search_sidebar', 'cherry_real_estate_get_search_sidebar', 10 );
 
 /**
  * Single Property.

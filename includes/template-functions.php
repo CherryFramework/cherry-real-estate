@@ -35,15 +35,27 @@ if ( ! function_exists( 'cherry_real_estate_output_content_wrapper_end' ) ) {
 	}
 }
 
-if ( ! function_exists( 'cherry_real_estate_get_sidebar' ) ) {
+if ( ! function_exists( 'cherry_real_estate_get_property_sidebar' ) ) {
 
 	/**
 	 * Get the sidebar template.
 	 *
 	 * @since 1.0.0
 	 */
-	function cherry_real_estate_get_sidebar() {
-		cherry_re_get_template( 'global/sidebar' );
+	function cherry_real_estate_get_property_sidebar() {
+		cherry_re_get_template( 'global/sidebars/property' );
+	}
+}
+
+if ( ! function_exists( 'cherry_real_estate_get_search_sidebar' ) ) {
+
+	/**
+	 * Get the sidebar template for search page.
+	 *
+	 * @since 1.0.0
+	 */
+	function cherry_real_estate_get_search_sidebar() {
+		cherry_re_get_template( 'global/sidebars/search' );
 	}
 }
 

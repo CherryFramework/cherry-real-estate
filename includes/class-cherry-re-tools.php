@@ -116,7 +116,6 @@ class Cherry_RE_Tools {
 		}
 
 		$args = wp_parse_args( $args, array(
-			'id'      => '',
 			'name'    => '',
 			'default' => '',
 			'value'   => '',
@@ -134,16 +133,9 @@ class Cherry_RE_Tools {
 			$html .= sprintf( '<option value="%1$s" %3$s>%2$s</option>', esc_attr( $key ), esc_html( $value ), $selected );
 		}
 
-		$id = $args['id'];
-
-		if ( empty( $id ) ) {
-			$id = $args['name'];
-		}
-
 		$html = sprintf(
-			'<select id="%2$s" name="%1$s">%3$s</select>',
+			'<select name="%1$s">%2$s</select>',
 			esc_attr( $args['name'] ),
-			esc_attr( $id ),
 			$html
 		);
 

@@ -413,7 +413,7 @@ class Cherry_RE_Property_Data {
 			$meta_prefix = cherry_real_estate()->get_meta_prefix();
 			$data_atts   = apply_filters( 'cherry_re_property_item_data_atts', array(
 				'property-id'      => esc_attr( $property_ID ),
-				'property-address' => get_post_meta( $property_ID, $meta_prefix . 'location', true ),
+				'property-address' => esc_attr( get_post_meta( $property_ID, $meta_prefix . 'location', true ) ),
 			), $property_ID );
 
 			$output .= '<div class="' . join( ' ', $item_classes ) . '" ' . cherry_re_return_data_atts( $data_atts ) . '><div class="tm-property__inner">';

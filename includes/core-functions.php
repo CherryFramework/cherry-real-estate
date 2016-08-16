@@ -163,6 +163,14 @@ function cherry_re_print_data_atts( $atts, $single = false ) {
 	echo cherry_re_return_data_atts( $atts, $single );
 }
 
+/**
+ * Retrieve a string with HTML5-data attributes.
+ *
+ * @since  1.0.0
+ * @param  array $atts   Data attributes.
+ * @param  bool  $single True if data attributes needs print as a single attribute. False - multiple attributes.
+ * @return string
+ */
 function cherry_re_return_data_atts( $atts, $single = false ) {
 
 	if ( ! is_array( $atts ) || empty( $atts ) ) {
@@ -197,13 +205,24 @@ function cherry_re_return_data_atts( $atts, $single = false ) {
 	return join( $data, ' ' );
 }
 
-
+/**
+ * Is the query for an existing property taxonomy archive page?
+ *
+ * @since 1.0.0
+ * @return bool
+ */
 function cherry_re_is_property_taxonomy() {
 	$post_type = cherry_real_estate()->get_post_type_name();
 
 	return is_tax( get_object_taxonomies( $post_type ) );
 }
 
+/**
+ * Is the query for a property search?
+ *
+ * @since 1.0.0
+ * @return bool
+ */
 function cherry_re_is_property_search() {
 
 	if ( empty( $_GET ) ) {

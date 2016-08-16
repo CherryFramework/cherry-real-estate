@@ -12,11 +12,5 @@
  */
 ?>
 <div class="widget-tm-re-search widget-tm-re-search--result">
-	<?php // Search form template. ?>
-	<?php cherry_re_get_template( 'widgets/search/form', array(
-			'values' => array_map( 'esc_attr', $_GET ),
-		) ); ?>
-
-	<?php // Map template. ?>
-	<?php cherry_re_get_template( 'widgets/search/map' ); ?>
+	<?php cherry_re_get_template( 'widgets/search/map' ); // Map template. ?>
 </div>

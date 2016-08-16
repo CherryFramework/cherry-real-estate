@@ -11,9 +11,9 @@
  * @copyright  2002-2016, Template Monster
  */
 
-$sourceselector = 'tm-map-pins-' . uniqid();
-$defaults       = apply_filters( 'cherry_re_search_map_pins_args', array(
-	'css_id'          => $sourceselector,
+$source_selector = 'tm-map-pins-' . uniqid();
+$defaults        = apply_filters( 'cherry_re_search_map_pins_args', array(
+	'css_id'          => $source_selector,
 	'wrap_class'      => 'tm-map-pins__wrap tm-re-hidden',
 	'item_class'      => 'tm-map-pins__item',
 	'show_pagination' => false,
@@ -49,7 +49,7 @@ $atts = array(
 		'content'  => esc_html__( 'loading...', 'cherry-real-estate' ),
 		'maxWidth' => 200,
 	),
-	'sourceselector'        => $sourceselector,
+	'sourceselector'        => $source_selector,
 	'mapTypeControl'        => true,
 	'zoomControl'           => true,
 	'streetViewControl'     => true,

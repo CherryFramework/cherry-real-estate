@@ -44,7 +44,6 @@ $data->the_property( $args );
  */
 do_action( 'cherry_re_after_search_loop' );
 
-
 if ( did_action( 'cherry_re_before_main_content' ) ) {
 
 	/**
@@ -57,13 +56,13 @@ if ( did_action( 'cherry_re_before_main_content' ) ) {
 	do_action( 'cherry_re_after_main_content' );
 
 	/**
-	 * cherry_re_sidebar hook.
+	 * cherry_re_search_sidebar hook.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @hooked cherry_real_estate_get_sidebar - 10
+	 * @hooked cherry_real_estate_get_search_sidebar - 10
 	 */
-	do_action( 'cherry_re_sidebar' );
+	do_action( 'cherry_re_search_sidebar' );
 
 	get_footer( 'property' );
 }

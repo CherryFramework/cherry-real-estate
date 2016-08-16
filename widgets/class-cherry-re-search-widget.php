@@ -2,13 +2,19 @@
 /**
  * Search widget for Real Estate.
  *
- * @package __Tm
+ * @package    Cherry_Real_Estate
+ * @subpackage Widgets
+ * @author     Template Monster
+ * @license    GPL-3.0+
+ * @copyright  2002-2016, Template Monster
  */
 
 class Cherry_RE_Search_Widget extends Cherry_Abstract_Widget {
 
 	/**
-	 * Constructor.
+	 * Constructor method.
+	 *
+	 * @since 1.0.0
 	 */
 	public function __construct() {
 		$this->widget_cssclass    = 'widget-tm-re-search';
@@ -41,6 +47,16 @@ class Cherry_RE_Search_Widget extends Cherry_Abstract_Widget {
 				'label'     => esc_html__( 'Visible markers on map', '__tm' ),
 				'master'    => 'map_relation',
 			),
+			'form_visibility' => array(
+				'type'   => 'switcher',
+				'value'  => 'true',
+				'style'  => ( wp_is_mobile() ) ? 'normal' : 'small',
+				'label'  => esc_html__( 'Show form', '__tm' ),
+				'toggle' => array(
+					'true_toggle'  => esc_html__( 'Yes', '__tm' ),
+					'false_toggle' => esc_html__( 'No', '__tm' ),
+				),
+			),
 		);
 
 		parent::__construct();
@@ -60,25 +76,40 @@ class Cherry_RE_Search_Widget extends Cherry_Abstract_Widget {
 			return;
 		}
 
-		ob_start();
-
 		$this->setup_widget_data( $args, $instance );
-		echo $args['before_widget'];
 
-		$title          = $this->widget_start( $args, $instance );
+		$form_visibility = ! empty( $instance['form_visibility'] ) ? $instance['form_visibility'] : $this->settings['form_visibility']['value'];
+		$form_visibility = filter_var( $form_visibility, FILTER_VALIDATE_BOOLEAN );
+
 		$map_visibility = ! empty( $instance['map_visibility'] ) ? $instance['map_visibility'] : $this->settings['map_visibility']['value'];
 		$map_visibility = filter_var( $map_visibility, FILTER_VALIDATE_BOOLEAN );
-		$number         = ! empty( $instance['marker_number'] ) ? $instance['marker_number'] : $this->settings['marker_number']['value'];
+
+		if ( ! $form_visibility && ! $map_visibility ) {
+			$this->reset_widget_data();
+			return;
+		}
+
+		ob_start();
+
+		echo $args['before_widget'];
+
+		$title  = $this->widget_start( $args, $instance );
+		$number = ! empty( $instance['marker_number'] ) ? $instance['marker_number'] : $this->settings['marker_number']['value'];
 
 		$data     = Cherry_RE_Property_Data::get_instance();
 		$defaults = $data->get_search_defaults();
-		$values   = wp_parse_args( $defaults, $_GET );
+		$get_args = array_map( 'esc_attr', $_GET );
+		$values   = wp_parse_args( $get_args, $defaults );
 
-		// Search form template.
-		cherry_re_get_template( 'widgets/search/form', array(
-			'title'  => $title,
-			'values' => $values,
-		) );
+		if ( $form_visibility ) {
+
+			// Search form template.
+			cherry_re_get_template( 'widgets/search/form', array(
+				'title'  => $title,
+				'values' => $values,
+			) );
+
+		}
 
 		if ( $map_visibility ) {
 
