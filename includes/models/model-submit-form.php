@@ -295,27 +295,38 @@ class Model_Submit_Form {
 			return;
 		}
 
-		$property_id = $post->ID;
-		$user_id     = $post->post_author;
-		$user_data   = get_userdata( $user_id );
-		$user_email  = false;
+		$property_id  = $post->ID;
+		$meta_prefix  = cherry_real_estate()->get_meta_prefix();
+		$author_login = get_post_meta( $property_id, $meta_prefix . 'author', true );
 
-		if ( false !== $user_data ) {
-			$user_email = isset( $user_data->user_email ) ? $user_data->user_email : false;
+		if ( empty( $author_login ) ) {
+			return;
+		}
+
+		$author = get_user_by( 'login', $author_login );
+
+		if ( false === $author ) {
+			return;
+		}
+
+		$author_email = isset( $author->user_email ) ? $author->user_email : false;
+		$author_email = sanitize_email( $author_email );
+
+		if ( ! is_email( $author_email ) ) {
+			return;
 		}
 
 		$message = Model_Settings::get_congratulate_message();
 		$message .= sprintf( __( '<br>View: %s<br><br>', 'cherry-real-estate' ), get_permalink( $property_id ) );
 
-		$meta_prefix    = cherry_real_estate()->get_meta_prefix();
-		$agent_id       = get_post_meta( $property_id, $meta_prefix . 'agent', true );
+		$agent_id       = $post->author;
 		$agent_contacts = $this->_prepare_agent_contacts_to_mail( $agent_id );
 
 		if ( ! empty( $agent_contacts ) ) {
 			$message .= $agent_contacts;
 		}
 
-		return self::send_mail( $user_email, Model_Settings::get_congratulate_subject(), $message );
+		return self::send_mail( $author_email, Model_Settings::get_congratulate_subject(), $message );
 	}
 
 	/**

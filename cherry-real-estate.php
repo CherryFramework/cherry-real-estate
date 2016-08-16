@@ -479,7 +479,11 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 
 			// Add property capabilities to Admin Role.
 			$roles        = apply_filters( 'cherry_re_update_roles_list', array( 'administrator' ) );
-			$capabilities = wp_parse_args( $cap_agent, array( "edit_others_{$capability_type}s" => true ) );
+			$capabilities = wp_parse_args( $cap_agent, array(
+				"edit_others_{$capability_type}s"   => true,
+				"delete_others_{$capability_type}s" => true,
+				"read_private_{$capability_type}s"  => true,
+			) );
 			$capabilities = apply_filters( 'cherry_re_admin_property_capabilities', $capabilities );
 
 			foreach ( (array) $roles as $name ) {
