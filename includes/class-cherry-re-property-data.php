@@ -339,9 +339,9 @@ class Cherry_RE_Property_Data {
 		 */
 		$this->query_args = apply_filters( 'cherry_re_get_properties_query_args', $this->query_args, $args );
 
-		echo "<pre>";
-		var_dump($this->query_args);
-		echo "</pre>";
+		// echo "<pre>";
+		// var_dump($this->query_args);
+		// echo "</pre>";
 
 		// The Query.
 		$query = new WP_Query( $this->query_args );
