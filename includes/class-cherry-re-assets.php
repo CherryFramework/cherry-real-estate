@@ -47,9 +47,9 @@ class Cherry_RE_Assets {
 		// add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_admin_scripts' ) );
 
 		// CSS.
-		add_action( 'wp_enqueue_scripts',    array( __CLASS__, 'register_public_styles' ), 1 );
-		add_action( 'wp_enqueue_scripts',    array( __CLASS__, 'enqueue_public_styles' ), 9 );
-		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_admin_styles' ) );
+		add_action( 'wp_enqueue_scripts',    array( $this, 'register_public_styles' ), 1 );
+		add_action( 'wp_enqueue_scripts',    array( $this, 'enqueue_public_styles' ), 9 );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ), 0 );
 
 		// Google Map API - fix conflict.
 		add_action( 'wp_footer', array( __CLASS__, 'googleapis_conflict' ), 11 );
@@ -291,7 +291,7 @@ class Cherry_RE_Assets {
 	 *
 	 * @since 1.0.0
 	 */
-	public static function register_public_styles() {
+	public function register_public_styles() {
 		wp_register_style(
 			'jquery-swiper',
 			plugins_url( 'assets/css/swiper.css', CHERRY_REAL_ESTATE_MAIN_FILE ),
@@ -329,7 +329,7 @@ class Cherry_RE_Assets {
 	 *
 	 * @since 1.0.0
 	 */
-	public static function enqueue_public_styles() {
+	public function enqueue_public_styles() {
 		wp_enqueue_style( 'jquery-swiper' );
 		wp_enqueue_style( 'cherry-re-style' );
 
@@ -346,16 +346,18 @@ class Cherry_RE_Assets {
 	 *
 	 * @since 1.0.0
 	 */
-	public static function enqueue_admin_styles( $hook_suffix ) {
+	public function enqueue_admin_styles( $hook_suffix ) {
+
+		wp_register_style(
+			'cherry-re-admin-styles',
+			plugins_url( 'admin/assets/css/admin-style.css', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			array(),
+			CHERRY_REAL_ESTATE_VERSION,
+			'all'
+		);
 
 		if ( in_array( $hook_suffix, array( 'user-edit.php', 'profile.php' ) ) ) {
-			wp_enqueue_style(
-				'cherry-re-agent-styles',
-				plugins_url( 'admin/assets/css/admin-style.css', CHERRY_REAL_ESTATE_MAIN_FILE ),
-				array(),
-				CHERRY_REAL_ESTATE_VERSION,
-				'all'
-			);
+			wp_enqueue_style( 'cherry-re-admin-styles' );
 		}
 
 		wp_register_style(

@@ -37,9 +37,8 @@ class Model_Agents {
 		// Hide a avatar option in profile page.
 		add_filter( 'option_show_avatars', array( $this, 'hide_avatar_option' ), 10, 2 );
 
-		// Correcting the author meta box drop-down.
-		add_action( 'load-post.php',     array( $this, 'load_user_dropdown_filter' ) );
-		add_action( 'load-post-new.php', array( $this, 'load_user_dropdown_filter' ) );
+		add_action( 'load-post.php',     array( $this, 'load' ) );
+		add_action( 'load-post-new.php', array( $this, 'load' ) );
 
 		// Changed position to the athor metabox.
 		add_action( 'do_meta_boxes' , array( $this, 'relocate_author_metabox' ) );
@@ -316,13 +315,14 @@ class Model_Agents {
 	}
 
 	/**
-	 * Correcting the author meta box drop-down.
+	 * Fires on the page load hook to add actions specifically for the post and
+	 * new post screens.
 	 *
 	 * @author Justin Tadlock <justin@justintadlock.com>
 	 * @author Template Monster
 	 * @since  1.0.0
 	 */
-	public function load_user_dropdown_filter() {
+	public function load() {
 		$current_screen = get_current_screen();
 		$post_type_name = cherry_real_estate()->get_post_type_name();
 
@@ -330,7 +330,21 @@ class Model_Agents {
 			return;
 		}
 
+		// Enqueue scripts/styles.
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );
+
+		// Filtering the author drop-down.
 		add_filter( 'wp_dropdown_users_args', array( $this, 'dropdown_users_args' ), 10, 2 );
+	}
+
+	/**
+	 * Loads scripts and styles.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	public function enqueue() {
+		wp_enqueue_style( 'cherry-re-admin-styles' );
 	}
 
 	/**

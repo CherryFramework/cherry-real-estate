@@ -81,17 +81,18 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		private $shortcode_prefix = 'tm_re_';
 
 		/**
-		 * Sets up needed actions/filters for the plugin to initialize.
+		 * Constructor method.
 		 *
 		 * @since 1.0.0
 		 */
-		private function __construct() {
+		private function __construct() {}
 
-			// Set the constants needed by the plugin.
-			$this->constants();
-
-			// Load all required files.
-			$this->includes();
+		/**
+		 * Sets up initial actions.
+		 *
+		 * @since 1.0.0
+		 */
+		private function actions() {
 
 			// Internationalize the text strings used.
 			add_action( 'plugins_loaded', array( $this, 'i18n' ) );
@@ -161,6 +162,43 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			 * @since 1.0.0
 			 */
 			define( 'CHERRY_REAL_ESTATE_VERSION', '1.0.0-beta' );
+		}
+
+		/**
+		 * Include required files used in admin and on the frontend.
+		 *
+		 * @since 1.0.0
+		 */
+		public function includes() {
+
+			// Models.
+			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/models/model-properties.php' );
+			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/models/model-agents.php' );
+			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/models/model-submit-form.php' );
+			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/models/model-settings.php' );
+
+			// Classes.
+			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-registration.php' );
+			include_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-assets.php' );
+			include_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-agent-data.php' );
+			include_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-property-data.php' );
+			include_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-shortcodes-data.php' );
+			include_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-template-loader.php' );
+			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-tools.php' );
+
+			// Functions.
+			include_once( CHERRY_REAL_ESTATE_DIR . 'includes/core-functions.php' );
+
+			// Frontend.
+			if ( ( ! is_admin() || defined( 'DOING_AJAX' ) ) && ! defined( 'DOING_CRON' ) ) {
+				include_once( CHERRY_REAL_ESTATE_DIR . 'includes/template-hooks.php' );
+				require_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-template-callbacks.php' );
+			}
+
+			// Admin.
+			if ( is_admin() ) {
+				include_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-cherry-re-options-page.php' );
+			}
 		}
 
 		/**
@@ -331,7 +369,8 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 						'id'         => $prefix . 'author',
 						'name'       => $prefix . 'author',
 						'value'      => '',
-						'left_label' => esc_html__( 'Author (original)', 'cherry-real-estate' ),
+						'class'      => 'disabled',
+						'left_label' => esc_html__( 'Author', 'cherry-real-estate' ),
 					),
 				),
 			) );
@@ -346,42 +385,6 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 
 			// Load widgets.
 			$this->add_widgets();
-		}
-
-		/**
-		 * Include required files used in admin and on the frontend.
-		 *
-		 * @since 1.0.0
-		 */
-		public function includes() {
-			// Models.
-			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/models/model-properties.php' );
-			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/models/model-agents.php' );
-			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/models/model-submit-form.php' );
-			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/models/model-settings.php' );
-
-			// Classes.
-			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-registration.php' );
-			include_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-assets.php' );
-			include_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-agent-data.php' );
-			include_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-property-data.php' );
-			include_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-shortcodes-data.php' );
-			include_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-template-loader.php' );
-			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-tools.php' );
-
-			// Functions.
-			include_once( CHERRY_REAL_ESTATE_DIR . 'includes/core-functions.php' );
-
-			// Frontend.
-			if ( ( ! is_admin() || defined( 'DOING_AJAX' ) ) && ! defined( 'DOING_CRON' ) ) {
-				include_once( CHERRY_REAL_ESTATE_DIR . 'includes/template-hooks.php' );
-				require_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-template-callbacks.php' );
-			}
-
-			// Admin.
-			if ( is_admin() ) {
-				include_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-cherry-re-options-page.php' );
-			}
 		}
 
 		/**
@@ -657,6 +660,9 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			// If the single instance hasn't been set, set it now.
 			if ( null == self::$instance ) {
 				self::$instance = new self;
+				self::$instance->constants();
+				self::$instance->includes();
+				self::$instance->actions();
 			}
 
 			return self::$instance;
