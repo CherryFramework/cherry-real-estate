@@ -15,14 +15,14 @@
 		 * Initialize map.
 		 */
 		function initMap() {
-			var $selector = [],
+			var $source = [],
 				map, geocoder, bounds;
 
 			if ( data.hasOwnProperty( 'sourceselector' ) ) {
-				$selector = $( data.sourceselector );
+				$source = $( '#' + data.sourceselector ).children();
 			}
 
-			if ( null === data.address && ! $selector.length ) {
+			if ( null === data.address && ! $source.length ) {
 				return !1;
 			}
 
@@ -42,7 +42,7 @@
 
 			if ( null === data.address ) {
 
-				$selector.each( function() {
+				$source.each( function( i, el ) {
 					geocodeAddress( map, geocoder, bounds, $( this ) );
 				} );
 

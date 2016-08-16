@@ -99,6 +99,7 @@ class Cherry_RE_Property_Data {
 			'wrap_class'      => 'tm-property__wrap',
 			'item_class'      => 'tm-property__item',
 			'color_scheme'    => '',
+			'css_id'          => '',
 			'css_class'       => '',
 		), $args );
 
@@ -141,6 +142,10 @@ class Cherry_RE_Property_Data {
 		$this->wp_query = null;
 		$this->wp_query = $query;
 
+		// Prepare CSS-id.
+		$css_id = ! empty( $args['css_id'] ) ? esc_attr( $args['css_id'] ) : '';
+		$css_id = ! empty( $css_id ) ? sprintf( ' id="%s"', $css_id ) : '';
+
 		// Prepare CSS-class.
 		$css_classes = array();
 
@@ -169,8 +174,15 @@ class Cherry_RE_Property_Data {
 		$post_ids = wp_list_pluck( $query->posts, 'ID' );
 
 		$inner          = apply_filters( 'cherry_re_properties_loop_after', $inner, $args );
-		$wrapper_format = apply_filters( 'cherry_re_properties_wrapper_format', '<div class="%s" data-property-ids="%s">%s</div>', $args );
-		$output         = sprintf( $wrapper_format, join( ' ', array_unique( $css_classes ) ), wp_json_encode( $post_ids ), $inner );
+		$wrapper_format = apply_filters( 'cherry_re_properties_wrapper_format', '<div%s class="%s" data-property-ids="%s">%s</div>', $args );
+
+		$output = sprintf(
+			$wrapper_format,
+			$css_id,
+			join( ' ', array_unique( $css_classes ) ),
+			wp_json_encode( $post_ids ),
+			$inner
+		);
 
 		// Pagination (if we need).
 		if ( true == $args['show_pagination'] ) {
