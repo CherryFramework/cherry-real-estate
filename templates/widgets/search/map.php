@@ -17,6 +17,7 @@ $defaults        = apply_filters( 'cherry_re_search_map_pins_args', array(
 	'wrap_class'      => 'tm-map-pins__wrap tm-re-hidden',
 	'item_class'      => 'tm-map-pins__item',
 	'show_pagination' => false,
+	'paged'           => true,
 	'template'        => 'infowindow.tmpl',
 	'echo'            => false,
 ) );

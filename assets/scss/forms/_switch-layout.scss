@@ -1,0 +1,13 @@
+.tm-re-switch-layout {
+	&.processing {
+		* {
+			cursor: wait;
+		}
+	}
+	&__btn {
+		cursor: pointer;
+		&--active {
+			cursor: default;
+		}
+	}
+}

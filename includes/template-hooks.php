@@ -48,3 +48,5 @@ add_action( 'cherry_re_end_agent_archive',    'cherry_real_estate_output_agent_a
  */
 add_action( 'cherry_re_before_main_content', 'cherry_real_estate_search_map_result', 5 );
 add_action( 'cherry_re_output_search_result_map', 'cherry_real_estate_search_map_result', 10 );
+add_action( 'cherry_re_before_search_loop', 'cherry_real_estate_switch_layout', 5 );
+add_action( 'cherry_re_before_search_loop', 'cherry_real_estate_property_sort', 10 );

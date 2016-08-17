@@ -32,8 +32,13 @@ if ( ! did_action( 'get_header' ) ) {
  */
 do_action( 'cherry_re_before_search_loop' );
 
-$data = Cherry_RE_Property_Data::get_instance();
-$args = $data->prepare_search_args();
+$data   = Cherry_RE_Property_Data::get_instance();
+$params = $data->prepare_search_args();
+$args   = array(
+	'css_id'    => 'tm-re-search-items',
+	'css_class' => Model_Settings::get_search_layout(),
+);
+$args = wp_parse_args( $args, $params );
 
 $data->the_property( $args );
 

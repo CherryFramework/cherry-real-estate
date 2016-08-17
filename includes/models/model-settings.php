@@ -58,6 +58,16 @@ class Model_Settings {
 	}
 
 	/**
+	 * Get settings for Search page.
+	 *
+	 * @since 1.0.0
+	 * @return mixed
+	 */
+	public static function get_search_settings() {
+		return get_option( 'cherry-re-options-search' );
+	}
+
+	/**
 	 * Get are unit.
 	 *
 	 * @since 1.0.0
@@ -313,6 +323,27 @@ class Model_Settings {
 		$emails = self::get_emails_settings();
 
 		return ! empty( $emails['congratulate-message'] ) ? $emails['congratulate-message'] : '';
+	}
+
+	/**
+	 * Get search layout.
+	 *
+	 * @since 1.0.0
+	 * @return string
+	 */
+	public static function get_search_layout() {
+		$search_options = self::get_search_settings();
+		$layout         = false;
+
+		if ( is_array( $search_options ) && ! empty( $search_options['layout'] ) ) {
+			$layout = $search_options['layout'];
+		}
+
+		if ( ! in_array( $layout, array( 'grid', 'list' ) ) ) {
+			$layout = 'grid';
+		}
+
+		return $layout;
 	}
 
 	/**

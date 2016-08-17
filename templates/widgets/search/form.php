@@ -17,10 +17,6 @@
 		echo $title;
 	} ?>
 
-	<input type="hidden" name="post_type" value="<?php echo cherry_real_estate()->get_post_type_name(); ?>">
-	<input type="hidden" name="orderby" value="<?php echo $values['orderby']; ?>">
-	<input type="hidden" name="order" value="<?php echo $values['order']; ?>">
-
 	<div class="tm-re-search-form__group">
 		<label>
 			<span class="tm-re-search-form__label"><?php esc_html_e( 'Keyword', 'cherry-real-estate' ); ?></span>
@@ -110,6 +106,8 @@
 			<input type="number" min="0" name="max_parking_place" class="tm-re-search-form__field" placeholder="<?php esc_html_e( 'Max', 'cherry-real-estate' ); ?>" value="<?php echo $values['max_parking_place']; ?>">
 		</span>
 	</div>
+
+	<input type="hidden" name="post_type" value="<?php echo cherry_real_estate()->get_post_type_name(); ?>">
 
 	<button type="submit" class="tm-re-search-form__submit"><?php esc_html_e( 'Search', 'cherry-real-estate' ); ?></button>
 </form>

@@ -503,6 +503,15 @@ class Model_Submit_Form {
 		) );
 	}
 
+	public static function get_sort_options() {
+		return apply_filters( 'cherry_re_get_sort_options', array(
+			'asc_price'  => esc_html__( 'Price (Low to High)', 'cherry-real-estate' ),
+			'desc_price' => esc_html__( 'Price (High to Low)', 'cherry-real-estate' ),
+			'asc_date'   => esc_html__( 'Date Old to New', 'cherry-real-estate' ),
+			'desc_date'  => esc_html__( 'Date New to Old', 'cherry-real-estate' ),
+		) );
+	}
+
 	/**
 	 * Returns the instance.
 	 *

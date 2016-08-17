@@ -61,8 +61,7 @@ class Cherry_RE_Property_Data {
 		'max_area'          => '',
 		'min_parking_place' => '',
 		'max_parking_place' => '',
-		'orderby'           => 'date',
-		'order'             => 'desc',
+		'properties_sort'   => '',
 	);
 
 	/**
@@ -301,8 +300,13 @@ class Cherry_RE_Property_Data {
 			$this->query_args['meta_query'] = array_merge( $this->query_args['meta_query'], $args['meta_query'] );
 		}
 
+		if ( ! empty( $args['meta_key'] ) ) {
+			$this->query_args['meta_key'] = $args['meta_key'];
+		}
+
 		// Pagination.
-		if ( isset( $args['show_pagination'] ) && ( true == $args['show_pagination'] ) ) :
+		if ( ( isset( $args['show_pagination'] ) && ( true == $args['show_pagination'] ) )
+			|| ( isset( $args['paged'] ) && ( true == $args['paged'] ) ) ) :
 
 			if ( get_query_var( 'paged' ) ) {
 				$this->query_args['paged'] = get_query_var( 'paged' );
@@ -595,17 +599,31 @@ class Cherry_RE_Property_Data {
 			);
 		}
 
-		if ( 'price' == $atts['orderby'] ) {
-			$args['orderby']  = 'meta_value_num';
-			$args['meta_key'] = $prefix . 'price';
-		} else {
-			$args['orderby'] = 'date';
-		}
+		if ( ! empty( $atts['properties_sort'] ) ) {
 
-		if ( ! empty( $atts['order'] ) ) {
-			$args['order'] = $atts['order'];
-		} else {
-			$args['order'] = 'desc';
+			switch ( $atts['properties_sort']  ) {
+				case 'asc_price':
+					$args['orderby']  = 'meta_value_num';
+					$args['order']    = 'asc';
+					$args['meta_key'] = $prefix . 'price';
+					break;
+
+				case 'desc_price':
+					$args['orderby']  = 'meta_value_num';
+					$args['order']    = 'desc';
+					$args['meta_key'] = $prefix . 'price';
+					break;
+
+				case 'asc_date':
+					$args['orderby'] = 'date';
+					$args['order']   = 'asc';
+					break;
+
+				default:
+					$args['orderby'] = 'date';
+					$args['order']   = 'desc';
+					break;
+			}
 		}
 
 		return apply_filters( 'cherry_re_prepare_search_args', $args, $atts );

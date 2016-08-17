@@ -59,6 +59,9 @@ class Cherry_RE_Search_Widget extends Cherry_Abstract_Widget {
 			),
 		);
 
+		add_action( 'wp_ajax_switch_layout', array( $this, 'switch_layout_callback' ) );
+		add_action( 'wp_ajax_nopriv_switch_layout', array( $this, 'switch_layout_callback' ) );
+
 		parent::__construct();
 	}
 
@@ -143,5 +146,37 @@ class Cherry_RE_Search_Widget extends Cherry_Abstract_Widget {
 		if ( $title ) {
 			return $args['before_title'] . $title . $args['after_title'];
 		}
+	}
+
+	/**
+	 * Switching layout.
+	 *
+	 * @return void
+	 */
+	public function switch_layout_callback() {
+
+		// Check a nonce.
+		$security = check_ajax_referer( '_tm-re-switch-layout', 'nonce', false );
+
+		if ( false === $security ) {
+			wp_send_json_error( array(
+				'message' => esc_html__( 'Internal error. Please, try again later.', 'cherry-real-estate' ),
+			) );
+		}
+
+		$saved_layout  = Model_Settings::get_search_layout();
+		$passed_layout = ! empty( $_POST['layout'] ) ? esc_attr( $_POST['layout'] ) : false;
+
+		if ( ! in_array( $passed_layout, array( 'grid', 'list' ) ) ) {
+			$passed_layout = 'grid';
+		}
+
+		if ( $saved_layout !== $passed_layout ) {
+			$search_options = get_option( 'cherry-re-options-search', array() );
+			$new_options    = array_merge( $search_options, array( 'layout' => $passed_layout ) );
+			update_option( 'cherry-re-options-search', $new_options );
+		}
+
+		wp_send_json_success();
 	}
 }

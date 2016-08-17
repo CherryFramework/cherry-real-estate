@@ -25,6 +25,8 @@
 			self.loginForm( self );
 			self.registerForm( self );
 			self.uploadImages( self );
+			self.previewLayouts( self );
+			self.sort( self );
 		},
 
 		gallery: function( self ) {
@@ -529,6 +531,92 @@
 				};
 
 			});
+		},
+
+		previewLayouts: function( self ) {
+			var $button = $( '.tm-re-switch-layout__btn' ),
+				$items  = $( '#tm-re-search-items' );
+
+			if ( ! ( $button.length && $items.length ) ) {
+				return !1;
+			}
+
+			$button.on( 'click', init );
+
+			function init( event ) {
+				var $target     = $( event.target ),
+					$form       = $target.parents( 'form' ),
+					nonce       = $form.find( 'input[name="tm-re-switch-layout-nonce"]' ).val(),
+					layout      = $target.val(),
+					active      = 'tm-re-switch-layout__btn--active',
+					listClass   = 'grid list',
+					processing  = 'processing';
+
+				if ( $target.hasClass( active ) ) {
+					return !1;
+				}
+
+				if ( $form.hasClass( processing ) ) {
+					return !1;
+				}
+
+				$form.addClass( processing );
+
+				$.ajax({
+					url: CherryREData.ajaxurl,
+					type: 'post',
+					dataType: 'json',
+					data: {
+						action: 'switch_layout',
+						layout: layout,
+						nonce: nonce
+					},
+					error: function() {
+						$form.removeClass( 'processing' );
+					}
+				}).done( function( response ) {
+
+					$form.removeClass( 'processing' );
+
+					if ( true === response.success ) {
+
+						if ( $button.hasClass( active ) ) {
+							$button.removeClass( active );
+						}
+
+						$target.addClass( active );
+						$items.toggleClass( listClass );
+
+						return 1;
+					}
+
+					return !1;
+				});
+			}
+		},
+
+		sort: function( self ) {
+			var $form = $( '#tm-re-property-sort' ),
+				$sort = $form.find( 'select' );
+
+			if ( ! $sort.length ) {
+				return !1;
+			}
+
+			$sort.on( 'change', init );
+
+			function init() {
+				var search    = CherryJsCore.variable.$window[0].location.search,
+					params    = self.getQueryParameters( search );
+
+				params.properties_sort = $( this ).val();
+
+				CherryJsCore.variable.$window[0].location.search = $.param( params );
+			}
+		},
+
+		getQueryParameters: function( str ) {
+			return (str || document.location.search).replace(/(^\?)/,'').split("&").map(function(n){return n = n.split("="),this[n[0]] = n[1],this}.bind({}))[0];
 		}
 
 	};
