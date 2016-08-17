@@ -1,8 +1,8 @@
 <?php
 /**
- * The Template for displaying search from and map in result page.
+ * The Template for displaying search map in result page.
  *
- * This template can be overridden by copying it to yourtheme/real-estate/search-result.php.
+ * This template can be overridden by copying it to yourtheme/real-estate/search/result.php.
  *
  * @package    Cherry_Real_Estate
  * @subpackage Templates

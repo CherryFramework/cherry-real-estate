@@ -229,11 +229,13 @@ function cherry_re_is_property_search() {
 		return false;
 	}
 
-	if ( empty( $_GET['post_type'] ) ) {
+	$query_post_type = get_query_var( 'post_type', false );
+
+	if ( false === $query_post_type ) {
 		return false;
 	}
 
 	$post_type = cherry_real_estate()->get_post_type_name();
 
-	return ( is_search() && $_GET['post_type'] == $post_type );
+	return ( is_search() && $query_post_type == $post_type );
 }
