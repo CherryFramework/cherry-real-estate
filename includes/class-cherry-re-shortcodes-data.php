@@ -405,8 +405,6 @@ class Cherry_RE_Shortcodes_Data {
 				'submission_form' => array(
 					'title' => esc_html__( 'Submission Form', 'cherry-real-estate' ),
 					'icon'  => '',
-					'body'  => array(
-					),
 				),
 			)
 		);

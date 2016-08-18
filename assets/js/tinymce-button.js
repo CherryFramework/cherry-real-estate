@@ -13,29 +13,32 @@
 			item['text']    = value['title'];
 			item['onclick'] = function() {
 
-				editor.windowManager.open({
-					title: value['title'],
-					icon: value['icon'],
-					body: value['body'],
-					minWidth: 600,
-					onsubmit: function( e ) {
-						var attr = e.data,
-							shortcode,
-							prop;
+				var selfClosed = ( 'object' == typeof value['body'] ) ? false : true,
+					shortcode  = prefix + key;
 
-						shortcode = '[' + prefix + key;
+				if ( ! selfClosed ) {
+					editor.windowManager.open({
+						title: value['title'],
+						icon: value['icon'],
+						body: value['body'],
+						minWidth: 600,
+						onsubmit: function( e ) {
+							var attr = e.data,
+								prop;
 
-						for ( prop in attr ) {
-							if ( attr[ prop ] ) {
-								shortcode += ' ' + prop + '="' + attr[ prop ] + '"';
+							for ( prop in attr ) {
+								if ( attr[ prop ] ) {
+									shortcode += ' ' + prop + '="' + attr[ prop ] + '"';
+								}
 							}
+
+							editor.selection.setContent( '[' + shortcode + ']' );
 						}
+					});
 
-						shortcode += ']';
-
-						editor.selection.setContent( shortcode );
-					}
-				});
+				} else {
+					editor.selection.setContent( '[' + shortcode + ']' );
+				}
 			};
 
 			menu.push( item );
