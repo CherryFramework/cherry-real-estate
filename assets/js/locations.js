@@ -2,11 +2,13 @@
 
 	$.fn.RELocations = function( options ) {
 		var $this = $( this ),
-			data = {
+			data  = {
 				zoom : 5,
 				infowindow : null,
 				address : null
-			};
+			},
+			locations = {},
+			positions = {};
 
 		$.extend( data, options );
 		initMap();
@@ -18,6 +20,8 @@
 			var $source = [],
 				map, geocoder, bounds;
 
+			// console.log( locations[0] );
+
 			if ( data.hasOwnProperty( 'sourceselector' ) ) {
 				$source = $( '#' + data.sourceselector ).children();
 			}
@@ -26,11 +30,12 @@
 				return !1;
 			}
 
-			prepareControlOptions();
+			// Changed a control's position.
+			setControlOptions();
 
-			map = new google.maps.Map( $this[0], data );
+			map      = new google.maps.Map( $this[0], data );
 			geocoder = new google.maps.Geocoder();
-			bounds = new google.maps.LatLngBounds();
+			bounds   = new google.maps.LatLngBounds();
 
 			map.addListener( 'click', function( e ) {
 				mapPanTo( e.latLng, map );
@@ -43,7 +48,7 @@
 			if ( null === data.address ) {
 
 				$source.each( function( i, el ) {
-					geocodeAddress( map, geocoder, bounds, $( this ) );
+					geocodeAddress( map, geocoder, bounds, $( el ) );
 				} );
 
 			} else {
@@ -55,7 +60,86 @@
 		};
 
 		/**
-		 * Callback function on click-event.
+		 * Geocoding.
+		 *
+		 * @param  object resultsMap
+		 * @param  object geocoder
+		 * @param  object bounds
+		 * @param  string _data
+		 * @return void
+		 */
+		function geocodeAddress( resultsMap, geocoder, bounds, _data ) {
+			var location = _data,
+				html     = '';
+
+			if ( 'object' == typeof _data ) {
+				location = _data.data( 'property-address' );
+				html     = _data.html();
+			}
+
+			if ( undefined === location ) {
+				return !1;
+			}
+
+			location = String( location );
+
+			// console.log( locations );
+
+			// for ( var id in menu ) {
+			// 	console.log( menu[ id ] );
+			// 	if ( location == locations[ id ] ) {
+			// 		console.log( locations[ id ] );
+			// 	} else {
+			// 		console.log( 'no' );
+			// 	}
+			// }
+
+			geocoder.geocode({
+				'address': location
+			}, function( results, status ) {
+
+				if ( status === google.maps.GeocoderStatus.OK ) {
+					var position      = results[0].geometry.location,
+						key           = results[0].place_id,
+						animationType = data.hasOwnProperty( 'animation' ) ? data.animation : '',
+						marker;
+
+					// console.log( results );
+
+					// locations[ key ] = location;
+					// positions[ key ] = position;
+
+					// console.log( locations );
+
+					bounds.extend( position );
+
+					marker = new google.maps.Marker({
+						map: resultsMap,
+						draggable: false,
+						animation: google.maps.Animation[ animationType ],
+						position: position,
+						icon: data.hasOwnProperty( 'icon' ) ? data.icon : '',
+						html: html
+					});
+
+					if ( null !== data.infowindow ) {
+						google.maps.event.addListener( marker, 'click', function () {
+							infowindow.setContent( this.html );
+							infowindow.open( resultsMap, this );
+						});
+					}
+
+					// Automatically center the map fitting all markers on the screen.
+					resultsMap.fitBounds( bounds );
+					// resultsMap.setZoom( zoom );
+				}
+			});
+
+			// console.log( locations );
+		};
+
+		/**
+		 * Callback-function on `click` event.
 		 *
 		 * @param  object LatLng
 		 * @param  ojject map
@@ -68,7 +152,7 @@
 		/**
 		 * Prepare options for Map Controls in javascript-format.
 		 */
-		function prepareControlOptions() {
+		function setControlOptions() {
 
 			if ( data.hasOwnProperty( 'mapTypeControlOptions' ) ) {
 				var mapTypeControlOptions = {
@@ -95,84 +179,6 @@
 				data.streetViewControlOptions = streetViewControlOptions;
 			}
 		};
-
-		/**
-		 * Geocoding.
-		 *
-		 * @param  object resultsMap
-		 * @param  object geocoder
-		 * @param  object bounds
-		 * @param  string address
-		 * @return void
-		 */
-		function geocodeAddress( resultsMap, geocoder, bounds, _data ) {
-			var location = _data,
-				html = '';
-
-			if ( 'object' === typeof _data ) {
-				location = _data.data( 'property-address' );
-				html     = _data.html();
-			}
-
-			if ( undefined === location ) {
-				return !1;
-			}
-
-			geocoder.geocode({
-				'address': String( location )
-			}, function( results, status ) {
-
-				if ( status === google.maps.GeocoderStatus.OK ) {
-					var position = results[0].geometry.location,
-						marker,
-						animationType = data.hasOwnProperty( 'animation' ) ? data.animation : '';
-
-					bounds.extend( position );
-
-					marker = new google.maps.Marker({
-						map: resultsMap,
-						draggable: false,
-						animation: google.maps.Animation[ animationType ],
-						position: position,
-						icon: data.hasOwnProperty( 'icon' ) ? data.icon : '',
-						html: html
-					});
-
-					if ( null !== data.infowindow ) {
-						google.maps.event.addListener( marker, 'click', function () {
-							infowindow.setContent( this.html );
-							infowindow.open( resultsMap, this );
-						});
-					}
-
-					// Automatically center the map fitting all markers on the screen.
-					resultsMap.fitBounds( bounds );
-					// resultsMap.setZoom( zoom );
-				}
-			});
-		};
 	}
-
-	// Let's Go.
-	$( '.tm-re-map' ).each( function() {
-		var data = $( this ).data( 'atts' ),
-			$map;
-
-		if ( 'object' != typeof data ) {
-			return !1;
-		}
-
-		if ( ! data.hasOwnProperty( 'id' ) ) {
-			return !1;
-		}
-
-		$map = $( '#' + data.id );
-
-		if ( ! $.isFunction( jQuery.fn.RELocations ) || ! $map.length ) {
-			return !1;
-		}
-
-		$map.RELocations( data );
-	} );
 
 })( jQuery );

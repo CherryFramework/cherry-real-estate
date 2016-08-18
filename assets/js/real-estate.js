@@ -27,6 +27,7 @@
 			self.uploadImages( self );
 			self.previewLayouts( self );
 			self.sort( self );
+			self.location( self );
 		},
 
 		gallery: function( self ) {
@@ -561,6 +562,7 @@
 				}
 
 				$form.addClass( processing );
+				$items.addClass( processing );
 
 				$.ajax({
 					url: CherryREData.ajaxurl,
@@ -580,10 +582,12 @@
 						$items.toggleClass( listClass );
 					},
 					error: function() {
-						$form.removeClass( 'processing' );
+						$form.removeClass( processing );
+						$items.removeClass( processing );
 					}
 				}).done( function( response ) {
-					$form.removeClass( 'processing' );
+					$form.removeClass( processing );
+					$items.removeClass( processing );
 				});
 			}
 		},
@@ -610,6 +614,25 @@
 
 		getQueryParameters: function( str ) {
 			return (str || document.location.search).replace(/(^\?)/,'').split("&").map(function(n){return n = n.split("="),this[n[0]] = n[1],this}.bind({}))[0];
+		},
+
+		location: function( self ) {
+			$( '.tm-re-map' ).each( function() {
+				var data = $( this ).data( 'atts' ),
+					$map;
+
+				if ( 'object' != typeof data ) {
+					return !1;
+				}
+
+				$map = $( '#' + data.id );
+
+				if ( ! $.isFunction( jQuery.fn.RELocations ) || ! $map.length ) {
+					return !1;
+				}
+
+				$map.RELocations( data );
+			} );
 		}
 
 	};
