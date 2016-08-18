@@ -73,6 +73,10 @@
 				return !1;
 			}
 
+			var $error   = $form.find( '.tm-re-submission-form__error' ),
+				$success = $form.find( '.tm-re-submission-form__success' ),
+				hidden   = 'tm-re-hidden';
+
 			$form.validate({
 				debug: true, // disabled submit event
 				messages: {
@@ -104,6 +108,20 @@
 				},
 				errorElement: 'span',
 				onkeyup: false,
+				onfocusout: function( element ) {
+					// native
+					if ( !this.checkable( element ) && ( element.name in this.submitted || !this.optional( element ) ) ) {
+						this.element( element );
+					}
+
+					if ( ! $error.hasClass( hidden ) ) {
+						$error.addClass( hidden );
+					}
+
+					if ( ! $success.hasClass( hidden ) ) {
+						$success.addClass( hidden );
+					}
+				},
 				highlight: function( element, errorClass, validClass ) {
 					$( element ).fadeOut( function() {
 						$( element ).fadeIn().addClass( errorClass ).removeClass( validClass );
@@ -112,6 +130,15 @@
 				unhighlight: function( element, errorClass, validClass ) {
 					$( element ).removeClass( errorClass ).addClass( validClass );
 				},
+				invalidHandler: function( event, validator ) {
+					if ( ! $error.hasClass( hidden ) ) {
+						$error.addClass( hidden );
+					}
+
+					if ( ! $success.hasClass( hidden ) ) {
+						$success.addClass( hidden );
+					}
+				},
 				submitHandler: function( form ) {
 					ajaxSubmit( $( form ) );
 				}
@@ -119,12 +146,11 @@
 
 			function ajaxSubmit( $form ) {
 				var formData    = $form.serializeArray(),
-					gallery_ids = $form.find( '.tm-re-uploaded-ids' ).data( 'ids' ),
+					$source     = $form.find( '.tm-re-uploaded-ids' ),
+					$preview    = $form.find( '.tm-re-uploaded-image' ),
+					gallery_ids = $source.data( 'ids' ),
 					nonce       = $form.find( 'input[name="tm-re-submissionform-nonce"]' ).val(),
-					$error      = $form.find( '.tm-re-submission-form__error' ),
-					$success    = $form.find( '.tm-re-submission-form__success' ),
-					processing  = 'processing',
-					hidden      = 'tm-re-hidden';
+					processing  = 'processing';
 
 				if ( $form.hasClass( processing ) ) {
 					return !1;
@@ -156,14 +182,15 @@
 						$error.removeClass( hidden ).html( textStatus );
 					}
 				}).done( function( response ) {
-					console.log( response );
+					// console.log( response );
 
 					$form.removeClass( processing );
 
 					if ( true === response.success ) {
 						$success.removeClass( hidden );
 						$form[0].reset();
-						$form.find( '.tm-re-uploaded-image' ).remove()
+						$preview.remove();
+						$source.data( 'ids', [] );
 						return 1;
 					}
 
@@ -242,7 +269,7 @@
 						$error.removeClass( hidden ).html( textStatus );
 					}
 				}).done( function( response ) {
-					console.log( response );
+					// console.log( response );
 
 					$form.removeClass( processing );
 
@@ -328,7 +355,7 @@
 						$error.removeClass( hidden ).html( textStatus );
 					}
 				}).done( function( response ) {
-					console.log( response );
+					// console.log( response );
 
 					$form.removeClass( processing );
 

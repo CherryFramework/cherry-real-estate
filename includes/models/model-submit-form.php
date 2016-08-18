@@ -120,6 +120,7 @@ class Model_Submit_Form {
 				$meta_prefix . 'location'       => $data['property_address'],
 				$meta_prefix . 'gallery'        => $gallery,
 				$meta_prefix . 'author'         => isset( $current_user->user_login ) ? $current_user->user_login : '',
+				$meta_prefix . 'state'          => $need_confirm ? 'inactive' : 'active',
 			),
 		);
 
