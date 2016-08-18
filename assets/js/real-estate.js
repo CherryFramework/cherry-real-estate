@@ -571,26 +571,19 @@
 						layout: layout,
 						nonce: nonce
 					},
-					error: function() {
-						$form.removeClass( 'processing' );
-					}
-				}).done( function( response ) {
-
-					$form.removeClass( 'processing' );
-
-					if ( true === response.success ) {
-
+					beforeSend: function() {
 						if ( $button.hasClass( active ) ) {
 							$button.removeClass( active );
 						}
 
 						$target.addClass( active );
 						$items.toggleClass( listClass );
-
-						return 1;
+					},
+					error: function() {
+						$form.removeClass( 'processing' );
 					}
-
-					return !1;
+				}).done( function( response ) {
+					$form.removeClass( 'processing' );
 				});
 			}
 		},
