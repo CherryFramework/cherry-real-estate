@@ -224,17 +224,21 @@ class Model_Agents {
 
 		$prefix = cherry_real_estate()->get_meta_prefix();
 
-		update_user_meta(
-			$user_id,
-			$prefix . 'agent_contacts',
-			$_POST[ $prefix . 'agent_contacts' ]
-		);
+		if ( ! empty( $_POST[ $prefix . 'agent_contacts' ] ) ) {
+			update_user_meta(
+				$user_id,
+				$prefix . 'agent_contacts',
+				$_POST[ $prefix . 'agent_contacts' ]
+			);
+		}
 
-		update_user_meta(
-			$user_id,
-			$prefix . 'agent_socials',
-			$_POST[ $prefix . 'agent_socials' ]
-		);
+		if ( ! empty( $_POST[ $prefix . 'agent_socials' ] ) ) {
+			update_user_meta(
+				$user_id,
+				$prefix . 'agent_socials',
+				$_POST[ $prefix . 'agent_socials' ]
+			);
+		}
 	}
 
 	/**
