@@ -33,33 +33,14 @@ class Model_Submit_Form {
 		add_action( 'transition_post_status', array( $this, 'publish_property' ), 10, 3 );
 
 		add_action( 'wp_ajax_upload_file', array( __CLASS__, 'upload_file_callback' ) );
-
-		add_action( 'cherry_re_before_submission_form', array( $this, 'popup_link' ) );
-		add_action( 'cherry_re_before_submission_form_btn', array( $this, 'popup_link' ) );
 	}
 
-	public function popup_link() {
-
-		if ( is_user_logged_in() ) {
-			return;
-		}
-
-		$args = array(
-			'class' => 'tm-re-popup',
-			'href'  => $this->get_popup_id(),
-			'text'  => __( 'Please <a class="%1$s" href="#%2$s" data-tab="0">log in</a> or <a class="%1$s" href="#%2$s" data-tab="1">register</a> to create a new listing', 'cherry-real-estate' ),
-		);
-
-		$args = apply_filters( 'cherry_re_popup_link_args', $args );
-		$text = sprintf(
-			$args['text'],
-			esc_attr( $args['class'] ),
-			esc_attr( $args['href'] )
-		);
-
-		printf( '<div class="tm-re-auth-message">%s</div>', $text );
-	}
-
+	/**
+	 * Retrieve a popup id attribute (without `#`).
+	 *
+	 * @since 1.0.0
+	 * @return string
+	 */
 	public static function get_popup_id() {
 		return apply_filters( 'cherry_re_get_popup_html_id', 'tm-re-auth-popup' );
 	}

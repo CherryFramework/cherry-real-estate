@@ -16,7 +16,7 @@
 	<?php wp_nonce_field( '_tm-re-register-form', 'tm-re-registerform-nonce' ); ?>
 
 	<div class="tm-re-register-form__group">
-		<input type="text" id="tm-re-user-reg-login" name="user_login" placeholder="<?php esc_html_e( 'Username', 'cherry-real-estate' ); ?>" required="required">
+		<input type="text" id="tm-re-user-reg-login" name="user_login" placeholder="<?php esc_html_e( 'User Name', 'cherry-real-estate' ); ?>" required="required">
 	</div>
 
 	<div class="tm-re-register-form__group">

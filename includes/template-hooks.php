@@ -50,3 +50,9 @@ add_action( 'cherry_re_before_main_content', 'cherry_real_estate_search_map_resu
 add_action( 'cherry_re_output_search_result_map', 'cherry_real_estate_search_map_result', 10 );
 add_action( 'cherry_re_before_search_loop', 'cherry_real_estate_switch_layout', 5 );
 add_action( 'cherry_re_before_search_loop', 'cherry_real_estate_property_sort', 10 );
+
+/**
+ * Submission Form.
+ */
+add_action( 'cherry_re_before_submission_form', 'cherry_real_estate_auth_message_link', 10 );
+add_action( 'cherry_re_before_submission_form_btn', 'cherry_real_estate_auth_message_link', 10 );

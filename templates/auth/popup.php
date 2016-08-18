@@ -15,7 +15,7 @@ do_action( 'cherry_re_before_auth_popup' ); ?>
 
 <div id="<?php echo esc_attr( $popup_id ); ?>" class="tm-re-auth-popup mfp-with-anim mfp-hide" data-anim-effect="tm-re-mfp-move-from-top">
 	<ul>
-		<li><a href="#tm-re-login-form"><?php esc_html_e( 'Log In', 'cherry-real-estate' ); ?></a></li>
+		<li><a href="#tm-re-login-form"><?php esc_html_e( 'Login', 'cherry-real-estate' ); ?></a></li>
 		<li><a href="#tm-re-register-form"><?php esc_html_e( 'Register', 'cherry-real-estate' ); ?></a></li>
 	</ul>
 	<div id="tm-re-login-form">

@@ -252,3 +252,21 @@ if ( ! function_exists( 'cherry_real_estate_property_sort' ) ) {
 		) );
 	}
 }
+
+
+/* Submission Form --------------------------------------------------------------*/
+
+if ( ! function_exists( 'cherry_real_estate_auth_message_link' ) ) {
+
+	/**
+	 * Output the message with login/register links.
+	 *
+	 * @since 1.0.0
+	 */
+	function cherry_real_estate_auth_message_link() {
+		cherry_re_get_template( 'auth/message-link', array(
+			'class' => 'tm-re-popup',
+			'href'  => Model_Submit_Form::get_popup_id(),
+		) );
+	}
+}

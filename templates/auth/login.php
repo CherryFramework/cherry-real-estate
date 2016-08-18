@@ -16,7 +16,7 @@
 	<?php wp_nonce_field( '_tm-re-login-form', 'tm-re-loginform-nonce' ); ?>
 
 	<div class="tm-re-login-form__group">
-		<input type="text" id="tm-re-user-login" name="user_login" placeholder="<?php esc_html_e( 'Username', 'cherry-real-estate' ); ?>" required="required">
+		<input type="text" id="tm-re-user-login" name="user_login" placeholder="<?php esc_html_e( 'User Name', 'cherry-real-estate' ); ?>" required="required">
 	</div>
 
 	<div class="tm-re-login-form__group">
@@ -24,7 +24,7 @@
 	</div>
 
 	<div class="tm-re-login-form__group">
-		<button type="submit" class="tm-re-login-form__btn"><?php esc_html_e( 'Log In', 'cherry-real-estate' ); ?></button>
+		<button type="submit" class="tm-re-login-form__btn"><?php esc_html_e( 'Login', 'cherry-real-estate' ); ?></button>
 	</div>
 
 	<div class="tm-re-login-form__messages tm-re-messages">
