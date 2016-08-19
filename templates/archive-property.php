@@ -29,8 +29,7 @@ if ( ! did_action( 'get_header' ) ) {
  *
  * @since 1.0.0
  *
- * @hooked cherry_real_estate_switch_layout - 5
- * @hooked cherry_real_estate_property_sort - 10
+ * @hooked cherry_real_estate_listing_controls - 10
  */
 do_action( 'cherry_re_archive_description' );
 
@@ -61,7 +60,6 @@ $data->the_property( $args );
  * @since 1.0.0
  */
 do_action( 'cherry_re_after_property_loop' );
-
 
 if ( did_action( 'cherry_re_before_main_content' ) ) {
 

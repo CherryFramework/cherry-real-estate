@@ -226,29 +226,20 @@ if ( ! function_exists( 'cherry_real_estate_search_map_result' ) ) {
 	}
 }
 
-if ( ! function_exists( 'cherry_real_estate_switch_layout' ) ) {
+if ( ! function_exists( 'cherry_real_estate_listing_controls' ) ) {
 
 	/**
-	 * Output the switch layout form.
+	 * Output the listing controls.
 	 *
 	 * @since 1.0.0
 	 */
-	function cherry_real_estate_switch_layout() {
-		cherry_re_get_template( 'misc/switch-layout' );
-	}
-}
-
-if ( ! function_exists( 'cherry_real_estate_property_sort' ) ) {
-
-	/**
-	 * Output the switch layout form.
-	 *
-	 * @since 1.0.0
-	 */
-	function cherry_real_estate_property_sort() {
-		cherry_re_get_template( 'misc/sort', array(
-			'options' => Model_Submit_Form::get_sort_options(),
-			'value' => ! empty( $_GET['properties_sort'] ) ? esc_attr( $_GET['properties_sort'] ) : '',
+	function cherry_real_estate_listing_controls() {
+		cherry_re_get_template( 'misc/listing-controls', array(
+			'layout_control' => cherry_re_get_template_html( 'misc/switch-layout' ),
+			'sort_control'   => cherry_re_get_template_html( 'misc/sort', array(
+				'options' => Model_Submit_Form::get_sort_options(),
+				'value'   => ! empty( $_GET['properties_sort'] ) ? esc_attr( $_GET['properties_sort'] ) : '',
+			) ),
 		) );
 	}
 }
