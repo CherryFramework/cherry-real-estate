@@ -11,7 +11,7 @@
  * @copyright  2002-2016, Template Monster
  */
 
-$layout = Model_Settings::get_search_layout(); ?>
+$layout = Model_Settings::get_listing_layout(); ?>
 
 <form method="post" id="tm-re-switch-layout" class="tm-re-switch-layout" action="#">
 

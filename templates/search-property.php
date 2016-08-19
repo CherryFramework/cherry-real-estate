@@ -38,7 +38,7 @@ $data   = Cherry_RE_Property_Data::get_instance();
 $params = $data->prepare_search_args();
 $args   = apply_filters( 'cherry_re_search_template_args', array(
 	'css_id'    => 'tm-re-property-items',
-	'css_class' => Model_Settings::get_search_layout(),
+	'css_class' => Model_Settings::get_listing_layout(),
 ) );
 $args = wp_parse_args( $args, $params );
 

@@ -70,7 +70,7 @@ class Cherry_RE_Templater {
 		$find      = array();
 		$file      = '';
 
-		if ( is_single() && get_post_type() == $post_type ) {
+		if ( is_singular( $post_type ) ) {
 
 			$file   = 'single-property.php';
 			$find[] = $file;
@@ -110,7 +110,7 @@ class Cherry_RE_Templater {
 			// CSS class.
 			self::$classes[] = 'tm-property--taxonomy';
 
-		} elseif ( is_post_type_archive( $post_type ) ) {
+		} elseif ( cherry_re_is_property_listing() ) {
 
 			$file   = 'archive-property.php';
 			$find[] = $file;

@@ -164,7 +164,7 @@ class Cherry_RE_Search_Widget extends Cherry_Abstract_Widget {
 			) );
 		}
 
-		$saved_layout  = Model_Settings::get_search_layout();
+		$saved_layout  = Model_Settings::get_listing_layout();
 		$passed_layout = ! empty( $_POST['layout'] ) ? esc_attr( $_POST['layout'] ) : false;
 
 		if ( ! in_array( $passed_layout, array( 'grid', 'list' ) ) ) {
@@ -172,9 +172,9 @@ class Cherry_RE_Search_Widget extends Cherry_Abstract_Widget {
 		}
 
 		if ( $saved_layout !== $passed_layout ) {
-			$search_options = get_option( 'cherry-re-options-search', array() );
-			$new_options    = array_merge( $search_options, array( 'layout' => $passed_layout ) );
-			update_option( 'cherry-re-options-search', $new_options );
+			$listing_options = get_option( 'cherry-re-options-listing', array() );
+			$new_options     = array_merge( $listing_options, array( 'layout' => $passed_layout ) );
+			update_option( 'cherry-re-options-listing', $new_options );
 		}
 
 		wp_send_json_success();

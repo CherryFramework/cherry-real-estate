@@ -86,6 +86,10 @@ class Cherry_RE_Options_Page {
 				'slug' => 'cherry-re-options-emails',
 				'name' => esc_html__( 'E-mails', 'cherry-real-estate' ),
 			),
+			'cherry-re-options-listing' => array(
+				'slug' => 'cherry-re-options-listing',
+				'name' => esc_html__( 'Listing', 'cherry-real-estate' ),
+			),
 		) );
 	}
 
@@ -194,24 +198,6 @@ class Cherry_RE_Options_Page {
 				),
 			),
 			'cherry-re-options-emails' => array(
-				'confirm-subject' => array(
-					'slug'  => 'confirm-subject',
-					'title' => esc_html__( 'Confirm E-mail subject', 'cherry-real-estate' ),
-					'type'  => 'text',
-					'field' => array(
-						'id'    => 'confirm-subject',
-						'value' => esc_html__( 'Confirmation e-mail', 'cherry-real-estate' ),
-					),
-				),
-				'confirm-message' => array(
-					'slug'  => 'confirm-message',
-					'title' => esc_html__( 'Confirm E-mail message', 'cherry-real-estate' ),
-					'type'  => 'textarea',
-					'field' => array(
-						'id'    => 'confirm-message',
-						'value' => esc_html__( 'Hi. You submit a new property. Please, to confirm your ads go to the link ', 'cherry-real-estate' ),
-					),
-				),
 				'notification-subject' => array(
 					'slug'  => 'notification-subject',
 					'title' => esc_html__( 'Notification E-mail subject', 'cherry-real-estate' ),
@@ -246,6 +232,33 @@ class Cherry_RE_Options_Page {
 					'field' => array(
 						'id'    => 'congratulate-message',
 						'value' => esc_html__( 'Congratulations! Your property has been published.', 'cherry-real-estate' ),
+					),
+				),
+			),
+			'cherry-re-options-listing' => array(
+				'page' => array(
+					'slug'  => 'page',
+					'title' => esc_html__( 'Page', 'cherry-real-estate' ),
+					'type'  => 'select',
+					'field' => array(
+						'id'           => 'page',
+						'options'      => $this->get_pages(),
+						'inline_style' => 'width:auto',
+						'value'        => apply_filters( 'cherry_re_listing_page_slug', 0 ),
+					),
+				),
+				'layout' => array(
+					'slug'  => 'layout',
+					'title' => esc_html__( 'Layout', 'cherry-real-estate' ),
+					'type'  => 'select',
+					'field' => array(
+						'id'      => 'layout',
+						'options' => array(
+							'grid' => esc_html__( 'Grid', 'cherry-real-estate' ),
+							'list' => esc_html__( 'List', 'cherry-real-estate' ),
+						),
+						'inline_style' => 'width:auto',
+						'value'        => 'grid',
 					),
 				),
 			),
@@ -318,6 +331,29 @@ class Cherry_RE_Options_Page {
 	 */
 	public function get_page_slug() {
 		return $this->page_slug;
+	}
+
+	/**
+	 * Retrieve a set of all pages (key - page slug, value - page title).
+	 *
+	 * @since  1.0.0
+	 * @return array
+	 */
+	public function get_pages() {
+		$all_pages = get_pages( apply_filters( 'cherry_re_get_pages_args', array(
+				'hierarchical' => 1,
+				'parent'       => -1,
+				'post_status'  => 'publish',
+			)
+		) );
+
+		$pages = array( esc_attr__( '&mdash;&nbsp;Select&nbsp;&mdash;', 'cherry-real-estate' ) );
+
+		foreach ( $all_pages as $page ) {
+			$pages[ $page->ID ] = $page->post_title;
+		}
+
+		return $pages;
 	}
 
 	/**

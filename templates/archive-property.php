@@ -41,7 +41,7 @@ $args   = apply_filters( 'cherry_re_archive_template_args', array(
 	'tax_query'       => ! empty( $wp_query->tax_query->queries ) ? $wp_query->tax_query->queries : false,
 	'template'        => 'archive.tmpl',
 	'css_id'          => 'tm-re-property-items',
-	'css_class'       => Model_Settings::get_search_layout(),
+	'css_class'       => Model_Settings::get_listing_layout(),
 ) );
 $args = wp_parse_args( $args, $params );
 

@@ -58,13 +58,13 @@ class Model_Settings {
 	}
 
 	/**
-	 * Get settings for Search page.
+	 * Get settings for Property pages.
 	 *
 	 * @since 1.0.0
 	 * @return mixed
 	 */
-	public static function get_search_settings() {
-		return get_option( 'cherry-re-options-search' );
+	public static function get_listing_settings() {
+		return get_option( 'cherry-re-options-listing' );
 	}
 
 	/**
@@ -254,30 +254,6 @@ class Model_Settings {
 	}
 
 	/**
-	 * Get confirm subject.
-	 *
-	 * @since 1.0.0
-	 * @return string
-	 */
-	public static function get_confirm_subject() {
-		$emails = self::get_emails_settings();
-
-		return ! empty( $emails['confirm-subject'] ) ? $emails['confirm-subject'] : '';
-	}
-
-	/**
-	 * Get confirm message.
-	 *
-	 * @since 1.0.0
-	 * @return string
-	 */
-	public static function get_confirm_message() {
-		$emails = self::get_emails_settings();
-
-		return ! empty( $emails['confirm-message'] ) ? $emails['confirm-message'] : '';
-	}
-
-	/**
 	 * Get notification subject.
 	 *
 	 * @since 1.0.0
@@ -326,17 +302,29 @@ class Model_Settings {
 	}
 
 	/**
-	 * Get search layout.
+	 * Get listing page.
 	 *
 	 * @since 1.0.0
 	 * @return string
 	 */
-	public static function get_search_layout() {
-		$search_options = self::get_search_settings();
+	public static function get_listing_page() {
+		$listing_options = self::get_listing_settings();
+
+		return ! empty( $listing_options['page'] ) ? $listing_options['page'] : '';
+	}
+
+	/**
+	 * Get listing layout.
+	 *
+	 * @since 1.0.0
+	 * @return string
+	 */
+	public static function get_listing_layout() {
+		$listing_options = self::get_listing_settings();
 		$layout         = false;
 
-		if ( is_array( $search_options ) && ! empty( $search_options['layout'] ) ) {
-			$layout = $search_options['layout'];
+		if ( is_array( $listing_options ) && ! empty( $listing_options['layout'] ) ) {
+			$layout = $listing_options['layout'];
 		}
 
 		if ( ! in_array( $layout, array( 'grid', 'list' ) ) ) {

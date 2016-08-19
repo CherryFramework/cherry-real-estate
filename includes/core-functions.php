@@ -239,3 +239,17 @@ function cherry_re_is_property_search() {
 
 	return ( is_search() && $query_post_type == $post_type );
 }
+
+
+/**
+ * Is the query for an existing property archive page?
+ *
+ * @since 1.0.0
+ * @return bool
+ */
+function cherry_re_is_property_listing() {
+	$post_type    = cherry_real_estate()->get_post_type_name();
+	$listing_page = Model_Settings::get_listing_page();
+
+	return is_post_type_archive( $post_type ) || ( is_page( $listing_page ) && '' !== $listing_page );
+}
