@@ -110,7 +110,7 @@
 				onkeyup: false,
 				onfocusout: function( element ) {
 					// native
-					if ( !this.checkable( element ) && ( element.name in this.submitted || !this.optional( element ) ) ) {
+					if ( ! this.checkable( element ) && ( element.name in this.submitted || ! this.optional( element ) ) ) {
 						this.element( element );
 					}
 
@@ -563,7 +563,7 @@
 
 		previewLayouts: function( self ) {
 			var $button = $( '.tm-re-switch-layout__btn' ),
-				$items  = $( '#tm-re-search-items' );
+				$items  = $( '#tm-re-property-items' );
 
 			if ( ! ( $button.length && $items.length ) ) {
 				return !1;

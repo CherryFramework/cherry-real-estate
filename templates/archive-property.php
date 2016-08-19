@@ -29,17 +29,22 @@ if ( ! did_action( 'get_header' ) ) {
  *
  * @since 1.0.0
  *
- * @hooked
+ * @hooked cherry_real_estate_switch_layout - 5
+ * @hooked cherry_real_estate_property_sort - 10
  */
 do_action( 'cherry_re_archive_description' );
 
-$args = apply_filters( 'cherry_re_archive_template_args', array(
+$data   = Cherry_RE_Property_Data::get_instance();
+$params = $data->prepare_search_args();
+$args   = apply_filters( 'cherry_re_archive_template_args', array(
 	'number'          => get_query_var( 'posts_per_page', 10 ),
 	'show_pagination' => true,
 	'tax_query'       => ! empty( $wp_query->tax_query->queries ) ? $wp_query->tax_query->queries : false,
 	'template'        => 'archive.tmpl',
+	'css_id'          => 'tm-re-property-items',
+	'css_class'       => Model_Settings::get_search_layout(),
 ) );
-$data = Cherry_RE_Property_Data::get_instance();
+$args = wp_parse_args( $args, $params );
 
 /**
  * cherry_re_before_property_loop hook.

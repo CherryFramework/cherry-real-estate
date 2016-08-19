@@ -27,3 +27,5 @@
 	</label>
 
 </form>
+
+<?php cherry_re_enqueue_script( array( 'cherry-re-script') ); // Enqueue script. ?>

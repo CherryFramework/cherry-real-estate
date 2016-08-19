@@ -16,10 +16,8 @@ do_action( 'cherry_re_before_submission_form' ); ?>
 	<?php wp_nonce_field( '_tm-re-submission-form', 'tm-re-submissionform-nonce' ); ?>
 
 	<div class="tm-re-submission-form__group">
-		<label>
-			<span class="tm-re-submission-form__label"><?php esc_html_e( 'Title', 'cherry-real-estate' ); ?></span>
-			<input type="text" id="property_title" class="tm-re-submission-form__field" name="property_title" value="" placeholder="<?php esc_html_e( 'Enter your property title', 'cherry-real-estate' ); ?>" required="required">
-		</label>
+		<label><?php esc_html_e( 'Title', 'cherry-real-estate' ); ?></label>
+		<input type="text" id="property_title" class="tm-re-submission-form__field" name="property_title" value="" placeholder="<?php esc_html_e( 'Enter your property title', 'cherry-real-estate' ); ?>" required="required">
 	</div>
 
 	<div class="tm-re-submission-form__group">

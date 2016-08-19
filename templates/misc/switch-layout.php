@@ -20,3 +20,5 @@ $layout = Model_Settings::get_search_layout(); ?>
 	<button type="button" class="tm-re-switch-layout__btn tm-re-layout--grid<?php if ( 'grid' === $layout ) echo ' tm-re-switch-layout__btn--active'; ?>" value="grid"><?php esc_html_e( 'Grid', 'cherry-real-estate' ); ?></button>
 	<button type="button" class="tm-re-switch-layout__btn tm-re-layout--list<?php if ( 'list' === $layout ) echo ' tm-re-switch-layout__btn--active'; ?>" value="list"><?php esc_html_e( 'List', 'cherry-real-estate' ); ?></button>
 </form>
+
+<?php cherry_re_enqueue_script( array( 'cherry-re-script') ); // Enqueue script. ?>
