@@ -13,15 +13,15 @@
 
 do_action( 'cherry_re_before_auth_popup' ); ?>
 
-<div id="<?php echo esc_attr( $popup_id ); ?>" class="tm-re-auth-popup mfp-with-anim mfp-hide" data-anim-effect="tm-re-mfp-move-from-top">
-	<ul>
-		<li><a href="#tm-re-login-form"><?php esc_html_e( 'Login', 'cherry-real-estate' ); ?></a></li>
-		<li><a href="#tm-re-register-form"><?php esc_html_e( 'Register', 'cherry-real-estate' ); ?></a></li>
+<div id="<?php echo esc_attr( $popup_id ); ?>" class="tm-re-auth-popup tm-re-tabs mfp-with-anim mfp-hide" data-anim-effect="tm-re-mfp-move-from-top">
+	<ul class="tm-re-tabs__nav">
+		<li class="tm-re-tabs__item"><a href="#tm-re-login-form"><?php esc_html_e( 'Login', 'cherry-real-estate' ); ?></a></li>
+		<li class="tm-re-tabs__item"><a href="#tm-re-register-form"><?php esc_html_e( 'Register', 'cherry-real-estate' ); ?></a></li>
 	</ul>
-	<div id="tm-re-login-form">
+	<div id="tm-re-login-form" class="tm-re-tabs__panel">
 		<?php echo $login_form; ?>
 	</div>
-	<div id="tm-re-register-form">
+	<div id="tm-re-register-form" class="tm-re-tabs__panel">
 		<?php echo $register_form; ?>
 	</div>
 </div>
