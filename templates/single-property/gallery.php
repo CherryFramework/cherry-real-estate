@@ -24,16 +24,25 @@ if ( ! $gallery_ids ) {
 
 $instance           = 'tm-property-gallery-' . uniqid();
 $gallery_ids_amount = count( $gallery_ids );
-$gallery_js_class   = '';
+$gallery_js_classes = array(
+	'container' => '',
+	'wrapper'   => '',
+	'item'      => '',
+);
 $slide_atts         = array();
 
 // Gallery or single image?
 $is_gallery = false;
 
 if ( $gallery_ids_amount > 1 ) {
-	$is_gallery       = true;
-	$gallery_js_class = 'tm-property-gallery-js';
-	$slides_per_view  = $gallery_ids_amount < 6 ? count( $gallery_ids_amount ) : 6;
+	$is_gallery         = true;
+	$gallery_js_classes = array(
+		'container' => 'swiper-container tm-property-gallery-js',
+		'wrapper'   => 'swiper-wrapper',
+		'item'      => 'swiper-slide',
+	);
+	$gallery_js_classes = array_map( 'esc_attr', $gallery_js_classes );
+	$slides_per_view    = $gallery_ids_amount < 6 ? count( $gallery_ids_amount ) : 6;
 
 	// Slide data attributes.
 	$slide_atts = apply_filters( 'cherry_re_single_property_gallery_data_atts', array(
@@ -53,8 +62,10 @@ if ( $gallery_ids_amount > 1 ) {
 	) );
 } ?>
 
-<div id="<?php echo esc_attr( $instance ); ?>" class="tm-property-gallery swiper-container tm-property-gallery--top <?php echo $gallery_js_class; ?>" data-id="<?php echo esc_attr( $instance ); ?>" <?php cherry_re_print_data_atts( $slide_atts, true ); ?>>
-	<div class="tm-property-gallery__wrapper swiper-wrapper">
+<?php $gallery_js_classes = apply_filters( 'cherry_re_gallery_js_classes', $gallery_js_classes ); ?>
+
+<div id="<?php echo esc_attr( $instance ); ?>" class="tm-property-gallery tm-property-gallery--top <?php echo $gallery_js_classes['container']; ?>" data-id="<?php echo esc_attr( $instance ); ?>" <?php cherry_re_print_data_atts( $slide_atts, true ); ?>>
+	<div class="tm-property-gallery__wrapper <?php echo $gallery_js_classes['wrapper']; ?>">
 
 		<?php foreach ( $gallery_ids as $key => $attachment_id ) {
 			$image_title = get_the_title( $attachment_id );
@@ -69,8 +80,10 @@ if ( $gallery_ids_amount > 1 ) {
 
 			echo apply_filters( 'cherry_re_single_property_gallery_item_html',
 				sprintf(
-					'<div class="tm-property-gallery__item swiper-slide"><img src="%s" alt="%s"></div>',
-					esc_url( $image_src[0] ), esc_attr( $image_title )
+					'<div class="tm-property-gallery__item %3$s"><img src="%1$s" alt="%2$s"></div>',
+					esc_url( $image_src[0] ),
+					esc_attr( $image_title ),
+					$gallery_js_classes['item']
 				),
 				$attachment_id, $property_ID
 			);
