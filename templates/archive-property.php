@@ -36,7 +36,7 @@ do_action( 'cherry_re_archive_description' );
 $data   = Cherry_RE_Property_Data::get_instance();
 $params = $data->prepare_search_args();
 $args   = apply_filters( 'cherry_re_archive_template_args', array(
-	'number'          => get_query_var( 'posts_per_page', 10 ),
+	'number'          => Model_Settings::get_listing_per_page(),
 	'show_pagination' => true,
 	'tax_query'       => ! empty( $wp_query->tax_query->queries ) ? $wp_query->tax_query->queries : false,
 	'template'        => 'archive.tmpl',

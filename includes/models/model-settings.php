@@ -335,6 +335,18 @@ class Model_Settings {
 	}
 
 	/**
+	 * Get listing per page.
+	 *
+	 * @since 1.0.0
+	 * @return string
+	 */
+	public static function get_listing_per_page() {
+		$listing_options = self::get_listing_settings();
+
+		return ! empty( $listing_options['posts_per_page'] ) ? $listing_options['posts_per_page'] : 10;
+	}
+
+	/**
 	 * Remove all settings.
 	 *
 	 * @since 1.0.0

@@ -261,6 +261,18 @@ class Cherry_RE_Options_Page {
 						'value'        => 'grid',
 					),
 				),
+				'posts_per_page' => array(
+					'slug'  => 'posts_per_page',
+					'title' => esc_html__( 'Listings Per Page', 'cherry-real-estate' ),
+					'type'  => 'stepper',
+					'field' => array(
+						'id'         => 'posts_per_page',
+						'max_value'  => '100',
+						'min_value'  => '1',
+						'step_value' => '1',
+						'value'      => '10',
+					),
+				),
 			),
 		) );
 	}
