@@ -301,7 +301,7 @@ class Model_Submit_Form {
 		$message = Model_Settings::get_congratulate_message();
 		$message .= sprintf( __( '<br>View: %s<br><br>', 'cherry-real-estate' ), get_permalink( $property_id ) );
 
-		$agent_id       = $post->author;
+		$agent_id       = $post->post_author;
 		$agent_contacts = $this->_prepare_agent_contacts_to_mail( $agent_id );
 
 		if ( ! empty( $agent_contacts ) ) {
@@ -436,11 +436,15 @@ class Model_Submit_Form {
 			$info   = array();
 			$info[] = ! empty( $data->first_name ) ? $data->first_name : '';
 			$info[] = ! empty( $data->last_name ) ? $data->last_name : '';
+			$email  = ! empty( $data->user_email ) ? $data->user_email : '';
+
+			$mail_message .= __( '<br>Your personal agent:<br><br>', 'cherry-real-estate' );
 
 			if ( ! empty( $info ) ) {
-				$mail_message .= __( '<br>Your personal agent:<br><br>', 'cherry-real-estate' );
 				$mail_message .= join( $info, ' ' );
-			};
+			}
+
+			$mail_message .= sprintf( __( '<br>Email: %s', 'cherry-real-estate' ), antispambot( $email ) );
 		}
 
 		if ( ! empty( $contacts ) ) {
