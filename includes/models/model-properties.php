@@ -52,7 +52,46 @@ class Model_Properties {
 	public static function get_property_types( $key = 'id' ) {
 		$post_type = cherry_real_estate()->get_post_type_name();
 		$tax       = $post_type . '_type';
-		$terms     = array();
+
+		return self::get_terms( $tax, $key );
+	}
+
+	/**
+	 * Get property tags.
+	 *
+	 * @since  1.0.0
+	 * @return array
+	 */
+	public static function get_property_tags( $key = 'id' ) {
+		$post_type = cherry_real_estate()->get_post_type_name();
+		$tax       = $post_type . '_tag';
+
+		return self::get_terms( $tax, $key );
+	}
+
+	/**
+	 * Get property tags.
+	 *
+	 * @since  1.0.0
+	 * @return array
+	 */
+	public static function get_property_features( $key = 'id' ) {
+		$post_type = cherry_real_estate()->get_post_type_name();
+		$tax       = $post_type . '_feature';
+
+		return self::get_terms( $tax, $key );
+	}
+
+	/**
+	 * Retrieve the terms in a given taxonomy or list of taxonomies.
+	 *
+	 * @since  1.0.0
+	 * @param  string $tax Taxonomy name
+	 * @param  string $key Key - id or slug
+	 * @return array
+	 */
+	public static function get_terms( $tax, $key ) {
+		$terms = array();
 
 		if ( 'id' === $key ) {
 			foreach ( (array) get_terms( $tax, array( 'hide_empty' => false ) ) as $term ) {

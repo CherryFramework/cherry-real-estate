@@ -25,14 +25,6 @@ class Cherry_RE_Property_Data {
 	private static $instance = null;
 
 	/**
-	 * The array of arguments for query.
-	 *
-	 * @since 1.0.0
-	 * @var array
-	 */
-	private $query_args = array();
-
-	/**
 	 * Holder for the main query object.
 	 *
 	 * @since 1.0.0
@@ -239,24 +231,28 @@ class Cherry_RE_Property_Data {
 
 		// The Query Arguments.
 		$post_type = cherry_real_estate()->get_post_type_name();
-		$this->query_args['post_type']        = $post_type;
-		$this->query_args['posts_per_page']   = $args['number'];
-		$this->query_args['orderby']          = $args['orderby'];
-		$this->query_args['order']            = $args['order'];
-		$this->query_args['suppress_filters'] = false;
+		$query_args['post_type']        = $post_type;
+		$query_args['posts_per_page']   = $args['number'];
+		$query_args['orderby']          = $args['orderby'];
+		$query_args['order']            = $args['order'];
+		$query_args['suppress_filters'] = false;
 
 		if ( ! empty( $args['author'] ) ) {
-			$this->query_args['author'] = $args['author'];
+			$query_args['author'] = $args['author'];
 		}
 
 		// Tax Query.
 		if ( ! empty( $args['tax_query'] ) ) {
-			$this->query_args['tax_query'] = $args['tax_query'];
+			$query_args['tax_query'] = $args['tax_query'];
 
 		} elseif ( ! empty( $args['taxonomy'] ) && ! empty( $args['terms'] ) ) {
 
 			// Term string to array.
-			$terms = explode( ',', $args['terms'] );
+			if ( is_array( $args['terms'] ) ) {
+				$terms = $args['terms'];
+			} else {
+				$terms = explode( ',', $args['terms'] );
+			}
 
 			// Taxonomy operator.
 			$tax_operator = ! empty( $args['tax_operator'] ) ? $args['tax_operator'] : 'IN';
@@ -269,15 +265,16 @@ class Cherry_RE_Property_Data {
 			$tax_args = array(
 				'tax_query' => array(
 					array(
-						'taxonomy' => $args['taxonomy'],
-						'field'    => ( is_numeric( $terms[0] ) ) ? 'id' : 'slug',
-						'terms'    => $terms,
-						'operator' => $tax_operator,
+						'taxonomy'         => $args['taxonomy'],
+						'terms'            => $terms,
+						'field'            => ( is_numeric( $terms[0] ) ) ? 'id' : 'slug',
+						'operator'         => $tax_operator,
+						'include_children' => true,
 					),
 				),
 			);
 
-			$this->query_args = array_merge( $this->query_args, $tax_args );
+			$query_args = array_merge( $query_args, $tax_args );
 		}
 
 		// State param.
@@ -294,14 +291,14 @@ class Cherry_RE_Property_Data {
 		);
 
 		// Meta Query.
-		$this->query_args['meta_query'] = $state_query;
+		$query_args['meta_query'] = $state_query;
 
 		if ( ! empty( $args['meta_query'] ) ) {
-			$this->query_args['meta_query'] = array_merge( $this->query_args['meta_query'], $args['meta_query'] );
+			$query_args['meta_query'] = array_merge( $query_args['meta_query'], $args['meta_query'] );
 		}
 
 		if ( ! empty( $args['meta_key'] ) ) {
-			$this->query_args['meta_key'] = $args['meta_key'];
+			$query_args['meta_key'] = $args['meta_key'];
 		}
 
 		// Pagination.
@@ -309,11 +306,11 @@ class Cherry_RE_Property_Data {
 			|| ( isset( $args['paged'] ) && ( true == $args['paged'] ) ) ) :
 
 			if ( get_query_var( 'paged' ) ) {
-				$this->query_args['paged'] = get_query_var( 'paged' );
+				$query_args['paged'] = get_query_var( 'paged' );
 			} elseif ( get_query_var( 'page' ) ) {
-				$this->query_args['paged'] = get_query_var( 'page' );
+				$query_args['paged'] = get_query_var( 'page' );
 			} else {
-				$this->query_args['paged'] = 1;
+				$query_args['paged'] = 1;
 			}
 
 		endif;
@@ -326,24 +323,24 @@ class Cherry_RE_Property_Data {
 			$ids = array_map( 'intval', $ids );
 
 			if ( 1 == count( $ids ) && is_numeric( $ids[0] ) && ( 0 < intval( $ids[0] ) ) ) {
-				$this->query_args['p'] = intval( $args['ids'] );
+				$query_args['p'] = intval( $args['ids'] );
 			} else {
-				$this->query_args['post__in'] = $ids;
+				$query_args['post__in'] = $ids;
 			}
 
 		endif;
 
 		// Whitelist checks.
-		if ( ! in_array( $this->query_args['orderby'], array( 'none', 'ID', 'author', 'title', 'date', 'modified', 'parent', 'rand', 'menu_order', 'meta_value', 'meta_value_num' ) ) ) {
-			$this->query_args['orderby'] = 'date';
+		if ( ! in_array( $query_args['orderby'], array( 'none', 'ID', 'author', 'title', 'date', 'modified', 'parent', 'rand', 'menu_order', 'meta_value', 'meta_value_num' ) ) ) {
+			$query_args['orderby'] = 'date';
 		}
 
-		if ( ! in_array( strtolower( $this->query_args['order'] ), array( 'asc', 'desc' ) ) ) {
-			$this->query_args['order'] = 'desc';
+		if ( ! in_array( strtolower( $query_args['order'] ), array( 'asc', 'desc' ) ) ) {
+			$query_args['order'] = 'desc';
 		}
 
 		if ( ! empty( $args['s'] ) ) {
-			$this->query_args['s'] = esc_attr( $args['s'] );
+			$query_args['s'] = esc_attr( $args['s'] );
 		}
 
 		/**
@@ -353,14 +350,14 @@ class Cherry_RE_Property_Data {
 		 * @param array The array of query arguments.
 		 * @param array The array of arguments to be passed to the query.
 		 */
-		$this->query_args = apply_filters( 'cherry_re_get_properties_query_args', $this->query_args, $args );
+		$query_args = apply_filters( 'cherry_re_get_properties_query_args', $query_args, $args );
 
 		// echo "<pre>";
-		// var_dump($this->query_args);
+		// var_dump($query_args);
 		// echo "</pre>";
 
 		// The Query.
-		$query = new WP_Query( $this->query_args );
+		$query = new WP_Query( $query_args );
 
 		if ( ! $query->have_posts() ) {
 			return false;

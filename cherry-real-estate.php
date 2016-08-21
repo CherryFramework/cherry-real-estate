@@ -429,7 +429,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		}
 
 		/**
-		 * Add `Search Form` widget.
+		 * Add a plugin widgets.
 		 *
 		 * @since 1.0.0
 		 */
@@ -439,6 +439,12 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 				require_once( CHERRY_REAL_ESTATE_DIR . '/widgets/class-cherry-re-search-widget.php' );
 
 				add_action( 'widgets_init', create_function( '', 'register_widget("Cherry_RE_Search_Widget");' ) );
+			}
+
+			if ( ! class_exists( 'Cherry_RE_Properties_Widget' ) ) {
+				require_once( CHERRY_REAL_ESTATE_DIR . '/widgets/class-cherry-re-properties-widget.php' );
+
+				add_action( 'widgets_init', create_function( '', 'register_widget("Cherry_RE_Properties_Widget");' ) );
 			}
 		}
 

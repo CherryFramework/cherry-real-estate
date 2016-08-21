@@ -189,6 +189,7 @@ class Cherry_RE_Agent_Data {
 			'role'    => 're_agent',
 			'orderby' => 'display_name',
 			'order'   => 'asc',
+			'id'      => '',
 		);
 
 		$args = wp_parse_args( $args, $defaults );
@@ -201,9 +202,9 @@ class Cherry_RE_Agent_Data {
 		 */
 		$args = apply_filters( 'cherry_get_agents_args', $args );
 
-		$args['show_pagination'] = filter_var( $args['show_pagination'], FILTER_VALIDATE_BOOLEAN );
+		$args['show_pagination'] = isset( $args['show_pagination'] ) ? filter_var( $args['show_pagination'], FILTER_VALIDATE_BOOLEAN ) : false;
 
-		if ( isset( $args['show_pagination'] ) && ( true === $args['show_pagination'] ) ) {
+		if ( true === $args['show_pagination'] ) {
 
 			if ( get_query_var( 'paged' ) ) {
 				$args['paged'] = get_query_var( 'paged' );
@@ -409,4 +410,14 @@ class Cherry_RE_Agent_Data {
 
 		return self::$instance;
 	}
+}
+
+/**
+ * Returns instance of Agent data class.
+ *
+ * @since  1.0.0
+ * @return Cherry_Real_Estate
+ */
+function cherry_re_agent_data() {
+	return Cherry_RE_Agent_Data::get_instance();
 }

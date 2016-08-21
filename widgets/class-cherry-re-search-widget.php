@@ -18,23 +18,23 @@ class Cherry_RE_Search_Widget extends Cherry_Abstract_Widget {
 	 */
 	public function __construct() {
 		$this->widget_cssclass    = 'widget-tm-re-search';
-		$this->widget_description = esc_html__( 'Display a search form with map.', '__tm' );
+		$this->widget_description = esc_html__( 'Display a search form with map.', 'cherry-real-estate' );
 		$this->widget_id          = 'tm_re_search_form';
-		$this->widget_name        = esc_html__( 'Cherry RE Search', '__tm' );
+		$this->widget_name        = esc_html__( 'Cherry RE Search', 'cherry-real-estate' );
 		$this->settings           = array(
 			'title'  => array(
 				'type'  => 'text',
 				'value' => '',
-				'label' => esc_html__( 'Title:', '__tm' ),
+				'label' => esc_html__( 'Title:', 'cherry-real-estate' ),
 			),
 			'map_visibility' => array(
 				'type'   => 'switcher',
 				'value'  => 'true',
 				'style'  => ( wp_is_mobile() ) ? 'normal' : 'small',
-				'label'  => esc_html__( 'Show map', '__tm' ),
+				'label'  => esc_html__( 'Show map', 'cherry-real-estate' ),
 				'toggle' => array(
-					'true_toggle'  => esc_html__( 'Yes', '__tm' ),
-					'false_toggle' => esc_html__( 'No', '__tm' ),
+					'true_toggle'  => esc_html__( 'Yes', 'cherry-real-estate' ),
+					'false_toggle' => esc_html__( 'No', 'cherry-real-estate' ),
 					'true_slave'   => 'map_relation',
 					'false_slave'  => '',
 				),
@@ -44,17 +44,17 @@ class Cherry_RE_Search_Widget extends Cherry_Abstract_Widget {
 				'value'     => 10,
 				'max_value' => 9999,
 				'min_value' => 1,
-				'label'     => esc_html__( 'Visible markers on map', '__tm' ),
+				'label'     => esc_html__( 'Visible markers on map', 'cherry-real-estate' ),
 				'master'    => 'map_relation',
 			),
 			'form_visibility' => array(
 				'type'   => 'switcher',
 				'value'  => 'true',
 				'style'  => ( wp_is_mobile() ) ? 'normal' : 'small',
-				'label'  => esc_html__( 'Show form', '__tm' ),
+				'label'  => esc_html__( 'Show form', 'cherry-real-estate' ),
 				'toggle' => array(
-					'true_toggle'  => esc_html__( 'Yes', '__tm' ),
-					'false_toggle' => esc_html__( 'No', '__tm' ),
+					'true_toggle'  => esc_html__( 'Yes', 'cherry-real-estate' ),
+					'false_toggle' => esc_html__( 'No', 'cherry-real-estate' ),
 				),
 			),
 		);

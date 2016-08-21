@@ -78,6 +78,10 @@ class Cherry_RE_Options_Page {
 				'slug' => 'cherry-re-options-main',
 				'name' => esc_html__( 'Main', 'cherry-real-estate' ),
 			),
+			'cherry-re-options-listing' => array(
+				'slug' => 'cherry-re-options-listing',
+				'name' => esc_html__( 'Listing', 'cherry-real-estate' ),
+			),
 			'cherry-re-options-map' => array(
 				'slug' => 'cherry-re-options-map',
 				'name' => esc_html__( 'Map', 'cherry-real-estate' ),
@@ -85,10 +89,6 @@ class Cherry_RE_Options_Page {
 			'cherry-re-options-emails' => array(
 				'slug' => 'cherry-re-options-emails',
 				'name' => esc_html__( 'E-mails', 'cherry-real-estate' ),
-			),
-			'cherry-re-options-listing' => array(
-				'slug' => 'cherry-re-options-listing',
-				'name' => esc_html__( 'Listing', 'cherry-real-estate' ),
 			),
 		) );
 	}
