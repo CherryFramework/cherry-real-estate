@@ -248,21 +248,21 @@ class Cherry_RE_Templater {
 	 * @return string
 	 */
 	public function get_template_by_name( $template, $shortcode ) {
-		$default = 'default.tmpl';
-		$content = '';
-		$find    = array();
-		$find[]  = cherry_real_estate()->template_path( 'shortcodes/' . $shortcode ) . $template;
+		$stylesheet_dir = trailingslashit( get_stylesheet_directory() );
+		$default        = 'default.tmpl';
+		$content        = '';
 
-		if ( $template == $default ) {
-			$find[] = cherry_real_estate()->template_path( 'shortcodes/' . $shortcode ) . $default;
-		}
+		$find   = array();
+		$find[] = $stylesheet_dir . cherry_real_estate()->template_path( 'shortcodes/' . $shortcode ) . $template;
+		$find[] = cherry_real_estate()->plugin_path( 'templates/shortcodes/' . $shortcode ) . $template;
+		$find[] = $stylesheet_dir . cherry_real_estate()->template_path( 'shortcodes/' . $shortcode ) . $default;
+		$find[] = cherry_real_estate()->plugin_path( 'templates/shortcodes/' . $shortcode ) . $default;
 
-		if ( $theme_template = locate_template( array_unique( $find ) ) ) {
-			$template = $theme_template;
-		} elseif ( file_exists( cherry_real_estate()->plugin_path( 'templates/shortcodes/' . $shortcode ) . $template ) ) {
-			$template = cherry_real_estate()->plugin_path( 'templates/shortcodes/' . $shortcode ) . $template;
-		} else {
-			$template = cherry_real_estate()->plugin_path( 'templates/shortcodes/' . $shortcode ) . $default;
+		foreach ( $find as $path ) {
+			if ( file_exists( $path ) ) {
+				$template = $path;
+				break;
+			}
 		}
 
 		if ( ! empty( $template ) ) {

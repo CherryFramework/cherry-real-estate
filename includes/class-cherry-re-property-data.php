@@ -265,11 +265,10 @@ class Cherry_RE_Property_Data {
 			$tax_args = array(
 				'tax_query' => array(
 					array(
-						'taxonomy'         => $args['taxonomy'],
-						'terms'            => $terms,
-						'field'            => ( is_numeric( $terms[0] ) ) ? 'id' : 'slug',
-						'operator'         => $tax_operator,
-						'include_children' => true,
+						'taxonomy' => $args['taxonomy'],
+						'terms'    => $terms,
+						'field'    => ( is_numeric( $terms[0] ) ) ? 'id' : 'slug',
+						'operator' => $tax_operator,
 					),
 				),
 			);
@@ -326,12 +325,13 @@ class Cherry_RE_Property_Data {
 				$query_args['p'] = intval( $args['ids'] );
 			} else {
 				$query_args['post__in'] = $ids;
+				$query_args['orderby']  = 'post__in';
 			}
 
 		endif;
 
 		// Whitelist checks.
-		if ( ! in_array( $query_args['orderby'], array( 'none', 'ID', 'author', 'title', 'date', 'modified', 'parent', 'rand', 'menu_order', 'meta_value', 'meta_value_num' ) ) ) {
+		if ( ! in_array( $query_args['orderby'], array( 'none', 'ID', 'author', 'title', 'date', 'modified', 'type', 'parent', 'rand', 'menu_order', 'meta_value', 'meta_value_num', 'post__in' ) ) ) {
 			$query_args['orderby'] = 'date';
 		}
 
