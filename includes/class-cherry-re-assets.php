@@ -118,6 +118,14 @@ class Cherry_RE_Assets {
 		);
 
 		wp_register_script(
+			'jquery-load-image',
+			plugins_url( 'assets/js/file-upload/load-image.all.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			array(),
+			'2.6.1',
+			true
+		);
+
+		wp_register_script(
 			'jquery-iframe-transport',
 			plugins_url( 'assets/js/file-upload/jquery.iframe-transport.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array( 'jquery' ),
@@ -126,9 +134,33 @@ class Cherry_RE_Assets {
 		);
 
 		wp_register_script(
-			'jquery-fileupload',
+			'jquery-fileupload-core',
 			plugins_url( 'assets/js/file-upload/jquery.fileupload.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
-			array( 'jquery', 'jquery-iframe-transport', 'jquery-ui-widget' ),
+			array( 'jquery', 'jquery-ui-widget', 'jquery-iframe-transport' ),
+			'9.12.5',
+			true
+		);
+
+		wp_register_script(
+			'jquery-fileupload-image',
+			plugins_url( 'assets/js/file-upload/jquery.fileupload-image.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			array( 'jquery-load-image' ),
+			'9.12.5',
+			true
+		);
+
+		wp_register_script(
+			'jquery-fileupload-process',
+			plugins_url( 'assets/js/file-upload/jquery.fileupload-process.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			array(),
+			'9.12.5',
+			true
+		);
+
+		wp_register_script(
+			'jquery-fileupload',
+			false,
+			array( 'jquery-fileupload-core', 'jquery-fileupload-process', 'jquery-fileupload-image' ),
 			'9.12.5',
 			true
 		);

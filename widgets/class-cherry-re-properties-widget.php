@@ -154,7 +154,7 @@ class Cherry_RE_Properties_Widget extends Cherry_Abstract_Widget {
 				'type'    => 'select',
 				'options' => array_combine( $image_sizes, $image_sizes ),
 				'value'   => 'thumbnail',
-				'label'   => esc_html__( 'Order:', 'cherry-real-estate' ),
+				'label'   => esc_html__( 'Image Size:', 'cherry-real-estate' ),
 				'master'  => 'image_attr',
 			),
 			'show_excerpt' => array(

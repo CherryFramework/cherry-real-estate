@@ -35,5 +35,13 @@ $allowed_mime_types = array_keys( $allowed_mime_types ); ?>
 	<?php endif; ?>
 </small>
 
+<!-- The global progress bar -->
+<div id="progress" class="progress">
+	<div class="progress-bar progress-bar-success"></div>
+</div>
+
+<!-- The container for the uploaded files -->
+<div id="files" class="files"></div>
+
 <?php // Enqueue a script.
 cherry_re_enqueue_script( array( 'jquery-fileupload' ) ); ?>

@@ -199,7 +199,6 @@ class Model_Submit_Form {
 		}
 
 		$files = $_FILES[ $name ];
-		// wp_send_json_success( $files );
 
 		if ( ! empty( $files['name'] ) && is_array( $files['name'] ) ) {
 			$_files = array();
@@ -208,7 +207,6 @@ class Model_Submit_Form {
 				$_files[ $key ] = current( $value );
 			}
 
-			// $data['files'][] = $_files;
 			$_FILES[ $name ] = $_files;
 		}
 
@@ -219,7 +217,6 @@ class Model_Submit_Form {
 			wp_send_json_error( $data );
 		}
 
-		// $data['files'] = $_files;
 		$data['files'][] = $upload;
 		wp_send_json_success( $data );
 	}

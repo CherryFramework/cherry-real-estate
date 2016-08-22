@@ -454,7 +454,27 @@
 					name            = $this.attr( 'name' ),
 					multiple        = $this.attr( 'multiple' ) ? 1 : 0,
 					allowed_types   = $this.data( 'file_types' ),
-					processing      = 'processing';
+					processing      = 'processing',
+					uploadButton    = $( '<button type="button" />' )
+						.addClass( 'btn btn-primary' )
+						.prop( 'disabled', true )
+						.text( 'Processing...' )
+						.on( 'click', function() {
+							var $this = $( this ),
+								data  = $this.data();
+
+							$this
+								.off( 'click' )
+								.text( 'Abort' )
+								.on( 'click', function() {
+									$this.remove();
+									data.abort();
+								});
+
+							data.submit().always( function() {
+								$this.remove();
+							});
+						});
 
 				if ( $form.hasClass( processing ) ) {
 					return !1;
@@ -466,89 +486,194 @@
 					dataType: 'json',
 					singleFileUploads: true,
 					dropZone: $this,
+					autoUpload: false,
+					previewMaxWidth: 100,
+					previewMaxHeight: 100,
+					previewCrop: true,
 					formData: {
 						nonce: nonce,
 						name: name,
 						action: 'upload_file',
 						script: true
 					},
-					add: function ( e, data ) {
-						var uploadErrors = [];
+					// add: function ( e, data ) {
+					// 	var uploadErrors = [];
 
-						if ( allowed_types ) {
-							var acceptFileTypes = new RegExp( "(\.|\/)(" + allowed_types + ")$", "i" );
+					// 	if ( allowed_types ) {
+					// 		var acceptFileTypes = new RegExp( "(\.|\/)(" + allowed_types + ")$", "i" );
 
-							if ( data.files[0]['name'].length && ! acceptFileTypes.test( data.files[0]['name'] ) ) {
-								uploadErrors.push( CherryREData.messages.invalid_file_type + ' ' + allowed_types );
+					// 		if ( data.files[0]['name'].length && ! acceptFileTypes.test( data.files[0]['name'] ) ) {
+					// 			uploadErrors.push( CherryREData.messages.invalid_file_type + ' ' + allowed_types );
+					// 		}
+					// 	}
+
+					// 	if ( uploadErrors.length > 0 ) {
+					// 		alert( uploadErrors.join( "\n" ) );
+					// 	} else {
+					// 		$submit_button.attr( 'disabled', 'disabled' );
+					// 		data.context = $( '<progress value="" max="100"></progress>' ).appendTo( $uploaded_files );
+					// 		data.submit();
+					// 	}
+					// },
+					// progress: function ( e, data ) {
+					// 	var progress = parseInt( data.loaded / data.total * 100, 10 );
+
+					// 	data.context.val( progress );
+					// 	$form.addClass( processing );
+					// },
+					// fail: function ( e, data ) {
+
+					// 	if ( data.errorThrown ) {
+					// 		alert( data.errorThrown );
+					// 	}
+
+					// 	data.context.remove();
+					// 	$submit_button.removeAttr( 'disabled' );
+					// 	$form.removeClass( processing );
+					// },
+					// done: function ( e, data ) {
+					// 	var image_types = allowed_types.split( '|' ),
+					// 		response    = data.result;
+
+					// 	data.context.remove();
+					// 	$submit_button.removeAttr( 'disabled' );
+					// 	$form.removeClass( processing );
+
+					// 	if ( false === response.success ) {
+					// 		alert( response.data.message );
+					// 		return !1;
+					// 	}
+
+					// 	$.each( response.data.files, function( index, file ) {
+
+					// 		if ( file.error ) {
+
+					// 			alert( file.error );
+					// 			return -1;
+
+					// 		} else {
+					// 			var ids  = $files_ids.data( 'ids' ),
+					// 				html = '';
+
+					// 			if ( -1 == $.inArray( file.extension, image_types ) ) {
+					// 				return -1;
+					// 			}
+
+					// 			html = $.parseHTML( CherryREData.js_field_html_img );
+					// 			$( html ).find( '.tm-re-uploaded-image__preview img' ).attr( 'src', file.url );
+
+					// 			ids.push( file.id );
+					// 			$files_ids.data( 'ids', ids );
+
+					// 			if ( multiple ) {
+					// 				$uploaded_files.append( html );
+					// 			} else {
+					// 				$uploaded_files.html( html );
+					// 			}
+					// 		}
+					// 	});
+					// }
+				}).on( 'fileuploadadd', function( e, data ) {
+
+
+					// console.log( 'fileuploadadd' );
+
+					// data.context = $( '<div class="tm-re-uploaded-images__item" />' ).appendTo( $uploaded_files );
+
+					// $.each( data.files, function( index, file ) {
+					// 	var node = $( '<p/>' ).append( $( '<span/>' ).text( file.name ) );
+
+					// 	if ( ! index ) {
+					// 		node
+					// 			.append( '<br>' )
+					// 			.append( uploadButton.clone( true ).data( data ) );
+					// 	}
+					// 	node.appendTo( data.context );
+					// });
+
+					//---------------------
+
+					var uploadErrors = [];
+
+					if ( allowed_types ) {
+						var acceptFileTypes = new RegExp( "(\.|\/)(" + allowed_types + ")$", "i" );
+
+						if ( data.files[0]['name'].length && ! acceptFileTypes.test( data.files[0]['name'] ) ) {
+							uploadErrors.push( CherryREData.messages.invalid_file_type + ' ' + allowed_types );
+						}
+					}
+
+					if ( uploadErrors.length > 0 ) {
+						alert( uploadErrors.join( "\n" ) );
+
+					} else {
+
+						$submit_button.attr( 'disabled', 'disabled' );
+						// data.context = $( '<progress value="" max="100"></progress>' ).appendTo( $uploaded_files );
+
+						data.context = $( '<div class="tm-re-uploaded-images__item" />' ).appendTo( $uploaded_files );
+
+						$.each( data.files, function( index, file ) {
+							var node = $( '<p />' ).append( $( '<span class="tm-re-uploaded-images__item-name"/>' ).text( file.name ) );
+
+							if ( ! index ) {
+								node.append( uploadButton.clone( true ).data( data ) );
 							}
-						}
-
-						if ( uploadErrors.length > 0 ) {
-							alert( uploadErrors.join( "\n" ) );
-						} else {
-							$submit_button.attr( 'disabled', 'disabled' );
-							data.context = $( '<progress value="" max="100"></progress>' ).appendTo( $uploaded_files );
-							data.submit();
-						}
-					},
-					progress: function ( e, data ) {
-						var progress = parseInt( data.loaded / data.total * 100, 10 );
-
-						data.context.val( progress );
-						$form.addClass( processing );
-					},
-					fail: function ( e, data ) {
-
-						if ( data.errorThrown ) {
-							alert( data.errorThrown );
-						}
-
-						data.context.remove();
-						$submit_button.removeAttr( 'disabled' );
-						$form.removeClass( processing );
-					},
-					done: function ( e, data ) {
-						var image_types = allowed_types.split( '|' ),
-							response    = data.result;
-
-						data.context.remove();
-						$submit_button.removeAttr( 'disabled' );
-						$form.removeClass( processing );
-
-						if ( false === response.success ) {
-							alert( response.data.message );
-							return !1;
-						}
-
-						$.each( response.data.files, function( index, file ) {
-
-							if ( file.error ) {
-
-								alert( file.error );
-								return -1;
-
-							} else {
-								var ids  = $files_ids.data( 'ids' ),
-									html = '';
-
-								if ( -1 == $.inArray( file.extension, image_types ) ) {
-									return -1;
-								}
-
-								html = $.parseHTML( CherryREData.js_field_html_img );
-								$( html ).find( '.tm-re-uploaded-image__preview img' ).attr( 'src', file.url );
-
-								ids.push( file.id );
-								$files_ids.data( 'ids', ids );
-
-								if ( multiple ) {
-									$uploaded_files.append( html );
-								} else {
-									$uploaded_files.html( html );
-								}
-							}
+							node.appendTo( data.context );
 						});
 					}
+				})
+
+				.on( 'fileuploadprocessalways', function( e, data ) {
+
+					if ( ! $( data.context ).length ) {
+						return !1;
+					}
+
+					var index = data.index,
+						file  = data.files[ index ],
+						node  = $( data.context.children()[ index ] );
+
+					if ( file.preview ) {
+						node.prepend( file.preview );
+					}
+
+					if ( file.error ) {
+						node
+							.append( '<br>' )
+							.append( $( '<span class="text-danger"/>' ).text( file.error ) );
+					}
+
+					if ( index + 1 === data.files.length ) {
+						data.context.find( 'button' )
+							.text( 'Upload' )
+							.prop( 'disabled', !!data.files.error );
+					}
+				})
+
+				.on( 'fileuploadprogressall', function( e, data ) {
+					var progress = parseInt( data.loaded / data.total * 100, 10 );
+
+					data.context = $( '<progress value="" max="100"></progress>' ).appendTo( $uploaded_files );
+					data.context.val( progress );
+				})
+
+				.on( 'fileuploaddone', function( e, data ) {
+					console.log('fileuploaddone');
+
+					$.each( data.result.files, function( index, file ) {
+
+						if ( file.url ) {
+							var link = $( '<a>' ).attr( 'target', '_blank' ).prop( 'href', file.url );
+
+							$( data.context.children()[ index ] ).wrap( link );
+
+						} else if ( file.error ) {
+							var error = $( '<span class="text-danger"/>' ).text( file.error );
+
+							$( data.context.children()[ index ] ).append( '<br>' ).append( error );
+						}
+					});
 				});
 
 				CherryJsCore.variable.$document.on( 'click', '.tm-re-uploaded-image__remove', remove );

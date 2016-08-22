@@ -13,3 +13,12 @@
 		}
 	}
 }
+
+/* Uploader */
+.tm-re-uploaded-images {
+	&__item {
+		&-name {
+			display: block;
+		}
+	}
+}
