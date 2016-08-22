@@ -455,26 +455,7 @@
 					multiple        = $this.attr( 'multiple' ) ? 1 : 0,
 					allowed_types   = $this.data( 'file_types' ),
 					processing      = 'processing',
-					uploadButton    = $( '<button type="button" />' )
-						.addClass( 'btn btn-primary' )
-						.prop( 'disabled', true )
-						.text( 'Processing...' )
-						.on( 'click', function() {
-							var $this = $( this ),
-								data  = $this.data();
-
-							$this
-								.off( 'click' )
-								.text( 'Abort' )
-								.on( 'click', function() {
-									$this.remove();
-									data.abort();
-								});
-
-							data.submit().always( function() {
-								$this.remove();
-							});
-						});
+					hidden          = 'tm-re-hidden';
 
 				if ( $form.hasClass( processing ) ) {
 					return !1;
@@ -487,8 +468,8 @@
 					singleFileUploads: true,
 					dropZone: $this,
 					autoUpload: false,
-					previewMaxWidth: 100,
-					previewMaxHeight: 100,
+					previewMaxWidth: 150,
+					previewMaxHeight: 150,
 					previewCrop: true,
 					formData: {
 						nonce: nonce,
@@ -496,104 +477,14 @@
 						action: 'upload_file',
 						script: true
 					},
-					// add: function ( e, data ) {
-					// 	var uploadErrors = [];
 
-					// 	if ( allowed_types ) {
-					// 		var acceptFileTypes = new RegExp( "(\.|\/)(" + allowed_types + ")$", "i" );
-
-					// 		if ( data.files[0]['name'].length && ! acceptFileTypes.test( data.files[0]['name'] ) ) {
-					// 			uploadErrors.push( CherryREData.messages.invalid_file_type + ' ' + allowed_types );
-					// 		}
-					// 	}
-
-					// 	if ( uploadErrors.length > 0 ) {
-					// 		alert( uploadErrors.join( "\n" ) );
-					// 	} else {
-					// 		$submit_button.attr( 'disabled', 'disabled' );
-					// 		data.context = $( '<progress value="" max="100"></progress>' ).appendTo( $uploaded_files );
-					// 		data.submit();
-					// 	}
-					// },
-					// progress: function ( e, data ) {
-					// 	var progress = parseInt( data.loaded / data.total * 100, 10 );
-
-					// 	data.context.val( progress );
-					// 	$form.addClass( processing );
-					// },
-					// fail: function ( e, data ) {
-
-					// 	if ( data.errorThrown ) {
-					// 		alert( data.errorThrown );
-					// 	}
-
-					// 	data.context.remove();
-					// 	$submit_button.removeAttr( 'disabled' );
-					// 	$form.removeClass( processing );
-					// },
-					// done: function ( e, data ) {
-					// 	var image_types = allowed_types.split( '|' ),
-					// 		response    = data.result;
-
-					// 	data.context.remove();
-					// 	$submit_button.removeAttr( 'disabled' );
-					// 	$form.removeClass( processing );
-
-					// 	if ( false === response.success ) {
-					// 		alert( response.data.message );
-					// 		return !1;
-					// 	}
-
-					// 	$.each( response.data.files, function( index, file ) {
-
-					// 		if ( file.error ) {
-
-					// 			alert( file.error );
-					// 			return -1;
-
-					// 		} else {
-					// 			var ids  = $files_ids.data( 'ids' ),
-					// 				html = '';
-
-					// 			if ( -1 == $.inArray( file.extension, image_types ) ) {
-					// 				return -1;
-					// 			}
-
-					// 			html = $.parseHTML( CherryREData.js_field_html_img );
-					// 			$( html ).find( '.tm-re-uploaded-image__preview img' ).attr( 'src', file.url );
-
-					// 			ids.push( file.id );
-					// 			$files_ids.data( 'ids', ids );
-
-					// 			if ( multiple ) {
-					// 				$uploaded_files.append( html );
-					// 			} else {
-					// 				$uploaded_files.html( html );
-					// 			}
-					// 		}
-					// 	});
-					// }
 				}).on( 'fileuploadadd', function( e, data ) {
+					console.log( 'add' );
 
+					var uploadErrors = [],
+						html         = $.parseHTML( CherryREData.js_field_html_img );
 
-					// console.log( 'fileuploadadd' );
-
-					// data.context = $( '<div class="tm-re-uploaded-images__item" />' ).appendTo( $uploaded_files );
-
-					// $.each( data.files, function( index, file ) {
-					// 	var node = $( '<p/>' ).append( $( '<span/>' ).text( file.name ) );
-
-					// 	if ( ! index ) {
-					// 		node
-					// 			.append( '<br>' )
-					// 			.append( uploadButton.clone( true ).data( data ) );
-					// 	}
-					// 	node.appendTo( data.context );
-					// });
-
-					//---------------------
-
-					var uploadErrors = [];
+					data.context = $( html );
 
 					if ( allowed_types ) {
 						var acceptFileTypes = new RegExp( "(\.|\/)(" + allowed_types + ")$", "i" );
@@ -608,27 +499,27 @@
 
 					} else {
 
-						$submit_button.attr( 'disabled', 'disabled' );
-						// data.context = $( '<progress value="" max="100"></progress>' ).appendTo( $uploaded_files );
-
-						data.context = $( '<div class="tm-re-uploaded-images__item" />' ).appendTo( $uploaded_files );
-
 						$.each( data.files, function( index, file ) {
-							var node = $( '<p />' ).append( $( '<span class="tm-re-uploaded-images__item-name"/>' ).text( file.name ) );
+							var $name = data.context.find( '.tm-re-uploaded-image__name' ),
+								$btn  = data.context.find( '.tm-re-uploaded-image__btn' );
 
-							if ( ! index ) {
-								node.append( uploadButton.clone( true ).data( data ) );
-							}
-							node.appendTo( data.context );
+							$name.text( file.name );
+							$btn.data( data );
+							data.context.appendTo( $uploaded_files );
 						});
 					}
 				})
 
-				.on( 'fileuploadprocessalways', function( e, data ) {
+				.on( 'fileuploadprocessstart', function( e ) {
+					$submit_button.prop( 'disabled', true );
+				})
 
+				.on( 'fileuploadprocessalways', function( e, data ) {
 					if ( ! $( data.context ).length ) {
 						return !1;
 					}
+
+					// console.log(data.context);
 
 					var index = data.index,
 						file  = data.files[ index ],
@@ -645,42 +536,105 @@
 					}
 
 					if ( index + 1 === data.files.length ) {
-						data.context.find( 'button' )
-							.text( 'Upload' )
-							.prop( 'disabled', !!data.files.error );
+						data.context.find( 'button' ).prop( 'disabled', !!data.files.error );
 					}
 				})
 
 				.on( 'fileuploadprogressall', function( e, data ) {
 					var progress = parseInt( data.loaded / data.total * 100, 10 );
-
-					data.context = $( '<progress value="" max="100"></progress>' ).appendTo( $uploaded_files );
-					data.context.val( progress );
+					$( '.tm-re-uploaded-image__pregress').val( progress );
 				})
 
 				.on( 'fileuploaddone', function( e, data ) {
-					console.log('fileuploaddone');
+					console.log(data.context);
 
-					$.each( data.result.files, function( index, file ) {
+					var image_types = allowed_types.split( '|' ),
+						response    = data.result;
 
-						if ( file.url ) {
-							var link = $( '<a>' ).attr( 'target', '_blank' ).prop( 'href', file.url );
+					$form.removeClass( processing );
 
-							$( data.context.children()[ index ] ).wrap( link );
+					if ( false === response.success ) {
+						alert( response.data.message );
+						return !1;
+					}
 
-						} else if ( file.error ) {
-							var error = $( '<span class="text-danger"/>' ).text( file.error );
+					$.each( response.data.files, function( index, file ) {
 
-							$( data.context.children()[ index ] ).append( '<br>' ).append( error );
+						if ( file.error ) {
+
+							alert( file.error );
+							return -1;
+
+						} else {
+							var ids  = $files_ids.data( 'ids' );
+
+							if ( -1 == $.inArray( file.extension, image_types ) ) {
+								return -1;
+							}
+
+							ids.push( file.id );
+							$files_ids.data( 'ids', ids );
+
+							data.context.find( '.tm-re-uploaded-image__pregress' ).remove();
+							data.context.find( '.tm-re-uploaded-image__btn' ).remove();
+
+							$( data.context ).remove( 'progress' );
+							$( data.context ).remove( 'button' );
 						}
 					});
+
+					// $.each( data.result.files, function( index, file ) {
+
+					// 	if ( file.url ) {
+					// 		var link = $( '<a>' ).attr( 'target', '_blank' ).prop( 'href', file.url );
+
+					// 		$( data.context.children()[ index ] ).wrap( link );
+
+					// 	} else if ( file.error ) {
+					// 		var error = $( '<span class="text-danger"/>' ).text( file.error );
+
+					// 		$( data.context.children()[ index ] ).append( '<br>' ).append( error );
+					// 	}
+					// });
 				});
 
 				CherryJsCore.variable.$document.on( 'click', '.tm-re-uploaded-image__remove', remove );
+				CherryJsCore.variable.$document.on( 'click', '.tm-re-uploaded-image__btn', upload );
 
 				function remove( event ) {
 					event.preventDefault();
-					jQuery( this ).closest( '.tm-re-uploaded-image' ).remove();
+					$( this ).closest( '.tm-re-uploaded-images__item' ).remove();
+				};
+
+				function upload( event ) {
+					event.preventDefault();
+
+					var $this     = $( this ),
+						$item     = $this.closest( '.tm-re-uploaded-images__item' ),
+						$progress = $item.find( 'progress' ),
+						$remove   = $item.find( '.tm-re-uploaded-image__remove' ),
+						data      = $this.data();
+
+					$progress.removeClass( hidden );
+					$form.addClass( processing );
+					$remove.remove();
+
+					// $this
+					// 	.off( 'click' )
+					// 	.text( 'Abort' )
+					// 	.on( 'click', function() {
+					// 		$this.remove();
+					// 		data.abort();
+					// 	});
+
+					data.submit();
+
+					// $this.remove();
+					// $progress.addClass( hidden );
+					// data.submit().always( function() {
+					// 	console.log( 'submit fire' );
+					// 	$this.remove();
+					// });
 				};
 
 			});

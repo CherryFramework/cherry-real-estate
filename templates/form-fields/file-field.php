@@ -21,9 +21,8 @@ $allowed_mime_types = ! empty( $field['allowed_mime_types'] ) ? $field['allowed_
 $allowed_mime_types = array_keys( $allowed_mime_types ); ?>
 
 <label for="property_gallery"><?php echo $field['label']; ?></label>
-<div class="tm-re-uploaded-images">
-	<input type="hidden" class="tm-re-uploaded-ids" data-ids="[]" value="">
-</div>
+<div class="tm-re-uploaded-images"></div>
+<input type="hidden" class="tm-re-uploaded-ids" data-ids="[]" value="">
 
 <input type="file" class="tm-re-image-upload" data-file_types="<?php echo esc_attr( implode( '|', $allowed_mime_types ) ); ?>" <?php if ( ! empty( $field['multiple'] ) ) echo 'multiple'; ?> name="<?php echo esc_attr( $field_name ); ?>" id="<?php echo esc_attr( $field['name'] ); ?>">
 
@@ -34,14 +33,6 @@ $allowed_mime_types = array_keys( $allowed_mime_types ); ?>
 		<?php printf( esc_html__( 'Maximum file size: %s.', 'cherry-real-estate' ), size_format( wp_max_upload_size() ) ); ?>
 	<?php endif; ?>
 </small>
-
-<!-- The global progress bar -->
-<div id="progress" class="progress">
-	<div class="progress-bar progress-bar-success"></div>
-</div>
-
-<!-- The container for the uploaded files -->
-<div id="files" class="files"></div>
 
 <?php // Enqueue a script.
 cherry_re_enqueue_script( array( 'jquery-fileupload' ) ); ?>

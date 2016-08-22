@@ -12,9 +12,11 @@
  */
 ?>
 
-<div class="tm-re-uploaded-image">
-	<span class="tm-re-uploaded-image__preview">
-		<img src="" alt="">
+<div class="tm-re-uploaded-images__item">
+	<div class="tm-re-uploaded-image__preview">
 		<a class="tm-re-uploaded-image__remove" href="#"></a>
-	</span>
+	</div>
+	<div class="tm-re-uploaded-image__name"></div>
+	<button type="button" class="tm-re-uploaded-image__btn btn btn-upload" disabled="disabled"><?php echo esc_html__( 'Upload', 'cherry-real-estate' ); ?></button>
+	<progress class="tm-re-uploaded-image__pregress tm-re-hidden" value="" max="100"></progress>
 </div>

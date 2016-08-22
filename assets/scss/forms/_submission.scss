@@ -7,18 +7,20 @@
 			cursor: wait;
 		}
 	}
-	.tm-re-uploaded-image__remove {
-		&:before {
-			content: '\00D7';
-		}
-	}
 }
 
 /* Uploader */
-.tm-re-uploaded-images {
-	&__item {
-		&-name {
-			display: block;
+.tm-re-uploaded {
+	&-images {
+		&__item {}
+	}
+	&-image {
+		&__remove {
+			display: inline-block;
+			vertical-align: top;
+			&:before {
+				content: '\00D7';
+			}
 		}
 	}
 }
