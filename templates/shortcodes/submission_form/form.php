@@ -111,7 +111,13 @@ do_action( 'cherry_re_before_submission_form' ); ?>
 
 	<?php do_action( 'cherry_re_after_submission_form_btn' ); ?>
 
-	<div class="tm-re-submission-form__messages">
+	<div class="tm-re-submission-form__messages tm-re-status">
+		<div class="tm-re-submission-form__process tm-re-status__item tm-re-status--process tm-re-hidden">
+			<svg class="circular" viewBox="25 25 50 50">
+				<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+			</svg>
+		</div>
+
 		<div class="tm-re-submission-form__success tm-re-hidden"><?php esc_html_e( 'Success', 'cherry-real-estate' ) ?></div>
 		<div class="tm-re-submission-form__error tm-re-hidden"></div>
 	</div>

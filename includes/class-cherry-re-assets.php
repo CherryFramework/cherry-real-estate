@@ -143,7 +143,7 @@ class Cherry_RE_Assets {
 
 		wp_register_script(
 			'jquery-fileupload-image',
-			plugins_url( 'assets/js/file-upload/jquery.fileupload-image.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( 'assets/js/file-upload/jquery.fileupload-image.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array( 'jquery-load-image' ),
 			'9.12.5',
 			true
@@ -151,7 +151,7 @@ class Cherry_RE_Assets {
 
 		wp_register_script(
 			'jquery-fileupload-process',
-			plugins_url( 'assets/js/file-upload/jquery.fileupload-process.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( 'assets/js/file-upload/jquery.fileupload-process.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array(),
 			'9.12.5',
 			true

@@ -24,7 +24,10 @@ $allowed_mime_types = array_keys( $allowed_mime_types ); ?>
 <div class="tm-re-uploaded-images"></div>
 <input type="hidden" class="tm-re-uploaded-ids" data-ids="[]" value="">
 
-<input type="file" class="tm-re-image-upload" data-file_types="<?php echo esc_attr( implode( '|', $allowed_mime_types ) ); ?>" <?php if ( ! empty( $field['multiple'] ) ) echo 'multiple'; ?> name="<?php echo esc_attr( $field_name ); ?>" id="<?php echo esc_attr( $field['name'] ); ?>">
+<span class="tm-re-uploaded-btn">
+	<span><?php echo esc_html__( 'Brouse file', 'cherry-rea-estate' ); ?></span>
+	<input type="file" class="tm-re-uploaded-btn__field" data-file_types="<?php echo esc_attr( implode( '|', $allowed_mime_types ) ); ?>" <?php if ( ! empty( $field['multiple'] ) ) echo 'multiple'; ?> name="<?php echo esc_attr( $field_name ); ?>" id="<?php echo esc_attr( $field['name'] ); ?>">
+</span>
 
 <small class="tm-re-submission-form__group-desc">
 	<?php if ( ! empty( $field['description'] ) ) : ?>

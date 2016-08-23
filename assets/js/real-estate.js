@@ -75,6 +75,7 @@
 
 			var $error   = $form.find( '.tm-re-submission-form__error' ),
 				$success = $form.find( '.tm-re-submission-form__success' ),
+				$process = $form.find( '.tm-re-submission-form__process' ),
 				hidden   = 'tm-re-hidden';
 
 			$form.validate({
@@ -147,7 +148,7 @@
 			function ajaxSubmit( $form ) {
 				var formData    = $form.serializeArray(),
 					$source     = $form.find( '.tm-re-uploaded-ids' ),
-					$preview    = $form.find( '.tm-re-uploaded-image' ),
+					$preview    = $form.find( '.tm-re-uploaded-images' ),
 					gallery_ids = $source.data( 'ids' ),
 					nonce       = $form.find( 'input[name="tm-re-submissionform-nonce"]' ).val(),
 					processing  = 'processing';
@@ -177,19 +178,22 @@
 						property: formData,
 						gallery: gallery_ids
 					},
+					beforeSend: function() {
+						$process.removeClass( hidden );
+					},
 					error: function( jqXHR, textStatus, errorThrown ) {
 						$form.removeClass( processing );
 						$error.removeClass( hidden ).html( textStatus );
+						$process.addClass( hidden );
 					}
 				}).done( function( response ) {
-					// console.log( response );
-
 					$form.removeClass( processing );
+					$process.addClass( hidden );
 
 					if ( true === response.success ) {
 						$success.removeClass( hidden );
 						$form[0].reset();
-						$preview.remove();
+						$preview.empty();
 						$source.data( 'ids', [] );
 						return 1;
 					}
@@ -269,8 +273,6 @@
 						$error.removeClass( hidden ).html( textStatus );
 					}
 				}).done( function( response ) {
-					// console.log( response );
-
 					$form.removeClass( processing );
 
 					if ( true === response.success ) {
@@ -355,8 +357,6 @@
 						$error.removeClass( hidden ).html( textStatus );
 					}
 				}).done( function( response ) {
-					// console.log( response );
-
 					$form.removeClass( processing );
 
 					if ( true === response.success ) {
@@ -439,7 +439,7 @@
 		},
 
 		uploadImages: function( self ) {
-			$( '.tm-re-image-upload' ).each( function() {
+			$( '.tm-re-uploaded-btn__field' ).each( function() {
 				var $this = $( this );
 
 				if ( ! $.isFunction( jQuery.fn.fileupload ) || ! $this.length ) {
@@ -508,11 +508,8 @@
 					}
 				})
 
-				.on( 'fileuploadprocessstart', function( e ) {
-					// $submit_button.prop( 'disabled', true );
-				})
-
 				.on( 'fileuploadprocessalways', function( e, data ) {
+
 					if ( ! $( data.context ).length ) {
 						return !1;
 					}
@@ -536,41 +533,42 @@
 					}
 				})
 
-				.on( 'fileuploadprogressall', function( e, data ) {
-					var progress = parseInt( data.loaded / data.total * 100, 10 );
-					$( '.tm-re-uploaded-image__progress').val( progress );
-				})
-
 				.on( 'fileuploaddone', function( e, data ) {
 					var image_types = allowed_types.split( '|' ),
-						response    = data.result;
+						response    = data.result,
+						$process    = data.context.find( '.tm-re-status--process' ),
+						$error      = data.context.find( '.tm-re-status--error' ),
+						$success    = data.context.find( '.tm-re-status--success' );
 
 					$form.removeClass( processing );
+					$process.addClass( hidden ),
 					$submit_button.prop( 'disabled', false );
 
 					if ( false === response.success ) {
 						alert( response.data.message );
+						$error.removeClass( hidden );
 						return !1;
 					}
 
 					$.each( response.data.files, function( index, file ) {
 
 						if ( file.error ) {
-
 							alert( file.error );
+							$error.removeClass( hidden );
 							return -1;
 
 						} else {
 							var ids  = $files_ids.data( 'ids' );
 
 							if ( -1 == $.inArray( file.extension, image_types ) ) {
+								$error.removeClass( hidden );
 								return -1;
 							}
 
 							ids.push( file.id );
 							$files_ids.data( 'ids', ids );
 
-							data.context.find( 'progress' ).remove();
+							$success.removeClass( hidden );
 							data.context.find( 'button' ).remove();
 						}
 					});
@@ -587,7 +585,7 @@
 				function upload( event ) {
 					var $this     = $( this ),
 						$item     = $this.closest( '.tm-re-uploaded-images__item' ),
-						$progress = $item.find( 'progress' ),
+						$progress = $item.find( '.tm-re-status--process' ),
 						$remove   = $item.find( '.tm-re-uploaded-image__remove' ),
 						data      = $this.data();
 
