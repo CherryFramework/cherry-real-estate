@@ -37,9 +37,9 @@
 			geocoder = new google.maps.Geocoder();
 			bounds   = new google.maps.LatLngBounds();
 
-			map.addListener( 'click', function( e ) {
-				mapPanTo( e.latLng, map );
-			});
+			// map.addListener( 'click', function( e ) {
+			// 	mapPanTo( e.latLng, map );
+			// });
 
 			if ( null !== data.infowindow ) {
 				infowindow = new google.maps.InfoWindow( data.infowindow );
@@ -74,7 +74,7 @@
 
 			if ( 'object' == typeof _data ) {
 				location = _data.data( 'property-address' );
-				html     = _data.html();
+				html     = _data[0].outerHTML;
 			}
 
 			if ( undefined === location ) {
@@ -82,17 +82,6 @@
 			}
 
 			location = String( location );
-
-			// console.log( locations );
-
-			// for ( var id in menu ) {
-			// 	console.log( menu[ id ] );
-			// 	if ( location == locations[ id ] ) {
-			// 		console.log( locations[ id ] );
-			// 	} else {
-			// 		console.log( 'no' );
-			// 	}
-			// }
 
 			geocoder.geocode({
 				'address': location
@@ -103,13 +92,6 @@
 						key           = results[0].place_id,
 						animationType = data.hasOwnProperty( 'animation' ) ? data.animation : '',
 						marker;
-
-					// console.log( results );
-
-					// locations[ key ] = location;
-					// positions[ key ] = position;
-
-					// console.log( locations );
 
 					bounds.extend( position );
 
@@ -123,9 +105,16 @@
 					});
 
 					if ( null !== data.infowindow ) {
-						google.maps.event.addListener( marker, 'click', function () {
+						google.maps.event.addListener( marker, 'click', function() {
 							infowindow.setContent( this.html );
 							infowindow.open( resultsMap, this );
+						});
+
+						google.maps.event.addListener( infowindow, 'domready', function() {
+							$( '.tm-map-pins__item' )
+								.closest( '.gm-style-iw' )
+								.parent()
+								.addClass( 'tm-re-iw' );
 						});
 					}
 
@@ -134,8 +123,6 @@
 					// resultsMap.setZoom( zoom );
 				}
 			});
-
-			// console.log( locations );
 		};
 
 		/**

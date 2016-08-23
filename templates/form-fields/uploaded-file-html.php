@@ -18,5 +18,5 @@
 	</div>
 	<div class="tm-re-uploaded-image__name"></div>
 	<button type="button" class="tm-re-uploaded-image__btn btn btn-upload" disabled="disabled"><?php echo esc_html__( 'Upload', 'cherry-real-estate' ); ?></button>
-	<progress class="tm-re-uploaded-image__pregress tm-re-hidden" value="" max="100"></progress>
+	<div class="tm-re-uploaded-image__progress tm-re-hidden"></div>
 </div>

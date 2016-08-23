@@ -24,7 +24,7 @@ class Cherry_RE_Properties_Widget extends Cherry_Abstract_Widget {
 
 		$post_type = cherry_real_estate()->get_post_type_name();
 		$agents    = cherry_re_agent_data()->get_agents( array(
-		'number' => -1,
+			'number' => -1,
 		) );
 		$agents_select = wp_list_pluck( $agents, 'display_name', 'ID' );
 		$image_sizes   = get_intermediate_image_sizes();

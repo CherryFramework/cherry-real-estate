@@ -448,7 +448,7 @@
 
 				var $form           = $this.parents( 'form' ),
 					$uploaded_files = $form.find( '.tm-re-uploaded-images' ),
-					$submit_button  = $form.find( ':button[type="submit"]' ),
+					$submit_button  = $form.find( 'button[type="submit"]' ),
 					$files_ids      = $form.find( '.tm-re-uploaded-ids' ),
 					nonce           = $form.find( 'input[name="tm-re-submissionform-nonce"]' ).val(),
 					name            = $this.attr( 'name' ),
@@ -479,8 +479,6 @@
 					},
 
 				}).on( 'fileuploadadd', function( e, data ) {
-					console.log( 'add' );
-
 					var uploadErrors = [],
 						html         = $.parseHTML( CherryREData.js_field_html_img );
 
@@ -511,15 +509,13 @@
 				})
 
 				.on( 'fileuploadprocessstart', function( e ) {
-					$submit_button.prop( 'disabled', true );
+					// $submit_button.prop( 'disabled', true );
 				})
 
 				.on( 'fileuploadprocessalways', function( e, data ) {
 					if ( ! $( data.context ).length ) {
 						return !1;
 					}
-
-					// console.log(data.context);
 
 					var index = data.index,
 						file  = data.files[ index ],
@@ -542,16 +538,15 @@
 
 				.on( 'fileuploadprogressall', function( e, data ) {
 					var progress = parseInt( data.loaded / data.total * 100, 10 );
-					$( '.tm-re-uploaded-image__pregress').val( progress );
+					$( '.tm-re-uploaded-image__progress').val( progress );
 				})
 
 				.on( 'fileuploaddone', function( e, data ) {
-					console.log(data.context);
-
 					var image_types = allowed_types.split( '|' ),
 						response    = data.result;
 
 					$form.removeClass( processing );
+					$submit_button.prop( 'disabled', false );
 
 					if ( false === response.success ) {
 						alert( response.data.message );
@@ -575,27 +570,10 @@
 							ids.push( file.id );
 							$files_ids.data( 'ids', ids );
 
-							data.context.find( '.tm-re-uploaded-image__pregress' ).remove();
-							data.context.find( '.tm-re-uploaded-image__btn' ).remove();
-
-							$( data.context ).remove( 'progress' );
-							$( data.context ).remove( 'button' );
+							data.context.find( 'progress' ).remove();
+							data.context.find( 'button' ).remove();
 						}
 					});
-
-					// $.each( data.result.files, function( index, file ) {
-
-					// 	if ( file.url ) {
-					// 		var link = $( '<a>' ).attr( 'target', '_blank' ).prop( 'href', file.url );
-
-					// 		$( data.context.children()[ index ] ).wrap( link );
-
-					// 	} else if ( file.error ) {
-					// 		var error = $( '<span class="text-danger"/>' ).text( file.error );
-
-					// 		$( data.context.children()[ index ] ).append( '<br>' ).append( error );
-					// 	}
-					// });
 				});
 
 				CherryJsCore.variable.$document.on( 'click', '.tm-re-uploaded-image__remove', remove );
@@ -607,34 +585,20 @@
 				};
 
 				function upload( event ) {
-					event.preventDefault();
-
 					var $this     = $( this ),
 						$item     = $this.closest( '.tm-re-uploaded-images__item' ),
 						$progress = $item.find( 'progress' ),
 						$remove   = $item.find( '.tm-re-uploaded-image__remove' ),
 						data      = $this.data();
 
+					event.preventDefault();
+
 					$progress.removeClass( hidden );
-					$form.addClass( processing );
 					$remove.remove();
-
-					// $this
-					// 	.off( 'click' )
-					// 	.text( 'Abort' )
-					// 	.on( 'click', function() {
-					// 		$this.remove();
-					// 		data.abort();
-					// 	});
-
+					$form.addClass( processing );
+					$submit_button.prop( 'disabled', true );
+					$this.prop( 'disabled', true );
 					data.submit();
-
-					// $this.remove();
-					// $progress.addClass( hidden );
-					// data.submit().always( function() {
-					// 	console.log( 'submit fire' );
-					// 	$this.remove();
-					// });
 				};
 
 			});
