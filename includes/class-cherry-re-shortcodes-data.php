@@ -590,7 +590,7 @@ class Cherry_RE_Shortcodes_Data {
 
 			$register_form = '';
 
-			if ( get_option('users_can_register') ) {
+			if ( get_option( 'users_can_register' ) ) {
 				$register_form = cherry_re_get_template_html( 'auth/register' );
 			} else {
 				$register_form = esc_html__( 'User registration is currently not allowed.', 'cherry-real-estate' );

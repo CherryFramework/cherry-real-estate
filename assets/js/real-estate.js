@@ -33,16 +33,16 @@
 		gallery: function( self ) {
 			$( '.tm-property-gallery-js' ).each( function() {
 				var $gallery = $( this ),
-					params = $gallery.data( 'atts' );
+					params   = $gallery.data( 'atts' );
 
 				if ( ! $.isFunction( jQuery.fn.swiper ) || ! $gallery.length ) {
 					return !1;
 				}
 
 				if ( params.hasOwnProperty( 'group' ) ) {
-					var obj = params.group,
-						key,
-						saved = {};
+					var obj   = params.group,
+						saved = {},
+						key;
 
 					for ( key in obj ) {
 						saved[ key ] = init( $( obj[ key ] ) );
@@ -110,7 +110,7 @@
 				errorElement: 'span',
 				onkeyup: false,
 				onfocusout: function( element ) {
-					// native
+					// native `Validation Plugin` behavior.
 					if ( ! this.checkable( element ) && ( element.name in this.submitted || ! this.optional( element ) ) ) {
 						this.element( element );
 					}
@@ -264,7 +264,7 @@
 						action: 'login_form',
 						nonce: nonce,
 						access: {
-							login : login,
+							login: login,
 							pass: pass
 						}
 					},
@@ -647,7 +647,6 @@
 						}
 
 						$target.addClass( active );
-						$items.toggleClass( listClass );
 					},
 					error: function() {
 						$form.removeClass( processing );
@@ -656,6 +655,7 @@
 				}).done( function( response ) {
 					$form.removeClass( processing );
 					$items.removeClass( processing );
+					$items.toggleClass( listClass );
 				});
 			}
 		},
@@ -671,8 +671,8 @@
 			$sort.on( 'change', init );
 
 			function init() {
-				var search    = CherryJsCore.variable.$window[0].location.search,
-					params    = self.getQueryParameters( search );
+				var search = CherryJsCore.variable.$window[0].location.search,
+					params = self.getQueryParameters( search );
 
 				params.properties_sort = $( this ).val();
 
