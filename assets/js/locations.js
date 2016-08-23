@@ -20,8 +20,6 @@
 			var $source = [],
 				map, geocoder, bounds;
 
-			// console.log( locations[0] );
-
 			if ( data.hasOwnProperty( 'sourceselector' ) ) {
 				$source = $( '#' + data.sourceselector ).children();
 			}

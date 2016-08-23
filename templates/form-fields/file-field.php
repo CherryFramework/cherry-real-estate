@@ -20,8 +20,8 @@ $field_name         .= ! empty( $field['multiple'] ) ? '[]' : '';
 $allowed_mime_types = ! empty( $field['allowed_mime_types'] ) ? $field['allowed_mime_types'] : get_allowed_mime_types();
 $allowed_mime_types = array_keys( $allowed_mime_types ); ?>
 
+<label for="property_gallery"><?php echo $field['label']; ?></label>
 <div class="tm-re-submission-form__upload tm-re-uploaded">
-	<label for="property_gallery"><?php echo $field['label']; ?></label>
 	<div class="tm-re-uploaded-images"></div>
 	<input type="hidden" class="tm-re-uploaded-ids" data-ids="[]" value="">
 
