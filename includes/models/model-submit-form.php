@@ -73,10 +73,9 @@ class Model_Submit_Form {
 			) );
 		}
 
-		$post_type    = cherry_real_estate()->get_post_type_name();
-		$meta_prefix  = cherry_real_estate()->get_meta_prefix();
-		$need_confirm = current_user_can( "publish_{$post_type}s" ) ? false : true;
-		$data         = wp_list_pluck( $_POST['property'], 'value', 'name' );
+		$post_type   = cherry_real_estate()->get_post_type_name();
+		$meta_prefix = cherry_real_estate()->get_meta_prefix();
+		$data        = wp_list_pluck( $_POST['property'], 'value', 'name' );
 
 		// Prepare defaults array for new property.
 		$defaults = apply_filters( 'cherry_re_before_insert_post_defaults', array(
@@ -101,15 +100,17 @@ class Model_Submit_Form {
 			$gallery = join( ',', $gallery );
 		}
 
-		// Retrieve the current user object (WP_User).
-		$current_user = wp_get_current_user();
+		$current_user    = wp_get_current_user();
+		$is_admin        = current_user_can( 'manage_options' );
+		$is_trusted_user = Model_Agents::get_agent_trust( $current_user->ID );
+		$is_trusted_user = filter_var( $is_trusted_user, FILTER_VALIDATE_BOOLEAN );
 
 		// Prepare data array for new property.
 		$property_arr = array(
-			'post_type'    => cherry_real_estate()->get_post_type_name(),
+			'post_type'    => $post_type,
 			'post_title'   => wp_strip_all_tags( $data['property_title'] ),
 			'post_content' => $data['property_description'],
-			'post_status'  => $need_confirm ? 'pending' : 'publish',
+			'post_status'  => $is_trusted_user || $is_admin ? 'publish' : 'pending',
 			'meta_input'   => array(
 				$meta_prefix . 'price'          => $data['property_price'],
 				$meta_prefix . 'status'         => $data['property_status'],
@@ -120,7 +121,7 @@ class Model_Submit_Form {
 				$meta_prefix . 'location'       => $data['property_address'],
 				$meta_prefix . 'gallery'        => $gallery,
 				$meta_prefix . 'author'         => isset( $current_user->user_login ) ? $current_user->user_login : '',
-				$meta_prefix . 'state'          => $need_confirm ? 'inactive' : 'active',
+				$meta_prefix . 'state'          => $is_trusted_user || $is_admin ? 'active' : 'inactive',
 			),
 		);
 
@@ -131,7 +132,7 @@ class Model_Submit_Form {
 
 		if ( 0 == $property_ID || is_wp_error( $property_ID ) ) {
 			wp_send_json_error( array(
-				'message' => esc_html__( 'Internal error. Please, try again later', 'cherry-real-estate' ),
+				'message' => esc_html__( 'Request not created. Please, try again later', 'cherry-real-estate' ),
 			) );
 		}
 
@@ -147,7 +148,7 @@ class Model_Submit_Form {
 		}
 
 		// Send notification e-mail.
-		if ( $need_confirm && is_email( $user_email ) ) {
+		if ( ! ( $is_trusted_user || $is_admin ) && is_email( $user_email ) ) {
 
 			$result = self::send_mail(
 				$user_email,
@@ -155,11 +156,11 @@ class Model_Submit_Form {
 				Model_Settings::get_notification_message()
 			);
 
-			if ( ! $result ) {
-				wp_send_json_error( array(
-					'message' => esc_html__( 'Internal error. Please, try again later', 'cherry-real-estate' ),
-				) );
-			}
+			// if ( ! $result ) {
+			// 	wp_send_json_error( array(
+			// 		'message' => esc_html__( "Request are created. But we can't send your message. Please, try again later", 'cherry-real-estate' ),
+			// 	) );
+			// }
 		}
 
 		wp_send_json_success( $property_ID );
@@ -274,6 +275,14 @@ class Model_Submit_Form {
 			return;
 		}
 
+		$agent_id = $post->post_author;
+		$agent    = get_user_by( 'ID', $agent_id );
+		$roles    = ! empty( $agent->roles ) ? $agent->roles : array();
+
+		if ( ! in_array( 're_agent', $roles ) ) {
+			return;
+		}
+
 		$property_id  = $post->ID;
 		$meta_prefix  = cherry_real_estate()->get_meta_prefix();
 		$author_login = get_post_meta( $property_id, $meta_prefix . 'author', true );
@@ -288,6 +297,13 @@ class Model_Submit_Form {
 			return;
 		}
 
+		$is_trusted_user = Model_Agents::get_agent_trust( $author->ID );
+		$is_trusted_user = filter_var( $is_trusted_user, FILTER_VALIDATE_BOOLEAN );
+
+		if ( $is_trusted_user || user_can( $author, 'manage_options' ) ) {
+			return;
+		}
+
 		$author_email = isset( $author->user_email ) ? $author->user_email : false;
 		$author_email = sanitize_email( $author_email );
 
@@ -298,7 +314,6 @@ class Model_Submit_Form {
 		$message = Model_Settings::get_congratulate_message();
 		$message .= sprintf( __( '<br>View: %s<br><br>', 'cherry-real-estate' ), get_permalink( $property_id ) );
 
-		$agent_id       = $post->post_author;
 		$agent_contacts = $this->_prepare_agent_contacts_to_mail( $agent_id );
 
 		if ( ! empty( $agent_contacts ) ) {

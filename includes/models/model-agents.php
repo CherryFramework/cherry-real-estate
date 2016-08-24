@@ -51,6 +51,7 @@ class Model_Agents {
 	 * @param WP_User $user The current WP_User object.
 	 */
 	public function add_profile_fields( $user ) {
+		$this->_add_trusted( $user );
 		$this->_add_photo( $user );
 		$this->_add_contacts( $user );
 	}
@@ -62,6 +63,7 @@ class Model_Agents {
 	 * @param int $user_id The user ID.
 	 */
 	public function save_profile_fields( $user_id ) {
+		$this->_save_trusted( $user_id );
 		$this->_save_contacts( $user_id );
 		$this->_save_photo( $user_id );
 	}
@@ -73,6 +75,11 @@ class Model_Agents {
 	 * @param WP_User $user The current WP_User object.
 	 */
 	public function _add_contacts( $user ) {
+
+		if ( ! current_user_can( 'edit_user', $user->ID ) ) {
+			return false;
+		}
+
 		$prefix = cherry_real_estate()->get_meta_prefix();
 
 		// Prerape arguments for custom fields.
@@ -86,11 +93,11 @@ class Model_Agents {
 				'title_field' => 'contact_name',
 				'fields'      => array(
 					'icon' => array(
-						'type'        => 'iconpicker',
-						'id'          => 'icon',
-						'name'        => 'icon',
-						'label'       => esc_html__( 'Choose icon', 'cherry-real-estate' ),
-						'icon_data'   => array(
+						'type'      => 'iconpicker',
+						'id'        => 'icon',
+						'name'      => 'icon',
+						'label'     => esc_html__( 'Choose icon', 'cherry-real-estate' ),
+						'icon_data' => array(
 							'icon_set'    => 'cherryREFontAwesome',
 							'icon_css'    => CHERRY_REAL_ESTATE_URI . 'assets/css/font-awesome.min.css',
 							'icon_base'   => 'fa',
@@ -177,7 +184,7 @@ class Model_Agents {
 	 */
 	public function _add_photo( $user ) {
 
-		if ( ! current_user_can( 'upload_files' ) ) {
+		if ( ! current_user_can( 'upload_files', $user->ID ) ) {
 			return false;
 		}
 
@@ -203,6 +210,54 @@ class Model_Agents {
 			'photo-field',
 			array(
 				'control_name' => $prefix . 'agent_photo',
+				'control_html' => $control->render(),
+			),
+			cherry_real_estate()->template_path(),
+			CHERRY_REAL_ESTATE_DIR . 'views/profile/'
+		);
+	}
+
+	/**
+	 * Add a photo profile field.
+	 *
+	 * @since  1.0.0
+	 * @param  object $user
+	 * @return string
+	 */
+	public function _add_trusted( $user ) {
+		$post_type = cherry_real_estate()->get_post_type_name();
+		$type      = get_post_type_object( $post_type );
+		$caps      = $type->cap->edit_posts;
+
+		// Output only for users with RE-capabilities.
+		if ( ! user_can( $user, $caps ) ) {
+			return false;
+		}
+
+		// Visibility only for admin.
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return false;
+		}
+
+		$prefix = cherry_real_estate()->get_meta_prefix();
+		$value  = self::get_agent_trust( $user->ID );
+		$value  = ! empty( $value ) ? $value : 'false';
+
+		$control = new UI_Switcher( array(
+			'id'     => $prefix . 'agent_trust',
+			'name'   => $prefix . 'agent_trust',
+			'value'  => $value,
+			'style'  => ( wp_is_mobile() ) ? 'normal' : 'small',
+			'toggle' => array(
+				'true_toggle'  => esc_html__( 'Yes', 'cherry-real-estate' ),
+				'false_toggle' => esc_html__( 'No', 'cherry-real-estate' ),
+			),
+		) );
+
+		cherry_re_get_template(
+			'trust-field',
+			array(
+				'control_name' => $prefix . 'agent_trust',
 				'control_html' => $control->render(),
 			),
 			cherry_real_estate()->template_path(),
@@ -255,11 +310,39 @@ class Model_Agents {
 
 		$prefix = cherry_real_estate()->get_meta_prefix();
 
-		update_user_meta(
-			$user_id,
-			$prefix . 'agent_photo',
-			sanitize_text_field( $_POST[ $prefix . 'agent_photo' ] )
-		);
+		if ( ! empty( $_POST[ $prefix . 'agent_photo' ] ) ) {
+			update_user_meta(
+				$user_id,
+				$prefix . 'agent_photo',
+				sanitize_text_field( $_POST[ $prefix . 'agent_photo' ] )
+			);
+		}
+	}
+
+	/**
+	 * Save agent option for trust.
+	 *
+	 * @since 1.0.0
+	 * @param int $user_id The user ID.
+	 */
+	public static function _save_trusted( $user_id ) {
+		$post_type = cherry_real_estate()->get_post_type_name();
+		$type      = get_post_type_object( $post_type );
+		$caps      = $type->cap->edit_posts;
+
+		if ( ! user_can( $user_id, $caps ) || ! current_user_can( 'manage_options' ) ) {
+			return false;
+		}
+
+		$prefix = cherry_real_estate()->get_meta_prefix();
+
+		if ( ! empty( $_POST[ $prefix . 'agent_trust' ] ) ) {
+			update_user_meta(
+				$user_id,
+				$prefix . 'agent_trust',
+				sanitize_text_field( $_POST[ $prefix . 'agent_trust' ] )
+			);
+		}
 	}
 
 	/**
@@ -498,6 +581,19 @@ class Model_Agents {
 		$prefix = cherry_real_estate()->get_meta_prefix();
 
 		return get_the_author_meta( $prefix . 'agent_socials', $agent_id );
+	}
+
+	/**
+	 * Retrieve agent trust value.
+	 *
+	 * @since  1.0.0
+	 * @param  bool  $agent_id Agent ID.
+	 * @return mixed
+	 */
+	public static function get_agent_trust( $agent_id ) {
+		$prefix = cherry_real_estate()->get_meta_prefix();
+
+		return get_the_author_meta( $prefix . 'agent_trust', $agent_id );
 	}
 
 	/**
