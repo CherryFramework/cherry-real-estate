@@ -2,6 +2,7 @@
 	&.processing {
 		* {
 			cursor: wait;
+			pointer-events: none;
 		}
 	}
 	&__btn {

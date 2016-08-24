@@ -279,6 +279,11 @@ class Cherry_RE_Assets {
 					'validation messages (Cherry RE plugin)',
 					'cherry-real-estate'
 				),
+				'wait' => esc_html_x(
+					'Waiting...',
+					'uploading message (Cherry RE plugin)',
+					'cherry-real-estate'
+				)
 			),
 		) );
 

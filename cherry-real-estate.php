@@ -161,7 +161,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			 *
 			 * @since 1.0.0
 			 */
-			define( 'CHERRY_REAL_ESTATE_VERSION', '1.0.0-beta' );
+			define( 'CHERRY_REAL_ESTATE_VERSION', '1.0.0-beta2' );
 		}
 
 		/**

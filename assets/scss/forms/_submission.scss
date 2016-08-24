@@ -5,6 +5,7 @@
 	&.processing {
 		* {
 			cursor: wait;
+			pointer-events: none;
 		}
 	}
 }

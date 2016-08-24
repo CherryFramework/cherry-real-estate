@@ -597,7 +597,10 @@
 					$remove.remove();
 					$form.addClass( processing );
 					$submit_button.prop( 'disabled', true );
-					$this.prop( 'disabled', true );
+					$this
+						.text( CherryREData.messages.wait )
+						.prop( 'disabled', true );
+
 					data.submit();
 				};
 
