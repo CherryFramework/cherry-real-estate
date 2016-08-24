@@ -434,18 +434,8 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		 * @since 1.0.0
 		 */
 		public function add_widgets() {
-
-			if ( ! class_exists( 'Cherry_RE_Search_Widget' ) ) {
-				require_once( CHERRY_REAL_ESTATE_DIR . '/widgets/class-cherry-re-search-widget.php' );
-
-				add_action( 'widgets_init', create_function( '', 'register_widget("Cherry_RE_Search_Widget");' ) );
-			}
-
-			if ( ! class_exists( 'Cherry_RE_Properties_Widget' ) ) {
-				require_once( CHERRY_REAL_ESTATE_DIR . '/widgets/class-cherry-re-properties-widget.php' );
-
-				add_action( 'widgets_init', create_function( '', 'register_widget("Cherry_RE_Properties_Widget");' ) );
-			}
+			require_once( CHERRY_REAL_ESTATE_DIR . '/widgets/class-cherry-re-search-widget.php' );
+			require_once( CHERRY_REAL_ESTATE_DIR . '/widgets/class-cherry-re-properties-widget.php' );
 		}
 
 		/**
