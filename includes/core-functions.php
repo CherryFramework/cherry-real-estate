@@ -240,7 +240,6 @@ function cherry_re_is_property_search() {
 	return ( is_search() && $query_post_type == $post_type );
 }
 
-
 /**
  * Is the query for an existing property archive page?
  *
@@ -252,4 +251,31 @@ function cherry_re_is_property_listing() {
 	$listing_page = Model_Settings::get_listing_page();
 
 	return is_post_type_archive( $post_type ) || ( is_page( $listing_page ) && '' !== $listing_page );
+}
+
+/**
+ * Is the query for an existing RE agent archive page?
+ *
+ * @since 1.0.0
+ * @return bool
+ */
+function cherry_re_is_agent() {
+
+	if ( ! is_author() ) {
+		return false;
+	}
+
+	$author = get_queried_object();
+
+	if ( ! ( $author instanceof WP_User ) ) {
+		return false;
+	}
+
+	$roles = ! empty( $author->roles ) ? $author->roles : array();
+
+	if ( in_array( 're_agent', $roles ) ) {
+		return true;
+	}
+
+	return false;
 }

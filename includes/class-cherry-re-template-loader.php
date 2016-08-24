@@ -119,27 +119,18 @@ class Cherry_RE_Templater {
 			// CSS class.
 			self::$classes[] = 'tm-property--archive';
 
-		} elseif ( is_author() ) {
+		} elseif ( cherry_re_is_agent() ) {
 
-			$author = get_queried_object();
+			$file = 're-agent.php';
 
-			if ( $author instanceof WP_User ) {
+			$find[] = $file;
+			$find[] = cherry_real_estate()->template_path() . $file;
 
-				$role = $author->roles;
+			$find[] = 'archive-property.php';
+			$find[] = cherry_real_estate()->template_path() . 'archive-property.php';
 
-				if ( in_array( 're_agent', $role ) ) {
-					$file = 're-agent.php';
-
-					$find[] = $file;
-					$find[] = cherry_real_estate()->template_path() . $file;
-
-					$find[] = 'archive-property.php';
-					$find[] = cherry_real_estate()->template_path() . 'archive-property.php';
-
-					// CSS class.
-					self::$classes[] = 'tm-property--agent';
-				}
-			}
+			// CSS class.
+			self::$classes[] = 'tm-property--agent';
 		}
 
 		if ( $file ) {
