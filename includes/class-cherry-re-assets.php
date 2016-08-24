@@ -26,6 +26,15 @@ class Cherry_RE_Assets {
 	public static $js_handles = array();
 
 	/**
+	 * Handle for main RE javascript.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 * @var string
+	 */
+	public static $main_handle = 'cherry-re-script';
+
+	/**
 	 * Handle for Google Map API javascript.
 	 *
 	 * @since 1.0.0
@@ -71,7 +80,7 @@ class Cherry_RE_Assets {
 
 		wp_register_script(
 			'cherry-re-locations',
-			plugins_url( 'assets/js/locations.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( 'assets/js/locations.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array( 'jquery' ),
 			CHERRY_REAL_ESTATE_VERSION,
 			true
@@ -166,8 +175,8 @@ class Cherry_RE_Assets {
 		);
 
 		wp_register_script(
-			'cherry-re-script',
-			plugins_url( 'assets/js/real-estate.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			self::get_main_handle(),
+			plugins_url( 'assets/js/real-estate.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array( 'cherry-js-core' ),
 			CHERRY_REAL_ESTATE_VERSION,
 			true
@@ -273,7 +282,7 @@ class Cherry_RE_Assets {
 			),
 		) );
 
-		wp_localize_script( 'cherry-re-script', 'CherryREData', $data );
+		wp_localize_script( self::get_main_handle(), 'CherryREData', $data );
 
 		/**
 		 * Hook to deregister the javascripts or add custom.
@@ -290,10 +299,22 @@ class Cherry_RE_Assets {
 	 */
 	public static function enqueue_public_scripts() {
 		$assets = self::get_js_handles();
+		$main   = self::get_main_handle();
 
 		// Enqueue the javascript.
 		foreach ( $assets as $script ) {
+
+			// Skip a main javascript.
+			if ( $main == $script ) {
+				continue;
+			}
+
 			wp_enqueue_script( $script );
+		}
+
+		// Enqueue the main javascript after all.
+		if ( in_array( $main, $assets ) ) {
+			wp_enqueue_script( $main );
 		}
 
 		/**
@@ -479,6 +500,16 @@ class Cherry_RE_Assets {
 	 */
 	public static function get_googleapis_handle() {
 		return apply_filters( 'cherry_re_get_googleapis_handle', self::$googleapis_handle );
+	}
+
+	/**
+	 * Retrieve a main RE javascript.
+	 *
+	 * @since 1.0.0
+	 * @return string
+	 */
+	public static function get_main_handle() {
+		return apply_filters( 'cherry_re_get_main_handle', self::$main_handle );
 	}
 }
 
