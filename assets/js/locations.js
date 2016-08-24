@@ -20,6 +20,11 @@
 			var $source = [],
 				map, geocoder, bounds;
 
+			// Sanitize & parse styles.
+			if ( data.hasOwnProperty( 'styles' ) && ( 'string' == typeof data.styles ) ) {
+				data.styles = $.parseJSON( data.styles );
+			}
+
 			if ( data.hasOwnProperty( 'sourceselector' ) ) {
 				$source = $( '#' + data.sourceselector ).children();
 			}
