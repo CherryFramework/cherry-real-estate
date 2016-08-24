@@ -18,6 +18,7 @@
 		 */
 		function initMap() {
 			var $source = [],
+				loading = 'tm-re-map-loading',
 				map, geocoder, bounds;
 
 			// Sanitize & parse styles.
@@ -39,6 +40,13 @@
 			map      = new google.maps.Map( $this[0], data );
 			geocoder = new google.maps.Geocoder();
 			bounds   = new google.maps.LatLngBounds();
+
+			// When map are loaded - remove loader.
+			google.maps.event.addListenerOnce( map, 'idle', function() {
+				if ( $this.hasClass( loading ) ) {
+					$this.removeClass( loading );
+				}
+			});
 
 			// map.addListener( 'click', function( e ) {
 			// 	mapPanTo( e.latLng, map );

@@ -49,7 +49,7 @@ $atts = apply_filters( 'cherry_re_agent_map_data_atts', array(
 		<h2 class="tm-agent-locations__subtitle"><?php echo $heading; ?></h2>
 	<?php endif; ?>
 
-	<div id="<?php echo esc_attr( $instance ); ?>" class="tm-agent-location__map tm-re-map" <?php cherry_re_print_data_atts( $atts, true ); ?>></div>
+	<div id="<?php echo esc_attr( $instance ); ?>" class="tm-agent-location__map tm-re-map tm-re-map-loading" <?php cherry_re_print_data_atts( $atts, true ); ?>></div>
 </div><!-- .tm-agent-locations -->
 
 <?php cherry_re_enqueue_script( array(

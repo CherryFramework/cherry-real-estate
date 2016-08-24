@@ -64,7 +64,7 @@ $atts = apply_filters( 'cherry_re_single_property_map_data_atts', $atts ); ?>
 		<h2 class="tm-property__subtitle"><?php echo $heading; ?></h2>
 	<?php endif; ?>
 
-	<div id="<?php echo esc_attr( $instance ); ?>" class="tm-property__map tm-re-map" <?php cherry_re_print_data_atts( $atts, true ); ?>></div>
+	<div id="<?php echo esc_attr( $instance ); ?>" class="tm-property__map tm-re-map tm-re-map-loading" <?php cherry_re_print_data_atts( $atts, true ); ?>></div>
 </div>
 
 <?php cherry_re_enqueue_script( array(

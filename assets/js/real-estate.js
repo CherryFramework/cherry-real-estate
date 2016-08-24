@@ -19,6 +19,8 @@
 		},
 
 		documentReady: function( self ) {
+			var self = self;
+
 			self.gallery( self );
 			self.popup( self );
 			self.submissionForm( self );

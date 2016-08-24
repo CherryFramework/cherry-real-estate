@@ -74,7 +74,7 @@ if ( ! empty( $map_style ) ) {
 
 $atts = apply_filters( 'cherry_re_search_map_data_atts', $atts ); ?>
 
-<div id="<?php echo esc_attr( $instance ); ?>" class="widget-tm-re-search__map tm-re-map" <?php cherry_re_print_data_atts( $atts, true ); ?>></div>
+<div id="<?php echo esc_attr( $instance ); ?>" class="widget-tm-re-search__map tm-re-map tm-re-map-loading" <?php cherry_re_print_data_atts( $atts, true ); ?>></div>
 
 <?php echo $pins; ?>
 
