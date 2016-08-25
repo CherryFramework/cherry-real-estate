@@ -13,11 +13,11 @@
 <table class="form-table">
 	<tr>
 		<th>
-			<label for="<?php echo esc_attr( $control_name ); ?>"><?php _e( 'Trust?', 'cherry-real-estate' ); ?></label>
+			<label for="<?php echo esc_attr( $control_name ); ?>"><?php _e( 'Trusted User', 'cherry-real-estate' ); ?></label>
 		</th>
 		<td>
 			<?php echo $control_html; ?>
-			<p class="description"><?php esc_html_e( 'Megasuper description', 'cherry-real-estate' ); ?></p>
+			<p class="description"><?php esc_html_e( 'Automatically mark submitted properties as approved', 'cherry-real-estate' ); ?></p>
 		</td>
 	</tr>
 </table>
