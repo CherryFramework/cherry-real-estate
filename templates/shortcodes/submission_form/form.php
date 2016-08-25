@@ -26,7 +26,7 @@ do_action( 'cherry_re_before_submission_form' ); ?>
 	</div>
 
 	<div class="tm-re-submission-form__group">
-		<label for="property_price"><?php esc_html_e( 'Price', 'cherry-real-estate' ); ?></label>
+		<label for="property_price"><?php printf( esc_html__( 'Price, %s', 'cherry-real-estate' ), Model_Settings::get_currency_symbol() ); ?></label>
 		<input type="text" id="property_price" name="property_price" value="" placeholder="<?php esc_html_e( 'Enter price', 'cherry-real-estate' ); ?>" required="required">
 	</div>
 
@@ -73,7 +73,7 @@ do_action( 'cherry_re_before_submission_form' ); ?>
 	</div>
 
 	<div class="tm-re-submission-form__group">
-		<label for="property_area"><?php printf( esc_html__( 'Area Size (in %s)', 'cherry-real-estate' ), Model_Settings::get_area_unit_title() ); ?></label>
+		<label for="property_area"><?php printf( esc_html__( 'Area Size, %s', 'cherry-real-estate' ), Model_Settings::get_area_unit_title() ); ?></label>
 		<input type="text" id="property_area" name="property_area" value="" placeholder="<?php esc_html_e( 'Enter property area size', 'cherry-real-estate' ); ?>">
 	</div>
 

@@ -370,7 +370,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 						'name'       => $prefix . 'author',
 						'value'      => '',
 						'class'      => 'disabled',
-						'left_label' => esc_html__( 'Author', 'cherry-real-estate' ),
+						'left_label' => esc_html__( 'Author (read only)', 'cherry-real-estate' ),
 					),
 				),
 			) );
