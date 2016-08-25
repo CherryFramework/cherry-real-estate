@@ -39,9 +39,6 @@ class Model_Agents {
 
 		add_action( 'load-post.php',     array( $this, 'load' ) );
 		add_action( 'load-post-new.php', array( $this, 'load' ) );
-
-		// Changed position to the athor metabox.
-		add_action( 'do_meta_boxes' , array( $this, 'relocate_author_metabox' ) );
 	}
 
 	/**
@@ -422,6 +419,9 @@ class Model_Agents {
 
 		// Filtering the author drop-down.
 		add_filter( 'wp_dropdown_users_args', array( $this, 'dropdown_users_args' ), 10, 2 );
+
+		// Changed position to the athor metabox.
+		add_action( 'do_meta_boxes' , array( $this, 'relocate_author_metabox' ) );
 	}
 
 	/**
