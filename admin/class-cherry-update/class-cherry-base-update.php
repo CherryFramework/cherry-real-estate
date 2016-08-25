@@ -86,7 +86,7 @@ if ( ! class_exists( 'Cherry_Base_Update' ) ) {
 				$args['up_query_limit'] = true;
 			}
 
-			$response = $this -> remote_query( $args );
+			$response = $this->remote_query( $args );
 
 			if ( $response && 'not_update' !== $response ) {
 				$this->api['details_url'] = $response->details_url;

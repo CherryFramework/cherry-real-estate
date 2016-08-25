@@ -64,14 +64,13 @@ if ( ! class_exists( 'Cherry_Plugin_Update' ) ) {
 
 				$update = new stdClass();
 
-				$update->slug = $this->api['slug'];
-				$update->plugin = $this->api['plugin'];
+				$update->slug        = $this->api['slug'];
+				$update->plugin      = $this->api['plugin'];
 				$update->new_version = $new_update['version'];
-				$update->url = $this->api['details_url'];
-				$update->package = $new_update['package'];
+				$update->url         = $this->api['details_url'];
+				$update->package     = $new_update['package'];
 
 				$data->response[ $this->api['plugin'] ] = $update;
-
 			}
 
 			return $data;
@@ -93,13 +92,14 @@ if ( ! class_exists( 'Cherry_Plugin_Update' ) ) {
 				$plugins_string = '';
 
 				foreach ( $plugins as $plugin_key => $plugin_value ) {
+
 					$plugin_key = strtolower( $plugin_key );
+
 					if ( strpos( $plugin_key, 'cherry' ) !== false ) {
 						$plugins_string .= '"' . $plugin_value ->update ->slug . '" : "' . $plugin_value ->update ->url .'", ';
 					}
-				}
+				} ?>
 
-				?>
 				<script>
 					( function( $ ){
 						var plugin_updates = {<?php echo $plugins_string; ?>};

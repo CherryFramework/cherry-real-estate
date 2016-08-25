@@ -68,8 +68,9 @@
 	</div>
 
 	<div class="tm-re-search-form__group-more">
-		<label for="tm-re-more-property-fields" class="tm-re-search-form__more-toggle"><?php esc_html_e( 'More', 'cherry-real-estate' ); ?></label>
+
 		<input type="checkbox" id="tm-re-more-property-fields" name="tm-re-more-property-fields" class="tm-re-search-form__more-field">
+		<label for="tm-re-more-property-fields" class="tm-re-search-form__more-toggle"><?php esc_html_e( 'More', 'cherry-real-estate' ); ?></label>
 
 		<div class="tm-re-search-form__more-fields">
 			<div class="tm-re-search-form__group">
