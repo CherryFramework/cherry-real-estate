@@ -136,18 +136,18 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		public function constants() {
 
 			/**
-			 * Set constant path to the plugin directory.
-			 *
-			 * @since 1.0.0
-			 */
-			define( 'CHERRY_REAL_ESTATE_DIR', trailingslashit( plugin_dir_path( __FILE__ ) ) );
-
-			/**
 			 * Set constant path to the main file.
 			 *
 			 * @since 1.0.0
 			 */
 			define( 'CHERRY_REAL_ESTATE_MAIN_FILE', __FILE__ );
+
+			/**
+			 * Set constant path to the plugin directory.
+			 *
+			 * @since 1.0.0
+			 */
+			define( 'CHERRY_REAL_ESTATE_DIR', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 
 			/**
 			 * Set constant path to the plugin URI.
@@ -157,11 +157,18 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			define( 'CHERRY_REAL_ESTATE_URI', trailingslashit( plugin_dir_url( __FILE__ ) ) );
 
 			/**
+			 * Set the slug of the plugin.
+			 *
+			 * @since 1.0.0
+			 */
+			define( 'CHERRY_REAL_ESTATE_SLUG', basename( dirname( __FILE__ ) ) );
+
+			/**
 			 * Set the version number of the plugin.
 			 *
 			 * @since 1.0.0
 			 */
-			define( 'CHERRY_REAL_ESTATE_VERSION', '1.0.0-beta2' );
+			define( 'CHERRY_REAL_ESTATE_VERSION', '1.0.1' );
 		}
 
 		/**
@@ -198,6 +205,14 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			// Admin.
 			if ( is_admin() ) {
 				include_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-cherry-re-options-page.php' );
+				require_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-cherry-update/class-cherry-plugin-update.php' );
+
+				$updater = new Cherry_Plugin_Update();
+				$updater->init( array(
+					'version'         => CHERRY_REAL_ESTATE_VERSION,
+					'slug'            => CHERRY_REAL_ESTATE_SLUG,
+					'repository_name' => CHERRY_REAL_ESTATE_SLUG,
+				) );
 			}
 		}
 
