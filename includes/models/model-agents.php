@@ -506,10 +506,16 @@ class Model_Agents {
 	 * @since 1.0.0
 	 */
 	public function relocate_author_metabox() {
+		global $post;
+
 		$post_type_name = cherry_real_estate()->get_post_type_name();
 
 		remove_meta_box( 'authordiv', array( $post_type_name ), 'normal' );
-		add_meta_box( 'authordiv', esc_html__( 'Agent', 'cherry-real-estate' ), 'post_author_meta_box', $post_type_name, 'side', 'default' );
+
+		// Only for administrator.
+		if ( user_can( $post->post_author, 'manage_options' ) ) {
+			add_meta_box( 'authordiv', esc_html__( 'Agent', 'cherry-real-estate' ), 'post_author_meta_box', $post_type_name, 'side', 'default' );
+		}
 	}
 
 	/**
