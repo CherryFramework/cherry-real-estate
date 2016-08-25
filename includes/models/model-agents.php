@@ -414,24 +414,11 @@ class Model_Agents {
 			return;
 		}
 
-		// Enqueue scripts/styles.
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );
-
 		// Filtering the author drop-down.
 		add_filter( 'wp_dropdown_users_args', array( $this, 'dropdown_users_args' ), 10, 2 );
 
 		// Changed position to the athor metabox.
 		add_action( 'do_meta_boxes' , array( $this, 'relocate_author_metabox' ) );
-	}
-
-	/**
-	 * Loads scripts and styles.
-	 *
-	 * @since 1.0.0
-	 * @return void
-	 */
-	public function enqueue() {
-		wp_enqueue_style( 'cherry-re-admin-styles' );
 	}
 
 	/**
@@ -457,6 +444,7 @@ class Model_Agents {
 			// If we have roles, change the args to only get users of those roles.
 			if ( $roles ) {
 				$args['who']      = '';
+				$args['include']  = false;
 				$args['role__in'] = $roles;
 			}
 		}

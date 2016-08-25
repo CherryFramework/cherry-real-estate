@@ -205,6 +205,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			// Admin.
 			if ( is_admin() ) {
 				include_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-cherry-re-options-page.php' );
+				include_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-meta-box-authors.php' );
 				require_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-cherry-update/class-cherry-plugin-update.php' );
 
 				$updater = new Cherry_Plugin_Update();
@@ -370,13 +371,6 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 						'name'         => $prefix . 'gallery',
 						'multi_upload' => true,
 						'left_label'   => esc_html__( 'Gallery', 'cherry-real-estate' ),
-					),
-					$prefix . 'author' => array(
-						'type'       => 'text',
-						'id'         => $prefix . 'author',
-						'name'       => $prefix . 'author',
-						'class'      => 'disabled',
-						'left_label' => esc_html__( 'Author (read only)', 'cherry-real-estate' ),
 					),
 				),
 			) );

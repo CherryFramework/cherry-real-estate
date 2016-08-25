@@ -120,7 +120,7 @@ class Model_Submit_Form {
 				$meta_prefix . 'parking_places' => $data['property_parking_places'],
 				$meta_prefix . 'location'       => $data['property_address'],
 				$meta_prefix . 'gallery'        => $gallery,
-				$meta_prefix . 'author'         => isset( $current_user->user_login ) ? $current_user->user_login : '',
+				$meta_prefix . 'author'         => isset( $current_user->ID ) ? $current_user->ID : '',
 				$meta_prefix . 'state'          => $is_trusted_user || $is_admin ? 'active' : 'inactive',
 			),
 		);
