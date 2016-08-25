@@ -3,7 +3,7 @@
  * Plugin Name: Cherry Real Estate
  * Plugin URI:  http://www.templatemonster.com/
  * Description: Plugin for adding real estate functionality to the site.
- * Version:     1.0.0-beta
+ * Version:     1.0.0-beta2
  * Author:      Template Monster
  * Author URI:  http://www.templatemonster.com/
  * Text Domain: cherry-real-estate
@@ -289,7 +289,6 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 						'type'       => 'select',
 						'id'         => $prefix . 'state',
 						'name'       => $prefix . 'state',
-						'value'      => 'active',
 						'left_label' => esc_html__( 'State of progress', 'cherry-real-estate' ),
 						'options'    => Model_Properties::get_allowed_property_states(),
 					),
@@ -300,14 +299,12 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 						'max_value'  => 9999999999,
 						'min_value'  => 0,
 						'step_value' => 0.01,
-						'value'      => 0,
 						'left_label' => esc_html__( 'Price', 'cherry-real-estate' ),
 					),
 					$prefix . 'status' => array(
 						'type'       => 'select',
 						'id'         => $prefix . 'status',
 						'name'       => $prefix . 'status',
-						'value'      => 'rent',
 						'left_label' => esc_html__( 'Property status', 'cherry-real-estate' ),
 						'options'    => Model_Properties::get_allowed_property_statuses(),
 					),
@@ -315,7 +312,6 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 						'type'       => 'text',
 						'id'         => $prefix . 'location',
 						'name'       => $prefix . 'location',
-						'value'      => '',
 						'left_label' => esc_html__( 'Location', 'cherry-real-estate' ),
 					),
 					$prefix . 'bedrooms' => array(
@@ -325,7 +321,6 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 						'max_value'  => 99999,
 						'min_value'  => 0,
 						'step_value' => 1,
-						'value'      => 0,
 						'left_label' => esc_html__( 'Bedrooms', 'cherry-real-estate' ),
 					),
 					$prefix . 'bathrooms' => array(
@@ -335,7 +330,6 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 						'max_value'  => 99999,
 						'min_value'  => 0,
 						'step_value' => 1,
-						'value'      => 0,
 						'left_label' => esc_html__( 'Bathrooms', 'cherry-real-estate' ),
 					),
 					$prefix . 'area' => array(
@@ -345,7 +339,6 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 						'max_value'  => 999999,
 						'min_value'  => 0,
 						'step_value' => 0.01,
-						'value'      => 0,
 						'left_label' => esc_html__( 'Area', 'cherry-real-estate' ),
 					),
 					$prefix . 'parking_places' => array(
@@ -354,7 +347,6 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 						'name'       => $prefix . 'parking_places',
 						'max_value'  => 99999,
 						'min_value'  => 0,
-						'value'      => 0,
 						'left_label' => esc_html__( 'Parking places', 'cherry-real-estate' ),
 					),
 					$prefix . 'gallery' => array(
@@ -368,7 +360,6 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 						'type'       => 'text',
 						'id'         => $prefix . 'author',
 						'name'       => $prefix . 'author',
-						'value'      => '',
 						'class'      => 'disabled',
 						'left_label' => esc_html__( 'Author (read only)', 'cherry-real-estate' ),
 					),
@@ -451,7 +442,6 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 				"delete_{$capability_type}s"           => true,
 				"delete_private_{$capability_type}s"   => true,
 				"delete_published_{$capability_type}s" => true,
-				"publish_{$capability_type}s"          => true,
 				"edit_private_{$capability_type}s"     => true,
 				"edit_published_{$capability_type}s"   => true,
 				"edit_{$capability_type}s"             => true,
@@ -476,6 +466,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			// Add property capabilities to Admin Role.
 			$roles        = apply_filters( 'cherry_re_update_roles_list', array( 'administrator' ) );
 			$capabilities = wp_parse_args( $cap_agent, array(
+				"publish_{$capability_type}s"       => true,
 				"edit_others_{$capability_type}s"   => true,
 				"delete_others_{$capability_type}s" => true,
 				"read_private_{$capability_type}s"  => true,

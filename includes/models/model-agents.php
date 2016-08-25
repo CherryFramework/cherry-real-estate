@@ -480,7 +480,7 @@ class Model_Agents {
 		$type  = get_post_type_object( $post_type );
 
 		// Get the post type object caps.
-		$caps = array( $type->cap->publish_posts );
+		$caps = array( $type->cap->delete_published_posts );
 		$caps = apply_filters( 'cherry_re_get_roles_for_author_meta_box', $caps, $post_type );
 		$caps = array_unique( $caps );
 
@@ -513,7 +513,7 @@ class Model_Agents {
 		remove_meta_box( 'authordiv', array( $post_type_name ), 'normal' );
 
 		// Only for administrator.
-		if ( user_can( $post->post_author, 'manage_options' ) ) {
+		if ( current_user_can( 'manage_options' ) ) {
 			add_meta_box( 'authordiv', esc_html__( 'Agent', 'cherry-real-estate' ), 'post_author_meta_box', $post_type_name, 'side', 'default' );
 		}
 	}
