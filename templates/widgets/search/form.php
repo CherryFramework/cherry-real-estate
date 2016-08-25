@@ -67,44 +67,52 @@
 		</label>
 	</div>
 
-	<div class="tm-re-search-form__group">
-		<span class="tm-re-search-form__label"><?php esc_html_e( 'Price', 'cherry-real-estate' ); ?></span>
-		<span class="tm-re-search-form__range">
-			<input type="number" min="0" step="0.01" name="min_price" class="tm-re-search-form__field" placeholder="<?php esc_html_e( 'Min', 'cherry-real-estate' ); ?>" value="<?php echo $values['min_price']; ?>">
-			<input type="number" min="0" step="0.01" name="max_price" class="tm-re-search-form__field" placeholder="<?php esc_html_e( 'Max', 'cherry-real-estate' ); ?>" value="<?php echo $values['max_price']; ?>">
-		</span>
-	</div>
+	<div class="tm-re-search-form__group-more">
+		<label for="tm-re-more-property-fields" class="tm-re-search-form__more-toggle"><?php esc_html_e( 'More', 'cherry-real-estate' ); ?></label>
+		<input type="checkbox" id="tm-re-more-property-fields" name="tm-re-more-property-fields" class="tm-re-search-form__more-field">
 
-	<div class="tm-re-search-form__group">
-		<span class="tm-re-search-form__label"><?php esc_html_e( 'Bedrooms', 'cherry-real-estate' ); ?></span>
-		<span class="tm-re-search-form__range">
-			<input type="number" min="0" name="min_bedrooms" class="tm-re-search-form__field" placeholder="<?php esc_html_e( 'Min', 'cherry-real-estate' ); ?>" value="<?php echo $values['min_bedrooms']; ?>">
-			<input type="number" min="0" name="max_bedrooms" class="tm-re-search-form__field" placeholder="<?php esc_html_e( 'Max', 'cherry-real-estate' ); ?>" value="<?php echo $values['max_bedrooms']; ?>">
-		</span>
-	</div>
+		<div class="tm-re-search-form__more-fields">
+			<div class="tm-re-search-form__group">
+				<span class="tm-re-search-form__label"><?php esc_html_e( 'Price', 'cherry-real-estate' ); ?></span>
+				<span class="tm-re-search-form__range">
+					<input type="number" min="0" step="0.01" name="min_price" class="tm-re-search-form__field" placeholder="<?php esc_html_e( 'Min', 'cherry-real-estate' ); ?>" value="<?php echo $values['min_price']; ?>">
+					<input type="number" min="0" step="0.01" name="max_price" class="tm-re-search-form__field" placeholder="<?php esc_html_e( 'Max', 'cherry-real-estate' ); ?>" value="<?php echo $values['max_price']; ?>">
+				</span>
+			</div>
 
-	<div class="tm-re-search-form__group">
-		<span class="tm-re-search-form__label"><?php esc_html_e( 'Bathrooms', 'cherry-real-estate' ); ?></span>
-		<span class="tm-re-search-form__range">
-			<input type="number" min="0" name="min_bathrooms" class="tm-re-search-form__field" placeholder="<?php esc_html_e( 'Min', 'cherry-real-estate' ); ?>" value="<?php echo $values['min_bathrooms']; ?>">
-			<input type="number" min="0" name="max_bathrooms" class="tm-re-search-form__field" placeholder="<?php esc_html_e( 'Max', 'cherry-real-estate' ); ?>" value="<?php echo $values['max_bathrooms']; ?>">
-		</span>
-	</div>
+			<div class="tm-re-search-form__group">
+				<span class="tm-re-search-form__label"><?php esc_html_e( 'Bedrooms', 'cherry-real-estate' ); ?></span>
+				<span class="tm-re-search-form__range">
+					<input type="number" min="0" name="min_bedrooms" class="tm-re-search-form__field" placeholder="<?php esc_html_e( 'Min', 'cherry-real-estate' ); ?>" value="<?php echo $values['min_bedrooms']; ?>">
+					<input type="number" min="0" name="max_bedrooms" class="tm-re-search-form__field" placeholder="<?php esc_html_e( 'Max', 'cherry-real-estate' ); ?>" value="<?php echo $values['max_bedrooms']; ?>">
+				</span>
+			</div>
 
-	<div class="tm-re-search-form__group">
-		<span class="tm-re-search-form__label"><?php esc_html_e( 'Area', 'cherry-real-estate' ); ?></span>
-		<span class="tm-re-search-form__range">
-			<input type="number" min="0" step="0.01" name="min_area" class="tm-re-search-form__field"  placeholder="<?php esc_html_e( 'Min', 'cherry-real-estate' ); ?>" value="<?php echo $values['min_area']; ?>">
-			<input type="number" min="0" step="0.01" name="max_area" class="tm-re-search-form__field"  placeholder="<?php esc_html_e( 'Max', 'cherry-real-estate' ); ?>" value="<?php echo $values['max_area']; ?>">
-		</span>
-	</div>
+			<div class="tm-re-search-form__group">
+				<span class="tm-re-search-form__label"><?php esc_html_e( 'Bathrooms', 'cherry-real-estate' ); ?></span>
+				<span class="tm-re-search-form__range">
+					<input type="number" min="0" name="min_bathrooms" class="tm-re-search-form__field" placeholder="<?php esc_html_e( 'Min', 'cherry-real-estate' ); ?>" value="<?php echo $values['min_bathrooms']; ?>">
+					<input type="number" min="0" name="max_bathrooms" class="tm-re-search-form__field" placeholder="<?php esc_html_e( 'Max', 'cherry-real-estate' ); ?>" value="<?php echo $values['max_bathrooms']; ?>">
+				</span>
+			</div>
 
-	<div class="tm-re-search-form__group">
-		<span class="tm-re-search-form__label"><?php esc_html_e( 'Parking spots', 'cherry-real-estate' ); ?></span>
-		<span class="tm-re-search-form__range">
-			<input type="number" min="0" name="min_parking_place" class="tm-re-search-form__field" placeholder="<?php esc_html_e( 'Min', 'cherry-real-estate' ); ?>" value="<?php echo $values['min_parking_place']; ?>">
-			<input type="number" min="0" name="max_parking_place" class="tm-re-search-form__field" placeholder="<?php esc_html_e( 'Max', 'cherry-real-estate' ); ?>" value="<?php echo $values['max_parking_place']; ?>">
-		</span>
+			<div class="tm-re-search-form__group">
+				<span class="tm-re-search-form__label"><?php esc_html_e( 'Area', 'cherry-real-estate' ); ?></span>
+				<span class="tm-re-search-form__range">
+					<input type="number" min="0" step="0.01" name="min_area" class="tm-re-search-form__field"  placeholder="<?php esc_html_e( 'Min', 'cherry-real-estate' ); ?>" value="<?php echo $values['min_area']; ?>">
+					<input type="number" min="0" step="0.01" name="max_area" class="tm-re-search-form__field"  placeholder="<?php esc_html_e( 'Max', 'cherry-real-estate' ); ?>" value="<?php echo $values['max_area']; ?>">
+				</span>
+			</div>
+
+			<div class="tm-re-search-form__group">
+				<span class="tm-re-search-form__label"><?php esc_html_e( 'Parking spots', 'cherry-real-estate' ); ?></span>
+				<span class="tm-re-search-form__range">
+					<input type="number" min="0" name="min_parking_place" class="tm-re-search-form__field" placeholder="<?php esc_html_e( 'Min', 'cherry-real-estate' ); ?>" value="<?php echo $values['min_parking_place']; ?>">
+					<input type="number" min="0" name="max_parking_place" class="tm-re-search-form__field" placeholder="<?php esc_html_e( 'Max', 'cherry-real-estate' ); ?>" value="<?php echo $values['max_parking_place']; ?>">
+				</span>
+			</div>
+
+		</div>
 	</div>
 
 	<input type="hidden" name="post_type" value="<?php echo cherry_real_estate()->get_post_type_name(); ?>">

@@ -21,14 +21,14 @@ if ( ! class_exists( 'Cherry_Plugin_Update' ) ) {
 	/**
 	 * Define plugin updater class.
 	 *
-	 * @since 4.0.0
+	 * @since 1.0.0
 	 */
 	class Cherry_Plugin_Update extends Cherry_Base_Update {
 
 		/**
 		 * Init class parameters.
 		 *
-		 * @since  4.0.0
+		 * @since  1.0.0
 		 * @param  array $attr Input attributes array.
 		 * @return void
 		 */
@@ -52,7 +52,7 @@ if ( ! class_exists( 'Cherry_Plugin_Update' ) ) {
 		/**
 		 * Process update.
 		 *
-		 * @since  4.0.0
+		 * @since  1.0.0
 		 * @param  object $data Update data.
 		 * @return object
 		 */
@@ -80,7 +80,7 @@ if ( ! class_exists( 'Cherry_Plugin_Update' ) ) {
 		/**
 		 * Change plugin detail URL.
 		 *
-		 * @since  4.0.0
+		 * @since  1.0.0
 		 * @return void
 		 */
 		public function change_details_url() {
