@@ -276,31 +276,36 @@ class Model_Submit_Form {
 		}
 
 		$agent_id = $post->post_author;
-		$agent    = get_user_by( 'ID', $agent_id );
-		$roles    = ! empty( $agent->roles ) ? $agent->roles : array();
 
-		if ( ! in_array( 're_agent', $roles ) ) {
+		// $agent    = get_user_by( 'ID', $agent_id );
+		// $roles    = ! empty( $agent->roles ) ? $agent->roles : array();
+
+		// if ( ! in_array( 're_agent', $roles ) ) {
+		// 	return;
+		// }
+
+		$property_id = $post->ID;
+		$meta_prefix = cherry_real_estate()->get_meta_prefix();
+		$author_ID   = get_post_meta( $property_id, $meta_prefix . 'author', true );
+
+		if ( empty( $author_ID ) ) {
 			return;
 		}
 
-		$property_id  = $post->ID;
-		$meta_prefix  = cherry_real_estate()->get_meta_prefix();
-		$author_login = get_post_meta( $property_id, $meta_prefix . 'author', true );
-
-		if ( empty( $author_login ) ) {
-			return;
-		}
-
-		$author = get_user_by( 'login', $author_login );
+		$author = get_user_by( 'ID', $author_ID );
 
 		if ( false === $author ) {
 			return;
 		}
 
-		$is_trusted_user = Model_Agents::get_agent_trust( $author->ID );
-		$is_trusted_user = filter_var( $is_trusted_user, FILTER_VALIDATE_BOOLEAN );
+		// $is_trusted_user = Model_Agents::get_agent_trust( $author_ID );
+		// $is_trusted_user = filter_var( $is_trusted_user, FILTER_VALIDATE_BOOLEAN );
 
-		if ( $is_trusted_user || user_can( $author, 'manage_options' ) ) {
+		// if ( $is_trusted_user || user_can( $author, 'manage_options' ) ) {
+		// 	return;
+		// }
+
+		if ( user_can( $author, 'manage_options' ) ) {
 			return;
 		}
 
@@ -314,10 +319,9 @@ class Model_Submit_Form {
 		$message = Model_Settings::get_congratulate_message();
 		$message .= sprintf( __( '<br>View: %s<br><br>', 'cherry-real-estate' ), get_permalink( $property_id ) );
 
-		$agent_contacts = $this->_prepare_agent_contacts_to_mail( $agent_id );
-
-		if ( ! empty( $agent_contacts ) ) {
-			$message .= $agent_contacts;
+		if ( $author_ID != $agent_id ) {
+			$agent_contacts = $this->_prepare_agent_contacts_to_mail( $agent_id );
+			$message        .= ! empty( $agent_contacts ) ? $agent_contacts : '';
 		}
 
 		return self::send_mail( $author_email, Model_Settings::get_congratulate_subject(), $message );

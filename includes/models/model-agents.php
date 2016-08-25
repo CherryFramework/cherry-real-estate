@@ -224,7 +224,7 @@ class Model_Agents {
 	public function _add_trusted( $user ) {
 		$post_type = cherry_real_estate()->get_post_type_name();
 		$type      = get_post_type_object( $post_type );
-		$caps      = $type->cap->edit_posts;
+		$caps      = $type->cap->delete_published_posts;
 
 		// Output only for users with RE-capabilities.
 		if ( ! user_can( $user, $caps ) ) {
