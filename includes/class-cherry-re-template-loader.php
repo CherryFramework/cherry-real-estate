@@ -56,6 +56,9 @@ class Cherry_RE_Templater {
 	public function __construct() {
 		add_filter( 'template_include', array( $this, 'template_loader' ) );
 		add_filter( 'body_class',       array( $this, 'add_body_class' ) );
+
+		// Set `posts_per_page` for archive index page.
+		add_action( 'pre_get_posts', array( $this, 'set_posts_per_archive_page' ) );
 	}
 
 	/**
@@ -142,6 +145,24 @@ class Cherry_RE_Templater {
 		}
 
 		return $template;
+	}
+
+	/**
+	 * Set `posts_per_page` for archive index page.
+	 *
+	 * @since 1.0.0
+	 * @param object $query Main query.
+	 */
+	public function set_posts_per_archive_page( $query ) {
+		$post_type = cherry_real_estate()->get_post_type_name();
+
+		if ( ! is_admin()
+			&& $query->is_main_query()
+			&& ( $query->is_post_type_archive( $post_type ) || $query->is_tax( get_object_taxonomies( $post_type ) ) )
+			) {
+
+			$query->set( 'posts_per_page', Model_Settings::get_listing_per_page() );
+		}
 	}
 
 	/**
