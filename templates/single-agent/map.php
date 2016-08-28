@@ -11,37 +11,51 @@
  * @copyright  2002-2016, Template Monster
  */
 
-if ( empty( $callbacks ) ) {
-	return;
-}
+// if ( empty( $callbacks ) ) {
+// 	return;
+// }
 
-$data = Cherry_RE_Property_Data::get_instance();
+// $data = Cherry_RE_Property_Data::get_instance();
 
 // Get saved object of WP_Query.
-$current_query = $data->get_wp_query();
+// $current_query = $data->get_wp_query();
 
-$addresses = $data->get_property_data_from_query( $current_query, 'property_location' );
+// echo "<pre>";
+// var_dump($current_query);
+// echo "</pre>";
 
-if ( empty( $addresses ) ) {
-	return;
-}
+// $addresses = $data->get_property_data_from_query( $current_query, 'property_location' );
+
+// echo "<pre>";
+// var_dump($addresses);
+// echo "</pre>";
+
+// if ( empty( $addresses ) ) {
+// 	return;
+// }
 
 $heading   = apply_filters( 'cherry_re_agent_map_heading', esc_html__( "This Agent's Active Listings:", 'cherry-real-estate' ) );
 $instance  = 'tm-re-agent-map-' . uniqid();
+$map_style = Model_Settings::get_map_style();
 $marker_id = Model_Settings::get_map_marker();
 $marker    = wp_get_attachment_image_src( $marker_id );
 $marker    = is_array( $marker ) ? esc_url( $marker[0] ) : '';
 
 // Data attributes.
-$atts = apply_filters( 'cherry_re_agent_map_data_atts', array(
+$defaults = Cherry_RE_Tools::get_google_map_defaults();
+$atts     = array(
 	'id'          => $instance,
-	'address'     => $addresses,
-	'zoom'        => 15,
-	'scrollwheel' => false,
-	'draggable'   => wp_is_mobile() ? false : true,
 	'icon'        => $marker,
-	'styles'      => Model_Settings::get_map_style(),
-) ); ?>
+	'infowindow'  => array(
+		'content'  => esc_html__( 'loading...', 'cherry-real-estate' ),
+		'maxWidth' => 200,
+	),
+	'styles'         => $map_style,
+	'sourceselector' => Model_Agents::get_property_wrap_id(),
+);
+
+$atts = wp_parse_args( $atts, $defaults );
+$atts = apply_filters( 'cherry_re_agent_map_data_atts', $atts ); ?>
 
 <div class="tm-agent-locations">
 

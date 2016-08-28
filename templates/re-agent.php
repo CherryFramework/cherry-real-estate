@@ -38,6 +38,7 @@ do_action( 'cherry_re_before_agent_archive', $callbacks );
 $args = apply_filters( 'cherry_re_agent_archive_template_args', array(
 	'number'          => get_query_var( 'posts_per_page', 10 ),
 	'author'          => get_query_var( 'author' ),
+	'css_id'          => Model_Agents::get_property_wrap_id(),
 	'show_pagination' => true,
 	'echo'            => false,
 	'template'        => 'archive.tmpl',

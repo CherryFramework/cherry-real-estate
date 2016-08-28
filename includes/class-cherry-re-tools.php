@@ -145,4 +145,32 @@ class Cherry_RE_Tools {
 			return $html;
 		}
 	}
+
+	/**
+	 * Retireve a default settings for google maps.
+	 *
+	 * @since 1.0.1
+	 * @return array
+	 */
+	public static function get_google_map_defaults() {
+		return apply_filters( 'cherry_re_get_google_map_defaults', array(
+			'zoom'                  => 15,
+			'scrollwheel'           => false,
+			'draggable'             => wp_is_mobile() ? false : true,
+			'animation'             => '', // BOUNCE, DROP
+			'mapTypeControl'        => true,
+			'zoomControl'           => true,
+			'streetViewControl'     => true,
+			'mapTypeControlOptions' => array(
+				'style'    => 'HORIZONTAL_BAR',
+				'position' => 'TOP_CENTER',
+			),
+			'zoomControlOptions' => array(
+				'position' => 'LEFT_CENTER',
+			),
+			'streetViewControlOptions' => array(
+				'position' => 'LEFT_TOP',
+			),
+		) );
+	}
 }

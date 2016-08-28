@@ -628,7 +628,7 @@ class Cherry_RE_Property_Data {
 
 	public function get_property_data_from_query( $query, $key ) {
 
-		if ( ! is_a( $query, 'WP_Query' ) ) {
+		if ( ! ( $query instanceof WP_Query ) ) {
 			return;
 		}
 
@@ -640,7 +640,7 @@ class Cherry_RE_Property_Data {
 		$callbacks    = cherry_re_templater()->setup_template_data();
 		$replace_data = cherry_re_templater()->get_replace_data();
 
-		if ( empty( $replace_data[ $key ]  ) ) {
+		if ( empty( $replace_data[ $key ] ) ) {
 			return;
 		}
 
