@@ -17,5 +17,9 @@ if ( is_user_logged_in() ) {
 } ?>
 
 <div class="tm-re-auth-message">
-	<?php printf( __( 'Please <a class="%1$s" href="#%2$s" data-tab="0">login</a> or <a class="%1$s" href="#%2$s" data-tab="1">register</a> to create a new listing', 'cherry-real-estate' ), esc_attr( $class ), esc_attr( $href ) ); ?>
+	<?php printf(
+		__( 'Please <a class="%1$s" href="#%2$s" data-tab="0">login</a> or <a class="%1$s" href="#%2$s" data-tab="1">register</a> to create a new listing', 'cherry-real-estate' ),
+		esc_attr( $class ),
+		esc_attr( $href )
+	); ?>
 </div>

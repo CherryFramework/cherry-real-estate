@@ -37,7 +37,9 @@ class Cherry_RE_Shortcodes_Data {
 	 *
 	 * @since 1.0.0
 	 */
-	public function __construct() {}
+	public function __construct() {
+		add_filter( 'baz', array( $this, 'foo' ) );
+	}
 
 	/**
 	 * Retrieve a shortcodes.
@@ -558,32 +560,35 @@ class Cherry_RE_Shortcodes_Data {
 	 * @return string
 	 */
 	public function submission_form( $atts = null, $content = null ) {
-		$defaults = apply_filters( 'cherry_re_submission_form_shortcode_defaults', array(
-			'number'           => 5,
-			'orderby'          => 'date',
-			'order'            => 'desc',
-			'show_title'       => 'yes',
-			'show_image'       => 'yes',
-			'image_size'       => 'thumbnail',
-			'show_status'      => 'yes',
-			'show_area'        => 'yes',
-			'show_bedrooms'    => 'yes',
-			'show_bathrooms'   => 'yes',
-			'show_price'       => 'yes',
-			'show_location'    => 'yes',
-			'show_excerpt'     => 'yes',
-			'excerpt_length'   => 15,
-			'show_more_button' => 'yes',
-			'more_button_text' => esc_html__( 'read more', 'cherry-real-estate' ),
-			'show_pagination'  => 'no',
-			'template'         => 'default.tmpl',
-			'color_scheme'     => 'regular',
-			'css_class'        => '',
-		), $atts );
-
+		$defaults  = apply_filters( 'cherry_re_submission_form_shortcode_defaults', array(), $atts );
 		$shortcode = 'submission_form';
 		$atts      = shortcode_atts( $defaults, $atts, $shortcode );
 
+		$output = $this->foo();
+
+		// if ( ! is_user_logged_in() ) {
+
+		// 	$register_form = '';
+
+		// 	if ( get_option( 'users_can_register' ) ) {
+		// 		$register_form = cherry_re_get_template_html( 'auth/register' );
+		// 	} else {
+		// 		$register_form = esc_html__( 'User registration is currently not allowed.', 'cherry-real-estate' );
+		// 	}
+
+		// 	$output .= cherry_re_get_template_html( 'auth/popup', array(
+		// 		'popup_id'      => Model_Submit_Form::get_popup_id(),
+		// 		'login_form'    => cherry_re_get_template_html( 'auth/login' ),
+		// 		'register_form' => $register_form,
+		// 	) );
+		// }
+
+		$output .= cherry_re_get_template_html( 'shortcodes/' . $shortcode . '/form' );
+
+		return apply_filters( 'cherry_re_shortcodes_output', $output, $atts, $shortcode );
+	}
+
+	public function foo() {
 		$output = '';
 
 		if ( ! is_user_logged_in() ) {
@@ -603,9 +608,7 @@ class Cherry_RE_Shortcodes_Data {
 			) );
 		}
 
-		$output .= cherry_re_get_template_html( 'shortcodes/' . $shortcode . '/form' );
-
-		return apply_filters( 'cherry_re_shortcodes_output', $output, $atts, $shortcode );
+		return $output;
 	}
 
 	/**
