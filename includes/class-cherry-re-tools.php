@@ -133,8 +133,14 @@ class Cherry_RE_Tools {
 			$html .= sprintf( '<option value="%1$s" %3$s>%2$s</option>', esc_attr( $key ), esc_html( $value ), $selected );
 		}
 
+		if ( ! empty( $args['id'] ) ) {
+			$format = '<select name="%1$s" id="%1$s">%2$s</select>';
+		} else {
+			$format = '<select name="%1$s">%2$s</select>';
+		}
+
 		$html = sprintf(
-			'<select name="%1$s">%2$s</select>',
+			$format,
 			esc_attr( $args['name'] ),
 			$html
 		);
