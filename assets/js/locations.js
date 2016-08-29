@@ -122,7 +122,9 @@
 						});
 
 						google.maps.event.addListener( infowindow, 'domready', function() {
-							$( '.tm-map-pins__item' )
+							var className = _data.attr( 'class' ).split( ' ' ).join( '.' );
+
+							$( '.' + className )
 								.closest( '.gm-style-iw' )
 								.parent()
 								.addClass( 'tm-re-iw' );

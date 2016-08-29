@@ -159,6 +159,11 @@ class Cherry_RE_Tools {
 	 * @return array
 	 */
 	public static function get_google_map_defaults() {
+		$map_style = Model_Settings::get_map_style();
+		$marker_id = Model_Settings::get_map_marker();
+		$marker    = wp_get_attachment_image_src( $marker_id );
+		$marker    = is_array( $marker ) ? esc_url( $marker[0] ) : '';
+
 		return apply_filters( 'cherry_re_get_google_map_defaults', array(
 			'zoom'                  => 15,
 			'scrollwheel'           => false,
@@ -167,6 +172,8 @@ class Cherry_RE_Tools {
 			'mapTypeControl'        => true,
 			'zoomControl'           => true,
 			'streetViewControl'     => true,
+			'icon'                  => $marker,
+			'styles'                => $map_style,
 			'mapTypeControlOptions' => array(
 				'style'    => 'HORIZONTAL_BAR',
 				'position' => 'TOP_CENTER',
