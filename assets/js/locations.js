@@ -43,6 +43,12 @@
 
 			// When map are loaded - remove loader.
 			google.maps.event.addListenerOnce( map, 'idle', function() {
+
+				// Automatically center the map fitting all markers on the screen.
+				map.fitBounds( bounds );
+
+				// console.log(map.data);
+
 				if ( $this.hasClass( loading ) ) {
 					$this.removeClass( loading );
 				}
@@ -132,8 +138,8 @@
 					}
 
 					// Automatically center the map fitting all markers on the screen.
-					resultsMap.fitBounds( bounds );
-					// resultsMap.setZoom( zoom );
+					// resultsMap.fitBounds( bounds );
+					// resultsMap.setZoom( data.zoom );
 				}
 			});
 		};
