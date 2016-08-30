@@ -299,7 +299,7 @@ class Model_Agents {
 	 * @since 1.0.0
 	 * @param int $user_id The user ID.
 	 */
-	public static function _save_photo( $user_id ) {
+	public function _save_photo( $user_id ) {
 
 		if ( ! current_user_can( 'upload_files', $user_id ) ) {
 			return false;
@@ -322,7 +322,7 @@ class Model_Agents {
 	 * @since 1.0.0
 	 * @param int $user_id The user ID.
 	 */
-	public static function _save_trusted( $user_id ) {
+	public function _save_trusted( $user_id ) {
 		$post_type = cherry_real_estate()->get_post_type_name();
 		$type      = get_post_type_object( $post_type );
 		$caps      = $type->cap->edit_posts;
@@ -357,11 +357,16 @@ class Model_Agents {
 			return $value;
 		}
 
-		if ( ! defined( 'IS_PROFILE_PAGE' ) ) {
+		$screen = get_current_screen();
+
+		if ( null == $screen ) {
 			return $value;
 		}
 
-		if ( IS_PROFILE_PAGE ) {
+		/*
+		 * Check if current screen is profile or user-edit pages.
+		 */
+		if ( in_array( $screen->id, array( 'profile', 'user-edit' ) ) ) {
 			return false;
 		}
 
