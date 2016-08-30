@@ -113,6 +113,7 @@ if ( $gallery_ids_amount > 1 ) {
 		'slidesPerView'       => $slides_per_view,
 		'slideToClickedSlide' => true,
 		'loop'                => true,
+		'speed'               => 600,
 		'loopedSlides'        => $gallery_ids_amount + 1,
 		'centeredSlides'      => $gallery_ids_amount > 4 ? false : true,
 		'group'               => array(
