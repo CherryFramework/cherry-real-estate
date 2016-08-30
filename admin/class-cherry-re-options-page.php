@@ -53,6 +53,11 @@ class Cherry_RE_Options_Page {
 	 * @since 1.0.0
 	 */
 	public function create_page() {
+
+		if ( ! is_admin() ) {
+			return;
+		}
+
 		cherry_real_estate()->get_core()->modules['cherry-page-builder']->make(
 			$this->get_page_slug(),
 			esc_html__( 'Settings', 'cherry-real-estate' ),

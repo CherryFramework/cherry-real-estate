@@ -283,20 +283,6 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 
 			$this->get_core()->init_module( 'cherry-js-core' );
 			$this->get_core()->init_module( 'cherry-utility' );
-			$this->get_core()->init_module( 'cherry-page-builder' );
-			$this->get_core()->init_module( 'cherry-ui-elements', array(
-				'ui_elements' => array(
-					'text',
-					'textarea',
-					'select',
-					'media',
-					'stepper',
-					'checkbox',
-					'switcher',
-					'repeater',
-					'iconpicker',
-				),
-			) );
 			$this->get_core()->init_module( 'cherry-post-meta', array(
 				'title'  => esc_html__( 'Property Data', 'cherry-real-estate' ),
 				'page'   => array( $this->get_post_type_name() ),
@@ -375,6 +361,23 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 				),
 			) );
 			$this->get_core()->init_module( 'cherry-widget-factory' );
+
+			if ( is_admin() ) {
+				$this->get_core()->init_module( 'cherry-page-builder' );
+				$this->get_core()->init_module( 'cherry-ui-elements', array(
+					'ui_elements' => array(
+						'text',
+						'textarea',
+						'select',
+						'media',
+						'stepper',
+						'checkbox',
+						'switcher',
+						'repeater',
+						'iconpicker',
+					),
+				) );
+			}
 
 			/**
 			 * Fire when all modules already loaded and ready for to use.
