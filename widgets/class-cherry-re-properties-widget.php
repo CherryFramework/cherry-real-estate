@@ -23,10 +23,8 @@ if ( ! class_exists( 'Cherry_RE_Properties_Widget' ) ) {
 			$this->widget_id          = 'tm_re_properties_widget';
 			$this->widget_name        = esc_html__( 'Cherry RE Properites', 'cherry-real-estate' );
 
-			$post_type = cherry_real_estate()->get_post_type_name();
-			$agents    = cherry_re_agent_data()->get_agents( array(
-				'number' => -1,
-			) );
+			$post_type     = cherry_real_estate()->get_post_type_name();
+			$agents        = cherry_re_agent_data()->get_agents();
 			$agents_select = is_array( $agents ) ? wp_list_pluck( $agents, 'display_name', 'ID' ) : array();
 			$image_sizes   = get_intermediate_image_sizes();
 
