@@ -116,7 +116,7 @@ class Model_Settings {
 	public static function get_currency_symbol() {
 		$main_settings = self::get_main_settings();
 
-		return ! empty( $main_settings['сurrency-sign'] ) ? $main_settings['сurrency-sign'] : '$';
+		return ! empty( $main_settings['currency-sign'] ) ? $main_settings['currency-sign'] : '$';
 	}
 
 	/**
@@ -129,8 +129,8 @@ class Model_Settings {
 		$main_settings = self::get_main_settings();
 		$value         = false;
 
-		if ( ! empty( $main_settings['сurrency-position'] ) ) {
-			$value = stripslashes( $main_settings['сurrency-position'] );
+		if ( ! empty( $main_settings['currency-position'] ) ) {
+			$value = stripslashes( $main_settings['currency-position'] );
 		}
 
 		return $value ? $value : 'left';

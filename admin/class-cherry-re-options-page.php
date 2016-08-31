@@ -118,21 +118,21 @@ class Cherry_RE_Options_Page {
 						'options' => Model_Settings::get_area_unit(),
 					),
 				),
-				'сurrency-sign' => array(
-					'slug'  => 'сurrency-sign',
+				'currency-sign' => array(
+					'slug'  => 'currency-sign',
 					'type'  => 'text',
 					'title' => esc_html__( 'Currency', 'cherry-real-estate' ),
 					'field' => array(
-						'id'    => 'сurrency-sign',
+						'id'    => 'currency-sign',
 						'value' => '$',
 					),
 				),
-				'сurrency-position' => array(
-					'slug'  => 'сurrency-position',
+				'currency-position' => array(
+					'slug'  => 'currency-position',
 					'type'  => 'select',
 					'title' => esc_html__( 'Currency Position', 'cherry-real-estate' ),
 					'field' => array(
-						'id'      => 'сurrency-position',
+						'id'      => 'currency-position',
 						'size'    => 1,
 						'value'   => 'left',
 						'options' => array(
