@@ -34,9 +34,6 @@ class Model_Agents {
 		// Add Properties to Author Archives Page.
 		add_action( 'pre_get_posts', array( $this, 'author_archive' ) );
 
-		// Hide a avatar option in profile page.
-		add_filter( 'option_show_avatars', array( $this, 'hide_avatar_option' ), 10, 2 );
-
 		add_action( 'load-post.php',     array( $this, 'load' ) );
 		add_action( 'load-post-new.php', array( $this, 'load' ) );
 	}
@@ -340,37 +337,6 @@ class Model_Agents {
 				sanitize_text_field( $_POST[ $prefix . 'agent_trust' ] )
 			);
 		}
-	}
-
-	/**
-	 * Hide a avatar option in profile page.
-	 *
-	 * @since  1.0.0
-	 * @param  mixed  $value  Value of the option.
-	 * @param  string $option Option name.
-	 * @return mixed
-	 */
-	public function hide_avatar_option( $value, $option ) {
-		$pre = apply_filters( 'cherry_re_hide_avatar_option', true, $value, $option );
-
-		if ( true !== $pre ) {
-			return $value;
-		}
-
-		$screen = get_current_screen();
-
-		if ( null == $screen ) {
-			return $value;
-		}
-
-		/*
-		 * Check if current screen is profile or user-edit pages.
-		 */
-		if ( in_array( $screen->id, array( 'profile', 'user-edit' ) ) ) {
-			return false;
-		}
-
-		return $value;
 	}
 
 	/**
