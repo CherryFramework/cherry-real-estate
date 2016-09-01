@@ -10,17 +10,17 @@
 		$.each( shortcodes, function( key, value ) {
 			var item = {};
 
-			item['text']    = value['title'];
-			item['onclick'] = function() {
+			item.text    = value.title;
+			item.onclick = function() {
 
-				var selfClosed = ( 'object' == typeof value['body'] ) ? false : true,
+				var selfClosed = ( 'object' === typeof value.body ) ? false : true,
 					shortcode  = prefix + key;
 
 				if ( ! selfClosed ) {
 					editor.windowManager.open({
-						title: value['title'],
-						icon: value['icon'],
-						body: value['body'],
+						title: value.title,
+						icon: value.icon,
+						body: value.body,
 						minWidth: 600,
 						onsubmit: function( e ) {
 							var attr = e.data,

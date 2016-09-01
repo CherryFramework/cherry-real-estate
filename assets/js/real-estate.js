@@ -1,4 +1,4 @@
-/* global CherryREData */
+/* global CherryJsCore, CherryREData, window */
 (function( $ ) {
 	'use strict';
 
@@ -33,20 +33,22 @@
 		},
 
 		gallery: function( self ) {
-			$( '.tm-property-gallery-js' ).each( function() {
-				var $gallery = $( this ),
-					params   = $gallery.data( 'atts' );
+			var $target = $( '.tm-property-gallery-js' );
 
-				if ( ! $.isFunction( jQuery.fn.swiper ) || ! $gallery.length ) {
-					return !1;
-				}
+			if ( ! $.isFunction( jQuery.fn.swiper ) || ! $target.length ) {
+				return ! 1;
+			}
+
+			$target.each( function() {
+				var $gallery = $( this ),
+					params   = $gallery.data( 'atts' ),
+					saved    = {},
+					obj;
 
 				if ( params.hasOwnProperty( 'group' ) ) {
-					var obj   = params.group,
-						saved = {},
-						key;
+					obj = params.group;
 
-					for ( key in obj ) {
+					for ( var key in obj ) {
 						saved[ key ] = init( $( obj[ key ] ) );
 					}
 
@@ -69,19 +71,20 @@
 		},
 
 		submissionForm: function( self ) {
-			var $form = $( '#tm-re-submissionform' );
+			var $form = $( '#tm-re-submissionform' ),
+				$error, $success, $process, hidden;
 
 			if ( ! $.isFunction( jQuery.fn.validate ) || ! $form.length ) {
-				return !1;
+				return ! 1;
 			}
 
-			var $error   = $form.find( '.tm-re-submission-form__error' ),
-				$success = $form.find( '.tm-re-submission-form__success' ),
-				$process = $form.find( '.tm-re-submission-form__process' ),
-				hidden   = 'tm-re-hidden';
+			$error   = $form.find( '.tm-re-submission-form__error' ),
+			$success = $form.find( '.tm-re-submission-form__success' ),
+			$process = $form.find( '.tm-re-submission-form__process' ),
+			hidden   = 'tm-re-hidden';
 
 			$form.validate({
-				debug: true, // disabled submit event
+				debug: true, // Disabled submit event
 				messages: {
 					property_title: CherryREData.messages,
 					property_description: CherryREData.messages,
@@ -112,7 +115,7 @@
 				errorElement: 'span',
 				onkeyup: false,
 				onfocusout: function( element ) {
-					// native `Validation Plugin` behavior.
+					// Native `Validation Plugin` behavior.
 					if ( ! this.checkable( element ) && ( element.name in this.submitted || ! this.optional( element ) ) ) {
 						this.element( element );
 					}
@@ -133,7 +136,7 @@
 				unhighlight: function( element, errorClass, validClass ) {
 					$( element ).removeClass( errorClass ).addClass( validClass );
 				},
-				invalidHandler: function( event, validator ) {
+				invalidHandler: function( event ) {
 					if ( ! $error.hasClass( hidden ) ) {
 						$error.addClass( hidden );
 					}
@@ -151,12 +154,12 @@
 				var formData    = $form.serializeArray(),
 					$source     = $form.find( '.tm-re-uploaded-ids' ),
 					$preview    = $form.find( '.tm-re-uploaded-images' ),
-					gallery_ids = $source.data( 'ids' ),
+					galleryIds  = $source.data( 'ids' ),
 					nonce       = $form.find( 'input[name="tm-re-submissionform-nonce"]' ).val(),
 					processing  = 'processing';
 
 				if ( $form.hasClass( processing ) ) {
-					return !1;
+					return ! 1;
 				}
 
 				$form.addClass( processing );
@@ -178,12 +181,12 @@
 						action: 'submission_form',
 						nonce: nonce,
 						property: formData,
-						gallery: gallery_ids
+						gallery: galleryIds
 					},
 					beforeSend: function() {
 						$process.removeClass( hidden );
 					},
-					error: function( jqXHR, textStatus, errorThrown ) {
+					error: function( jqXHR, textStatus ) {
 						$form.removeClass( processing );
 						$error.removeClass( hidden ).html( textStatus );
 						$process.addClass( hidden );
@@ -201,7 +204,7 @@
 					}
 
 					$error.removeClass( hidden ).html( response.data.message );
-					return !1;
+					return ! 1;
 				});
 			}
 		},
@@ -210,11 +213,11 @@
 			var $form = $( '#tm-re-loginform' );
 
 			if ( ! $.isFunction( jQuery.fn.validate ) || ! $form.length ) {
-				return !1;
+				return ! 1;
 			}
 
 			$form.validate({
-				debug: true, // disabled submit event
+				debug: true, // Disabled submit event
 				messages: {
 					user_login: CherryREData.messages,
 					user_pass: CherryREData.messages
@@ -244,7 +247,7 @@
 					hidden     = 'tm-re-hidden';
 
 				if ( $form.hasClass( processing ) ) {
-					return !1;
+					return ! 1;
 				}
 
 				$form.addClass( processing );
@@ -270,7 +273,7 @@
 							pass: pass
 						}
 					},
-					error: function( jqXHR, textStatus, errorThrown ) {
+					error: function( jqXHR, textStatus ) {
 						$form.removeClass( processing );
 						$error.removeClass( hidden ).html( textStatus );
 					}
@@ -284,7 +287,7 @@
 					}
 
 					$error.removeClass( hidden ).html( response.data.message );
-					return !1;
+					return ! 1;
 				});
 
 			};
@@ -294,11 +297,11 @@
 			var $form = $( '#tm-re-registerform' );
 
 			if ( ! $.isFunction( jQuery.fn.validate ) || ! $form.length ) {
-				return !1;
+				return ! 1;
 			}
 
 			$form.validate({
-				debug: true, // disabled submit event
+				debug: true, // Disabled submit event
 				messages: {
 					user_login: CherryREData.messages,
 					user_email: CherryREData.messages
@@ -328,7 +331,7 @@
 					hidden      = 'tm-re-hidden';
 
 				if ( $form.hasClass( processing ) ) {
-					return !1;
+					return ! 1;
 				}
 
 				$form.addClass( processing );
@@ -354,7 +357,7 @@
 							email: email
 						}
 					},
-					error: function( jqXHR, textStatus, errorThrown ) {
+					error: function( jqXHR, textStatus ) {
 						$form.removeClass( processing );
 						$error.removeClass( hidden ).html( textStatus );
 					}
@@ -372,7 +375,7 @@
 					}
 
 					$error.removeClass( hidden ).html( response.data.message );
-					return !1;
+					return ! 1;
 				});
 
 			};
@@ -383,11 +386,11 @@
 				src  = '#' + CherryREData.popupid;
 
 			if ( ! $( src ).length ) {
-				return !1;
+				return ! 1;
 			}
 
 			if ( ! $.isFunction( jQuery.fn.magnificPopup ) || ! $( link ).length ) {
-				return !1;
+				return ! 1;
 			}
 
 			self.magnificPopup = $.magnificPopup.instance;
@@ -395,10 +398,10 @@
 			CherryJsCore.variable.$document.on( 'click', link, init );
 
 			function init( event ) {
-				event.preventDefault();
-
 				var tab    = $( this ).data( 'tab' ),
 					effect = $( src ).data( 'anim-effect' );
+
+				event.preventDefault();
 
 				self.magnificPopup.open({
 					items: {
@@ -417,7 +420,7 @@
 								$forms.each( function( i, form ) {
 									$( form ).find( '.tm-re-messages span' ).addClass( hidden );
 									form.reset();
-								})
+								});
 							}
 
 							self.tabs( self, tab );
@@ -431,7 +434,7 @@
 			var $target = $( '#' + CherryREData.popupid );
 
 			if ( ! $.isFunction( jQuery.fn.tabs ) || ! $target.length ) {
-				return !1;
+				return ! 1;
 			}
 
 			$target.tabs({
@@ -441,26 +444,26 @@
 		},
 
 		uploadImages: function( self ) {
-			$( '.tm-re-uploaded-btn__field' ).each( function() {
-				var $this = $( this );
+			var $target = $( '.tm-re-uploaded-btn__field' );
 
-				if ( ! $.isFunction( jQuery.fn.fileupload ) || ! $this.length ) {
-					return !1;
-				}
+			if ( ! $.isFunction( jQuery.fn.fileupload ) || ! $target.length ) {
+				return ! 1;
+			}
 
-				var $form           = $this.parents( 'form' ),
-					$uploaded_files = $form.find( '.tm-re-uploaded-images' ),
-					$submit_button  = $form.find( 'button[type="submit"]' ),
-					$files_ids      = $form.find( '.tm-re-uploaded-ids' ),
+			$target.each( function() {
+				var $this           = $( this ),
+					$form           = $this.parents( 'form' ),
+					$uploadedFiles  = $form.find( '.tm-re-uploaded-images' ),
+					$submitButton   = $form.find( 'button[type="submit"]' ),
+					$filesIds       = $form.find( '.tm-re-uploaded-ids' ),
 					nonce           = $form.find( 'input[name="tm-re-submissionform-nonce"]' ).val(),
 					name            = $this.attr( 'name' ),
-					multiple        = $this.attr( 'multiple' ) ? 1 : 0,
-					allowed_types   = $this.data( 'file_types' ),
+					allowedTypes    = $this.data( 'file_types' ),
 					processing      = 'processing',
 					hidden          = 'tm-re-hidden';
 
 				if ( $form.hasClass( processing ) ) {
-					return !1;
+					return ! 1;
 				}
 
 				$this.fileupload({
@@ -486,16 +489,16 @@
 
 					data.context = $( html );
 
-					if ( allowed_types ) {
-						var acceptFileTypes = new RegExp( "(\.|\/)(" + allowed_types + ")$", "i" );
+					if ( allowedTypes ) {
+						var acceptFileTypes = new RegExp( "(\.|\/)(" + allowedTypes + ")$", "i" );
 
 						if ( data.files[0]['name'].length && ! acceptFileTypes.test( data.files[0]['name'] ) ) {
-							uploadErrors.push( CherryREData.messages.invalid_file_type + ' ' + allowed_types );
+							uploadErrors.push( CherryREData.messages.invalid_file_type + ' ' + allowedTypes );
 						}
 					}
 
 					if ( uploadErrors.length > 0 ) {
-						alert( uploadErrors.join( "\n" ) );
+						window.alert( uploadErrors.join( "\n" ) );
 
 					} else {
 
@@ -505,7 +508,7 @@
 
 							$name.text( file.name );
 							$btn.data( data );
-							data.context.appendTo( $uploaded_files );
+							data.context.appendTo( $uploadedFiles );
 						});
 					}
 				})
@@ -513,7 +516,7 @@
 				.on( 'fileuploadprocessalways', function( e, data ) {
 
 					if ( ! $( data.context ).length ) {
-						return !1;
+						return ! 1;
 					}
 
 					var index = data.index,
@@ -536,7 +539,7 @@
 				})
 
 				.on( 'fileuploaddone', function( e, data ) {
-					var image_types = allowed_types.split( '|' ),
+					var image_types = allowedTypes.split( '|' ),
 						response    = data.result,
 						$process    = data.context.find( '.tm-re-status--process' ),
 						$error      = data.context.find( '.tm-re-status--error' ),
@@ -544,23 +547,23 @@
 
 					$form.removeClass( processing );
 					$process.addClass( hidden ),
-					$submit_button.prop( 'disabled', false );
+					$submitButton.prop( 'disabled', false );
 
 					if ( false === response.success ) {
-						alert( response.data.message );
+						window.alert( response.data.message );
 						$error.removeClass( hidden );
-						return !1;
+						return ! 1;
 					}
 
 					$.each( response.data.files, function( index, file ) {
 
 						if ( file.error ) {
-							alert( file.error );
+							window.alert( file.error );
 							$error.removeClass( hidden );
 							return -1;
 
 						} else {
-							var ids  = $files_ids.data( 'ids' );
+							var ids  = $filesIds.data( 'ids' );
 
 							if ( -1 == $.inArray( file.extension, image_types ) ) {
 								$error.removeClass( hidden );
@@ -568,7 +571,7 @@
 							}
 
 							ids.push( file.id );
-							$files_ids.data( 'ids', ids );
+							$filesIds.data( 'ids', ids );
 
 							$success.removeClass( hidden );
 							data.context.find( 'button' ).remove();
@@ -596,7 +599,7 @@
 					$progress.removeClass( hidden );
 					$remove.remove();
 					$form.addClass( processing );
-					$submit_button.prop( 'disabled', true );
+					$submitButton.prop( 'disabled', true );
 					$this
 						.text( CherryREData.messages.wait )
 						.prop( 'disabled', true );
@@ -612,7 +615,7 @@
 				$items  = $( '#tm-re-property-items' );
 
 			if ( ! ( $button.length && $items.length ) ) {
-				return !1;
+				return ! 1;
 			}
 
 			$button.on( 'click', init );
@@ -627,11 +630,11 @@
 					processing  = 'processing';
 
 				if ( $target.hasClass( active ) ) {
-					return !1;
+					return ! 1;
 				}
 
 				if ( $form.hasClass( processing ) ) {
-					return !1;
+					return ! 1;
 				}
 
 				$form.addClass( processing );
@@ -657,7 +660,7 @@
 						$form.removeClass( processing );
 						$items.removeClass( processing );
 					}
-				}).done( function( response ) {
+				}).done( function() {
 					$form.removeClass( processing );
 					$items.removeClass( processing );
 					$items.toggleClass( listClass );
@@ -670,7 +673,7 @@
 				$sort = $form.find( 'select' );
 
 			if ( ! $sort.length ) {
-				return !1;
+				return ! 1;
 			}
 
 			$sort.on( 'change', init );
@@ -686,23 +689,27 @@
 		},
 
 		getQueryParameters: function( str ) {
-			return (str || document.location.search).replace(/(^\?)/,'').split("&").map(function(n){return n = n.split("="),this[n[0]] = n[1],this}.bind({}))[0];
+			return ( str || document.location.search ).replace( /(^\?)/, '' ).split( '&' ).map( function( n ) {
+				return n = n.split( '=' ), this[ n[0] ] = n[1], this
+			}.bind({}))[0];
 		},
 
 		location: function( self ) {
-			$( '.tm-re-map' ).each( function() {
+			var $target = $( '.tm-re-map' );
+
+			if ( ! $.isFunction( jQuery.fn.RELocations ) || ! $target.length ) {
+				return ! 1;
+			}
+
+			$target.each( function() {
 				var data = $( this ).data( 'atts' ),
 					$map;
 
-				if ( 'object' != typeof data ) {
-					return !1;
+				if ( 'object' !== typeof data ) {
+					return ! 1;
 				}
 
 				$map = $( '#' + data.id );
-
-				if ( ! $.isFunction( jQuery.fn.RELocations ) || ! $map.length ) {
-					return !1;
-				}
 
 				$map.RELocations( data );
 			} );

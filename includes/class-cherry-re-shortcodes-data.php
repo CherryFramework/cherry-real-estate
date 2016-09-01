@@ -666,7 +666,7 @@ var CherryRETinyMCE = {
 	public static function mce_external_plugins( $plugin_array ) {
 		$button = self::get_mce_button();
 
-		$plugin_array[ $button ] = CHERRY_REAL_ESTATE_URI . 'assets/js/tinymce-button.min.js';
+		$plugin_array[ $button ] = CHERRY_REAL_ESTATE_URI . 'assets/js/tinymce-button.js';
 
 		return $plugin_array;
 	}

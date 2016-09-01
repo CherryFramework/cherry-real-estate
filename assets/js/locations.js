@@ -1,14 +1,14 @@
+/* global google */
 (function( $ ) {
 
 	$.fn.RELocations = function( options ) {
 		var $this = $( this ),
 			data  = {
-				zoom : 5,
-				infowindow : null,
-				address : null
+				zoom: 5,
+				infowindow: null,
+				address: null
 			},
-			locations = {},
-			positions = {};
+			infowindow;
 
 		$.extend( data, options );
 		initMap();
@@ -33,7 +33,7 @@
 			markersNumb = $source.length;
 
 			if ( null === data.address && ! markersNumb ) {
-				return !1;
+				return ! 1;
 			}
 
 			// Changed a control's position.
@@ -59,10 +59,6 @@
 				}
 			});
 
-			// map.addListener( 'click', function( e ) {
-			// 	mapPanTo( e.latLng, map );
-			// });
-
 			if ( null !== data.infowindow ) {
 				infowindow = new google.maps.InfoWindow( data.infowindow );
 			}
@@ -75,7 +71,7 @@
 
 			} else {
 
-				for ( key in data.address ) {
+				for ( var key in data.address ) {
 					geocodeAddress( map, geocoder, bounds, data.address[ key ] );
 				}
 			}
@@ -100,7 +96,7 @@
 			}
 
 			if ( undefined === location ) {
-				return !1;
+				return ! 1;
 			}
 
 			location = String( location );
@@ -108,12 +104,12 @@
 			geocoder.geocode({
 				'address': location
 			}, function( results, status ) {
+				var position, animationType, marker;
 
 				if ( status === google.maps.GeocoderStatus.OK ) {
-					var position      = results[0].geometry.location,
-						key           = results[0].place_id,
-						animationType = data.hasOwnProperty( 'animation' ) ? data.animation : '',
-						marker;
+					position      = results[0].geometry.location,
+					animationType = data.hasOwnProperty( 'animation' ) ? data.animation : '',
+					marker;
 
 					bounds.extend( position );
 
@@ -141,32 +137,18 @@
 								.addClass( 'tm-re-iw' );
 						});
 					}
-
-					// Automatically center the map fitting all markers on the screen.
-					// resultsMap.fitBounds( bounds );
-					// resultsMap.setZoom( data.zoom );
 				}
 			});
-		};
-
-		/**
-		 * Callback-function on `click` event.
-		 *
-		 * @param  object LatLng
-		 * @param  ojject map
-		 * @return void
-		 */
-		function mapPanTo( LatLng, map ) {
-			map.panTo( LatLng );
 		};
 
 		/**
 		 * Prepare options for Map Controls in javascript-format.
 		 */
 		function setControlOptions() {
+			var mapTypeControlOptions, zoomControlOptions, streetViewControlOptions;
 
 			if ( data.hasOwnProperty( 'mapTypeControlOptions' ) ) {
-				var mapTypeControlOptions = {
+				mapTypeControlOptions = {
 					style: google.maps.MapTypeControlStyle[ data.mapTypeControlOptions.style ],
 					position: google.maps.ControlPosition[ data.mapTypeControlOptions.position ]
 				};
@@ -175,7 +157,7 @@
 			}
 
 			if ( data.hasOwnProperty( 'zoomControlOptions' ) ) {
-				var zoomControlOptions = {
+				zoomControlOptions = {
 					position: google.maps.ControlPosition[ data.zoomControlOptions.position ]
 				};
 
@@ -183,13 +165,13 @@
 			}
 
 			if ( data.hasOwnProperty( 'streetViewControlOptions' ) ) {
-				var streetViewControlOptions = {
+				streetViewControlOptions = {
 					position: google.maps.ControlPosition[ data.streetViewControlOptions.position ]
 				};
 
 				data.streetViewControlOptions = streetViewControlOptions;
 			}
-		};
-	}
+		}
+	};
 
 })( jQuery );
