@@ -501,6 +501,12 @@ class Model_Agents {
 	 * @return string
 	 */
 	public static function get_agent_photo_url( $agent_id, $size = 'thumbnail' ) {
+
+		// Skip unregistered user.
+		if ( 0 == $agent_id ) {
+			return false;
+		}
+
 		$photo_id = self::get_agent_photo_id( $agent_id );
 
 		if ( ! empty( $photo_id ) ) {
