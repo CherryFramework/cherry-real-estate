@@ -45,12 +45,21 @@ class Model_Agents {
 	 * @param WP_User $user The current WP_User object.
 	 */
 	public function add_profile_fields( $user ) {
+		$this->_add_trusted( $user );
+
+		$post_type = cherry_real_estate()->get_post_type_name();
+		$obj       = get_post_type_object( $post_type );
+		$caps      = $obj->cap->edit_published_posts;
+
+		// Output only for users with RE-capabilities.
+		if ( ! user_can( $user, $caps ) ) {
+			return false;
+		}
 
 		if ( ! current_user_can( 'edit_user', $user->ID ) ) {
 			return false;
 		}
 
-		$this->_add_trusted( $user );
 		$this->_add_photo( $user );
 		$this->_add_contacts( $user );
 	}
@@ -62,12 +71,21 @@ class Model_Agents {
 	 * @param int $user_id The user ID.
 	 */
 	public function save_profile_fields( $user_id ) {
+		$this->_save_trusted( $user_id );
+
+		$post_type = cherry_real_estate()->get_post_type_name();
+		$obj       = get_post_type_object( $post_type );
+		$caps      = $obj->cap->edit_published_posts;
+
+		// Output only for users with RE-capabilities.
+		if ( ! user_can( $user_id, $caps ) ) {
+			return false;
+		}
 
 		if ( ! current_user_can( 'edit_user', $user_id ) ) {
 			return false;
 		}
 
-		$this->_save_trusted( $user_id );
 		$this->_save_contacts( $user_id );
 		$this->_save_photo( $user_id );
 	}
@@ -191,9 +209,9 @@ class Model_Agents {
 		$photo_id = self::get_agent_photo_id( $user->ID );
 
 		if ( ! $photo_id ) {
-			$btn_text = esc_html__( 'Upload Photo', 'cherry-real-estate' );
+			$btn_text = esc_html__( 'Upload', 'cherry-real-estate' );
 		} else {
-			$btn_text = esc_html__( 'Change Photo', 'cherry-real-estate' );
+			$btn_text = esc_html__( 'Change', 'cherry-real-estate' );
 		}
 
 		$control = new UI_Media( array(
@@ -228,7 +246,7 @@ class Model_Agents {
 		$type      = get_post_type_object( $post_type );
 		$caps      = $type->cap->delete_published_posts;
 
-		// Output only for users with RE-capabilities.
+		// Output only for RE agents.
 		if ( ! user_can( $user, $caps ) ) {
 			return false;
 		}

@@ -19,7 +19,7 @@
 		</th>
 		<td>
 			<?php echo $control_html; ?>
-			<p class="description"><?php esc_html_e( 'Have a higher priority than `Profile Picture` option', 'cherry-real-estate' ); ?></p>
+			<p class="description"><?php esc_html_e( 'Only for Real Estate roles and have a higher priority than `Profile Picture` option', 'cherry-real-estate' ); ?></p>
 		</td>
 	</tr>
 </table>
