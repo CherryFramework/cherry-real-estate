@@ -45,6 +45,11 @@ class Model_Agents {
 	 * @param WP_User $user The current WP_User object.
 	 */
 	public function add_profile_fields( $user ) {
+
+		if ( ! current_user_can( 'edit_user', $user->ID ) ) {
+			return false;
+		}
+
 		$this->_add_trusted( $user );
 		$this->_add_photo( $user );
 		$this->_add_contacts( $user );
@@ -57,6 +62,11 @@ class Model_Agents {
 	 * @param int $user_id The user ID.
 	 */
 	public function save_profile_fields( $user_id ) {
+
+		if ( ! current_user_can( 'edit_user', $user_id ) ) {
+			return false;
+		}
+
 		$this->_save_trusted( $user_id );
 		$this->_save_contacts( $user_id );
 		$this->_save_photo( $user_id );
@@ -69,11 +79,6 @@ class Model_Agents {
 	 * @param WP_User $user The current WP_User object.
 	 */
 	public function _add_contacts( $user ) {
-
-		if ( ! current_user_can( 'edit_user', $user->ID ) ) {
-			return false;
-		}
-
 		$prefix = cherry_real_estate()->get_meta_prefix();
 
 		// Prerape arguments for custom fields.
@@ -266,28 +271,21 @@ class Model_Agents {
 	 * @param int $user_id The user ID.
 	 */
 	public function _save_contacts( $user_id ) {
+		$prefix   = cherry_real_estate()->get_meta_prefix();
+		$contacts = isset( $_POST[ $prefix . 'agent_contacts' ] ) ? $_POST[ $prefix . 'agent_contacts' ]: '';
+		$socials  = isset( $_POST[ $prefix . 'agent_socials' ] ) ? $_POST[ $prefix . 'agent_socials' ]: '';
 
-		if ( ! current_user_can( 'edit_user', $user_id ) ) {
-			return false;
-		}
+		update_user_meta(
+			absint( $user_id ),
+			$prefix . 'agent_contacts',
+			$contacts
+		);
 
-		$prefix = cherry_real_estate()->get_meta_prefix();
-
-		if ( ! empty( $_POST[ $prefix . 'agent_contacts' ] ) ) {
-			update_user_meta(
-				$user_id,
-				$prefix . 'agent_contacts',
-				$_POST[ $prefix . 'agent_contacts' ]
-			);
-		}
-
-		if ( ! empty( $_POST[ $prefix . 'agent_socials' ] ) ) {
-			update_user_meta(
-				$user_id,
-				$prefix . 'agent_socials',
-				$_POST[ $prefix . 'agent_socials' ]
-			);
-		}
+		update_user_meta(
+			absint( $user_id ),
+			$prefix . 'agent_socials',
+			$socials
+		);
 	}
 
 	/**
@@ -304,9 +302,9 @@ class Model_Agents {
 
 		$prefix = cherry_real_estate()->get_meta_prefix();
 
-		if ( ! empty( $_POST[ $prefix . 'agent_photo' ] ) ) {
+		if ( isset( $_POST[ $prefix . 'agent_photo' ] ) ) {
 			update_user_meta(
-				$user_id,
+				absint( $user_id ),
 				$prefix . 'agent_photo',
 				sanitize_text_field( $_POST[ $prefix . 'agent_photo' ] )
 			);
@@ -330,9 +328,9 @@ class Model_Agents {
 
 		$prefix = cherry_real_estate()->get_meta_prefix();
 
-		if ( ! empty( $_POST[ $prefix . 'agent_trust' ] ) ) {
+		if ( isset( $_POST[ $prefix . 'agent_trust' ] ) ) {
 			update_user_meta(
-				$user_id,
+				absint( $user_id ),
 				$prefix . 'agent_trust',
 				sanitize_text_field( $_POST[ $prefix . 'agent_trust' ] )
 			);
