@@ -640,7 +640,7 @@ class Cherry_RE_Shortcodes_Data {
 	 * @since 1.0.0
 	 */
 	public static function localize_script() {
-		$title      = __( 'Insert RE shortcodes', 'cherry-real-estate' );
+		$title      = esc_html__( 'Insert RE shortcodes', 'cherry-real-estate' );
 		$prefix     = cherry_real_estate()->get_shortcode_prefix();
 		$button     = self::get_mce_button();
 		$shortcodes = self::_prepare_localize_shortcodes();

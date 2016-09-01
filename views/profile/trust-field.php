@@ -13,7 +13,7 @@
 <table class="form-table">
 	<tr>
 		<th>
-			<label for="<?php echo esc_attr( $control_name ); ?>"><?php _e( 'Trusted User', 'cherry-real-estate' ); ?></label>
+			<label for="<?php echo esc_attr( $control_name ); ?>"><?php esc_html_e( 'Trusted User', 'cherry-real-estate' ); ?></label>
 		</th>
 		<td>
 			<?php echo $control_html; ?>

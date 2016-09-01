@@ -277,13 +277,6 @@ class Model_Submit_Form {
 
 		$agent_id = $post->post_author;
 
-		// $agent    = get_user_by( 'ID', $agent_id );
-		// $roles    = ! empty( $agent->roles ) ? $agent->roles : array();
-
-		// if ( ! in_array( 're_agent', $roles ) ) {
-		// 	return;
-		// }
-
 		$property_id = $post->ID;
 		$meta_prefix = cherry_real_estate()->get_meta_prefix();
 		$author_ID   = get_post_meta( $property_id, $meta_prefix . 'author', true );
@@ -297,13 +290,6 @@ class Model_Submit_Form {
 		if ( false === $author ) {
 			return;
 		}
-
-		// $is_trusted_user = Model_Agents::get_agent_trust( $author_ID );
-		// $is_trusted_user = filter_var( $is_trusted_user, FILTER_VALIDATE_BOOLEAN );
-
-		// if ( $is_trusted_user || user_can( $author, 'manage_options' ) ) {
-		// 	return;
-		// }
 
 		if ( user_can( $author, 'manage_options' ) ) {
 			return;

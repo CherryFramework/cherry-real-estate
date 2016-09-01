@@ -281,9 +281,9 @@ class Cherry_RE_Agent_Data {
 		$args = wp_parse_args( $args, array(
 			'total'              => $args['total_pages'],
 			'mid_size'           => 1,
-			'prev_text'          => _x( 'Previous', 'previous post', 'cherry-real-estate' ),
-			'next_text'          => _x( 'Next', 'next post', 'cherry-real-estate' ),
-			'screen_reader_text' => __( 'Posts navigation', 'cherry-real-estate' ),
+			'prev_text'          => esc_html_x( 'Previous', 'previous post', 'cherry-real-estate' ),
+			'next_text'          => esc_html_x( 'Next', 'next post', 'cherry-real-estate' ),
+			'screen_reader_text' => esc_html__( 'Posts navigation', 'cherry-real-estate' ),
 		) );
 
 		// Make sure we get a string back. Plain is the next best thing.
