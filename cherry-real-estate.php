@@ -464,11 +464,11 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 
 			// Define `RE Contributor` capabilities.
 			$cap_contributor = apply_filters( 'cherry_re_contributor_capabilities', array(
-				"edit_published_{$capability_type}s"   => true,
-				"edit_{$capability_type}s"             => true,
-				'edit_posts'                           => true, // `save_post` action-callback check `edit_posts` capability.
-				'read'                                 => true,
-				'upload_files'                         => true,
+				"edit_published_{$capability_type}s" => true,
+				"edit_{$capability_type}s"           => true,
+				'edit_posts'                         => true, // `save_post` action-callback check `edit_posts` capability.
+				'read'                               => true,
+				'upload_files'                       => true,
 			) );
 
 			// Create `RE Agent` and `RE Contributor` roles.
@@ -526,15 +526,19 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		 */
 		public function deactivation() {
 			do_action( 'cherry_re_plugin_deactivation' );
+
+			// Remove `RE Agent` and `RE Contributor` roles.
+			remove_role( 're_agent' );
+			remove_role( 're_contributor' );
 		}
 
 		/**
-		 * Uninstall
+		 * Fired when the plugin is uninstall.
 		 *
 		 * @since 1.0.0
 		 */
 		public static function uninstall() {
-			// Model_Settings::remove_all_settings();
+			Model_Settings::remove_all_settings();
 		}
 
 		/**
