@@ -352,12 +352,21 @@ class Model_Settings {
 	 * @since 1.0.0
 	 */
 	public static function remove_all_settings() {
-		// $defaults = self::get_default_options();
+		$options_page = Cherry_RE_Options_Page::get_instance();
+		$sections     = $options_page->get_sections();
 
-		// foreach ( $defaults as $option => $newvalue ) {
-		// 	delete_option( $option );
-		// }
+		if ( empty( $sections ) || ! is_array( $sections ) ) {
+			return;
+		}
 
-		// delete_option( self::SETTINGS_KEY );
+		$options = array_keys( $sections );
+
+		if ( empty( $options ) ) {
+			return;
+		}
+
+		foreach ( $options as $key ) {
+			delete_option( $key );
+		}
 	}
 }

@@ -283,20 +283,6 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 
 			$this->get_core()->init_module( 'cherry-js-core' );
 			$this->get_core()->init_module( 'cherry-utility' );
-			$this->get_core()->init_module( 'cherry-page-builder' );
-			$this->get_core()->init_module( 'cherry-ui-elements', array(
-				'ui_elements' => array(
-					'text',
-					'textarea',
-					'select',
-					'media',
-					'stepper',
-					'checkbox',
-					'switcher',
-					'repeater',
-					'iconpicker',
-				),
-			) );
 			$this->get_core()->init_module( 'cherry-post-meta', array(
 				'title'  => esc_html__( 'Property Data', 'cherry-real-estate' ),
 				'page'   => array( $this->get_post_type_name() ),
@@ -376,6 +362,23 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			) );
 			$this->get_core()->init_module( 'cherry-widget-factory' );
 
+			if ( is_admin() ) {
+				$this->get_core()->init_module( 'cherry-page-builder' );
+				$this->get_core()->init_module( 'cherry-ui-elements', array(
+					'ui_elements' => array(
+						'text',
+						'textarea',
+						'select',
+						'media',
+						'stepper',
+						'checkbox',
+						'switcher',
+						'repeater',
+						'iconpicker',
+					),
+				) );
+			}
+
 			/**
 			 * Fire when all modules already loaded and ready for to use.
 			 *
@@ -439,15 +442,80 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		}
 
 		/**
-		 * Add `RE Agent` role.
+		 * Add `RE Agent` and `RE Contributor` roles.
 		 *
 		 * @since 1.0.0
 		 */
-		public function add_user_role() {
+		public function add_user_roles() {
 			$capability_type = $this->get_post_type_name();
 
 			// Define `RE Agent` capabilities.
-			$cap_agent = apply_filters( 'cherry_re_agent_capabilities', array(
+			$cap_agent = $this->get_agent_caps();
+
+			// Define `RE Contributor` capabilities.
+			$cap_contributor = $this->get_contributor_caps();
+
+			// Create `RE Agent` and `RE Contributor` roles.
+			add_role( 're_agent', esc_html__( 'RE Agent', 'cherry-real-estate' ), $cap_agent );
+			add_role( 're_contributor', esc_html__( 'RE Contributor', 'cherry-real-estate' ), $cap_contributor );
+		}
+
+		/**
+		 * Remove `RE Agent` and `RE Contributor` roles.
+		 *
+		 * @since 1.0.0
+		 */
+		public function remove_user_roles() {
+			remove_role( 're_agent' );
+			remove_role( 're_contributor' );
+		}
+
+		/**
+		 * Added a custom capabilities.
+		 *
+		 * @since 1.0.0
+		 */
+		public function update_caps() {
+			$capability_type = $this->get_post_type_name();
+			$cap_agent       = $this->get_agent_caps();
+
+			// Update property capabilities to Admin Role.
+			$roles        = apply_filters( 'cherry_re_update_roles_list', array( 'administrator' ) );
+			$capabilities = wp_parse_args( $cap_agent, array(
+				"publish_{$capability_type}s"       => true,
+				"edit_others_{$capability_type}s"   => true,
+				"delete_others_{$capability_type}s" => true,
+				"read_private_{$capability_type}s"  => true,
+			) );
+			$capabilities = apply_filters( 'cherry_re_custom_property_capabilities', $capabilities );
+
+			foreach ( (array) $roles as $name ) {
+				$role = get_role( $name );
+
+				if ( is_null( $role ) ) {
+					continue;
+				}
+
+				foreach ( $capabilities as $capability => $enabled ) {
+					if ( ! $enabled ) {
+						continue;
+					}
+
+					$role->add_cap( $capability );
+				}
+			}
+		}
+
+		/**
+		 * Retrieve a `RE Agent` capabilities.
+		 *
+		 * @since 1.0.0
+		 * @return array
+		 */
+		public function get_agent_caps() {
+			$capability_type = $this->get_post_type_name();
+
+			return apply_filters( 'cherry_re_agent_capabilities', array(
 				"delete_{$capability_type}s"           => true,
 				"delete_private_{$capability_type}s"   => true,
 				"delete_published_{$capability_type}s" => true,
@@ -458,43 +526,24 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 				'read'                                 => true,
 				'upload_files'                         => true,
 			) );
+		}
 
-			// Define `RE Contributor` capabilities.
-			$cap_contributor = apply_filters( 'cherry_re_contributor_capabilities', array(
-				"edit_published_{$capability_type}s"   => true,
-				"edit_{$capability_type}s"             => true,
-				'edit_posts'                           => true, // `save_post` action-callback check `edit_posts` capability.
-				'read'                                 => true,
-				'upload_files'                         => true,
+		/**
+		 * Retrieve a `RE Contributor` capabilities.
+		 *
+		 * @since 1.0.0
+		 * @return array
+		 */
+		public function get_contributor_caps() {
+			$capability_type = $this->get_post_type_name();
+
+			return apply_filters( 'cherry_re_contributor_capabilities', array(
+				"edit_published_{$capability_type}s" => true,
+				"edit_{$capability_type}s"           => true,
+				'edit_posts'                         => true, // `save_post` action-callback check `edit_posts` capability.
+				'read'                               => true,
+				'upload_files'                       => true,
 			) );
-
-			// Create `RE Agent` and `RE Contributor` roles.
-			add_role( 're_agent', esc_html__( 'RE Agent', 'cherry-real-estate' ), $cap_agent );
-			add_role( 're_contributor', esc_html__( 'RE Contributor', 'cherry-real-estate' ), $cap_contributor );
-
-			// Add property capabilities to Admin Role.
-			$roles        = apply_filters( 'cherry_re_update_roles_list', array( 'administrator' ) );
-			$capabilities = wp_parse_args( $cap_agent, array(
-				"publish_{$capability_type}s"       => true,
-				"edit_others_{$capability_type}s"   => true,
-				"delete_others_{$capability_type}s" => true,
-				"read_private_{$capability_type}s"  => true,
-			) );
-			$capabilities = apply_filters( 'cherry_re_admin_property_capabilities', $capabilities );
-
-			foreach ( (array) $roles as $name ) {
-				$role = get_role( $name );
-
-				if ( is_null( $role ) ) {
-					continue;
-				}
-
-				foreach ( $capabilities as $capability => $enabled ) {
-					if ( $enabled ) {
-						$role->add_cap( $capability );
-					}
-				}
-			}
 		}
 
 		/**
@@ -511,7 +560,8 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			Cherry_RE_Registration::register_post_type();
 			Cherry_RE_Registration::register_taxonomies();
 
-			$this->add_user_role();
+			$this->add_user_roles();
+			$this->update_caps();
 
 			do_action( 'cherry_re_plugin_activation' );
 		}
@@ -522,16 +572,18 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		 * @since 1.0.0
 		 */
 		public function deactivation() {
+			$this->remove_user_roles();
+
 			do_action( 'cherry_re_plugin_deactivation' );
 		}
 
 		/**
-		 * Uninstall
+		 * Fired when the plugin is uninstall.
 		 *
 		 * @since 1.0.0
 		 */
 		public static function uninstall() {
-			// Model_Settings::remove_all_settings();
+			Model_Settings::remove_all_settings();
 		}
 
 		/**
