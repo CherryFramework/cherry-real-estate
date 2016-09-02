@@ -397,7 +397,7 @@
 			CherryJsCore.variable.$document.on( 'click', link, init );
 
 			function init( event ) {
-				var tab    = $( this ).data( 'tab' ),
+				var tab    = $( event.target ).data( 'tab' ),
 					effect = $( src ).data( 'anim-effect' );
 
 				event.preventDefault();
@@ -586,11 +586,11 @@
 
 				function remove( event ) {
 					event.preventDefault();
-					$( this ).closest( '.tm-re-uploaded-images__item' ).remove();
+					$( event.target ).closest( '.tm-re-uploaded-images__item' ).remove();
 				}
 
 				function upload( event ) {
-					var $this     = $( this ),
+					var $this     = $( event.target ),
 						$item     = $this.closest( '.tm-re-uploaded-images__item' ),
 						$progress = $item.find( '.tm-re-status--process' ),
 						$remove   = $item.find( '.tm-re-uploaded-image__remove' ),
