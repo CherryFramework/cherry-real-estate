@@ -19,7 +19,7 @@
 		function initMap() {
 			var $source = [],
 				loading = 'tm-re-map-loading',
-				map, geocoder, bounds;
+				markersNumb, map, geocoder, bounds;
 
 			// Sanitize & parse styles.
 			if ( data.hasOwnProperty( 'styles' ) && ( 'string' == typeof data.styles ) ) {
@@ -30,7 +30,9 @@
 				$source = $( '#' + data.sourceselector ).children();
 			}
 
-			if ( null === data.address && ! $source.length ) {
+			markersNumb = $source.length;
+
+			if ( null === data.address && ! markersNumb  ) {
 				return !1;
 			}
 
@@ -41,12 +43,17 @@
 			geocoder = new google.maps.Geocoder();
 			bounds   = new google.maps.LatLngBounds();
 
-			// When map are loaded - remove loader.
+			// When map are loaded.
 			google.maps.event.addListenerOnce( map, 'idle', function() {
 
 				// Automatically center the map fitting all markers on the screen.
 				map.fitBounds( bounds );
 
+				if ( ! markersNumb || 1 === markersNumb ) {
+					map.setZoom( data.zoom );
+				}
+
+				// Remove loader.
 				if ( $this.hasClass( loading ) ) {
 					$this.removeClass( loading );
 				}
