@@ -55,7 +55,7 @@ class Cherry_RE_Templater {
 	 */
 	public function __construct() {
 		add_filter( 'template_include', array( $this, 'template_loader' ) );
-		add_filter( 'body_class',       array( $this, 'add_body_class' ) );
+		add_filter( 'body_class',       array( __CLASS__, 'add_body_class' ) );
 
 		// Set `posts_per_page` for archive index page.
 		add_action( 'pre_get_posts', array( $this, 'set_posts_per_archive_page' ) );
@@ -181,7 +181,7 @@ class Cherry_RE_Templater {
 	 * @since 1.0.0
 	 * @param array $atts Output attributes.
 	 */
-	function setup_template_data( $atts = array() ) {
+	public function setup_template_data( $atts = array() ) {
 		$callbacks = new Cherry_RE_Template_Callbacks( $atts );
 
 		$data = array(

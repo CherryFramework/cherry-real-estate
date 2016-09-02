@@ -584,6 +584,16 @@ class Model_Agents {
 	}
 
 	/**
+	 * Retrieve a CSS-id for properties list wrapper in agent archive template.
+	 *
+	 * @since 1.0.0
+	 * @return string
+	 */
+	public static function get_property_wrap_id() {
+		return apply_filters( 'cherry_re_agent_archive_property_wrap_id', 'tm-agent-property-instance' );
+	}
+
+	/**
 	 * Returns the instance.
 	 *
 	 * @since  1.0.0

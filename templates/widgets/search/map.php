@@ -33,45 +33,20 @@ if ( empty( $pins ) ) {
 	return;
 }
 
-$instance  = 'tm-re-search-map-' . uniqid();
-$marker_id = Model_Settings::get_map_marker();
-$marker    = wp_get_attachment_image_src( $marker_id );
-$marker    = is_array( $marker ) ? esc_url( $marker[0] ) : '';
+$instance = 'tm-re-search-map-' . uniqid();
 
 // Data attributes.
-$atts = array(
-	'id'          => $instance,
-	'zoom'        => 15,
-	'scrollwheel' => false,
-	'draggable'   => wp_is_mobile() ? false : true,
-	'icon'        => $marker,
-	'animation'   => '', // BOUNCE, DROP
-	'infowindow'  => array(
+$defaults = Cherry_RE_Tools::get_google_map_defaults();
+$atts     = array(
+	'id'             => $instance,
+	'sourceselector' => $source_selector,
+	'infowindow'     => array(
 		'content'  => esc_html__( 'loading...', 'cherry-real-estate' ),
 		'maxWidth' => 200,
 	),
-	'sourceselector'        => $source_selector,
-	'mapTypeControl'        => true,
-	'zoomControl'           => true,
-	'streetViewControl'     => true,
-	'mapTypeControlOptions' => array(
-		'style'    => 'HORIZONTAL_BAR',
-		'position' => 'TOP_CENTER',
-	),
-	'zoomControlOptions' => array(
-		'position' => 'LEFT_CENTER',
-	),
-	'streetViewControlOptions' => array(
-		'position' => 'LEFT_TOP',
-	),
 );
 
-$map_style = Model_Settings::get_map_style();
-
-if ( ! empty( $map_style ) ) {
-	$atts = array_merge( $atts, array( 'styles' => $map_style ) );
-}
-
+$atts = wp_parse_args( $atts, $defaults );
 $atts = apply_filters( 'cherry_re_search_map_data_atts', $atts ); ?>
 
 <div id="<?php echo esc_attr( $instance ); ?>" class="widget-tm-re-search__map tm-re-map tm-re-map-loading" <?php cherry_re_print_data_atts( $atts, true ); ?>></div>

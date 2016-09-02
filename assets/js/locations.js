@@ -43,14 +43,14 @@
 
 			// When map are loaded - remove loader.
 			google.maps.event.addListenerOnce( map, 'idle', function() {
+
+				// Automatically center the map fitting all markers on the screen.
+				map.fitBounds( bounds );
+
 				if ( $this.hasClass( loading ) ) {
 					$this.removeClass( loading );
 				}
 			});
-
-			// map.addListener( 'click', function( e ) {
-			// 	mapPanTo( e.latLng, map );
-			// });
 
 			if ( null !== data.infowindow ) {
 				infowindow = new google.maps.InfoWindow( data.infowindow );
@@ -122,29 +122,16 @@
 						});
 
 						google.maps.event.addListener( infowindow, 'domready', function() {
-							$( '.tm-map-pins__item' )
+							var className = _data.attr( 'class' ).split( ' ' ).join( '.' );
+
+							$( '.' + className )
 								.closest( '.gm-style-iw' )
 								.parent()
 								.addClass( 'tm-re-iw' );
 						});
 					}
-
-					// Automatically center the map fitting all markers on the screen.
-					resultsMap.fitBounds( bounds );
-					// resultsMap.setZoom( zoom );
 				}
 			});
-		};
-
-		/**
-		 * Callback-function on `click` event.
-		 *
-		 * @param  object LatLng
-		 * @param  ojject map
-		 * @return void
-		 */
-		function mapPanTo( LatLng, map ) {
-			map.panTo( LatLng );
 		};
 
 		/**
