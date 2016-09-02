@@ -135,7 +135,7 @@ class Cherry_RE_Registration {
 					'slug'         => $post_type . '/type',
 					'with_front'   => false,
 					'hierarchical' => true,
-					'ep_mask'      => EP_NONE
+					'ep_mask'      => EP_NONE,
 				),
 				/* Labels used when displaying taxonomy and terms. */
 				'labels' => array(
@@ -157,7 +157,7 @@ class Cherry_RE_Registration {
 					'not_found'                  => esc_html__( 'No tags found',                  'cherry-real-estate' ),
 					'parent_item'                => null,
 					'parent_item_colon'          => null,
-				)
+				),
 			) )
 		);
 
@@ -178,7 +178,7 @@ class Cherry_RE_Registration {
 					'slug'         => $post_type . '/tag',
 					'with_front'   => false,
 					'hierarchical' => false,
-					'ep_mask'      => EP_NONE
+					'ep_mask'      => EP_NONE,
 				),
 				/* Labels used when displaying taxonomy and terms. */
 				'labels' => array(
@@ -200,7 +200,7 @@ class Cherry_RE_Registration {
 					'not_found'                  => esc_html__( 'No tags found',                  'cherry-real-estate' ),
 					'parent_item'                => null,
 					'parent_item_colon'          => null,
-				)
+				),
 			) )
 		);
 
@@ -221,7 +221,7 @@ class Cherry_RE_Registration {
 					'slug'         => $post_type . '/feature',
 					'with_front'   => false,
 					'hierarchical' => false,
-					'ep_mask'      => EP_NONE
+					'ep_mask'      => EP_NONE,
 				),
 				/* Labels used when displaying taxonomy and terms. */
 				'labels' => array(
@@ -243,7 +243,7 @@ class Cherry_RE_Registration {
 					'not_found'                  => esc_html__( 'No features found',                  'cherry-real-estate' ),
 					'parent_item'                => null,
 					'parent_item_colon'          => null,
-				)
+				),
 			) )
 		);
 	}

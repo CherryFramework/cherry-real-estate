@@ -37,9 +37,7 @@ class Cherry_RE_Shortcodes_Data {
 	 *
 	 * @since 1.0.0
 	 */
-	public function __construct() {
-		add_filter( 'baz', array( $this, 'foo' ) );
-	}
+	public function __construct() {}
 
 	/**
 	 * Retrieve a shortcodes.
@@ -564,31 +562,19 @@ class Cherry_RE_Shortcodes_Data {
 		$shortcode = 'submission_form';
 		$atts      = shortcode_atts( $defaults, $atts, $shortcode );
 
-		$output = $this->foo();
-
-		// if ( ! is_user_logged_in() ) {
-
-		// 	$register_form = '';
-
-		// 	if ( get_option( 'users_can_register' ) ) {
-		// 		$register_form = cherry_re_get_template_html( 'auth/register' );
-		// 	} else {
-		// 		$register_form = esc_html__( 'User registration is currently not allowed.', 'cherry-real-estate' );
-		// 	}
-
-		// 	$output .= cherry_re_get_template_html( 'auth/popup', array(
-		// 		'popup_id'      => Model_Submit_Form::get_popup_id(),
-		// 		'login_form'    => cherry_re_get_template_html( 'auth/login' ),
-		// 		'register_form' => $register_form,
-		// 	) );
-		// }
-
+		$output = $this->get_popup();
 		$output .= cherry_re_get_template_html( 'shortcodes/' . $shortcode . '/form' );
 
 		return apply_filters( 'cherry_re_shortcodes_output', $output, $atts, $shortcode );
 	}
 
-	public function foo() {
+	/**
+	 * Retrieve a popup with login & register forms.
+	 *
+	 * @since 1.0.0
+	 * @return string
+	 */
+	public function get_popup() {
 		$output = '';
 
 		if ( ! is_user_logged_in() ) {
@@ -629,7 +615,7 @@ class Cherry_RE_Shortcodes_Data {
 			add_filter( 'mce_buttons', array( __CLASS__, 'mce_buttons' ) );
 		}
 
-		foreach ( array( 'post.php','post-new.php' ) as $hook ) {
+		foreach ( array( 'post.php', 'post-new.php' ) as $hook ) {
 			add_action( "admin_head-$hook", array( __CLASS__, 'localize_script' ) );
 		}
 	}

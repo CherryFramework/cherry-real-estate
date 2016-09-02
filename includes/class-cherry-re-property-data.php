@@ -67,7 +67,7 @@ class Cherry_RE_Property_Data {
 	 * Display or return HTML-formatted properties.
 	 *
 	 * @since  1.0.0
-	 * @param  array  $args Arguments.
+	 * @param  array $args Arguments.
 	 * @return string
 	 */
 	public function the_property( $args = array() ) {
@@ -207,8 +207,8 @@ class Cherry_RE_Property_Data {
 	 * Get properties.
 	 *
 	 * @since  1.0.0
-	 * @param  array      $args Arguments to be passed to the query.
-	 * @return array|bool       Array if true, boolean if false.
+	 * @param  array $args Arguments to be passed to the query.
+	 * @return array|bool  Array if true, boolean if false.
 	 */
 	public function get_properties( $args = array() ) {
 		$defaults = array(
@@ -352,10 +352,6 @@ class Cherry_RE_Property_Data {
 		 */
 		$query_args = apply_filters( 'cherry_re_get_properties_query_args', $query_args, $args );
 
-		// echo "<pre>";
-		// var_dump($query_args);
-		// echo "</pre>";
-
 		// The Query.
 		$query = new WP_Query( $query_args );
 
@@ -405,7 +401,7 @@ class Cherry_RE_Property_Data {
 			$tpl = $template;
 			$tpl = cherry_re_templater()->parse_template( $tpl );
 
-			$property_ID    = $post->ID;
+			$property_id    = $post->ID;
 			$item_classes   = array( $args['item_class'], 'item-' . $count, 'clearfix' );
 			$item_classes[] = ( $count % 2 ) ? 'odd' : 'even';
 			$item_classes   = array_filter( $item_classes );
@@ -413,9 +409,9 @@ class Cherry_RE_Property_Data {
 
 			$meta_prefix = cherry_real_estate()->get_meta_prefix();
 			$data_atts   = apply_filters( 'cherry_re_property_item_data_atts', array(
-				'property-id'      => esc_attr( $property_ID ),
-				'property-address' => esc_attr( get_post_meta( $property_ID, $meta_prefix . 'location', true ) ),
-			), $property_ID );
+				'property-id'      => esc_attr( $property_id ),
+				'property-address' => esc_attr( get_post_meta( $property_id, $meta_prefix . 'location', true ) ),
+			), $property_id );
 
 			$output .= '<div class="' . join( ' ', $item_classes ) . '" ' . cherry_re_return_data_atts( $data_atts ) . '><div class="tm-property__inner">';
 
@@ -487,7 +483,7 @@ class Cherry_RE_Property_Data {
 
 		if ( ! empty( $atts['property_status'] ) ) {
 			$args['meta_query'][] = array(
-				'key'     =>  $prefix . 'status',
+				'key'     => $prefix . 'status',
 				'value'   => (string) $atts['property_status'],
 				'compare' => '=',
 			);
@@ -500,7 +496,7 @@ class Cherry_RE_Property_Data {
 
 		if ( ! empty( $atts['property_location'] ) ) {
 			$args['meta_query'][] = array(
-				'key'     =>  $prefix . 'location',
+				'key'     => $prefix . 'location',
 				'value'   => (string) $atts['property_location'],
 				'compare' => 'LIKE',
 			);
@@ -624,49 +620,6 @@ class Cherry_RE_Property_Data {
 		}
 
 		return apply_filters( 'cherry_re_prepare_search_args', $args, $atts );
-	}
-
-	public function get_property_data_from_query( $query, $key ) {
-
-		if ( ! ( $query instanceof WP_Query ) ) {
-			return;
-		}
-
-		if ( ! $query->have_posts() ) {
-			return;
-		}
-
-		$data         = array();
-		$callbacks    = cherry_re_templater()->setup_template_data();
-		$replace_data = cherry_re_templater()->get_replace_data();
-
-		if ( empty( $replace_data[ $key ] ) ) {
-			return;
-		}
-
-		if ( ! is_callable( $replace_data[ $key ] ) ) {
-			return;
-		}
-
-		// Start inner loop.
-		while ( $query->have_posts() ) {
-			$query->the_post();
-			$callbacks->the_property_data();
-
-			$address = call_user_func( $replace_data[ $key ] );
-
-			if ( empty( $address ) ) {
-				continue;
-			}
-
-			$data[] = $address;
-
-			$callbacks->clear_data();
-		}
-
-		wp_reset_postdata();
-
-		return $data;
 	}
 
 	/**

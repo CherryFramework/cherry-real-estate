@@ -24,6 +24,11 @@ class Model_Agents {
 	 */
 	private static $instance = null;
 
+	/**
+	 * Class constructor.
+	 *
+	 * @since 1.0.0
+	 */
 	private function __construct() {
 		add_action( 'show_user_profile', array( $this, 'add_profile_fields' ) );
 		add_action( 'edit_user_profile', array( $this, 'add_profile_fields' ) );
@@ -162,14 +167,14 @@ class Model_Agents {
 						'id'          => 'label',
 						'name'        => 'label',
 						'placeholder' => esc_html__( 'Label', 'cherry-real-estate' ),
-						'label'       => esc_html__( 'Label', 'cherry-real-estate'  ),
+						'label'       => esc_html__( 'Label', 'cherry-real-estate' ),
 					),
 					'value' => array(
 						'type'        => 'text',
 						'id'          => 'value',
 						'name'        => 'value',
 						'placeholder' => esc_html__( 'URL', 'cherry-real-estate' ),
-						'label'       => esc_html__( 'URL', 'cherry-real-estate'  ),
+						'label'       => esc_html__( 'URL', 'cherry-real-estate' ),
 					),
 				),
 			),
@@ -196,7 +201,7 @@ class Model_Agents {
 	 * Add a photo profile field.
 	 *
 	 * @since  1.0.0
-	 * @param  object $user
+	 * @param  WP_User $user The current WP_User object.
 	 * @return string
 	 */
 	public function _add_photo( $user ) {
@@ -238,7 +243,7 @@ class Model_Agents {
 	 * Add a photo profile field.
 	 *
 	 * @since  1.0.0
-	 * @param  object $user
+	 * @param  WP_User $user The current WP_User object.
 	 * @return string
 	 */
 	public function _add_trusted( $user ) {
@@ -376,7 +381,7 @@ class Model_Agents {
 	 * Add a custom CSS-class in Author Archives Page.
 	 *
 	 * @since  1.0.0
-	 * @param  array $classes CSS-classes
+	 * @param  array $classes CSS-classes.
 	 * @return array
 	 */
 	public function body_class( $classes ) {
@@ -414,8 +419,8 @@ class Model_Agents {
 	 * @author Justin Tadlock <justin@justintadlock.com>
 	 * @author Template Monster
 	 * @since  1.0.0
-	 * @param  array $args
-	 * @param  array $r
+	 * @param  array $args The query arguments for wp_dropdown_users().
+	 * @param  array $r    The default arguments for wp_dropdown_users().
 	 * @return array
 	 */
 	public function dropdown_users_args( $args, $r ) {
@@ -445,7 +450,7 @@ class Model_Agents {
 	 * @author Justin Tadlock <justin@justintadlock.com>
 	 * @author Template Monster
 	 * @since  1.0.0
-	 * @param  array $post_type
+	 * @param  array $post_type Post type name.
 	 * @return array
 	 */
 	public function get_roles_for_post_type( $post_type ) {
@@ -497,8 +502,9 @@ class Model_Agents {
 	 * Retrieve a photo url.
 	 *
 	 * @since  1.0.0
-	 * @param  int    Agent ID.
-	 * @return string
+	 * @param  int    $agent_id Agent ID.
+	 * @param  string $size     Valid image size.
+	 * @return bool|string
 	 */
 	public static function get_agent_photo_url( $agent_id, $size = 'thumbnail' ) {
 
@@ -535,7 +541,7 @@ class Model_Agents {
 	 * Retrieve a photo ID.
 	 *
 	 * @since  1.0.0
-	 * @param  int Agent ID.
+	 * @param  int $agent_id Agent ID.
 	 * @return int
 	 */
 	public static function get_agent_photo_id( $agent_id ) {
@@ -548,7 +554,7 @@ class Model_Agents {
 	 * Retrieve a custom agent contacts.
 	 *
 	 * @since  1.0.0
-	 * @param  bool  $agent_id Agent ID.
+	 * @param  bool $agent_id Agent ID.
 	 * @return mixed
 	 */
 	public static function get_agent_contacts( $agent_id ) {
@@ -561,7 +567,7 @@ class Model_Agents {
 	 * Retrieve agent socials contacts.
 	 *
 	 * @since  1.0.0
-	 * @param  bool  $agent_id Agent ID.
+	 * @param  bool $agent_id Agent ID.
 	 * @return mixed
 	 */
 	public static function get_agent_socials( $agent_id ) {
@@ -574,7 +580,7 @@ class Model_Agents {
 	 * Retrieve agent trust value.
 	 *
 	 * @since  1.0.0
-	 * @param  bool  $agent_id Agent ID.
+	 * @param  bool $agent_id Agent ID.
 	 * @return mixed
 	 */
 	public static function get_agent_trust( $agent_id ) {

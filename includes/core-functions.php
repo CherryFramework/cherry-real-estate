@@ -197,7 +197,6 @@ function cherry_re_return_data_atts( $atts, $single = false ) {
 
 			$data[] = sprintf( "data-%s='%s'", esc_attr( $name ), esc_attr( $value ) );
 		}
-
 	} else {
 		$data[] = sprintf( "data-atts='%s'", wp_json_encode( $atts ) );
 	}

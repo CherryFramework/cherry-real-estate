@@ -53,7 +53,7 @@ class Cherry_RE_Assets {
 		// JS.
 		add_action( 'wp_enqueue_scripts',    array( __CLASS__, 'register_public_scripts' ), 1 );
 		add_action( 'wp_footer',             array( __CLASS__, 'enqueue_public_scripts' ) );
-		// add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_admin_scripts' ) );
+		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_admin_scripts' ) );
 
 		// CSS.
 		add_action( 'wp_enqueue_scripts',    array( $this, 'register_public_styles' ), 1 );
@@ -187,7 +187,7 @@ class Cherry_RE_Assets {
 		$data = apply_filters( 'cherry_re_data_script', array(
 			'ajaxurl'           => esc_url( admin_url( 'admin-ajax.php' ) ),
 			'popupid'           => esc_attr( Model_Submit_Form::get_popup_id() ),
-			'js_field_html_img' => esc_js( str_replace( "\n", "", $js_field_html_img ) ),
+			'js_field_html_img' => esc_js( str_replace( '\n', '', $js_field_html_img ) ),
 			'sortName'          => 'properties_sort',
 			'messages'          => array(
 				'required' => esc_html_x(
@@ -284,7 +284,7 @@ class Cherry_RE_Assets {
 					'Waiting...',
 					'uploading message (Cherry RE plugin)',
 					'cherry-real-estate'
-				)
+				),
 			),
 		) );
 
@@ -478,9 +478,9 @@ class Cherry_RE_Assets {
 
 		global $wp_scripts;
 
-		foreach( $wp_scripts->registered as $r ) {
+		foreach ( $wp_scripts->registered as $r ) {
 
-			if ( $r->handle == self::get_googleapis_handle() ) {
+			if ( self::get_googleapis_handle() == $r->handle ) {
 				continue;
 			}
 

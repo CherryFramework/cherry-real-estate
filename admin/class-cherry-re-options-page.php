@@ -9,6 +9,11 @@
  * @copyright  2002-2016, Template Monster
  */
 
+/**
+ * Class for management setting/option page.
+ *
+ * @since 1.0.0
+ */
 class Cherry_RE_Options_Page {
 
 	/**
@@ -319,7 +324,7 @@ class Cherry_RE_Options_Page {
 	 * Enqueue settings page style.
 	 *
 	 * @since 1.0.0
-	 * @return void
+	 * @return bool
 	 */
 	public function enqueue_styles( $hook_suffix ) {
 

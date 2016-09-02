@@ -590,7 +590,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		 * Customize the title on search properties page.
 		 *
 		 * @since  1.0.0
-		 * @param  string $title
+		 * @param  array $title The document title parts.
 		 * @return string
 		 */
 		public function search_title( $title ) {
@@ -606,8 +606,8 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		 * Customize the breadcrumbs on search properties page.
 		 *
 		 * @since  1.0.0
-		 * @param  array $items
-		 * @param  array $args
+		 * @param  array $items Indexed array of breadcrumb trail items.
+		 * @param  array $args  Breadcrumb arguments.
 		 * @return array
 		 */
 		public function search_breadcrumbs( $items, $args ) {
@@ -630,7 +630,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 						esc_attr( $args['css_namespace']['item'] ),
 						esc_attr( $args['css_namespace']['target'] ),
 						esc_html__( 'Properties search results', 'cherry-real-estate' )
-					)
+					),
 				);
 			}
 
@@ -657,7 +657,8 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		/**
 		 * Get the plugin path.
 		 *
-		 * @param  string $path Path inside plugin dir.
+		 * @since  1.0.0
+		 * @param  string $dir Path inside plugin dir.
 		 * @return string
 		 */
 		public function plugin_path( $dir = '' ) {

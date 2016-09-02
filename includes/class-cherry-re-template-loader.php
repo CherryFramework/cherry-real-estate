@@ -63,9 +63,8 @@ class Cherry_RE_Templater {
 
 	/**
 	 * Load a template.
-	 * Handles template usage so that we can use our own templates instead of the themes.
 	 *
-	 * @param mixed $template
+	 * @param string $template The path of the template to include.
 	 * @return string
 	 */
 	public function template_loader( $template ) {
@@ -216,6 +215,12 @@ class Cherry_RE_Templater {
 		return $callbacks;
 	}
 
+	/**
+	 * Retrieve a replace data.
+	 *
+	 * @since 1.0.0
+	 * @return array
+	 */
 	public function get_replace_data() {
 		return $this->replace_data;
 	}
@@ -316,7 +321,7 @@ class Cherry_RE_Templater {
 		$macros = strtolower( $arr[0] );
 		$attr   = isset( $arr[1] ) ? shortcode_parse_atts( $arr[1] ) : array();
 
-		if ( ! isset(  $this->replace_data[ $macros ] ) ) {
+		if ( ! isset( $this->replace_data[ $macros ] ) ) {
 			return;
 		}
 

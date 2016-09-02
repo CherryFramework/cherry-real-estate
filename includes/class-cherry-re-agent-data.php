@@ -266,7 +266,7 @@ class Cherry_RE_Agent_Data {
 	 *
 	 * @see `get_the_posts_pagination` function.
 	 * @since  1.0.0
-	 * @param  array $args
+	 * @param  array $args Pagination arguments.
 	 * @return string
 	 */
 	public function get_pagination( $args ) {
@@ -304,8 +304,8 @@ class Cherry_RE_Agent_Data {
 	 * Get agents items.
 	 *
 	 * @since  1.0.0
-	 * @param  array $query WP_query object.
-	 * @param  array $args  The array of arguments.
+	 * @param  array $agents WP_query object.
+	 * @param  array $args   The array of arguments.
 	 * @return string
 	 */
 	public function get_agents_loop( $agents, $args ) {
@@ -370,7 +370,7 @@ class Cherry_RE_Agent_Data {
 	 * Setup agent data.
 	 *
 	 * @since 1.0.0
-	 * @param object $agent
+	 * @param object $agent Current agent instance.
 	 */
 	public function setup_agentdata( $agent ) {
 		$this->agent = $agent;
