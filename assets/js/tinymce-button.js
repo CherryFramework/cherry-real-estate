@@ -1,4 +1,4 @@
-/* global CherryRETinyMCE */
+/* global CherryRETinyMCE, tinymce */
 (function( $ ) {
 	var prefix = CherryRETinyMCE.prefix,
 		button = CherryRETinyMCE.button,
@@ -52,4 +52,4 @@
 		} );
 	});
 
-}( jQuery ));
+})( jQuery );

@@ -19,10 +19,10 @@
 		function initMap() {
 			var $source = [],
 				loading = 'tm-re-map-loading',
-				markersNumb, map, geocoder, bounds;
+				markersNumb, map, geocoder, bounds, key;
 
 			// Sanitize & parse styles.
-			if ( data.hasOwnProperty( 'styles' ) && ( 'string' == typeof data.styles ) ) {
+			if ( data.hasOwnProperty( 'styles' ) && ( 'string' === typeof data.styles ) ) {
 				data.styles = $.parseJSON( data.styles );
 			}
 
@@ -71,11 +71,11 @@
 
 			} else {
 
-				for ( var key in data.address ) {
+				for ( key in data.address ) {
 					geocodeAddress( map, geocoder, bounds, data.address[ key ] );
 				}
 			}
-		};
+		}
 
 		/**
 		 * Geocoding.
@@ -90,7 +90,7 @@
 			var location = _data,
 				html     = '';
 
-			if ( 'object' == typeof _data ) {
+			if ( 'object' === typeof _data ) {
 				location = _data.data( 'property-address' );
 				html     = _data[0].outerHTML;
 			}
@@ -139,7 +139,7 @@
 					}
 				}
 			});
-		};
+		}
 
 		/**
 		 * Prepare options for Map Controls in javascript-format.

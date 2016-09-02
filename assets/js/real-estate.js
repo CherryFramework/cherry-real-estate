@@ -19,8 +19,6 @@
 		},
 
 		documentReady: function( self ) {
-			var self = self;
-
 			self.gallery( self );
 			self.popup( self );
 			self.submissionForm( self );
@@ -32,7 +30,7 @@
 			self.location( self );
 		},
 
-		gallery: function( self ) {
+		gallery: function() {
 			var $target = $( '.tm-property-gallery-js' );
 
 			if ( ! $.isFunction( jQuery.fn.swiper ) || ! $target.length ) {
@@ -43,12 +41,12 @@
 				var $gallery = $( this ),
 					params   = $gallery.data( 'atts' ),
 					saved    = {},
-					obj;
+					obj, key;
 
 				if ( params.hasOwnProperty( 'group' ) ) {
 					obj = params.group;
 
-					for ( var key in obj ) {
+					for ( key in obj ) {
 						saved[ key ] = init( $( obj[ key ] ) );
 					}
 
@@ -67,10 +65,10 @@
 				args = args || $selector.data( 'atts' );
 
 				return new Swiper( '#' + galleryId, args );
-			};
+			}
 		},
 
-		submissionForm: function( self ) {
+		submissionForm: function() {
 			var $form = $( '#tm-re-submissionform' ),
 				$error, $success, $process, hidden;
 
@@ -115,6 +113,7 @@
 				errorElement: 'span',
 				onkeyup: false,
 				onfocusout: function( element ) {
+
 					// Native `Validation Plugin` behavior.
 					if ( ! this.checkable( element ) && ( element.name in this.submitted || ! this.optional( element ) ) ) {
 						this.element( element );
@@ -136,7 +135,7 @@
 				unhighlight: function( element, errorClass, validClass ) {
 					$( element ).removeClass( errorClass ).addClass( validClass );
 				},
-				invalidHandler: function( event ) {
+				invalidHandler: function() {
 					if ( ! $error.hasClass( hidden ) ) {
 						$error.addClass( hidden );
 					}
@@ -209,7 +208,7 @@
 			}
 		},
 
-		loginForm: function( self ) {
+		loginForm: function() {
 			var $form = $( '#tm-re-loginform' );
 
 			if ( ! $.isFunction( jQuery.fn.validate ) || ! $form.length ) {
@@ -290,7 +289,7 @@
 					return ! 1;
 				});
 
-			};
+			}
 		},
 
 		registerForm: function( self ) {
@@ -378,7 +377,7 @@
 					return ! 1;
 				});
 
-			};
+			}
 		},
 
 		popup: function( self ) {
@@ -443,7 +442,7 @@
 			});
 		},
 
-		uploadImages: function( self ) {
+		uploadImages: function() {
 			var $target = $( '.tm-re-uploaded-btn__field' );
 
 			if ( ! $.isFunction( jQuery.fn.fileupload ) || ! $target.length ) {
@@ -481,24 +480,25 @@
 						name: name,
 						action: 'upload_file',
 						script: true
-					},
+					}
 
 				}).on( 'fileuploadadd', function( e, data ) {
 					var uploadErrors = [],
-						html         = $.parseHTML( CherryREData.js_field_html_img );
+						html         = $.parseHTML( CherryREData.js_field_html_img ),
+						acceptFileTypes;
 
 					data.context = $( html );
 
 					if ( allowedTypes ) {
-						var acceptFileTypes = new RegExp( "(\.|\/)(" + allowedTypes + ")$", "i" );
+						acceptFileTypes = new RegExp( '(\.|\/)(' + allowedTypes + ')$', 'i' );
 
-						if ( data.files[0]['name'].length && ! acceptFileTypes.test( data.files[0]['name'] ) ) {
+						if ( data.files[0].name.length && ! acceptFileTypes.test( data.files[0].name ) ) {
 							uploadErrors.push( CherryREData.messages.invalid_file_type + ' ' + allowedTypes );
 						}
 					}
 
 					if ( uploadErrors.length > 0 ) {
-						window.alert( uploadErrors.join( "\n" ) );
+						window.alert( uploadErrors.join( '\n' ) );
 
 					} else {
 
@@ -514,14 +514,15 @@
 				})
 
 				.on( 'fileuploadprocessalways', function( e, data ) {
+					var index, file, node;
 
 					if ( ! $( data.context ).length ) {
 						return ! 1;
 					}
 
-					var index = data.index,
-						file  = data.files[ index ],
-						node  = $( data.context.children()[ index ] );
+					index = data.index;
+					file  = data.files[ index ];
+					node  = $( data.context.children()[ index ] );
 
 					if ( file.preview ) {
 						node.prepend( file.preview );
@@ -534,12 +535,12 @@
 					}
 
 					if ( index + 1 === data.files.length ) {
-						data.context.find( 'button' ).prop( 'disabled', !!data.files.error );
+						data.context.find( 'button' ).prop( 'disabled', !! data.files.error );
 					}
 				})
 
 				.on( 'fileuploaddone', function( e, data ) {
-					var image_types = allowedTypes.split( '|' ),
+					var imageTypes  = allowedTypes.split( '|' ),
 						response    = data.result,
 						$process    = data.context.find( '.tm-re-status--process' ),
 						$error      = data.context.find( '.tm-re-status--error' ),
@@ -556,6 +557,7 @@
 					}
 
 					$.each( response.data.files, function( index, file ) {
+						var ids;
 
 						if ( file.error ) {
 							window.alert( file.error );
@@ -563,9 +565,9 @@
 							return -1;
 
 						} else {
-							var ids  = $filesIds.data( 'ids' );
+							ids = $filesIds.data( 'ids' );
 
-							if ( -1 == $.inArray( file.extension, image_types ) ) {
+							if ( -1 === $.inArray( file.extension, imageTypes ) ) {
 								$error.removeClass( hidden );
 								return -1;
 							}
@@ -585,7 +587,7 @@
 				function remove( event ) {
 					event.preventDefault();
 					$( this ).closest( '.tm-re-uploaded-images__item' ).remove();
-				};
+				}
 
 				function upload( event ) {
 					var $this     = $( this ),
@@ -605,12 +607,12 @@
 						.prop( 'disabled', true );
 
 					data.submit();
-				};
+				}
 
 			});
 		},
 
-		previewLayouts: function( self ) {
+		previewLayouts: function() {
 			var $button = $( '.tm-re-switch-layout__btn' ),
 				$items  = $( '#tm-re-property-items' );
 
@@ -680,9 +682,10 @@
 
 			function init() {
 				var search = CherryJsCore.variable.$window[0].location.search,
-					params = self.getQueryParameters( search );
+					params = self.getQueryParameters( search ),
+					name   = CherryREData.sortName;
 
-				params.properties_sort = $( this ).val();
+				params[ name ] = $( this ).val();
 
 				CherryJsCore.variable.$window[0].location.search = $.param( params );
 			}
@@ -690,11 +693,11 @@
 
 		getQueryParameters: function( str ) {
 			return ( str || document.location.search ).replace( /(^\?)/, '' ).split( '&' ).map( function( n ) {
-				return n = n.split( '=' ), this[ n[0] ] = n[1], this
-			}.bind({}))[0];
+				return n = n.split( '=' ), this[ n[0] ] = n[1], this;
+			}.bind( {} ) )[0];
 		},
 
-		location: function( self ) {
+		location: function() {
 			var $target = $( '.tm-re-map' );
 
 			if ( ! $.isFunction( jQuery.fn.RELocations ) || ! $target.length ) {
