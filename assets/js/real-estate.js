@@ -64,7 +64,7 @@
 
 				args = args || $selector.data( 'atts' );
 
-				return new Swiper( '#' + galleryId, args );
+				return $( '#' + galleryId ).swiper( args );
 			}
 		},
 
@@ -680,12 +680,12 @@
 
 			$sort.on( 'change', init );
 
-			function init() {
+			function init( event ) {
 				var search = CherryJsCore.variable.$window[0].location.search,
 					params = self.getQueryParameters( search ),
 					name   = CherryREData.sortName;
 
-				params[ name ] = $( this ).val();
+				params[ name ] = $( event.target ).val();
 
 				CherryJsCore.variable.$window[0].location.search = $.param( params );
 			}
