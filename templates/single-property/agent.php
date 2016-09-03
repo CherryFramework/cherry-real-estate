@@ -15,8 +15,8 @@ if ( empty( $callbacks ) ) {
 	return;
 }
 
-$agent_ID = get_the_author_meta( 'ID' );
-$agent    = get_userdata( $agent_ID );
+$agent_id = get_the_author_meta( 'ID' );
+$agent    = get_userdata( $agent_id );
 $callbacks->the_agent_meta( $agent );
 
 $heading = esc_html( apply_filters(

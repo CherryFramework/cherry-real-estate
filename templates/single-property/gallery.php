@@ -15,7 +15,7 @@ if ( empty( $callbacks ) ) {
 	return;
 }
 
-$property_ID = get_the_ID();
+$property_id = get_the_ID();
 $gallery_ids = $callbacks->post_gallery();
 
 if ( ! $gallery_ids ) {
@@ -85,7 +85,7 @@ if ( $gallery_ids_amount > 1 ) {
 					esc_attr( $image_title ),
 					$gallery_js_classes['item']
 				),
-				$attachment_id, $property_ID
+				$attachment_id, $property_id
 			);
 		} ?>
 
@@ -147,7 +147,7 @@ if ( $gallery_ids_amount > 1 ) {
 						'<div class="tm-property-gallery__thumbs-item swiper-slide"><img src="%s" alt="%s"></div>',
 						esc_url( $thumbnail_src[0] ), esc_attr( $image_title )
 					),
-					$attachment_id, $property_ID
+					$attachment_id, $property_id
 				);
 			} ?>
 

@@ -104,7 +104,7 @@ if ( ! class_exists( 'Cherry_Base_Update' ) ) {
 		 * Remote request to updater API.
 		 *
 		 * @since  1.0.0
-		 * @param  array      $args Request paprams.
+		 * @param  array $args Request paprams.
 		 * @return array|bool
 		 */
 		protected function remote_query( $args ) {

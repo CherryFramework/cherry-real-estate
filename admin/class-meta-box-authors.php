@@ -119,7 +119,7 @@ class Cherry_RE_Meta_Box_Authors {
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @param  string   $post_type Post type aname.
+	 * @param  string $post_type Post type aname.
 	 * @global WP_Roles $wp_roles  WP_Roles global instance.
 	 * @return array
 	 */

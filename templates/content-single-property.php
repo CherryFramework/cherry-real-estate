@@ -22,7 +22,7 @@ $property_callbacks = cherry_re_templater()->setup_template_data(); ?>
 
 	<?php
 		/**
-		 * cherry_re_before_single_property_summary hook.
+		 * Fires before single property summary.
 		 *
 		 * @since 1.0.0
 		 *
@@ -37,7 +37,7 @@ $property_callbacks = cherry_re_templater()->setup_template_data(); ?>
 
 		<?php
 			/**
-			 * cherry_re_single_property_summary hook.
+			 * Fires before single property summary are printed.
 			 *
 			 * @since 1.0.0
 			 *
@@ -52,7 +52,7 @@ $property_callbacks = cherry_re_templater()->setup_template_data(); ?>
 
 	<?php
 		/**
-		 * cherry_re_after_single_property_summary hook.
+		 * Fires after single property summary.
 		 *
 		 * @since 1.0.0
 		 *

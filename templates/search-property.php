@@ -15,7 +15,7 @@ if ( ! did_action( 'get_header' ) ) {
 	get_header( 'property' );
 
 	/**
-	 * cherry_re_before_main_content hook.
+	 * Fires before the content divs are opened.
 	 *
 	 * @since 1.0.0
 	 *
@@ -26,7 +26,7 @@ if ( ! did_action( 'get_header' ) ) {
 }
 
 /**
- * cherry_re_before_search_loop hook.
+ * Fires before the search result listing.
  *
  * @since 1.0.0
  *
@@ -46,7 +46,7 @@ $args = wp_parse_args( $args, $params );
 $data->the_property( $args );
 
 /**
- * cherry_re_after_search_loop hook.
+ * Fires after the search result listing.
  *
  * @since 1.0.0
  */
@@ -55,7 +55,7 @@ do_action( 'cherry_re_after_search_loop' );
 if ( did_action( 'cherry_re_before_main_content' ) ) {
 
 	/**
-	 * cherry_re_after_main_content hook.
+	 * Fires after the content divs are closed.
 	 *
 	 * @since 1.0.0
 	 *
@@ -64,7 +64,7 @@ if ( did_action( 'cherry_re_before_main_content' ) ) {
 	do_action( 'cherry_re_after_main_content' );
 
 	/**
-	 * cherry_re_search_sidebar hook.
+	 * Fires before the sidebar template file is loaded.
 	 *
 	 * @since 1.0.0
 	 *
