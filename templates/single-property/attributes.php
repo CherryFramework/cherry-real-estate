@@ -56,7 +56,7 @@ $heading = esc_html( apply_filters(
 
 	$atts['id'] = array(
 		'label' => esc_html__( 'Property ID:', 'cherry-real-estate' ),
-		'value' => '<dd>' .  $property_id . '</dd>',
+		'value' => '<dd>' . $property_id . '</dd>',
 	);
 
 	if ( $status ) {

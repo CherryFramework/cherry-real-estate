@@ -159,13 +159,11 @@ class Model_Submit_Form {
 				Model_Settings::get_notification_message()
 			);
 
-			/*
 			if ( ! $result ) {
 				wp_send_json_error( array(
-					'message' => esc_html__( "Request are created. But we can't send your message. Please, try again later", 'cherry-real-estate' ),
+					'message' => esc_html__( "Request are created. But we can't send your message.", 'cherry-real-estate' ),
 				) );
 			}
-			*/
 		}
 
 		wp_send_json_success( $property_id );
