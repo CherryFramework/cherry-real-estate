@@ -42,7 +42,7 @@ if ( $gallery_ids_amount > 1 ) {
 		'item'      => 'swiper-slide',
 	);
 	$gallery_js_classes = array_map( 'esc_attr', $gallery_js_classes );
-	$slides_per_view    = $gallery_ids_amount < 6 ? count( $gallery_ids_amount ) : 6;
+	$slides_per_view    = $gallery_ids_amount < 6 ? $gallery_ids_amount : 6;
 
 	// Slide data attributes.
 	$slide_atts = apply_filters( 'cherry_re_single_property_gallery_data_atts', array(
