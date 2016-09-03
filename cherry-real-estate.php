@@ -120,6 +120,8 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			// Breacrumbs on search properties page.
 			add_filter( 'cherry_breadcrumbs_items', array( $this, 'search_breadcrumbs' ), 11, 2 );
 
+			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'settings_link' ), 10, 4 );
+
 			// Enable use shortcodes in text widget.
 			add_filter( 'widget_text', 'do_shortcode', 11 );
 
@@ -635,6 +637,36 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			}
 
 			return $items;
+		}
+
+		/**
+		 * Added a link to the plugin settings page.
+		 *
+		 * @since  1.0.0
+		 * @param array  $actions     An array of plugin action links.
+		 * @param string $plugin_file Path to the plugin file relative to the plugins directory.
+		 * @param array  $plugin_data An array of plugin data.
+		 * @param string $context     The plugin context. Defaults are 'All', 'Active',
+		 *                            'Inactive', 'Recently Activated', 'Upgrade',
+		 *                            'Must-Use', 'Drop-ins', 'Search'.
+		 * @return array
+		 */
+		public function settings_link( $actions, $plugin_file, $plugin_data, $context ) {
+			$options_page = Cherry_RE_Options_Page::get_instance();
+
+			$path = sprintf(
+				'edit.php?post_type=%s&page=%s">',
+				$this->get_post_type_name(),
+				$options_page->get_page_slug()
+			);
+
+			$actions[] = sprintf(
+				'<a href="%s">%s</a>',
+				esc_url( get_admin_url( null, $path ) ),
+				esc_html__( 'Settings', 'cherry-real-esatate' )
+			);
+
+			return $actions;
 		}
 
 		/**
