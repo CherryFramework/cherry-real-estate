@@ -15,7 +15,7 @@
 <table class="form-table">
 	<tr>
 		<td>
-			<?php echo $control_html; ?>
+			<?php echo $passed_vars['control_html']; ?>
 		</td>
 	</tr>
 </table>

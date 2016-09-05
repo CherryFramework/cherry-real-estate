@@ -11,10 +11,11 @@
  * @copyright  2002-2016, Template Monster
  */
 
-if ( empty( $callbacks ) ) {
+if ( empty( $passed_vars['callbacks'] ) ) {
 	return;
 }
 
+$callbacks   = $passed_vars['callbacks'];
 $property_id = get_the_ID();
 $gallery_ids = $callbacks->post_gallery();
 

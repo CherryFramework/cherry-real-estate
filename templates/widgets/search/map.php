@@ -21,7 +21,7 @@ $defaults        = apply_filters( 'cherry_re_search_map_pins_args', array(
 	'template'        => 'infowindow.tmpl',
 	'echo'            => false,
 ) );
-$args = wp_parse_args( $args, $defaults );
+$args = wp_parse_args( $passed_vars, $defaults );
 
 $data   = Cherry_RE_Property_Data::get_instance();
 $params = $data->prepare_search_args();

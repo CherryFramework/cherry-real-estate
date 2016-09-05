@@ -108,32 +108,28 @@ function cherry_re_locate_template( $template_name, $template_path = '', $defaul
  *
  * @since 1.0.0
  * @param string $template_name Template name.
- * @param array  $args          Arguments.
+ * @param array  $passed_vars   Arguments.
  * @param string $template_path Relative path to template's directory in theme.
  * @param string $default_path  Absolute path to template's directory in plugin.
  */
-function cherry_re_get_template( $template_name, $args = array(), $template_path = '', $default_path = '' ) {
-
-	if ( ! empty( $args ) && is_array( $args ) ) {
-		$args = apply_filters( 'cherry_re_get_template_args', $args, $template_name, $template_path );
-		extract( $args );
-	}
-
+function cherry_re_get_template( $template_name, $passed_vars = array(), $template_path = '', $default_path = '' ) {
 	$located = cherry_re_locate_template( $template_name, $template_path, $default_path );
 
 	if ( ! file_exists( $located ) ) {
 		return sprintf( '<code>%s</code> does not exist.', $located );
 	}
 
+	$passed_vars = apply_filters( 'cherry_re_get_template_passed_vars', $passed_vars, $template_name, $template_path );
+
 	// Allow 3rd party plugin filter template file from their plugin.
 	$located = apply_filters( 'cherry_re_get_template',
-		$located, $template_name, $args, $template_path, $default_path );
+		$located, $template_name, $passed_vars, $template_path, $default_path );
 
-	do_action( 'cherry_re_before_template_part', $template_name, $template_path, $located, $args );
+	do_action( 'cherry_re_before_template_part', $template_name, $template_path, $located, $passed_vars );
 
 	include( $located );
 
-	do_action( 'cherry_re_after_template_part', $template_name, $template_path, $located, $args );
+	do_action( 'cherry_re_after_template_part', $template_name, $template_path, $located, $passed_vars );
 }
 
 /**
