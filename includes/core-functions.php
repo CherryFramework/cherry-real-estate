@@ -113,9 +113,6 @@ function cherry_re_locate_template( $template_name, $template_path = '', $defaul
  * @param string $default_path  Absolute path to template's directory in plugin.
  */
 function cherry_re_get_template( $template_name, $passed_vars = array(), $template_path = '', $default_path = '' ) {
-
-	var_dump( $template_name );
-
 	$located = cherry_re_locate_template( $template_name, $template_path, $default_path );
 
 	if ( ! file_exists( $located ) ) {
