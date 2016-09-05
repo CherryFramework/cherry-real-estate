@@ -254,9 +254,6 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 					'cherry-js-core' => array(
 						'autoload' => false,
 					),
-					'cherry-utility' => array(
-						'autoload' => false,
-					),
 					'cherry-page-builder' => array(
 						'autoload' => false,
 					),
