@@ -70,7 +70,6 @@
 	<div class="tm-re-search-form__group-more">
 
 		<input type="checkbox" id="tm-re-more-property-fields" name="tm-re-more-property-fields" class="tm-re-search-form__more-field">
-		<label for="tm-re-more-property-fields" class="tm-re-search-form__more-toggle"><?php esc_html_e( 'More', 'cherry-real-estate' ); ?></label>
 
 		<div class="tm-re-search-form__more-fields">
 			<div class="tm-re-search-form__group">
@@ -114,6 +113,8 @@
 			</div>
 
 		</div>
+
+		<label for="tm-re-more-property-fields" class="tm-re-search-form__more-toggle"><?php esc_html_e( 'More', 'cherry-real-estate' ); ?></label>
 	</div>
 
 	<input type="hidden" name="post_type" value="<?php echo cherry_real_estate()->get_post_type_name(); ?>">
