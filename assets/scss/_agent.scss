@@ -8,6 +8,23 @@
 		&__title {
 			margin-bottom: $gap-size / 3;
 		}
+		&__contacts,
+		&__socials {
+			margin-top: $gap-size / 2;
+		}
+		&__contacts {
+			i {
+				margin-right: $gap-size / 5;
+			}
+		}
+		&__socials {
+			&-item {
+				display: inline-block;
+				vertical-align: middle;
+				margin-right: $gap-size / 5;
+				margin-bottom: $gap-size / 5;
+			}
+		}
 	}
 	&-locations {
 		.tm-property--agent & {

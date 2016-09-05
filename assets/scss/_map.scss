@@ -30,17 +30,13 @@
 	/* close button */
 	.gm-style > div:first-child > div + div > div:last-child > div > div:last-child,
 	.gm-style-iw + div {
-		width: 36px !important;
-		height: 36px !important;
-		top: 23px !important;
-		right: -22px !important;
-		opacity: 1 !important;
-		text-align: center;
+		top: 40px !important;
+		right: 0 !important;
 	}
 
 	/* image icon inside close button */
 	.gm-style > div:first-child > div + div > div:last-child > div > div:last-child > img {
-		display: none;
+		
 	}
 
 	/* positioning of infowindow */
@@ -81,9 +77,48 @@
 			}
 		}
 		> * {
-			&:not(.tm-property-info__image) {
+			&:not(.tm-property-info__image):not(.tm-property__image):not(.tm-property__bedrooms):not(.tm-property__area):not(.tm-property__bathrooms) {
 				padding: 0 $gap-size / 3;
 			}
+		}
+	}
+
+	// Agent infowindow
+
+	.tm-property {
+		&__inner {
+			background-color: $white;
+			padding-bottom: $gap-size / 3;
+		}
+		&__image {
+			margin: 0 0 10px;
+
+			img {
+				max-width: 100% !important;
+				width: 100%;
+			}
+		}
+		&__content {
+			display: flex;
+			flex-direction: column;
+		}
+		&__area {
+			padding-left: $gap-size / 3;
+		}
+		&__bathrooms {
+			padding-right: $gap-size / 3;
+		}
+		&__title {
+			order: 1;
+		}
+		&__price {
+			order: 2;
+		}
+		&__status,
+		&__excerpt,
+		&__location,
+		&__more {
+			display: none;
 		}
 	}
 }
