@@ -281,7 +281,6 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			$prefix = $this->get_meta_prefix();
 
 			$this->get_core()->init_module( 'cherry-js-core' );
-			$this->get_core()->init_module( 'cherry-utility' );
 			$this->get_core()->init_module( 'cherry-post-meta', array(
 				'title'  => esc_html__( 'Property Data', 'cherry-real-estate' ),
 				'page'   => array( $this->get_post_type_name() ),
