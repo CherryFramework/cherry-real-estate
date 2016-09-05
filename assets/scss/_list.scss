@@ -16,6 +16,8 @@
 		padding: 5px 10px;
 		margin: 0 0 $gap-size / 4;
 		display: inline-block;
+		vertical-align: middle;
+		font-size: .75em;
 	}
 	&__image {
 		margin: 0 0 $gap-size / 2;
@@ -23,6 +25,11 @@
 	&__area,
 	&__bedrooms {
 		margin: 0 $gap-size / 2 0 0;
+	}
+	&__area,
+	&__bedrooms,
+	&__bathrooms {
+		font-size: .75em;
 	}
 	&__title {
 		margin: $gap-size / 2 0;
