@@ -8,6 +8,9 @@
 			pointer-events: none;
 		}
 	}
+	&__group {
+		margin-bottom: $gap-size / 2;
+	}
 }
 
 /* Uploader */
@@ -29,6 +32,13 @@
 		position: relative;
 		overflow: hidden;
 		display: inline-block;
+		vertical-align: middle;
+
+		span {
+			display: inline-block;
+			vertical-align: middle;
+			margin-right: $gap-size / 3;
+		}
 		&__field {
 			position: absolute;
 			top: 0;

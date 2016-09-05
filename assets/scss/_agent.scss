@@ -1,0 +1,37 @@
+// Agent page
+.tm-agent {
+	&-info {
+		&__subtitle,
+		&__photo {
+			margin-bottom: $gap-size / 2;
+		}
+		&__title {
+			margin-bottom: $gap-size / 3;
+		}
+	}
+	&-locations {
+		.tm-property--agent & {
+			margin-top: $gap-size;
+		}
+		&__subtitle {
+			margin-bottom: $gap-size / 2;
+		}
+	}
+}
+
+// Agent Shortcode
+.tm-agents-list {
+	.tm-agent {
+		&-list {
+			&__item {
+				&:not(:first-child) {
+					margin: $gap-size 0 0;
+				}
+			}
+		}
+		&__photo,
+		&__name {
+			margin-bottom: $gap-size / 2;
+		}
+	}
+}
