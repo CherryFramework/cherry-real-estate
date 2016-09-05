@@ -15,6 +15,7 @@ if ( ! is_user_logged_in() ) {
 	return;
 }
 
+$field              = $passed_vars['field'];
 $field_name         = $field['name'];
 $field_name         .= ! empty( $field['multiple'] ) ? '[]' : '';
 $allowed_mime_types = ! empty( $field['allowed_mime_types'] ) ? $field['allowed_mime_types'] : get_allowed_mime_types();

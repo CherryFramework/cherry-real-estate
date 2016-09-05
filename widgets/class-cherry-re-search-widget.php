@@ -125,7 +125,7 @@ if ( ! class_exists( 'Cherry_RE_Search_Widget' ) ) {
 
 				// Map template.
 				cherry_re_get_template( 'widgets/search/map', array(
-					'args' => compact( 'number' ),
+					'number' => $number,
 				) );
 			}
 

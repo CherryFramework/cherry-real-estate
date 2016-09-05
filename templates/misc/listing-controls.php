@@ -11,9 +11,12 @@
  * @copyright  2002-2016, Template Monster
  */
 
-if ( empty( $sort_control ) && empty( $layout_control ) ) {
+if ( empty( $passed_vars ) ) {
 	return;
-} ?>
+}
+
+$sort_control   = $passed_vars['sort_control'];
+$layout_control = $passed_vars['layout_control']; ?>
 
 <div class="tm-re_listing-controls">
 	<?php echo $sort_control; ?>

@@ -15,10 +15,10 @@
 <table class="form-table">
 	<tr>
 		<th>
-			<label for="<?php echo esc_attr( $control_name ); ?>"><?php esc_html_e( 'Custom Photo', 'cherry-real-estate' ); ?></label>
+			<label for="<?php echo esc_attr( $passed_vars['control_name'] ); ?>"><?php esc_html_e( 'Custom Photo', 'cherry-real-estate' ); ?></label>
 		</th>
 		<td>
-			<?php echo $control_html; ?>
+			<?php echo $passed_vars['control_html']; ?>
 			<p class="description"><?php esc_html_e( 'Only for Real Estate roles and have a higher priority than `Profile Picture` option', 'cherry-real-estate' ); ?></p>
 		</td>
 	</tr>

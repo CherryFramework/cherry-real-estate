@@ -11,6 +11,10 @@
  * @copyright  2002-2016, Template Monster
  */
 
+$popup_id      = $passed_vars['popup_id'];
+$login_form    = $passed_vars['login_form'];
+$register_form = $passed_vars['register_form'];
+
 do_action( 'cherry_re_before_auth_popup' ); ?>
 
 <div id="<?php echo esc_attr( $popup_id ); ?>" class="tm-re-auth-popup tm-re-tabs mfp-with-anim mfp-hide" data-anim-effect="tm-re-mfp-move-from-top">

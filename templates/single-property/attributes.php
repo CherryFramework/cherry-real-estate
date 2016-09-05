@@ -11,11 +11,12 @@
  * @copyright  2002-2016, Template Monster
  */
 
-if ( empty( $callbacks ) ) {
+if ( empty( $passed_vars['callbacks'] ) ) {
 	return;
 }
 
-$heading = esc_html( apply_filters(
+$callbacks = $passed_vars['callbacks'];
+$heading   = esc_html( apply_filters(
 	'cherry_re_property_attributes_heading',
 	esc_html__( 'Quick Summary', 'cherry-real-estate' )
 ) ); ?>

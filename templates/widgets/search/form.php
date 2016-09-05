@@ -10,11 +10,13 @@
  * @license    GPL-3.0+
  * @copyright  2002-2016, Template Monster
  */
-?>
+
+$values = $passed_vars['values']; ?>
+
 <form role="search" method="get" class="widget-tm-re-search__form" action="<?php echo home_url( '/' ); ?>">
 
-	<?php if ( ! empty( $title ) ) {
-		echo $title;
+	<?php if ( ! empty( $passed_vars['title'] ) ) {
+		echo $passed_vars['title'];
 	} ?>
 
 	<div class="tm-re-search-form__group">
@@ -100,8 +102,8 @@
 			<div class="tm-re-search-form__group">
 				<span class="tm-re-search-form__label"><?php esc_html_e( 'Area', 'cherry-real-estate' ); ?></span>
 				<span class="tm-re-search-form__range">
-					<input type="number" min="0" step="0.01" name="min_area" class="tm-re-search-form__field"  placeholder="<?php esc_html_e( 'Min', 'cherry-real-estate' ); ?>" value="<?php echo $values['min_area']; ?>">
-					<input type="number" min="0" step="0.01" name="max_area" class="tm-re-search-form__field"  placeholder="<?php esc_html_e( 'Max', 'cherry-real-estate' ); ?>" value="<?php echo $values['max_area']; ?>">
+					<input type="number" min="0" step="0.01" name="min_area" class="tm-re-search-form__field" placeholder="<?php esc_html_e( 'Min', 'cherry-real-estate' ); ?>" value="<?php echo $values['min_area']; ?>">
+					<input type="number" min="0" step="0.01" name="max_area" class="tm-re-search-form__field" placeholder="<?php esc_html_e( 'Max', 'cherry-real-estate' ); ?>" value="<?php echo $values['max_area']; ?>">
 				</span>
 			</div>
 

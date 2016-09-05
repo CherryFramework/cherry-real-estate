@@ -11,11 +11,12 @@
  * @copyright  2002-2016, Template Monster
  */
 
-if ( empty( $callbacks ) ) {
+if ( empty( $passed_vars['callbacks'] ) ) {
 	return;
 }
 
-$location = $callbacks->get_property_location();
+$callbacks = $passed_vars['callbacks'];
+$location  = $callbacks->get_property_location();
 
 if ( empty( $location ) ) {
 	return;

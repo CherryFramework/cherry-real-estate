@@ -13,10 +13,10 @@
 <table class="form-table">
 	<tr>
 		<th>
-			<label for="<?php echo esc_attr( $control_name ); ?>"><?php esc_html_e( 'Trusted User', 'cherry-real-estate' ); ?></label>
+			<label for="<?php echo esc_attr( $passed_vars['control_name'] ); ?>"><?php esc_html_e( 'Trusted User', 'cherry-real-estate' ); ?></label>
 		</th>
 		<td>
-			<?php echo $control_html; ?>
+			<?php echo $passed_vars['control_html']; ?>
 			<p class="description"><?php esc_html_e( 'Automatically mark submitted properties as approved', 'cherry-real-estate' ); ?></p>
 		</td>
 	</tr>

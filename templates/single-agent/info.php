@@ -11,12 +11,13 @@
  * @copyright  2002-2016, Template Monster
  */
 
-if ( empty( $callbacks ) ) {
+if ( empty( $passed_vars['callbacks'] ) ) {
 	return;
 }
 
-$agent_id = get_query_var( 'author' );
-$agent    = get_userdata( $agent_id );
+$agent_id  = get_query_var( 'author' );
+$agent     = get_userdata( $agent_id );
+$callbacks = $passed_vars['callbacks'];
 $callbacks->the_agent_meta( $agent );
 
 $heading = esc_html( apply_filters(
