@@ -742,6 +742,8 @@ class Cherry_RE_Template_Callbacks {
 			return;
 		}
 
+		add_filter( 'cherry_re_property_item_classes', array( $this, 'add_thumb_class' ), 10, 2 );
+
 		$args['link'] = filter_var( $args['link'], FILTER_VALIDATE_BOOLEAN );
 
 		if ( true === $args['link'] ) {
@@ -935,5 +937,18 @@ class Cherry_RE_Template_Callbacks {
 	public function clear_data() {
 		$this->agent_data    = null;
 		$this->property_data = array();
+	}
+
+	/**
+	 * Added a specific CSS-class for image control.
+	 *
+	 * @since 1.0.0
+	 * @param array $classes     An array of post classes.
+	 * @param int   $property_id The property ID.
+	 */
+	public function add_thumb_class( $classes, $property_id ) {
+		$classes[] = 'tm-property-has-thumb';
+
+		return $classes;
 	}
 }
