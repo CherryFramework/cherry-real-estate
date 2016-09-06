@@ -28,8 +28,6 @@ if ( ! did_action( 'get_header' ) ) {
  * Fires before the archive description printed.
  *
  * @since 1.0.0
- *
- * @hooked cherry_real_estate_listing_controls - 10
  */
 do_action( 'cherry_re_archive_description' );
 
