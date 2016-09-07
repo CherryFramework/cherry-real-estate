@@ -208,14 +208,6 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			if ( is_admin() ) {
 				include_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-cherry-re-options-page.php' );
 				include_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-meta-box-authors.php' );
-				require_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-cherry-update/class-cherry-plugin-update.php' );
-
-				$updater = new Cherry_Plugin_Update();
-				$updater->init( array(
-					'version'         => CHERRY_REAL_ESTATE_VERSION,
-					'slug'            => CHERRY_REAL_ESTATE_SLUG,
-					'repository_name' => CHERRY_REAL_ESTATE_SLUG,
-				) );
 			}
 		}
 
