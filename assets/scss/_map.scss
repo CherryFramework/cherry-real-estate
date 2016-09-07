@@ -1,11 +1,11 @@
 // Map
 .tm-re-map {
 	width: 100%;
-	min-height: $map-height;
+	height: $map-height;
 
 	.sidebar & {
 		@media (min-width: 767px) {
-			min-height: $sidebar-map-height;
+			height: $sidebar-map-height;
 		}
 	}
 
