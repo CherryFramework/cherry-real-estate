@@ -36,7 +36,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		 * A reference to an instance of this class.
 		 *
 		 * @since 1.0.0
-		 * @var   object
+		 * @var object
 		 */
 		private static $instance = null;
 
@@ -44,7 +44,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		 * A reference to an instance of cherry framework core class.
 		 *
 		 * @since 1.0.0
-		 * @var   object
+		 * @var object
 		 */
 		private $core = null;
 
@@ -60,7 +60,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		 * The post type name.
 		 *
 		 * @since 1.0.0
-		 * @var   string
+		 * @var string
 		 */
 		private $post_type_name = 'tm-property';
 
@@ -68,7 +68,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		 * The prefix for metadata.
 		 *
 		 * @since 1.0.0
-		 * @var   string
+		 * @var string
 		 */
 		private $meta_prefix = '_tm_property_';
 
@@ -76,7 +76,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		 * The prefix for shortcodes.
 		 *
 		 * @since 1.0.0
-		 * @var   string
+		 * @var string
 		 */
 		private $shortcode_prefix = 'tm_re_';
 
@@ -639,12 +639,10 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		 * Added a link to the plugin settings page.
 		 *
 		 * @since  1.0.0
-		 * @param array  $actions     An array of plugin action links.
-		 * @param string $plugin_file Path to the plugin file relative to the plugins directory.
-		 * @param array  $plugin_data An array of plugin data.
-		 * @param string $context     The plugin context. Defaults are 'All', 'Active',
-		 *                            'Inactive', 'Recently Activated', 'Upgrade',
-		 *                            'Must-Use', 'Drop-ins', 'Search'.
+		 * @param  array  $actions     An array of plugin action links.
+		 * @param  string $plugin_file Path to the plugin file relative to the plugins directory.
+		 * @param  array  $plugin_data An array of plugin data.
+		 * @param  string $context     The plugin context.
 		 * @return array
 		 */
 		public function settings_link( $actions, $plugin_file, $plugin_data, $context ) {
