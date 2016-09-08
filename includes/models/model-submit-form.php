@@ -78,7 +78,8 @@ class Model_Submit_Form {
 
 		$post_type   = cherry_real_estate()->get_post_type_name();
 		$meta_prefix = cherry_real_estate()->get_meta_prefix();
-		$data        = wp_list_pluck( $_POST['property'], 'value', 'name' );
+		$_post       = wp_list_pluck( $_POST['property'], 'value', 'name' );
+		$data        = array_map( 'wp_filter_kses', $_post );
 
 		// Prepare defaults array for new property.
 		$defaults = apply_filters( 'cherry_re_before_insert_post_defaults', array(
@@ -93,7 +94,7 @@ class Model_Submit_Form {
 			'property_parking_places' => '',
 			'property_address'        => '',
 			'property_gallery'        => '',
-		), $_POST['property'] );
+		), $data );
 
 		$data    = wp_parse_args( $data, $defaults );
 		$gallery = '';
@@ -408,7 +409,7 @@ class Model_Submit_Form {
 			) );
 		}
 
-		$user_login = sanitize_text_field( $access['login'] );
+		$user_login = sanitize_user( $access['login'], true );
 		$user_email = sanitize_email( $access['email'] );
 		$user       = register_new_user( $user_login, $user_email );
 
