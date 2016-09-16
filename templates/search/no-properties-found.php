@@ -11,4 +11,4 @@
  * @copyright  2002-2016, Template Monster
  */
 ?>
-<p class="widget-tm-re-search__not-found"><?php _e( 'No properties were found matching your selection.', 'cherry-real-esate' ); ?></p>
+<p class="widget-tm-re-search__not-found"><?php esc_html_e( 'No properties were found matching your selection.', 'cherry-real-esate' ); ?></p>

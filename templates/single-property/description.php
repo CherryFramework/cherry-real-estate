@@ -18,7 +18,7 @@ $heading = esc_html( apply_filters(
 
 <div class="tm-property__description">
 
-	<?php if ( $heading ): ?>
+	<?php if ( $heading ) : ?>
 		<h2 class="tm-property__subtitle"><?php echo $heading; ?></h2>
 	<?php endif; ?>
 

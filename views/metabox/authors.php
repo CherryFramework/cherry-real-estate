@@ -8,7 +8,11 @@
  * @license    GPL-3.0+
  * @copyright  2002-2016, Template Monster
  */
-?>
+
+$key   = $passed_vars['key'];
+$value = $passed_vars['value'];
+$users = $passed_vars['users'];
+$nonce = $passed_vars['nonce']; ?>
 
 <div class="cherry-re-custom-authors">
 	<input type="hidden" name="cherry_re_custom_authors_meta_nonce" value="<?php echo $nonce; ?>" />

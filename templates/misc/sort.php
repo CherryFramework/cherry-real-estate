@@ -14,10 +14,10 @@
 
 <form id="tm-re-property-sort" class="tm-re-property-sort" action="#">
 
-	<?php $select = Cherry_RE_Tools::select_form( $options, array(
+	<?php $select = Cherry_RE_Tools::select_form( $passed_vars['options'], array(
 			'name'    => 'properties_sort',
 			'default' => esc_html__( 'Default', 'cherry-real-estate' ),
-			'value'   => $value,
+			'value'   => $passed_vars['value'],
 			'echo'    => false,
 		) ); ?>
 
@@ -28,4 +28,4 @@
 
 </form>
 
-<?php cherry_re_enqueue_script( array( 'cherry-re-script') ); // Enqueue script. ?>
+<?php cherry_re_enqueue_script( array( 'cherry-re-script' ) ); // Enqueue script. ?>

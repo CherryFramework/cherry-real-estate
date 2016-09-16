@@ -15,7 +15,7 @@ if ( ! did_action( 'get_header' ) ) {
 	get_header( 'property' );
 
 	/**
-	 * cherry_re_before_main_content hook.
+	 * Fires before the content divs are opened.
 	 *
 	 * @since 1.0.0
 	 *
@@ -27,7 +27,7 @@ if ( ! did_action( 'get_header' ) ) {
 $callbacks = cherry_re_templater()->setup_template_data();
 
 /**
- * cherry_re_before_agent_archive hook.
+ * Fires before the agent archive listing.
  *
  * @since 1.0.0
  *
@@ -48,7 +48,7 @@ $data       = Cherry_RE_Property_Data::get_instance();
 $properties = $data->the_property( $args );
 
 /**
- * cherry_re_start_agent_archive hook.
+ * Fires when the agent archive listing are ready.
  *
  * @since 1.0.0
  *
@@ -61,7 +61,7 @@ do_action( 'cherry_re_start_agent_archive', $callbacks );
 echo $properties;
 
 /**
- * cherry_re_end_agent_archive hook.
+ * Fires when agent archive listing are printed.
  *
  * @since 1.0.0
  *
@@ -73,7 +73,7 @@ do_action( 'cherry_re_end_agent_archive' );
 if ( did_action( 'cherry_re_before_main_content' ) ) {
 
 	/**
-	 * cherry_re_after_main_content hook.
+	 * Fires after the content divs are closed.
 	 *
 	 * @since 1.0.0
 	 *
@@ -82,7 +82,7 @@ if ( did_action( 'cherry_re_before_main_content' ) ) {
 	do_action( 'cherry_re_after_main_content' );
 
 	/**
-	 * cherry_re_property_sidebar hook.
+	 * Fires before the sidebar template file is loaded.
 	 *
 	 * @since 1.0.0
 	 *

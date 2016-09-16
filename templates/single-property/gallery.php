@@ -11,11 +11,12 @@
  * @copyright  2002-2016, Template Monster
  */
 
-if ( empty( $callbacks ) ) {
+if ( empty( $passed_vars['callbacks'] ) ) {
 	return;
 }
 
-$property_ID = get_the_ID();
+$callbacks   = $passed_vars['callbacks'];
+$property_id = get_the_ID();
 $gallery_ids = $callbacks->post_gallery();
 
 if ( ! $gallery_ids ) {
@@ -42,7 +43,7 @@ if ( $gallery_ids_amount > 1 ) {
 		'item'      => 'swiper-slide',
 	);
 	$gallery_js_classes = array_map( 'esc_attr', $gallery_js_classes );
-	$slides_per_view    = $gallery_ids_amount < 6 ? count( $gallery_ids_amount ) : 6;
+	$slides_per_view    = $gallery_ids_amount < 6 ? $gallery_ids_amount : 6;
 
 	// Slide data attributes.
 	$slide_atts = apply_filters( 'cherry_re_single_property_gallery_data_atts', array(
@@ -85,7 +86,7 @@ if ( $gallery_ids_amount > 1 ) {
 					esc_attr( $image_title ),
 					$gallery_js_classes['item']
 				),
-				$attachment_id, $property_ID
+				$attachment_id, $property_id
 			);
 		} ?>
 
@@ -147,7 +148,7 @@ if ( $gallery_ids_amount > 1 ) {
 						'<div class="tm-property-gallery__thumbs-item swiper-slide"><img src="%s" alt="%s"></div>',
 						esc_url( $thumbnail_src[0] ), esc_attr( $image_title )
 					),
-					$attachment_id, $property_ID
+					$attachment_id, $property_id
 				);
 			} ?>
 

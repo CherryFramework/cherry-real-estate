@@ -39,18 +39,21 @@ if ( ! class_exists( 'UI_Select' ) ) {
 				'select-2'	=> 'select 2',
 				'select-3'	=> 'select 3',
 				'select-4'	=> 'select 4',
-				'select-5'	=> 'select 5',
-				'optgroup-1'	=> array(
-					'label' => 'Group 1',
-					'group_options' => array(
+				'select-5'	=> array(
+					'label'			=> 'Group 1',
+					'slave'			=> 'slave',
+				),
+				'optgroup-1' => array(
+					'label'			=> 'Group 1',
+					'group_options'	=> array(
 						'select-6'	=> 'select 6',
 						'select-7'	=> 'select 7',
 						'select-8'	=> 'select 8',
 					),
 				),
 				'optgroup-2'	=> array(
-					'label' => 'Group 2',
-					'group_options' => array(
+					'label'			=> 'Group 2',
+					'group_options'	=> array(
 						'select-9'	=> 'select 9',
 						'select-10'	=> 'select 10',
 						'select-11'	=> 'select 11',
@@ -70,7 +73,7 @@ if ( ! class_exists( 'UI_Select' ) ) {
 		 */
 		function __construct( $args = array() ) {
 
-			$this->defaults_settings['id'] = 'cherry-ui-select-'.uniqid();
+			$this->defaults_settings['id'] = 'cherry-ui-select-' . uniqid();
 			$this->settings = wp_parse_args( $args, $this->defaults_settings );
 
 			add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_assets' ) );
@@ -117,7 +120,16 @@ if ( ! class_exists( 'UI_Select' ) ) {
 									}
 								}
 							}
-							$html .= '<option value="' . esc_attr( $option ) . '" ' . $selected_state . '>'. esc_html( $option_value ) .'</option>';
+
+							if ( is_array( $option_value ) ) {
+								$lable = $option_value['label'];
+								$data  = 'data-slave="' . $option_value['slave'] . '"';
+							} else {
+								$lable = $option_value;
+								$data  = '';
+							}
+
+							$html .= '<option value="' . esc_attr( $option ) . '" ' . $selected_state . ' ' . $data . '>' . esc_html( $lable ) . '</option>';
 						} else {
 							$html .= '<optgroup label="' . esc_attr( $option_value['label'] ) . '">';
 								$selected_state = '';
@@ -128,7 +140,7 @@ if ( ! class_exists( 'UI_Select' ) ) {
 											break;
 										}
 									}
-									$html .= '<option value="' . esc_attr( $group_item ) . '" ' . $selected_state . '>'. esc_html( $group_value ) .'</option>';
+									$html .= '<option value="' . esc_attr( $group_item ) . '" ' . $selected_state . '>' . esc_html( $group_value ) . '</option>';
 								}
 							$html .= '</optgroup>';
 						}

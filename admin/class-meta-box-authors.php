@@ -6,7 +6,6 @@
  * @subpackage Admin
  * @version    1.0.0
  * @author     Justin Tadlock <justin@justintadlock.com>
- * @author     Template Monster
  * @copyright  Copyright (c) 2015, Justin Tadlock
  * @link       http://themehybrid.com/plugins/avatars-meta-box
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -83,7 +82,7 @@ class Cherry_RE_Meta_Box_Authors {
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @param  object  $post
+	 * @param  object $post Current post object.
 	 * @return void
 	 */
 	public function meta_box( $post ) {
@@ -120,8 +119,8 @@ class Cherry_RE_Meta_Box_Authors {
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @param  string  $post_type
-	 * @global object  $wp_roles
+	 * @param  string $post_type Post type aname.
+	 * @global WP_Roles $wp_roles  WP_Roles global instance.
 	 * @return array
 	 */
 	public function get_roles( $post_type ) {
@@ -156,8 +155,8 @@ class Cherry_RE_Meta_Box_Authors {
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @param  int     $post_id
-	 * @param  object  $post
+	 * @param  int    $post_id The post ID.
+	 * @param  object $post    The post object.
 	 * @return void
 	 */
 	public function save_post( $post_id, $post ) {
@@ -200,15 +199,13 @@ class Cherry_RE_Meta_Box_Authors {
 			/* If a new meta value was added and there was no previous value, add it. */
 			if ( $new_meta_value && '' == $meta_value ) {
 				add_post_meta( $post_id, $meta_key, $new_meta_value, true );
-			}
 
-			/* If the new meta value does not match the old value, update it. */
-			elseif ( $new_meta_value && $new_meta_value != $meta_value ) {
+			} elseif ( $new_meta_value && $new_meta_value != $meta_value ) {
+				/* If the new meta value does not match the old value, update it. */
 				update_post_meta( $post_id, $meta_key, $new_meta_value );
-			}
 
-			/* If there is no new meta value but an old value exists, delete it. */
-			elseif ( '' == $new_meta_value && $meta_value ) {
+			} elseif ( '' == $new_meta_value && $meta_value ) {
+				/* If there is no new meta value but an old value exists, delete it. */
 				delete_post_meta( $post_id, $meta_key, $meta_value );
 			}
 		}
@@ -218,6 +215,7 @@ class Cherry_RE_Meta_Box_Authors {
 	 * Retrieve a meta key.
 	 *
 	 * @since 1.0.0
+	 * @author Template Monster
 	 * @return string
 	 */
 	public function get_meta_key() {

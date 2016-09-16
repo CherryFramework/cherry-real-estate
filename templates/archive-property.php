@@ -15,7 +15,7 @@ if ( ! did_action( 'get_header' ) ) {
 	get_header( 'property' );
 
 	/**
-	 * cherry_re_before_main_content hook.
+	 * Fires before the content divs are opened.
 	 *
 	 * @since 1.0.0
 	 *
@@ -25,11 +25,9 @@ if ( ! did_action( 'get_header' ) ) {
 }
 
 /**
- * cherry_re_archive_description hook.
+ * Fires before the archive description printed.
  *
  * @since 1.0.0
- *
- * @hooked cherry_real_estate_listing_controls - 10
  */
 do_action( 'cherry_re_archive_description' );
 
@@ -46,7 +44,7 @@ $args   = apply_filters( 'cherry_re_archive_template_args', array(
 $args = wp_parse_args( $args, $params );
 
 /**
- * cherry_re_before_property_loop hook.
+ * Fires before the archive listing.
  *
  * @since 1.0.0
  */
@@ -55,7 +53,7 @@ do_action( 'cherry_re_before_property_loop' );
 $data->the_property( $args );
 
 /**
- * cherry_re_after_property_loop hook.
+ * Fires after the archive listing.
  *
  * @since 1.0.0
  */
@@ -64,7 +62,7 @@ do_action( 'cherry_re_after_property_loop' );
 if ( did_action( 'cherry_re_before_main_content' ) ) {
 
 	/**
-	 * cherry_re_after_main_content hook.
+	 * Fires after the content divs are closed.
 	 *
 	 * @since 1.0.0
 	 *
@@ -73,7 +71,7 @@ if ( did_action( 'cherry_re_before_main_content' ) ) {
 	do_action( 'cherry_re_after_main_content' );
 
 	/**
-	 * cherry_re_property_sidebar hook.
+	 * Fires before the sidebar template file is loaded.
 	 *
 	 * @since 1.0.0
 	 *

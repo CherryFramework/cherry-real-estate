@@ -8,6 +8,12 @@
  * @license    GPL-3.0+
  * @copyright  2002-2016, Template Monster
  */
+
+/**
+ * Plugin tools.
+ *
+ * @since 1.0.0
+ */
 class Cherry_RE_Tools {
 
 	/**
@@ -48,10 +54,12 @@ class Cherry_RE_Tools {
 		$sizes = array();
 
 		foreach ( get_intermediate_image_sizes() as $_size ) {
-			if ( in_array( $_size, array('thumbnail', 'medium', 'medium_large', 'large') ) ) {
+
+			if ( in_array( $_size, array( 'thumbnail', 'medium', 'medium_large', 'large' ) ) ) {
 				$sizes[ $_size ]['width']  = get_option( "{$_size}_size_w" );
 				$sizes[ $_size ]['height'] = get_option( "{$_size}_size_h" );
 				$sizes[ $_size ]['crop']   = (bool) get_option( "{$_size}_crop" );
+
 			} elseif ( isset( $_wp_additional_image_sizes[ $_size ] ) ) {
 				$sizes[ $_size ] = array(
 					'width'  => $_wp_additional_image_sizes[ $_size ]['width'],
@@ -105,8 +113,8 @@ class Cherry_RE_Tools {
 	 * Display or retrieve a HTML-formatted select element.
 	 *
 	 * @since  1.0.0
-	 * @param  array  $options Options.
-	 * @param  array  $args    Arguments.
+	 * @param  array $options Options.
+	 * @param  array $args    Arguments.
 	 * @return string
 	 */
 	public static function select_form( $options, $args ) {
@@ -133,8 +141,14 @@ class Cherry_RE_Tools {
 			$html .= sprintf( '<option value="%1$s" %3$s>%2$s</option>', esc_attr( $key ), esc_html( $value ), $selected );
 		}
 
+		if ( ! empty( $args['id'] ) ) {
+			$format = '<select name="%1$s" id="%1$s">%2$s</select>';
+		} else {
+			$format = '<select name="%1$s">%2$s</select>';
+		}
+
 		$html = sprintf(
-			'<select name="%1$s">%2$s</select>',
+			$format,
 			esc_attr( $args['name'] ),
 			$html
 		);
@@ -149,7 +163,7 @@ class Cherry_RE_Tools {
 	/**
 	 * Retireve a default settings for google maps.
 	 *
-	 * @since 1.0.0
+	 * @since 1.0.1
 	 * @return array
 	 */
 	public static function get_google_map_defaults() {

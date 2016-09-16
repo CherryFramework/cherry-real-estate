@@ -70,7 +70,7 @@ if ( ! function_exists( 'cherry_real_estate_template_single_title' ) ) {
 	 * @since 1.0.0
 	 */
 	function cherry_real_estate_template_single_title( $callbacks ) {
-		cherry_re_get_template( 'single-property/title', array( 'callbacks' => $callbacks ) );
+		cherry_re_get_template( 'single-property/title' );
 	}
 }
 
@@ -85,18 +85,6 @@ if ( ! function_exists( 'cherry_real_estate_show_property_gallery' ) ) {
 		cherry_re_get_template( 'single-property/gallery', array( 'callbacks' => $callbacks ) );
 	}
 }
-
-// if ( ! function_exists( 'cherry_real_estate_show_property_images' ) ) {
-
-// 	*
-// 	 * Output the property image.
-// 	 *
-// 	 * @since 1.0.0
-
-// 	function cherry_real_estate_show_property_images() {
-// 		cherry_re_get_template( 'single-property/property-image' );
-// 	}
-// }
 
 if ( ! function_exists( 'cherry_real_estate_template_single_price' ) ) {
 
@@ -118,7 +106,7 @@ if ( ! function_exists( 'cherry_real_estate_property_description' ) ) {
 	 * @since 1.0.0
 	 */
 	function cherry_real_estate_property_description( $callbacks ) {
-		cherry_re_get_template( 'single-property/description', array( 'callbacks' => $callbacks ) );
+		cherry_re_get_template( 'single-property/description' );
 	}
 }
 
@@ -154,7 +142,7 @@ if ( ! function_exists( 'cherry_real_estate_property_agent' ) ) {
 	 * @since 1.0.0
 	 */
 	function cherry_real_estate_property_agent( $callbacks ) {
-		cherry_re_get_template( 'single-property/agent', array( 'callbacks' => $callbacks )  );
+		cherry_re_get_template( 'single-property/agent', array( 'callbacks' => $callbacks ) );
 	}
 }
 
@@ -181,7 +169,7 @@ if ( ! function_exists( 'cherry_real_estate_agent_map' ) ) {
 	 * @since 1.0.0
 	 */
 	function cherry_real_estate_agent_map( $callbacks ) {
-		cherry_re_get_template( 'single-agent/map', array( 'callbacks' => $callbacks ) );
+		cherry_re_get_template( 'single-agent/map' );
 	}
 }
 

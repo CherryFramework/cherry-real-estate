@@ -10,6 +10,12 @@
  */
 
 if ( ! class_exists( 'Cherry_RE_Search_Widget' ) ) {
+
+	/**
+	 * Class for Search widget.
+	 *
+	 * @since 1.0.0
+	 */
 	class Cherry_RE_Search_Widget extends Cherry_Abstract_Widget {
 
 		/**
@@ -71,8 +77,8 @@ if ( ! class_exists( 'Cherry_RE_Search_Widget' ) ) {
 		 *
 		 * @see   WP_Widget
 		 * @since 1.0.0
-		 * @param array $args
-		 * @param array $instance
+		 * @param array $args     Display arguments.
+		 * @param array $instance Settings for the current Text widget instance.
 		 */
 		public function widget( $args, $instance ) {
 
@@ -119,7 +125,7 @@ if ( ! class_exists( 'Cherry_RE_Search_Widget' ) ) {
 
 				// Map template.
 				cherry_re_get_template( 'widgets/search/map', array(
-					'args' => compact( 'number' ),
+					'number' => $number,
 				) );
 			}
 
@@ -135,7 +141,7 @@ if ( ! class_exists( 'Cherry_RE_Search_Widget' ) ) {
 		 * @since  1.0.0
 		 * @param  array $args     Widget arguments.
 		 * @param  array $instance Widget instance.
-		 * @return void
+		 * @return string
 		 */
 		public function widget_start( $args, $instance ) {
 
@@ -183,6 +189,12 @@ if ( ! class_exists( 'Cherry_RE_Search_Widget' ) ) {
 	}
 
 	add_action( 'widgets_init', 'cherry_re_register_search_widget' );
+
+	/**
+	 * Register a `Cherry RE Search` widget.
+	 *
+	 * @since 1.0.0
+	 */
 	function cherry_re_register_search_widget() {
 		register_widget( 'Cherry_RE_Search_Widget' );
 	}

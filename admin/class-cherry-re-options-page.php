@@ -9,6 +9,11 @@
  * @copyright  2002-2016, Template Monster
  */
 
+/**
+ * Class for management setting/option page.
+ *
+ * @since 1.0.0
+ */
 class Cherry_RE_Options_Page {
 
 	/**
@@ -53,6 +58,11 @@ class Cherry_RE_Options_Page {
 	 * @since 1.0.0
 	 */
 	public function create_page() {
+
+		if ( ! is_admin() ) {
+			return;
+		}
+
 		cherry_real_estate()->get_core()->modules['cherry-page-builder']->make(
 			$this->get_page_slug(),
 			esc_html__( 'Settings', 'cherry-real-estate' ),
@@ -314,7 +324,7 @@ class Cherry_RE_Options_Page {
 	 * Enqueue settings page style.
 	 *
 	 * @since 1.0.0
-	 * @return void
+	 * @return bool
 	 */
 	public function enqueue_styles( $hook_suffix ) {
 

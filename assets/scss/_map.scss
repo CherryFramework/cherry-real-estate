@@ -1,4 +1,124 @@
+// Map
 .tm-re-map {
 	width: 100%;
 	height: $map-height;
+
+	.sidebar & {
+		@media (min-width: 767px) {
+			height: $sidebar-map-height;
+		}
+	}
+
+	// Map infowindow
+	.tm-re-iw,
+	.tm-re-iw > div:first-child > div:last-child {
+		width: 195px !important;
+	}
+
+	.gm-style > div:first-child > div + div > div:last-child > div > div:first-child > div {
+		background-color: transparent !important;
+		box-shadow: none !important;
+		width: auto !important;
+		height: auto !important;
+		border: none !important;
+	}
+	/* arrow colour */
+	.gm-style > div:first-child > div + div > div:last-child > div > div:first-child > div > div > div {
+		display: none;
+	}
+
+	/* close button */
+	.gm-style > div:first-child > div + div > div:last-child > div > div:last-child,
+	.gm-style-iw + div {
+		top: 40px !important;
+		right: 0 !important;
+	}
+
+	/* image icon inside close button */
+	.gm-style > div:first-child > div + div > div:last-child > div > div:last-child > img {
+
+	}
+
+	/* positioning of infowindow */
+	.gm-style-iw {
+		top: 22px !important;
+		left: 22px !important;
+		overflow: visible !important;
+		position: relative;
+
+		&:after {
+			content: '';
+			width: 0;
+			height: 0;
+			border-style: solid;
+			border-width: 12px 12.5px 0 12.5px;
+			border-color: white transparent transparent transparent;
+			position: absolute;
+			bottom: -4px;
+			left: 50%;
+			margin-left: -19px;
+		}
+		> div {
+			box-shadow: 4px 5px 20px rgba(0,0,0,.3);
+		}
+	}
+
+	.tm-map-pins__item {
+		background-color: $white;
+	}
+	.tm-property__inner {
+		padding-bottom: $gap-size / 3;
+
+		.tm-property-info__image {
+			margin-bottom: $gap-size / 3;
+
+			img {
+				width: 100%;
+			}
+		}
+		> * {
+			&:not(.tm-property-info__image):not(.tm-property__image):not(.tm-property__bedrooms):not(.tm-property__area):not(.tm-property__bathrooms) {
+				padding: 0 $gap-size / 3;
+			}
+		}
+	}
+
+	// Agent infowindow
+
+	.tm-property {
+		&__inner {
+			background-color: $white;
+			padding-bottom: $gap-size / 3;
+		}
+		&__image {
+			margin: 0 0 10px;
+
+			img {
+				max-width: 100% !important;
+				width: 100%;
+			}
+		}
+		&__content {
+			display: flex;
+			flex-direction: column;
+		}
+		&__area {
+			padding-left: $gap-size / 3;
+		}
+		&__bathrooms {
+			padding-right: $gap-size / 3;
+		}
+		&__title {
+			order: 1;
+		}
+		&__price {
+			order: 2;
+		}
+		&__status,
+		&__excerpt,
+		&__location,
+		&__more {
+			display: none;
+		}
+	}
 }

@@ -1,0 +1,54 @@
+// Agent page
+.tm-agent {
+	&-info {
+		&__subtitle,
+		&__photo {
+			margin-bottom: $gap-size / 2;
+		}
+		&__title {
+			margin-bottom: $gap-size / 3;
+		}
+		&__contacts,
+		&__socials {
+			margin-top: $gap-size / 2;
+		}
+		&__contacts {
+			i {
+				margin-right: $gap-size / 5;
+			}
+		}
+		&__socials {
+			&-item {
+				display: inline-block;
+				vertical-align: middle;
+				margin-right: $gap-size / 5;
+				margin-bottom: $gap-size / 5;
+			}
+		}
+	}
+	&-locations {
+		.tm-property--agent & {
+			margin-top: $gap-size;
+		}
+		&__subtitle {
+			margin-bottom: $gap-size / 2;
+		}
+	}
+}
+
+// Agent Shortcode
+.tm-agents-list {
+	.tm-agent {
+		&-list {
+			&__item {
+				&:not(:first-child) {
+					margin: $gap-size 0 0;
+				}
+			}
+		}
+		&__photo,
+		&__name {
+			margin-bottom: $gap-size / 2;
+		}
+	}
+}

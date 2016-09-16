@@ -86,8 +86,8 @@ class Model_Properties {
 	 * Retrieve the terms in a given taxonomy or list of taxonomies.
 	 *
 	 * @since  1.0.0
-	 * @param  string $tax Taxonomy name
-	 * @param  string $key Key - id or slug
+	 * @param  string $tax Taxonomy name.
+	 * @param  string $key Key - id or slug.
 	 * @return array
 	 */
 	public static function get_terms( $tax, $key ) {
@@ -111,8 +111,8 @@ class Model_Properties {
 	 *
 	 * @since  1.0.0
 	 * @param  string $taxonomy Taxonomy name.
-	 * @param  int    $id       Post ID.
-	 * @param  array  $args     Arguments
+	 * @param  int    $post_id  Post ID.
+	 * @param  array  $args     Arguments.
 	 * @return string|false|WP_Error A list of terms on success, false if there are no terms, WP_Error on failure.
 	 */
 	public static function get_property_term_list( $taxonomy, $post_id = null, $args = array() ) {

@@ -3,7 +3,7 @@
  * Plugin Name: Cherry Real Estate
  * Plugin URI:  http://www.templatemonster.com/
  * Description: Plugin for adding real estate functionality to the site.
- * Version:     1.0.0
+ * Version:     1.0.1
  * Author:      Template Monster
  * Author URI:  http://www.templatemonster.com/
  * Text Domain: cherry-real-estate
@@ -36,7 +36,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		 * A reference to an instance of this class.
 		 *
 		 * @since 1.0.0
-		 * @var   object
+		 * @var object
 		 */
 		private static $instance = null;
 
@@ -44,7 +44,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		 * A reference to an instance of cherry framework core class.
 		 *
 		 * @since 1.0.0
-		 * @var   object
+		 * @var object
 		 */
 		private $core = null;
 
@@ -60,7 +60,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		 * The post type name.
 		 *
 		 * @since 1.0.0
-		 * @var   string
+		 * @var string
 		 */
 		private $post_type_name = 'tm-property';
 
@@ -68,7 +68,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		 * The prefix for metadata.
 		 *
 		 * @since 1.0.0
-		 * @var   string
+		 * @var string
 		 */
 		private $meta_prefix = '_tm_property_';
 
@@ -76,7 +76,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		 * The prefix for shortcodes.
 		 *
 		 * @since 1.0.0
-		 * @var   string
+		 * @var string
 		 */
 		private $shortcode_prefix = 'tm_re_';
 
@@ -119,6 +119,8 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 
 			// Breacrumbs on search properties page.
 			add_filter( 'cherry_breadcrumbs_items', array( $this, 'search_breadcrumbs' ), 11, 2 );
+
+			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'settings_link' ), 10, 4 );
 
 			// Enable use shortcodes in text widget.
 			add_filter( 'widget_text', 'do_shortcode', 11 );
@@ -168,7 +170,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			 *
 			 * @since 1.0.0
 			 */
-			define( 'CHERRY_REAL_ESTATE_VERSION', '1.0.0' );
+			define( 'CHERRY_REAL_ESTATE_VERSION', '1.0.1' );
 		}
 
 		/**
@@ -206,14 +208,6 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			if ( is_admin() ) {
 				include_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-cherry-re-options-page.php' );
 				include_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-meta-box-authors.php' );
-				require_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-cherry-update/class-cherry-plugin-update.php' );
-
-				$updater = new Cherry_Plugin_Update();
-				$updater->init( array(
-					'version'         => CHERRY_REAL_ESTATE_VERSION,
-					'slug'            => CHERRY_REAL_ESTATE_SLUG,
-					'repository_name' => CHERRY_REAL_ESTATE_SLUG,
-				) );
 			}
 		}
 
@@ -252,9 +246,6 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 					'cherry-js-core' => array(
 						'autoload' => false,
 					),
-					'cherry-utility' => array(
-						'autoload' => false,
-					),
 					'cherry-page-builder' => array(
 						'autoload' => false,
 					),
@@ -282,7 +273,6 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			$prefix = $this->get_meta_prefix();
 
 			$this->get_core()->init_module( 'cherry-js-core' );
-			$this->get_core()->init_module( 'cherry-utility' );
 			$this->get_core()->init_module( 'cherry-post-meta', array(
 				'title'  => esc_html__( 'Property Data', 'cherry-real-estate' ),
 				'page'   => array( $this->get_post_type_name() ),
@@ -482,9 +472,9 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			// Update property capabilities to Admin Role.
 			$roles        = apply_filters( 'cherry_re_update_roles_list', array( 'administrator' ) );
 			$capabilities = wp_parse_args( $cap_agent, array(
-				"publish_{$capability_type}s"       => true,
-				"edit_others_{$capability_type}s"   => true,
 				"delete_others_{$capability_type}s" => true,
+				"edit_others_{$capability_type}s"   => true,
+				"publish_{$capability_type}s"       => true,
 				"read_private_{$capability_type}s"  => true,
 			) );
 			$capabilities = apply_filters( 'cherry_re_custom_property_capabilities', $capabilities );
@@ -516,9 +506,9 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			$capability_type = $this->get_post_type_name();
 
 			return apply_filters( 'cherry_re_agent_capabilities', array(
-				"delete_{$capability_type}s"           => true,
 				"delete_private_{$capability_type}s"   => true,
 				"delete_published_{$capability_type}s" => true,
+				"delete_{$capability_type}s"           => true,
 				"edit_private_{$capability_type}s"     => true,
 				"edit_published_{$capability_type}s"   => true,
 				"edit_{$capability_type}s"             => true,
@@ -590,7 +580,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		 * Customize the title on search properties page.
 		 *
 		 * @since  1.0.0
-		 * @param  string $title
+		 * @param  array $title The document title parts.
 		 * @return string
 		 */
 		public function search_title( $title ) {
@@ -606,8 +596,8 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		 * Customize the breadcrumbs on search properties page.
 		 *
 		 * @since  1.0.0
-		 * @param  array $items
-		 * @param  array $args
+		 * @param  array $items Indexed array of breadcrumb trail items.
+		 * @param  array $args  Breadcrumb arguments.
 		 * @return array
 		 */
 		public function search_breadcrumbs( $items, $args ) {
@@ -630,11 +620,39 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 						esc_attr( $args['css_namespace']['item'] ),
 						esc_attr( $args['css_namespace']['target'] ),
 						esc_html__( 'Properties search results', 'cherry-real-estate' )
-					)
+					),
 				);
 			}
 
 			return $items;
+		}
+
+		/**
+		 * Added a link to the plugin settings page.
+		 *
+		 * @since  1.0.0
+		 * @param  array  $actions     An array of plugin action links.
+		 * @param  string $plugin_file Path to the plugin file relative to the plugins directory.
+		 * @param  array  $plugin_data An array of plugin data.
+		 * @param  string $context     The plugin context.
+		 * @return array
+		 */
+		public function settings_link( $actions, $plugin_file, $plugin_data, $context ) {
+			$options_page = Cherry_RE_Options_Page::get_instance();
+
+			$path = sprintf(
+				'edit.php?post_type=%s&page=%s">',
+				$this->get_post_type_name(),
+				$options_page->get_page_slug()
+			);
+
+			$actions[] = sprintf(
+				'<a href="%s">%s</a>',
+				esc_url( get_admin_url( null, $path ) ),
+				esc_html__( 'Settings', 'cherry-real-esatate' )
+			);
+
+			return $actions;
 		}
 
 		/**
@@ -657,7 +675,8 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		/**
 		 * Get the plugin path.
 		 *
-		 * @param  string $path Path inside plugin dir.
+		 * @since  1.0.0
+		 * @param  string $dir Path inside plugin dir.
 		 * @return string
 		 */
 		public function plugin_path( $dir = '' ) {

@@ -11,11 +11,12 @@
  * @copyright  2002-2016, Template Monster
  */
 
-if ( empty( $callbacks ) ) {
+if ( empty( $passed_vars['callbacks'] ) ) {
 	return;
 }
 
-$heading = esc_html( apply_filters(
+$callbacks = $passed_vars['callbacks'];
+$heading   = esc_html( apply_filters(
 	'cherry_re_property_attributes_heading',
 	esc_html__( 'Quick Summary', 'cherry-real-estate' )
 ) ); ?>
@@ -30,7 +31,7 @@ $heading = esc_html( apply_filters(
 	$atts = array();
 	$args = array( 'wrap' => 'dd' );
 
-	$property_ID    = get_the_ID();
+	$property_id    = get_the_ID();
 	$status         = $callbacks->get_property_status( $args );
 	$location       = $callbacks->get_property_location( $args );
 	$bedrooms       = $callbacks->get_property_bedrooms( $args );
@@ -40,13 +41,13 @@ $heading = esc_html( apply_filters(
 
 	$types = Model_Properties::get_property_term_list(
 		'type',
-		$property_ID,
+		$property_id,
 		apply_filters( 'cherry_re_single_property_types_list_args', array() )
 	);
 
 	$features = Model_Properties::get_property_term_list(
 		'feature',
-		$property_ID,
+		$property_id,
 		apply_filters( 'cherry_re_single_property_features_list_args', array(
 			'before' => '<p>',
 			'after'  => '</p>',
@@ -56,7 +57,7 @@ $heading = esc_html( apply_filters(
 
 	$atts['id'] = array(
 		'label' => esc_html__( 'Property ID:', 'cherry-real-estate' ),
-		'value' => '<dd>' .  $property_ID . '</dd>',
+		'value' => '<dd>' . $property_id . '</dd>',
 	);
 
 	if ( $status ) {

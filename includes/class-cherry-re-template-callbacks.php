@@ -113,7 +113,7 @@ class Cherry_RE_Template_Callbacks {
 		$args = wp_parse_args( $args, array(
 			'wrap'  => 'div',
 			'class' => '',
-			'link'  => false
+			'link'  => false,
 		) );
 
 		if ( empty( $this->agent_data->first_name ) && empty( $this->agent_data->last_name ) ) {
@@ -299,7 +299,7 @@ class Cherry_RE_Template_Callbacks {
 	 * Get agent read more button.
 	 *
 	 * @since  1.0.0
-	 * @param  array  $args Arguments.
+	 * @param  array $args Arguments.
 	 * @return string
 	 */
 	public function get_agent_more( $args = array() ) {
@@ -330,7 +330,6 @@ class Cherry_RE_Template_Callbacks {
 	 * @return int
 	 */
 	public function get_agent_id() {
-		// $agent_obj = Cherry_RE_Agent_Data::get_instance()->get_current_agent();
 
 		if ( is_object( $this->agent_data ) && ! empty( $this->agent_data->ID ) ) {
 			$agent_id = $this->agent_data->ID;
@@ -383,6 +382,13 @@ class Cherry_RE_Template_Callbacks {
 		$this->property_data = get_post_meta( $post->ID, '', true );
 	}
 
+	/**
+	 * Retrieve a property meta value.
+	 *
+	 * @since  1.0.0
+	 * @param  string $key Meta key.
+	 * @return bool|string
+	 */
 	public function get_the_property_data( $key ) {
 		$key = cherry_real_estate()->get_meta_prefix() . $key;
 
@@ -688,7 +694,7 @@ class Cherry_RE_Template_Callbacks {
 	 * Get property read more button.
 	 *
 	 * @since  1.0.0
-	 * @param  array  $args Arguments.
+	 * @param  array $args Arguments.
 	 * @return string
 	 */
 	public function get_property_more( $args = array() ) {
@@ -749,19 +755,6 @@ class Cherry_RE_Template_Callbacks {
 		}
 
 		return $this->macros_wrap( $args, sprintf( $format, $image, esc_url( $link ) ) );
-	}
-
-	/**
-	 * Added a specific CSS-class for image control.
-	 *
-	 * @since 1.0.0
-	 * @param array $classes     An array of post classes.
-	 * @param int   $property_id The property ID.
-	 */
-	public function add_thumb_class( $classes, $property_id ) {
-		$classes[] = 'tm-property-has-thumb';
-
-		return $classes;
 	}
 
 	/**
@@ -944,5 +937,18 @@ class Cherry_RE_Template_Callbacks {
 	public function clear_data() {
 		$this->agent_data    = null;
 		$this->property_data = array();
+	}
+
+	/**
+	 * Added a specific CSS-class for image control.
+	 *
+	 * @since 1.0.0
+	 * @param array $classes     An array of post classes.
+	 * @param int   $property_id The property ID.
+	 */
+	public function add_thumb_class( $classes, $property_id ) {
+		$classes[] = 'tm-property-has-thumb';
+
+		return $classes;
 	}
 }

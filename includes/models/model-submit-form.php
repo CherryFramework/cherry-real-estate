@@ -23,8 +23,11 @@ class Model_Submit_Form {
 	 */
 	private static $instance = null;
 
-	public static $errors = array();
-
+	/**
+	 * Class constructor.
+	 *
+	 * @since 1.0.0
+	 */
 	private function __construct() {
 		add_action( 'wp_ajax_nopriv_login_form',    array( __CLASS__, 'login_callback' ) );
 		add_action( 'wp_ajax_nopriv_register_form', array( __CLASS__, 'register_callback' ) );
@@ -75,7 +78,8 @@ class Model_Submit_Form {
 
 		$post_type   = cherry_real_estate()->get_post_type_name();
 		$meta_prefix = cherry_real_estate()->get_meta_prefix();
-		$data        = wp_list_pluck( $_POST['property'], 'value', 'name' );
+		$_post       = wp_list_pluck( $_POST['property'], 'value', 'name' );
+		$data        = array_map( 'wp_filter_kses', $_post );
 
 		// Prepare defaults array for new property.
 		$defaults = apply_filters( 'cherry_re_before_insert_post_defaults', array(
@@ -90,7 +94,7 @@ class Model_Submit_Form {
 			'property_parking_places' => '',
 			'property_address'        => '',
 			'property_gallery'        => '',
-		), $_POST['property'] );
+		), $data );
 
 		$data    = wp_parse_args( $data, $defaults );
 		$gallery = '';
@@ -128,9 +132,9 @@ class Model_Submit_Form {
 		$property_arr = apply_filters( 'cherry_re_before_insert_post', $property_arr, $data );
 
 		// Create new property.
-		$property_ID = wp_insert_post( $property_arr, false );
+		$property_id = wp_insert_post( $property_arr, false );
 
-		if ( 0 == $property_ID || is_wp_error( $property_ID ) ) {
+		if ( 0 == $property_id || is_wp_error( $property_id ) ) {
 			wp_send_json_error( array(
 				'message' => esc_html__( 'Request not created. Please, try again later', 'cherry-real-estate' ),
 			) );
@@ -138,7 +142,7 @@ class Model_Submit_Form {
 
 		// Set types for a property.
 		$type_id = intval( $data['property_type'] );
-		$term_taxonomy_id = wp_set_object_terms( $property_ID, $type_id, $post_type . '_type');
+		$term_taxonomy_id = wp_set_object_terms( $property_id, $type_id, $post_type . '_type' );
 
 		// Retrieve the current user e-mail.
 		$user_email = false;
@@ -156,14 +160,14 @@ class Model_Submit_Form {
 				Model_Settings::get_notification_message()
 			);
 
-			// if ( ! $result ) {
-			// 	wp_send_json_error( array(
-			// 		'message' => esc_html__( "Request are created. But we can't send your message. Please, try again later", 'cherry-real-estate' ),
-			// 	) );
-			// }
+			if ( ! $result ) {
+				wp_send_json_error( array(
+					'message' => esc_html__( "Request are created. But we can't send your message.", 'cherry-real-estate' ),
+				) );
+			}
 		}
 
-		wp_send_json_success( $property_ID );
+		wp_send_json_success( $property_id );
 	}
 
 	/**
@@ -222,7 +226,15 @@ class Model_Submit_Form {
 		wp_send_json_success( $data );
 	}
 
-
+	/**
+	 * Wrapper-function for `media_handle_upload`.
+	 *
+	 * @since  1.0.0
+	 * @param string $file_id   Index of the {@link $_FILES} array that the file was sent. Required.
+	 * @param int    $post_id   The post ID of a post to attach the media item to. Required, but can
+	 *                          be set to 0, creating a media item that has no relationship to a post.
+	 * @return int|WP_Error ID of the attachment or a WP_Error object on failure.
+	 */
 	public static function media_handle_upload( $file_id, $post_id = 0 ) {
 
 		// These files need to be included as dependencies when on the front end.
@@ -235,6 +247,7 @@ class Model_Submit_Form {
 
 		if ( is_wp_error( $upload ) ) {
 			return $upload;
+
 		} else {
 			$attachemnt_atts = wp_get_attachment_image_src( $upload );
 			$attachment_type = wp_check_filetype( basename( $_FILES[ $file_id ]['name'] ) );
@@ -242,11 +255,11 @@ class Model_Submit_Form {
 			$uploaded_file = array();
 			$uploaded_file['id']        = $upload;
 			$uploaded_file['url']       = is_array( $attachemnt_atts ) ? esc_url( $attachemnt_atts[0] ) : false;
-			// $uploaded_file['file']      = $_FILES[ $file_id ]['file'];
 			$uploaded_file['name']      = basename( $_FILES[ $file_id ]['name'] );
 			$uploaded_file['type']      = $_FILES[ $file_id ]['type'];
 			$uploaded_file['size']      = $_FILES[ $file_id ]['size'];
 			$uploaded_file['extension'] = is_array( $attachment_type ) ? $attachment_type['ext'] : false;
+
 			return $uploaded_file;
 		}
 	}
@@ -277,33 +290,19 @@ class Model_Submit_Form {
 
 		$agent_id = $post->post_author;
 
-		// $agent    = get_user_by( 'ID', $agent_id );
-		// $roles    = ! empty( $agent->roles ) ? $agent->roles : array();
-
-		// if ( ! in_array( 're_agent', $roles ) ) {
-		// 	return;
-		// }
-
 		$property_id = $post->ID;
 		$meta_prefix = cherry_real_estate()->get_meta_prefix();
-		$author_ID   = get_post_meta( $property_id, $meta_prefix . 'author', true );
+		$author_id   = get_post_meta( $property_id, $meta_prefix . 'author', true );
 
-		if ( empty( $author_ID ) ) {
+		if ( empty( $author_id ) ) {
 			return;
 		}
 
-		$author = get_user_by( 'ID', $author_ID );
+		$author = get_user_by( 'ID', $author_id );
 
 		if ( false === $author ) {
 			return;
 		}
-
-		// $is_trusted_user = Model_Agents::get_agent_trust( $author_ID );
-		// $is_trusted_user = filter_var( $is_trusted_user, FILTER_VALIDATE_BOOLEAN );
-
-		// if ( $is_trusted_user || user_can( $author, 'manage_options' ) ) {
-		// 	return;
-		// }
 
 		if ( user_can( $author, 'manage_options' ) ) {
 			return;
@@ -319,7 +318,7 @@ class Model_Submit_Form {
 		$message = Model_Settings::get_congratulate_message();
 		$message .= sprintf( __( '<br>View: %s<br><br>', 'cherry-real-estate' ), get_permalink( $property_id ) );
 
-		if ( $author_ID != $agent_id ) {
+		if ( $author_id != $agent_id ) {
 			$agent_contacts = $this->_prepare_agent_contacts_to_mail( $agent_id );
 			$message        .= ! empty( $agent_contacts ) ? $agent_contacts : '';
 		}
@@ -410,7 +409,7 @@ class Model_Submit_Form {
 			) );
 		}
 
-		$user_login = sanitize_text_field( $access['login'] );
+		$user_login = sanitize_user( $access['login'], true );
 		$user_email = sanitize_email( $access['email'] );
 		$user       = register_new_user( $user_login, $user_email );
 
@@ -439,7 +438,7 @@ class Model_Submit_Form {
 	 * Collect an info about agent.
 	 *
 	 * @since  1.0.0
-	 * @param  int $agent_id
+	 * @param  int $agent_id Agent ID.
 	 * @return string
 	 */
 	public function _prepare_agent_contacts_to_mail( $agent_id ) {
@@ -482,11 +481,9 @@ class Model_Submit_Form {
 	 * Wrapper-function for `wp_mail`.
 	 *
 	 * @since  1.0.0
-	 * @param  string|array $to          Array or comma-separated list of email addresses to send message.
-	 * @param  string       $subject     Email subject
-	 * @param  string       $message     Message contents
-	 * @param  string|array $headers     Optional. Additional headers.
-	 * @param  string|array $attachments Optional. Files to attach.
+	 * @param  string|array $to      Array or comma-separated list of email addresses to send message.
+	 * @param  string       $subject Email subject.
+	 * @param  string       $message Message contents.
 	 * @return bool Whether the email contents were sent successfully.
 	 */
 	public static function send_mail( $to, $subject, $message ) {
@@ -495,6 +492,12 @@ class Model_Submit_Form {
 		return wp_mail( $to, $subject, $message, $headers );
 	}
 
+	/**
+	 * Retrieve allowed image types.
+	 *
+	 * @since 1.0.0
+	 * @return array
+	 */
 	public static function allowed_image_types() {
 		return apply_filters( 'cherry_re_allowed_image_types', array(
 			'jpg'  => 'image/jpeg',
@@ -505,6 +508,12 @@ class Model_Submit_Form {
 		) );
 	}
 
+	/**
+	 * Retrieve a options for Sort select.
+	 *
+	 * @since 1.0.0
+	 * @return array
+	 */
 	public static function get_sort_options() {
 		return apply_filters( 'cherry_re_get_sort_options', array(
 			'asc_price'  => esc_html__( 'Price (Low to High)', 'cherry-real-estate' ),

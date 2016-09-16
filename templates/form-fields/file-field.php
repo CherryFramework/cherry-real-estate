@@ -15,10 +15,12 @@ if ( ! is_user_logged_in() ) {
 	return;
 }
 
+$field              = $passed_vars['field'];
 $field_name         = $field['name'];
 $field_name         .= ! empty( $field['multiple'] ) ? '[]' : '';
 $allowed_mime_types = ! empty( $field['allowed_mime_types'] ) ? $field['allowed_mime_types'] : get_allowed_mime_types();
-$allowed_mime_types = array_keys( $allowed_mime_types ); ?>
+$allowed_mime_types = array_keys( $allowed_mime_types );
+$multiple           = ! empty( $field['multiple'] ) ? 'multiple' : ''; ?>
 
 <label for="property_gallery"><?php echo $field['label']; ?></label>
 <div class="tm-re-submission-form__upload tm-re-uploaded">
@@ -27,7 +29,7 @@ $allowed_mime_types = array_keys( $allowed_mime_types ); ?>
 
 	<span class="tm-re-uploaded-btn">
 		<span><?php echo esc_html__( 'Browse file', 'cherry-rea-estate' ); ?></span>
-		<input type="file" class="tm-re-uploaded-btn__field" data-file_types="<?php echo esc_attr( implode( '|', $allowed_mime_types ) ); ?>" <?php if ( ! empty( $field['multiple'] ) ) echo 'multiple'; ?> name="<?php echo esc_attr( $field_name ); ?>" id="<?php echo esc_attr( $field['name'] ); ?>">
+		<input type="file" class="tm-re-uploaded-btn__field" data-file_types="<?php echo esc_attr( implode( '|', $allowed_mime_types ) ); ?>" <?php echo $multiple; ?> name="<?php echo esc_attr( $field_name ); ?>" id="<?php echo esc_attr( $field['name'] ); ?>">
 	</span>
 
 	<small class="tm-re-submission-form__group-desc">

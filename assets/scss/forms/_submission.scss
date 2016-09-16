@@ -8,27 +8,68 @@
 			pointer-events: none;
 		}
 	}
+	&__group {
+		margin-bottom: $gap-size / 2;
+	}
 }
 
 /* Uploader */
 .tm-re-uploaded {
 	&-images {
+		@media (min-width: 1200px) {
+			display: flex;
+			flex-wrap: wrap;
+			margin-left: $gap-size / -2;
+			margin-right: $gap-size / -2;
+		}
 		&__item {
+			@media (min-width: 1200px) {
+				flex: 1 0 33.33334%;
+				max-width: 33.33334%;
+				padding-left: $gap-size / 2;
+				padding-right: $gap-size / 2;
+				padding-bottom: $gap-size / 2;
+			}
 		}
 	}
 	&-image {
-		&__remove {
+		&__preview {
+			position: relative;
 			display: inline-block;
-			vertical-align: top;
+			vertical-align: middle;
+		}
+		&__remove {
+			display: block;
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			width: 30px;
+			height: 30px;
+			line-height: 30px;
+			text-align: center;
+			background-color: $black;
+			color: $white;
+			box-shadow: none;
+
 			&:before {
 				content: '\00D7';
 			}
+		}
+		&__btn {
+			margin: $gap-size / 4 0 0;
 		}
 	}
 	&-btn {
 		position: relative;
 		overflow: hidden;
 		display: inline-block;
+		vertical-align: middle;
+
+		span {
+			display: inline-block;
+			vertical-align: middle;
+			margin-right: $gap-size / 3;
+		}
 		&__field {
 			position: absolute;
 			top: 0;

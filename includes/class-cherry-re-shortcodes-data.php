@@ -558,32 +558,23 @@ class Cherry_RE_Shortcodes_Data {
 	 * @return string
 	 */
 	public function submission_form( $atts = null, $content = null ) {
-		$defaults = apply_filters( 'cherry_re_submission_form_shortcode_defaults', array(
-			'number'           => 5,
-			'orderby'          => 'date',
-			'order'            => 'desc',
-			'show_title'       => 'yes',
-			'show_image'       => 'yes',
-			'image_size'       => 'thumbnail',
-			'show_status'      => 'yes',
-			'show_area'        => 'yes',
-			'show_bedrooms'    => 'yes',
-			'show_bathrooms'   => 'yes',
-			'show_price'       => 'yes',
-			'show_location'    => 'yes',
-			'show_excerpt'     => 'yes',
-			'excerpt_length'   => 15,
-			'show_more_button' => 'yes',
-			'more_button_text' => esc_html__( 'read more', 'cherry-real-estate' ),
-			'show_pagination'  => 'no',
-			'template'         => 'default.tmpl',
-			'color_scheme'     => 'regular',
-			'css_class'        => '',
-		), $atts );
-
+		$defaults  = apply_filters( 'cherry_re_submission_form_shortcode_defaults', array(), $atts );
 		$shortcode = 'submission_form';
 		$atts      = shortcode_atts( $defaults, $atts, $shortcode );
 
+		$output = $this->get_popup();
+		$output .= cherry_re_get_template_html( 'shortcodes/' . $shortcode . '/form' );
+
+		return apply_filters( 'cherry_re_shortcodes_output', $output, $atts, $shortcode );
+	}
+
+	/**
+	 * Retrieve a popup with login & register forms.
+	 *
+	 * @since 1.0.0
+	 * @return string
+	 */
+	public function get_popup() {
 		$output = '';
 
 		if ( ! is_user_logged_in() ) {
@@ -603,9 +594,7 @@ class Cherry_RE_Shortcodes_Data {
 			) );
 		}
 
-		$output .= cherry_re_get_template_html( 'shortcodes/' . $shortcode . '/form' );
-
-		return apply_filters( 'cherry_re_shortcodes_output', $output, $atts, $shortcode );
+		return $output;
 	}
 
 	/**
@@ -626,7 +615,7 @@ class Cherry_RE_Shortcodes_Data {
 			add_filter( 'mce_buttons', array( __CLASS__, 'mce_buttons' ) );
 		}
 
-		foreach ( array( 'post.php','post-new.php' ) as $hook ) {
+		foreach ( array( 'post.php', 'post-new.php' ) as $hook ) {
 			add_action( "admin_head-$hook", array( __CLASS__, 'localize_script' ) );
 		}
 	}
@@ -637,7 +626,7 @@ class Cherry_RE_Shortcodes_Data {
 	 * @since 1.0.0
 	 */
 	public static function localize_script() {
-		$title      = __( 'Insert RE shortcodes', 'cherry-real-estate' );
+		$title      = esc_html__( 'Insert RE shortcodes', 'cherry-real-estate' );
 		$prefix     = cherry_real_estate()->get_shortcode_prefix();
 		$button     = self::get_mce_button();
 		$shortcodes = self::_prepare_localize_shortcodes();
@@ -663,7 +652,7 @@ var CherryRETinyMCE = {
 	public static function mce_external_plugins( $plugin_array ) {
 		$button = self::get_mce_button();
 
-		$plugin_array[ $button ] = CHERRY_REAL_ESTATE_URI . 'assets/js/tinymce-button.min.js';
+		$plugin_array[ $button ] = CHERRY_REAL_ESTATE_URI . 'assets/js/tinymce-button.js';
 
 		return $plugin_array;
 	}

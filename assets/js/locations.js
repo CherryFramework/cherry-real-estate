@@ -1,14 +1,14 @@
+/* global google */
 (function( $ ) {
 
 	$.fn.RELocations = function( options ) {
 		var $this = $( this ),
 			data  = {
-				zoom : 5,
-				infowindow : null,
-				address : null
+				zoom: 5,
+				infowindow: null,
+				address: null
 			},
-			locations = {},
-			positions = {};
+			infowindow;
 
 		$.extend( data, options );
 		initMap();
@@ -19,10 +19,10 @@
 		function initMap() {
 			var $source = [],
 				loading = 'tm-re-map-loading',
-				markersNumb, map, geocoder, bounds;
+				markersNumb, map, geocoder, bounds, key;
 
 			// Sanitize & parse styles.
-			if ( data.hasOwnProperty( 'styles' ) && ( 'string' == typeof data.styles ) ) {
+			if ( data.hasOwnProperty( 'styles' ) && ( 'string' === typeof data.styles ) ) {
 				data.styles = $.parseJSON( data.styles );
 			}
 
@@ -32,8 +32,8 @@
 
 			markersNumb = $source.length;
 
-			if ( null === data.address && ! markersNumb  ) {
-				return !1;
+			if ( null === data.address && ! markersNumb ) {
+				return ! 1;
 			}
 
 			// Changed a control's position.
@@ -75,7 +75,7 @@
 					geocodeAddress( map, geocoder, bounds, data.address[ key ] );
 				}
 			}
-		};
+		}
 
 		/**
 		 * Geocoding.
@@ -90,13 +90,13 @@
 			var location = _data,
 				html     = '';
 
-			if ( 'object' == typeof _data ) {
+			if ( 'object' === typeof _data ) {
 				location = _data.data( 'property-address' );
 				html     = _data[0].outerHTML;
 			}
 
 			if ( undefined === location ) {
-				return !1;
+				return ! 1;
 			}
 
 			location = String( location );
@@ -104,12 +104,12 @@
 			geocoder.geocode({
 				'address': location
 			}, function( results, status ) {
+				var position, animationType, marker;
 
 				if ( status === google.maps.GeocoderStatus.OK ) {
-					var position      = results[0].geometry.location,
-						key           = results[0].place_id,
-						animationType = data.hasOwnProperty( 'animation' ) ? data.animation : '',
-						marker;
+					position      = results[0].geometry.location,
+					animationType = data.hasOwnProperty( 'animation' ) ? data.animation : '',
+					marker;
 
 					bounds.extend( position );
 
@@ -139,15 +139,16 @@
 					}
 				}
 			});
-		};
+		}
 
 		/**
 		 * Prepare options for Map Controls in javascript-format.
 		 */
 		function setControlOptions() {
+			var mapTypeControlOptions, zoomControlOptions, streetViewControlOptions;
 
 			if ( data.hasOwnProperty( 'mapTypeControlOptions' ) ) {
-				var mapTypeControlOptions = {
+				mapTypeControlOptions = {
 					style: google.maps.MapTypeControlStyle[ data.mapTypeControlOptions.style ],
 					position: google.maps.ControlPosition[ data.mapTypeControlOptions.position ]
 				};
@@ -156,7 +157,7 @@
 			}
 
 			if ( data.hasOwnProperty( 'zoomControlOptions' ) ) {
-				var zoomControlOptions = {
+				zoomControlOptions = {
 					position: google.maps.ControlPosition[ data.zoomControlOptions.position ]
 				};
 
@@ -164,13 +165,13 @@
 			}
 
 			if ( data.hasOwnProperty( 'streetViewControlOptions' ) ) {
-				var streetViewControlOptions = {
+				streetViewControlOptions = {
 					position: google.maps.ControlPosition[ data.streetViewControlOptions.position ]
 				};
 
 				data.streetViewControlOptions = streetViewControlOptions;
 			}
-		};
-	}
+		}
+	};
 
 })( jQuery );

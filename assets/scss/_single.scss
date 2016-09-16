@@ -1,0 +1,22 @@
+// Single page
+.tm-property {
+	&-gallery,
+	&__subtitle {
+		margin-bottom: $gap-size / 2;
+	}
+	&-gallery--thumbs,
+	&__description,
+	&__attributes,
+	&__location {
+		margin-bottom: $gap-size;
+	}
+	&__attributes-list {
+		dd {
+			margin-bottom: $gap-size / 2;
+
+			p {
+				margin: 0;
+			}
+		}
+	}
+}

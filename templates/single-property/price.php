@@ -11,9 +11,11 @@
  * @copyright  2002-2016, Template Monster
  */
 
-if ( empty( $callbacks ) ) {
+if ( empty( $passed_vars['callbacks'] ) ) {
 	return;
-} ?>
+}
+
+$callbacks = $passed_vars['callbacks']; ?>
 
 <div class="tm-property__price">
 	<h2 class="tm-property__subtitle">

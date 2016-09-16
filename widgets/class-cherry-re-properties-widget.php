@@ -10,6 +10,12 @@
  */
 
 if ( ! class_exists( 'Cherry_RE_Properties_Widget' ) ) {
+
+	/**
+	 * Class for Properties widget.
+	 *
+	 * @since 1.0.0
+	 */
 	class Cherry_RE_Properties_Widget extends Cherry_Abstract_Widget {
 
 		/**
@@ -270,8 +276,8 @@ if ( ! class_exists( 'Cherry_RE_Properties_Widget' ) ) {
 		 *
 		 * @see   WP_Widget
 		 * @since 1.0.0
-		 * @param array $args
-		 * @param array $instance
+		 * @param array $args     Display arguments.
+		 * @param array $instance Settings for the current Text widget instance.
 		 */
 		public function widget( $args, $instance ) {
 
@@ -289,7 +295,7 @@ if ( ! class_exists( 'Cherry_RE_Properties_Widget' ) ) {
 			$source           = ! empty( $instance['source'] ) ? sanitize_text_field( $instance['source'] ) : '';
 			$terms            = ! empty( $instance[ $source ] ) ? $instance[ $source ] : '';
 			$terms            = is_array( $terms ) ? array_map( 'intval', $terms ) : sanitize_text_field( $terms );
-			$ids              = ! empty( $instance[ 'ids' ] ) && ( 'ids' === $source ) ? sanitize_text_field( $instance[ 'ids' ] ) : '';
+			$ids              = ! empty( $instance['ids'] ) && ( 'ids' === $source ) ? sanitize_text_field( $instance['ids'] ) : '';
 			$agent            = ! empty( $instance['agent'] ) ? sanitize_text_field( $instance['agent'] ) : '';
 			$orderby          = ! empty( $instance['sort'] ) ? sanitize_text_field( $instance['sort'] ) : $this->settings['sort']['value'];
 			$order            = ! empty( $instance['order'] ) ? sanitize_text_field( $instance['order'] ) : $this->settings['order']['value'];
@@ -384,6 +390,12 @@ if ( ! class_exists( 'Cherry_RE_Properties_Widget' ) ) {
 	}
 
 	add_action( 'widgets_init', 'cherry_re_register_properties_widget' );
+
+	/**
+	 * Register a `Cherry RE Properites` widget.
+	 *
+	 * @since 1.0.0
+	 */
 	function cherry_re_register_properties_widget() {
 		register_widget( 'Cherry_RE_Properties_Widget' );
 	}

@@ -1,20 +1,66 @@
+// Search widget
 .widget-tm-re-search {
 	overflow: hidden;
+
+	&--result {
+		margin-bottom: $gap-size;
+	}
 	&__form {
-		float: left;
-		width: 30%;
-		padding: 50px;
-		color: #fff;
-		background-color: #00afff;
-		&__group {
-			margin-bottom: 20px;
-		}
-		input {
-			color: black;
+		padding: $gap-size / 3;
+		color: $white;
+		background-color: $blue;
+
+		@media (min-width: 1200px) {
+			padding: $gap-size;
 		}
 	}
-	&__map {
-		float: right;
-		width: 70%;
+	.tm-re-search {
+		&-form {
+			&__group {
+				margin-bottom: $gap-size / 2;
+			}
+			&__range {
+				.tm-re-search-form__field {
+					&:not(:first-child) {
+						margin-top: $gap-size / 4;
+					}
+				}
+			}
+			&__more {
+				&-field {
+					position: absolute;
+					top: -9999px;
+					left: -9999px;
+					display: none;
+
+					&:checked ~ div {
+						display: none;
+
+						@media (min-width: 1200px) {
+							display: block;
+						}
+					}
+					&:checked ~ .tm-re-search-form__more-toggle {
+						&:after {
+							content: "+";
+						}
+					}
+				}
+				&-toggle {
+					cursor: pointer;
+					margin-bottom: $gap-size / 2;
+					display: block;
+					width: 100%;
+
+					@media (min-width: 1200px) {
+						display: none;
+					}
+					&:after {
+						content: "-";
+						margin-left: $gap-size / 5;
+					}
+				}
+			}
+		}
 	}
 }
