@@ -7,7 +7,7 @@
  * @author     Cherry Team <cherryframework@gmail.com>
  * @copyright  Copyright (c) 2012 - 2016, Cherry Team
  * @link       http://www.cherryframework.com/
- * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @license    http://www.gnu.org/licenses/old-licenses/gpl-3.0.html
  */
 
 // If this file is called directly, abort.
@@ -545,6 +545,7 @@ if ( ! class_exists( 'Cherry_Abstract_Widget' ) ) {
 					'title_field'        => Cherry_Toolkit::get_arg( $setting, 'title_field' ),
 					'add_label'          => Cherry_Toolkit::get_arg( $setting, 'add_label', '' ),
 					'fields'             => Cherry_Toolkit::get_arg( $setting, 'fields', array() ),
+					'ui_kit'             => Cherry_Toolkit::get_arg( $setting, 'ui_kit', true ),
 				);
 
 				$this->render_control( $args );
