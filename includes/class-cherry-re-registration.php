@@ -129,6 +129,13 @@ class Cherry_RE_Registration {
 				'show_admin_column' => true,
 				'hierarchical'      => true,
 				'query_var'         => $post_type . '_type',
+				/* Capabilities */
+				'capabilities'      => array(
+					'manage_terms' => sprintf( 'edit_%s_type', $post_type ),
+					'edit_terms'   => sprintf( 'edit_%s_type', $post_type ),
+					'delete_terms' => sprintf( 'edit_%s_type', $post_type ),
+					'assign_terms' => sprintf( 'read_%s_type', $post_type ),
+				),
 				/* The rewrite handles the URL structure. */
 				'rewrite' => array(
 					'slug'         => $post_type . '/type',
@@ -172,6 +179,13 @@ class Cherry_RE_Registration {
 				'show_admin_column' => true,
 				'hierarchical'      => false,
 				'query_var'         => $post_type . '_tag',
+				/* Capabilities */
+				'capabilities'      => array(
+					'manage_terms' => sprintf( 'edit_%s_tag', $post_type ),
+					'edit_terms'   => sprintf( 'edit_%s_tag', $post_type ),
+					'delete_terms' => sprintf( 'edit_%s_tag', $post_type ),
+					'assign_terms' => sprintf( 'read_%s_tag', $post_type ),
+				),
 				/* The rewrite handles the URL structure. */
 				'rewrite' => array(
 					'slug'         => $post_type . '/tag',
@@ -215,6 +229,13 @@ class Cherry_RE_Registration {
 				'show_admin_column' => true,
 				'hierarchical'      => false,
 				'query_var'         => $post_type . '_feature',
+				/* Capabilities */
+				'capabilities'      => array(
+					'manage_terms' => sprintf( 'edit_%s_feature', $post_type ),
+					'edit_terms'   => sprintf( 'edit_%s_feature', $post_type ),
+					'delete_terms' => sprintf( 'edit_%s_feature', $post_type ),
+					'assign_terms' => sprintf( 'read_%s_feature', $post_type ),
+				),
 				/* The rewrite handles the URL structure. */
 				'rewrite' => array(
 					'slug'         => $post_type . '/feature',
