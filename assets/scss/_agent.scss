@@ -20,9 +20,11 @@
 		&__socials {
 			&-item {
 				display: inline-block;
-				vertical-align: middle;
+
 				margin-right: $gap-size / 5;
 				margin-bottom: $gap-size / 5;
+
+				vertical-align: middle;
 			}
 		}
 	}

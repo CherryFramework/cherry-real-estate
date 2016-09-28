@@ -2,76 +2,68 @@
 .tm-re-map {
 	width: 100%;
 	height: $map-height;
-
 	.sidebar & {
 		@media (min-width: 767px) {
 			height: $sidebar-map-height;
 		}
 	}
-
 	// Map infowindow
 	.tm-re-iw,
 	.tm-re-iw > div:first-child > div:last-child {
 		width: 195px !important;
 	}
-
 	.gm-style > div:first-child > div + div > div:last-child > div > div:first-child > div {
-		background-color: transparent !important;
-		box-shadow: none !important;
 		width: auto !important;
 		height: auto !important;
+
 		border: none !important;
+		background-color: transparent !important;
+		box-shadow: none !important;
 	}
 	/* arrow colour */
 	.gm-style > div:first-child > div + div > div:last-child > div > div:first-child > div > div > div {
 		display: none;
 	}
-
 	/* close button */
 	.gm-style > div:first-child > div + div > div:last-child > div > div:last-child,
 	.gm-style-iw + div {
 		top: 40px !important;
 		right: 0 !important;
 	}
-
 	/* image icon inside close button */
-	.gm-style > div:first-child > div + div > div:last-child > div > div:last-child > img {
-
-	}
-
 	/* positioning of infowindow */
 	.gm-style-iw {
+		position: relative;
 		top: 22px !important;
 		left: 22px !important;
-		overflow: visible !important;
-		position: relative;
 
+		overflow: visible !important;
 		&:after {
-			content: '';
-			width: 0;
-			height: 0;
-			border-style: solid;
-			border-width: 12px 12.5px 0 12.5px;
-			border-color: white transparent transparent transparent;
 			position: absolute;
 			bottom: -4px;
 			left: 50%;
+
+			width: 0;
+			height: 0;
 			margin-left: -19px;
+
+			content: '';
+
+			border-width: 12px 12.5px 0 12.5px;
+			border-style: solid;
+			border-color: white transparent transparent transparent;
 		}
 		> div {
 			box-shadow: 4px 5px 20px rgba(0,0,0,.3);
 		}
 	}
-
 	.tm-map-pins__item {
 		background-color: $white;
 	}
 	.tm-property__inner {
 		padding-bottom: $gap-size / 3;
-
 		.tm-property-info__image {
 			margin-bottom: $gap-size / 3;
-
 			img {
 				width: 100%;
 			}
@@ -82,20 +74,18 @@
 			}
 		}
 	}
-
 	// Agent infowindow
-
 	.tm-property {
 		&__inner {
-			background-color: $white;
 			padding-bottom: $gap-size / 3;
+
+			background-color: $white;
 		}
 		&__image {
 			margin: 0 0 10px;
-
 			img {
-				max-width: 100% !important;
 				width: 100%;
+				max-width: 100% !important;
 			}
 		}
 		&__content {

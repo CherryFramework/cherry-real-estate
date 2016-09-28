@@ -1,18 +1,17 @@
 // Single gallery
 .tm-property-gallery {
-	&__item {}
-	&--top {}
 	&--thumbs {
-		padding: $gap-size / 4 0;
 		box-sizing: border-box;
+		padding: $gap-size / 4 0;
 	}
 	&__thumbs {
 		&-item {
 			width: 18%;
-			opacity: 0.4;
+
 			cursor: pointer;
 			transition: 333ms opacity;
 
+			opacity: .4;
 			&.swiper-slide-active,
 			&:hover {
 				opacity: 1;

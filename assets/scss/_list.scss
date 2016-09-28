@@ -11,13 +11,17 @@
 		}
 	}
 	&__status {
-		background-color: $black;
-		color: $white;
-		padding: 5px 10px;
-		margin: 0 0 $gap-size / 4;
 		display: inline-block;
-		vertical-align: middle;
+
+		margin: 0 0 $gap-size / 4;
+		padding: 5px 10px;
+
 		font-size: .75em;
+
+		vertical-align: middle;
+
+		color: $white;
+		background-color: $black;
 	}
 	&__image {
 		margin: 0 0 $gap-size / 2;
@@ -37,23 +41,23 @@
 	&__more {
 		margin: $gap-size / 2 0 0;
 	}
-
 	// Grid layout
 	&__wrap {
 		&.grid {
 			@media (min-width: 1200px) {
 				display: flex;
-				flex-wrap: wrap;
-				margin-left: $gap-size / -2;
+
 				margin-right: $gap-size / -2;
+				margin-left: $gap-size / -2;
 
+				flex-wrap: wrap;
 				.tm-property__item {
-					margin: $gap-size 0 0;
-					padding-left: $gap-size / 2;
-					padding-right: $gap-size / 2;
-					flex: 1 0 50%;
 					max-width: 50%;
+					margin: $gap-size 0 0;
+					padding-right: $gap-size / 2;
+					padding-left: $gap-size / 2;
 
+					flex: 1 0 50%;
 					&:nth-child(-n+2) {
 						margin: 0;
 					}
@@ -66,23 +70,26 @@
 // Properties control
 .tm-re_listing-controls {
 	margin-bottom: $gap-size;
-
 	.tm-re-property-sort,
 	.tm-re-switch-layout {
 		width: 50%;
 	}
 	.tm-re-property-sort {
 		float: left;
+
 		padding-right: $gap-size / 2;
 	}
 	.tm-re-switch-layout {
 		float: right;
+
 		text-align: right;
 	}
 	&:after {
-		content: '';
-		width: 100%;
 		display: block;
 		clear: both;
+
+		width: 100%;
+
+		content: '';
 	}
 }

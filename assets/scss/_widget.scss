@@ -1,15 +1,14 @@
 // Search widget
 .widget-tm-re-search {
 	overflow: hidden;
-
 	&--result {
 		margin-bottom: $gap-size;
 	}
 	&__form {
 		padding: $gap-size / 3;
+
 		color: $white;
 		background-color: $blue;
-
 		@media (min-width: 1200px) {
 			padding: $gap-size;
 		}
@@ -31,33 +30,34 @@
 					position: absolute;
 					top: -9999px;
 					left: -9999px;
-					display: none;
 
+					display: none;
 					&:checked ~ div {
 						display: none;
-
 						@media (min-width: 1200px) {
 							display: block;
 						}
 					}
 					&:checked ~ .tm-re-search-form__more-toggle {
 						&:after {
-							content: "+";
+							content: '+';
 						}
 					}
 				}
 				&-toggle {
-					cursor: pointer;
-					margin-bottom: $gap-size / 2;
 					display: block;
-					width: 100%;
 
+					width: 100%;
+					margin-bottom: $gap-size / 2;
+
+					cursor: pointer;
 					@media (min-width: 1200px) {
 						display: none;
 					}
 					&:after {
-						content: "-";
 						margin-left: $gap-size / 5;
+
+						content: '-';
 					}
 				}
 			}
