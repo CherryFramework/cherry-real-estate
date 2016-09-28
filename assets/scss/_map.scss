@@ -77,9 +77,14 @@
 			}
 		}
 		> * {
-			&:not(.tm-property-info__image):not(.tm-property__image):not(.tm-property__bedrooms):not(.tm-property__area):not(.tm-property__bathrooms) {
-				padding: 0 $gap-size / 3;
-			}
+			padding: 0 $gap-size / 3;
+		}
+		.tm-property-info__image,
+		.tm-property__image,
+		.tm-property__bedrooms,
+		.tm-property__area,
+		.tm-property__bathrooms {
+			padding: 0;
 		}
 	}
 
