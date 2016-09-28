@@ -179,7 +179,7 @@ if ( ! class_exists( 'Cherry_RE_Properties_Widget' ) ) {
 					'value'     => 15,
 					'max_value' => 9999,
 					'min_value' => 1,
-					'label'     => esc_html__( 'Excerpt Length (in words):', 'cherry-real-estate' ),
+					'label'     => esc_html__( 'Length (in words) only for auto-generated excerpt, and not apply for user-defined excerpt:', 'cherry-real-estate' ),
 					'master'    => 'excerpt_attr',
 				),
 				'show_more_button' => array(

@@ -347,7 +347,7 @@ class Cherry_RE_Shortcodes_Data {
 							'type'  => 'textbox',
 							'name'  => 'excerpt_length',
 							'value' => '15',
-							'label' => esc_html__( 'Excerpt Length (in words)', 'cherry-real-estate' ),
+							'label' => esc_html__( 'Auto-generated excerpt length (in words)', 'cherry-real-estate' ),
 						),
 						array(
 							'type'   => 'listbox',
