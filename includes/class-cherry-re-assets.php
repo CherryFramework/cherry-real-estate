@@ -427,6 +427,14 @@ class Cherry_RE_Assets {
 			'all'
 		);
 
+		wp_register_style(
+			'cherry-re-tinymce',
+			plugins_url( 'admin/assets/css/tinymce.css', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			array(),
+			CHERRY_REAL_ESTATE_VERSION,
+			'all'
+		);
+
 		/**
 		 * Hook to dequeue the stylesheets or add custom.
 		 *

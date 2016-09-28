@@ -18,10 +18,12 @@
 
 				if ( ! selfClosed ) {
 					editor.windowManager.open({
+						id: 'cherry-re-mce',
 						title: value.title,
 						icon: value.icon,
 						body: value.body,
 						minWidth: 600,
+						height: 600,
 						onsubmit: function( e ) {
 							var attr = e.data,
 								prop;

@@ -626,6 +626,8 @@ class Cherry_RE_Shortcodes_Data {
 	 * @since 1.0.0
 	 */
 	public static function localize_script() {
+		wp_enqueue_style( 'cherry-re-tinymce' );
+
 		$title      = esc_html__( 'Insert RE shortcodes', 'cherry-real-estate' );
 		$prefix     = cherry_real_estate()->get_shortcode_prefix();
 		$button     = self::get_mce_button();
@@ -652,7 +654,7 @@ var CherryRETinyMCE = {
 	public static function mce_external_plugins( $plugin_array ) {
 		$button = self::get_mce_button();
 
-		$plugin_array[ $button ] = CHERRY_REAL_ESTATE_URI . 'assets/js/tinymce-button.js';
+		$plugin_array[ $button ] = CHERRY_REAL_ESTATE_URI . 'assets/js/tinymce-button.min.js';
 
 		return $plugin_array;
 	}
