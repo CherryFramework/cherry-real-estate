@@ -518,12 +518,12 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 				"edit_private_{$capability_type}s"     => true,
 				"edit_published_{$capability_type}s"   => true,
 				"edit_{$capability_type}s"             => true,
-				"read_{$capability_type}_type"        => true,
-				"edit_{$capability_type}_type"        => true,
-				"read_{$capability_type}_tag"         => true,
-				"edit_{$capability_type}_tag"         => true,
-				"read_{$capability_type}_feature"     => true,
-				"edit_{$capability_type}_feature"     => true,
+				"read_{$capability_type}_type"         => true,
+				"edit_{$capability_type}_type"         => true,
+				"read_{$capability_type}_tag"          => true,
+				"edit_{$capability_type}_tag"          => true,
+				"read_{$capability_type}_feature"      => true,
+				"edit_{$capability_type}_feature"      => true,
 				'edit_posts'                           => true, // `save_post` action-callback check `edit_posts` capability.
 				'read'                                 => true,
 				'upload_files'                         => true,
@@ -545,9 +545,9 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 				'edit_posts'                         => true, // `save_post` action-callback check `edit_posts` capability.
 				'read'                               => true,
 				'upload_files'                       => true,
-				"read_{$capability_type}_type"        => true,
-				"read_{$capability_type}_tag"         => true,
-				"read_{$capability_type}_feature"     => true,
+				"read_{$capability_type}_type"       => true,
+				"read_{$capability_type}_tag"        => true,
+				"read_{$capability_type}_feature"    => true,
 			) );
 		}
 
