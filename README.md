@@ -26,3 +26,14 @@ The plugin is absolutely free and has no any hidden fees. Use Cherry Real Estate
 * Initial release
 
 = 1.0.1 =
+
+* ADD: description to `Photo` option in profile page
+* ADD: infowindow on agent archive page
+* ADD: link to settings page (admin)
+* UPD: zoom for map on single property
+* UPD: `re_agent` and `re_contribotor` capabilities
+* UPD: stop using `extract` function
+* UPD: clean php and javascript code
+* FIX: bug with dialog's height on laptop
+* FIX: bug with pagination on term page
+
