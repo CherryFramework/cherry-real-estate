@@ -399,6 +399,11 @@ class Model_Agents {
 	 * @since  1.0.0
 	 */
 	public function load() {
+
+		if ( 'agency' != Model_Settings::get_mode() ) {
+			return;
+		}
+
 		$current_screen = get_current_screen();
 		$post_type_name = cherry_real_estate()->get_post_type_name();
 

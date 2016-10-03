@@ -207,7 +207,10 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			// Admin.
 			if ( is_admin() ) {
 				include_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-cherry-re-options-page.php' );
-				include_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-meta-box-authors.php' );
+
+				if ( 'agency' == Model_Settings::get_mode() ) {
+					include_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-meta-box-authors.php' );
+				}
 			}
 		}
 
