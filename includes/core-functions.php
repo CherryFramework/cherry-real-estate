@@ -274,3 +274,30 @@ function cherry_re_is_agent() {
 
 	return false;
 }
+
+/**
+ * Is the query for an existing RE contributor archive page?
+ *
+ * @since 1.1.0
+ * @return bool
+ */
+function cherry_re_is_contributor() {
+
+	if ( ! is_author() ) {
+		return false;
+	}
+
+	$author = get_queried_object();
+
+	if ( ! ( $author instanceof WP_User ) ) {
+		return false;
+	}
+
+	$roles = ! empty( $author->roles ) ? $author->roles : array();
+
+	if ( in_array( 're_contributor', $roles ) ) {
+		return true;
+	}
+
+	return false;
+}
