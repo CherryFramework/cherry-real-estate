@@ -70,6 +70,8 @@ class Cherry_RE_Assets {
 	 * @since 1.0.0
 	 */
 	public static function register_public_scripts() {
+		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
 		wp_register_script(
 			self::get_googleapis_handle(),
 			esc_url( Cherry_RE_Tools::get_google_map_url() ),
@@ -80,7 +82,7 @@ class Cherry_RE_Assets {
 
 		wp_register_script(
 			'cherry-re-locations',
-			plugins_url( 'assets/js/locations.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( "assets/js/locations{$suffix}.js", CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array( 'jquery' ),
 			CHERRY_REAL_ESTATE_VERSION,
 			true
@@ -88,7 +90,7 @@ class Cherry_RE_Assets {
 
 		wp_register_script(
 			'jquery-swiper',
-			plugins_url( 'assets/js/swiper/swiper.jquery.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( "assets/js/swiper/swiper.jquery{$suffix}.js", CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array( 'jquery' ),
 			'3.3.1',
 			true
@@ -96,7 +98,7 @@ class Cherry_RE_Assets {
 
 		wp_register_script(
 			'jquery-validate-core',
-			plugins_url( 'assets/js/validate/jquery.validate.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( "assets/js/validate/jquery.validate{$suffix}.js", CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array( 'jquery' ),
 			'1.15.0',
 			true
@@ -104,7 +106,7 @@ class Cherry_RE_Assets {
 
 		wp_register_script(
 			'jquery-validate-methods',
-			plugins_url( 'assets/js/validate/additional-methods.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( "assets/js/validate/additional-methods{$suffix}.js", CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array( 'jquery' ),
 			'1.15.0',
 			true
@@ -120,7 +122,7 @@ class Cherry_RE_Assets {
 
 		wp_register_script(
 			'jquery-magnific-popup',
-			plugins_url( 'assets/js/magnific-popup/jquery.magnific-popup.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( "assets/js/magnific-popup/jquery.magnific-popup{$suffix}.js", CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array( 'jquery' ),
 			'1.1.0',
 			true
@@ -128,7 +130,7 @@ class Cherry_RE_Assets {
 
 		wp_register_script(
 			'jquery-load-image',
-			plugins_url( 'assets/js/file-upload/load-image.all.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( "assets/js/file-upload/load-image.all.min.js", CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array(),
 			'2.6.1',
 			true
@@ -136,7 +138,7 @@ class Cherry_RE_Assets {
 
 		wp_register_script(
 			'jquery-iframe-transport',
-			plugins_url( 'assets/js/file-upload/jquery.iframe-transport.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( "assets/js/file-upload/jquery.iframe-transport{$suffix}.js", CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array( 'jquery' ),
 			'9.12.5',
 			true
@@ -144,7 +146,7 @@ class Cherry_RE_Assets {
 
 		wp_register_script(
 			'jquery-fileupload-core',
-			plugins_url( 'assets/js/file-upload/jquery.fileupload.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( "assets/js/file-upload/jquery.fileupload{$suffix}.js", CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array( 'jquery', 'jquery-ui-widget', 'jquery-iframe-transport' ),
 			'9.12.5',
 			true
@@ -152,7 +154,7 @@ class Cherry_RE_Assets {
 
 		wp_register_script(
 			'jquery-fileupload-image',
-			plugins_url( 'assets/js/file-upload/jquery.fileupload-image.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( "assets/js/file-upload/jquery.fileupload-image{$suffix}.js", CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array( 'jquery-load-image' ),
 			'9.12.5',
 			true
@@ -160,7 +162,7 @@ class Cherry_RE_Assets {
 
 		wp_register_script(
 			'jquery-fileupload-process',
-			plugins_url( 'assets/js/file-upload/jquery.fileupload-process.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( "assets/js/file-upload/jquery.fileupload-process{$suffix}.js", CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array(),
 			'9.12.5',
 			true
@@ -176,7 +178,7 @@ class Cherry_RE_Assets {
 
 		wp_register_script(
 			self::get_main_handle(),
-			plugins_url( 'assets/js/real-estate.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( "assets/js/real-estate{$suffix}.js", CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array( 'cherry-js-core' ),
 			CHERRY_REAL_ESTATE_VERSION,
 			true
@@ -337,6 +339,26 @@ class Cherry_RE_Assets {
 	 * @since 1.0.0
 	 */
 	public static function enqueue_admin_scripts( $hook_suffix ) {
+		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
+		wp_register_script(
+			'google-maps-js-api-places-library',
+			esc_url( Cherry_RE_Tools::get_google_map_url( array(
+				'libraries' => 'places',
+			) ) ),
+			array(),
+			null,
+			true
+		);
+
+		wp_register_script(
+			'jquery-geocomplete',
+			plugins_url( "/admin/assets/js/geocomplete/jquery.geocomplete{$suffix}.js", CHERRY_REAL_ESTATE_MAIN_FILE ),
+			array( 'jquery', 'google-maps-js-api-places-library' ),
+			'1.7.0',
+			true
+		);
+
 		/**
 		 * Hook to dequeue the javascripts or add custom.
 		 *

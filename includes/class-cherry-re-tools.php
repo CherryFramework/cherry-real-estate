@@ -93,20 +93,23 @@ class Cherry_RE_Tools {
 	/**
 	 * Retrieve a URI for Google Maps API.
 	 *
-	 * @since 1.0.0
+	 * @since  1.0.0
+	 * @since  1.1.0 Added $args argument.
+	 * @param  array $args An associative array of query variables.
 	 * @return string
 	 */
-	public static function get_google_map_url() {
+	public static function get_google_map_url( $args = array() ) {
 		$url     = '//maps.googleapis.com/maps/api/js';
 		$api_key = Model_Settings::get_map_api_key();
 
-		$query = apply_filters( 'cherry_re_google_map_url_query', array(
+		$query = wp_parse_args( $args, array(
 			'key' => $api_key,
 		) );
 
-		$url = add_query_arg( $query, $url );
+		$query = apply_filters( 'cherry_re_google_map_url_query', $query, $args );
+		$url   = add_query_arg( $query, $url );
 
-		return apply_filters( 'cherry_re_google_map_url', $url, $query );
+		return apply_filters( 'cherry_re_google_map_url', $url, $query, $args );
 	}
 
 	/**

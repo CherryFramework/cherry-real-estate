@@ -208,6 +208,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			if ( is_admin() ) {
 				include_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-cherry-re-options-page.php' );
 				include_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-meta-box-authors.php' );
+				include_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-meta-box-location.php' );
 			}
 		}
 
