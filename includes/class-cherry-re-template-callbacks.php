@@ -94,7 +94,7 @@ class Cherry_RE_Template_Callbacks {
 			$link   = false;
 		}
 
-		return $this->macros_wrap( $args, sprintf( $format, esc_url( $photo ), esc_url( $link ) ) );
+		return $this->macros_wrap( $args, sprintf( $format, esc_url( $photo ), esc_url( $link ) ), 'agent_photo' );
 	}
 
 	/**
@@ -128,7 +128,7 @@ class Cherry_RE_Template_Callbacks {
 			$result = '<a href="' . esc_url( $this->get_agent_permalink() ) . '">' . $result . '</a>';
 		}
 
-		return $this->macros_wrap( $args, $result );
+		return $this->macros_wrap( $args, $result, 'agent_name' );
 	}
 
 	/**
@@ -156,7 +156,7 @@ class Cherry_RE_Template_Callbacks {
 			$description = wp_trim_words( $description, $args['length'] );
 		}
 
-		return $this->macros_wrap( $args, $description );
+		return $this->macros_wrap( $args, $description, 'agent_description' );
 	}
 
 	/**
@@ -223,7 +223,7 @@ class Cherry_RE_Template_Callbacks {
 			$result .= sprintf( $item_format, $icon, $label, $value, $label_class, $class );
 		}
 
-		return $this->macros_wrap( $args, $result );
+		return $this->macros_wrap( $args, $result, 'agent_contacts' );
 	}
 
 	/**
@@ -292,7 +292,7 @@ class Cherry_RE_Template_Callbacks {
 			$result .= sprintf( $format, $icon, $label, $value, $label_class, $class );
 		}
 
-		return $this->macros_wrap( $args, $result );
+		return $this->macros_wrap( $args, $result, 'agent_socials' );
 	}
 
 	/**
@@ -425,7 +425,7 @@ class Cherry_RE_Template_Callbacks {
 			$result = '<a href="' . esc_url( $this->property_link() ) . '">' . $result . '</a>';
 		}
 
-		return $this->macros_wrap( $args, $result );
+		return $this->macros_wrap( $args, $result, 'property_title' );
 	}
 
 	/**
@@ -465,7 +465,7 @@ class Cherry_RE_Template_Callbacks {
 
 		endif;
 
-		return $this->macros_wrap( $args, $excerpt );
+		return $this->macros_wrap( $args, $excerpt, 'property_excerpt' );
 	}
 
 	/**
@@ -508,7 +508,7 @@ class Cherry_RE_Template_Callbacks {
 			'<span class="' . esc_attr( $args['class'] . '-value' ) . '">' . $price . '</span>'
 		);
 
-		return $this->macros_wrap( $args, $amount );
+		return $this->macros_wrap( $args, $amount, 'property_price' );
 	}
 
 	/**
@@ -535,7 +535,7 @@ class Cherry_RE_Template_Callbacks {
 			'class' => '',
 		) );
 
-		return $this->macros_wrap( $args, esc_attr( $location ) );
+		return $this->macros_wrap( $args, esc_attr( $location ), 'property_location' );
 	}
 
 	/**
@@ -564,7 +564,7 @@ class Cherry_RE_Template_Callbacks {
 
 		$bedrooms = (int) $bedrooms;
 
-		return $this->macros_wrap( $args, $bedrooms );
+		return $this->macros_wrap( $args, $bedrooms, 'property_bedrooms' );
 	}
 
 	/**
@@ -593,7 +593,7 @@ class Cherry_RE_Template_Callbacks {
 
 		$bathrooms = (int) $bathrooms;
 
-		return $this->macros_wrap( $args, $bathrooms );
+		return $this->macros_wrap( $args, $bathrooms, 'property_bathrooms' );
 	}
 
 	/**
@@ -623,7 +623,7 @@ class Cherry_RE_Template_Callbacks {
 		$area = (float) $area;
 		$area = sprintf( '%01.2f&nbsp;%s', $area, esc_html( Model_Settings::get_area_unit_title() ) );
 
-		return $this->macros_wrap( $args, $area );
+		return $this->macros_wrap( $args, $area, 'property_area' );
 	}
 
 	/**
@@ -652,7 +652,7 @@ class Cherry_RE_Template_Callbacks {
 
 		$parking_places = (int) $parking_places;
 
-		return $this->macros_wrap( $args, $parking_places );
+		return $this->macros_wrap( $args, $parking_places, 'parking_places' );
 	}
 
 	/**
@@ -687,7 +687,7 @@ class Cherry_RE_Template_Callbacks {
 			$value = $allowed[ $status ];
 		}
 
-		return $this->macros_wrap( $args, esc_attr( $value ) );
+		return $this->macros_wrap( $args, esc_attr( $value ), 'property_status' );
 	}
 
 	/**
@@ -754,7 +754,7 @@ class Cherry_RE_Template_Callbacks {
 			$link   = false;
 		}
 
-		return $this->macros_wrap( $args, sprintf( $format, $image, esc_url( $link ) ) );
+		return $this->macros_wrap( $args, sprintf( $format, $image, esc_url( $link ) ), 'property_image' );
 	}
 
 	/**
@@ -763,7 +763,7 @@ class Cherry_RE_Template_Callbacks {
 	 * @since  1.0.0
 	 * @return string
 	 */
-	public function get_content( $args = array() ) {
+	public function get_property_content( $args = array() ) {
 		$content = apply_filters( 'the_content', get_the_content() );
 
 		if ( ! $content ) {
@@ -775,7 +775,7 @@ class Cherry_RE_Template_Callbacks {
 			'class' => '',
 		) );
 
-		return $this->macros_wrap( $args, $content );
+		return $this->macros_wrap( $args, $content, 'property_content' );
 	}
 
 	/**
@@ -886,7 +886,7 @@ class Cherry_RE_Template_Callbacks {
 	 * @param  string $string Macros string to wrap.
 	 * @return string
 	 */
-	public function macros_wrap( $args = array(), $string = '' ) {
+	public function macros_wrap( $args = array(), $string = '', $context = 'all' ) {
 
 		if ( '' === $string ) {
 			return '';
@@ -896,10 +896,13 @@ class Cherry_RE_Template_Callbacks {
 			return $string;
 		}
 
-		$tag   = esc_attr( $args['wrap'] );
-		$class = ! empty( $args['class'] ) ? esc_attr( $args['class'] ) : '';
+		$format = '<%1$s class="%2$s">%3$s</%1$s>';
+		$tag    = esc_attr( $args['wrap'] );
+		$class  = ! empty( $args['class'] ) ? esc_attr( $args['class'] ) : '';
 
-		return sprintf( '<%1$s class="%2$s">%3$s</%1$s>', $tag, $class, $string );
+		$output = sprintf( $format, $tag, $class, $string );
+
+		return apply_filters( "cherry_re_{$context}_masroc_output", $output, $args, $string );
 	}
 
 	/**
