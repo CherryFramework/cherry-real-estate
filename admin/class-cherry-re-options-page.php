@@ -332,7 +332,7 @@ class Cherry_RE_Options_Page {
 			return null;
 		}
 
-		wp_enqueue_style( 'cherry-re-settings-page' );
+		wp_enqueue_style( 'cherry-re-admin-style' );
 	}
 
 	/**

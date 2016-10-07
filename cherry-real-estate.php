@@ -275,6 +275,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 
 			$this->get_core()->init_module( 'cherry-js-core' );
 			$this->get_core()->init_module( 'cherry-post-meta', array(
+				'id'     => 'cherry-re-property-data',
 				'title'  => esc_html__( 'Property Data', 'cherry-real-estate' ),
 				'page'   => array( $this->get_post_type_name() ),
 				'fields' => array(
@@ -301,12 +302,12 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 						'left_label' => esc_html__( 'Property status', 'cherry-real-estate' ),
 						'options'    => Model_Properties::get_allowed_property_statuses(),
 					),
-					$prefix . 'location' => array(
-						'type'       => 'text',
-						'id'         => $prefix . 'location',
-						'name'       => $prefix . 'location',
-						'left_label' => esc_html__( 'Location', 'cherry-real-estate' ),
-					),
+					// $prefix . 'location' => array(
+					// 	'type'       => 'text',
+					// 	'id'         => $prefix . 'location',
+					// 	'name'       => $prefix . 'location',
+					// 	'left_label' => esc_html__( 'Location', 'cherry-real-estate' ),
+					// ),
 					$prefix . 'bedrooms' => array(
 						'type'       => 'stepper',
 						'id'         => $prefix . 'bedrooms',

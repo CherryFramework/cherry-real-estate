@@ -1,182 +1,89 @@
-<script>
-	( function( doc, $ ) {
-		$( doc ).ready( function() {
+<?php
+/**
+ * Authors metabox view.
+ *
+ * @package    Cherry_Real_Estate
+ * @subpackage Views
+ * @author     Template Monster
+ * @license    GPL-3.0+
+ * @copyright  2002-2016, Template Monster
+ */
 
-			var lat     = '<?php echo esc_js( get_post_meta( get_the_ID(), '_stlr_places_latitude', true ) ); ?>',
-				lng     = '<?php echo esc_js( get_post_meta( get_the_ID(), '_stlr_places_longitude', true ) ); ?>',
-				options = {
-					map: '.stellar-places-map-canvas',
-					details: '.stellar-places-geocode',
-					detailsAttribute: 'data-geo',
-					markerOptions: {
-						draggable: true
-					}
-				},
-				$el = $( '#stellar-places-geocode-input' ),
-				latLng;
+$meta_key    = $passed_vars['key'];
+$meta_values = $passed_vars['values'];
 
-			if ( lat && lng ) {
-				latLng = new google.maps.LatLng( lat, lng );
+$location      = ! empty( $meta_values[ $meta_key . 'location'] ) ? $meta_values[ $meta_key . 'location'][0] : '';
+$latitude      = ! empty( $meta_values[ 'geo_latitude'] )  ? $meta_values[ 'geo_latitude'][0] : '';
+$longitude     = ! empty( $meta_values[ 'geo_longitude'] ) ? $meta_values[ 'geo_longitude'][0] : '';
+$search_status = ! empty( $location ) ? ' ' : ' cherry-re-location-place--hidden';
 
-				options.mapOptions = { center: latLng };
-				options.markerOptions.position = latLng;
-			}
+if ( $latitude && $longitude ) {
+	$search  = '';
+	$checked = false;
 
-			$el.geocomplete( options )
-				.bind(
-					'geocode:dragged', function( event, latLng ) {
-						$( 'input[data-geo=lat]' ).val( latLng.lat() );
-						$( 'input[data-geo=lng]' ).val( latLng.lng() );
-					}
-				);
+} else {
+	$search  = $location;
+	$checked = true;
+} ?>
 
-			$( '.stellar-places-trigger-geocode' ).click(
-				function() {
-					$el.trigger( 'geocode' );
-				}
-			);
+<div class="cherry-re-location-place">
 
-		} );
+	<input class="cherry-re-location-place__toggle-control" type="checkbox" id="cherry-re-location-search-toggle" <?php checked( $checked, true, true ); ?>>
 
-	})( document, jQuery );
-</script>
+	<div class="cherry-re-location-place__search">
+		<input  id="cherry-re-geocode-input"
+				class="cherry-re-location-place__input cherry-ui-text"
+				type="text"
+				name="<?php echo esc_attr( $meta_key ); ?>search_location"
+				placeholder="<?php esc_html_e( 'Search', 'cherry-real-estate' ); ?>"
+				value="<?php echo esc_attr( $search ); ?>">
+		<button type="button" id="cherry-re-geocode-trigger" class="cherry-re-location-place__btn dashicons dashicons-search" aria-label="<?php esc_html_e( 'Search', 'cherry-real-estate' ); ?>"></button>
+	</div>
 
-<style>
-	.stellar-places-geocode {
-		margin-top: 1em;
-	}
+	<div class="cherry-re-location-place__map">
+		<div id="cherry-re-location-place-map" class="cherry-re-location-place__map-wrap"></div>
+		<label for="cherry-re-location-search-toggle" class="cherry-re-location-place__toggle-text<?php echo esc_attr( $search_status ); ?>"><?php esc_html_e( 'Search', 'cherry-real-estate' ); ?></label>
+	</div>
 
-	.stellar-places-geocode input {
-		width: 85%;
-	}
+	<p class="cherry-re-location-place__desc description"><?php esc_html_e( 'Drag marker to reposition.', 'cherry-real-estate' ); ?></p>
 
-	.stellar-places-map-canvas {
-		width: 100%;
-		height: 300px;
-		margin-top: 1em;
-	}
+	<div id="cherry-re-location-place-details" class="cherry-re-location-place__fieldset">
 
-	.stellar-places-geocode fieldset {
-		margin: 1em 0;
-	}
-
-	.stellar-places-field label {
-		display: block;
-		margin-top: .25em;
-	}
-
-	.stellar-places-field input {
-		width: 100%;
-	}
-
-	.stellar-places-latitude-field {
-		display: inline-block;
-		width: 49%;
-	}
-
-	.stellar-places-longitude-field {
-		float: right;
-		width: 49%;
-	}
-
-	.stellar-places-locality-field {
-		display: inline-block;
-		width: 42%;
-	}
-
-	.stellar-places-region-field {
-		display: inline-block;
-		width: 32%;
-		margin-left: 2%;
-	}
-
-	.stellar-places-postal-code-field {
-		float: right;
-		width: 20%;
-	}
-
-</style>
-
-<div class="stellar-places-geocode">
-
-	<input id="stellar-places-geocode-input"
-		   type="text"
-		   name="_stlr_places_formatted_address"
-		   placeholder="<?php _e( 'Enter a location', 'stellar-places' ); ?>"
-		   value="<?php echo esc_attr( get_post_meta( get_the_ID(), '_stlr_places_formatted_address', true ) ); ?>" />
-	<button type="button" class="stellar-places-trigger-geocode button-secondary"><?php
-		_e( 'Find', 'stellar-places' );
-		?></button>
-
-	<div class="stellar-places-map-canvas"></div>
-	<p class="description"><?php _e( 'Drag marker to reposition.', 'stellar-places' ); ?></p>
-
-	<fieldset class="stellar-places-address">
-
-		<div class="stellar-places-field stellar-places-street-address-field">
-			<label><?php _e( 'Street Address', 'stellar-places' ); ?></label>
-			<input type="text"
-				   data-geo="street_address"
-				   name="_stlr_places_street_address"
-				   placeholder="<?php _e( 'Street Address', 'stellar-places' ); ?>"
-				   value="<?php echo esc_attr( get_post_meta( get_the_ID(), '_stlr_places_street_address', true ) ); ?>" />
+		<div class="cherry-re-location-place__field cherry-re-location-place__field--formatted-address">
+			<label>
+				<span class="cherry-re-location-place__field-label"><?php esc_html_e( 'Address', 'cherry-real-estate' ); ?></span>
+				<input  type="text"
+						data-geo="formatted_address"
+						name="<?php echo esc_attr( $meta_key ); ?>location"
+						class="cherry-ui-text"
+						value="<?php echo esc_attr( $location ); ?>">
+			</label>
+			<p class="cherry-re-location-place__desc description"><?php esc_html_e( 'You may format and specify address.', 'cherry-real-estate' ); ?></p>
 		</div>
 
-		<div class="stellar-places-field stellar-places-locality-field">
-			<label><?php _e( 'City', 'stellar-places' ); ?></label>
-			<input type="text"
-				   data-geo="locality"
-				   name="_stlr_places_locality"
-				   placeholder="<?php _e( 'City', 'stellar-places' ); ?>"
-				   value="<?php echo esc_attr( get_post_meta( get_the_ID(), '_stlr_places_locality', true ) ); ?>" />
+		<div class="cherry-re-location-place__field cherry-re-location-place__field--lat">
+			<label>
+				<span class="cherry-re-location-place__field-label"><?php esc_html_e( 'Latitude', 'cherry-real-estate' ); ?></span>
+				<input  type="text"
+						data-geo="lat"
+						name="geo_latitude"
+						class="cherry-ui-text"
+						value="<?php echo esc_attr( $latitude ); ?>"
+						readonly>
+			</label>
 		</div>
 
-		<div class="stellar-places-field stellar-places-region-field">
-			<label><?php _e( 'State', 'stellar-places' ); ?></label>
-			<input type="text"
-				   data-geo="administrative_area_level_1"
-				   name="_stlr_places_region"
-				   placeholder="<?php _e( 'State', 'stellar-places' ); ?>"
-				   value="<?php echo esc_attr( get_post_meta( get_the_ID(), '_stlr_places_region', true ) ); ?>" />
+		<div class="cherry-re-location-place__field cherry-re-location-place__field--lng">
+			<label>
+				<span class="cherry-re-location-place__field-label"><?php esc_html_e( 'Longitude', 'cherry-real-estate' ); ?></span>
+				<input type="text"
+						data-geo="lng"
+						name="geo_longitude"
+						class="cherry-ui-text"
+						value="<?php echo esc_attr( $longitude ); ?>"
+						readonly>
+			</label>
 		</div>
-
-		<div class="stellar-places-field stellar-places-postal-code-field">
-			<label><?php _e( 'Postal Code', 'stellar-places' ); ?></label>
-			<input type="text"
-				   data-geo="postal_code"
-				   name="_stlr_places_postal_code"
-				   placeholder="<?php _e( 'Postal Code', 'stellar-places' ); ?>"
-				   value="<?php echo esc_attr( get_post_meta( get_the_ID(), '_stlr_places_postal_code', true ) ); ?>" />
-		</div>
-
-		<div class="stellar-places-field stellar-places-country-field">
-			<label><?php _e( 'Country', 'stellar-places' ); ?></label>
-			<input type="text"
-				   data-geo="country"
-				   name="_stlr_places_country"
-				   placeholder="<?php _e( 'Country', 'stellar-places' ); ?>"
-				   value="<?php echo esc_attr( get_post_meta( get_the_ID(), '_stlr_places_country', true ) ); ?>" />
-		</div>
-	</fieldset>
-
-	<fieldset class="stellar-places-coordinates">
-		<div class="stellar-places-field stellar-places-latitude-field">
-			<label><?php _e( 'Latitude', 'stellar-places' ); ?></label>
-			<input type="text"
-				   data-geo="lat"
-				   name="_stlr_places_latitude"
-				   placeholder="<?php _e( 'Latitude', 'stellar-places' ); ?>"
-				   value="<?php echo esc_attr( get_post_meta( get_the_ID(), '_stlr_places_latitude', true ) ); ?>" />
-		</div>
-
-		<div class="stellar-places-field stellar-places-longitude-field">
-			<label><?php _e( 'Longitude', 'stellar-places' ); ?></label>
-			<input type="text"
-				   data-geo="lng"
-				   name="_stlr_places_longitude"
-				   placeholder="<?php _e( 'Longitude', 'stellar-places' ); ?>"
-				   value="<?php echo esc_attr( get_post_meta( get_the_ID(), '_stlr_places_longitude', true ) ); ?>" />
-		</div>
-	</fieldset>
+	</div>
 
 </div>

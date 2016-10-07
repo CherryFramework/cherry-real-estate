@@ -76,7 +76,7 @@ class Cherry_RE_Assets {
 			self::get_googleapis_handle(),
 			esc_url( Cherry_RE_Tools::get_google_map_url() ),
 			array(),
-			false,
+			null, // false
 			true
 		);
 
@@ -186,7 +186,7 @@ class Cherry_RE_Assets {
 
 		$js_field_html_img = cherry_re_get_template_html( 'form-fields/uploaded-file-html' );
 
-		$data = apply_filters( 'cherry_re_data_script', array(
+		$data = apply_filters( 'cherry_re_main_data_script', array(
 			'ajaxurl'           => esc_url( admin_url( 'admin-ajax.php' ) ),
 			'popupid'           => esc_attr( Model_Submit_Form::get_popup_id() ),
 			'js_field_html_img' => esc_js( str_replace( PHP_EOL, '', $js_field_html_img ) ),
@@ -359,6 +359,21 @@ class Cherry_RE_Assets {
 			true
 		);
 
+		wp_register_script(
+			'cherry-re-geocomplete-init',
+			plugins_url( "/admin/assets/js/geocomplete/init{$suffix}.js", CHERRY_REAL_ESTATE_MAIN_FILE ),
+			array( 'jquery-geocomplete' ),
+			CHERRY_REAL_ESTATE_VERSION,
+			true
+		);
+
+		$data = apply_filters( 'cherry_re_geocomplete_data_script', array(
+			'lat' => esc_js( get_post_meta( get_the_ID(), 'geo_latitude', true ) ),
+			'lng' => esc_js( get_post_meta( get_the_ID(), 'geo_longitude', true ) ),
+		) );
+
+		wp_localize_script( 'cherry-re-geocomplete-init', 'CherryREGeocompleteData', $data );
+
 		/**
 		 * Hook to dequeue the javascripts or add custom.
 		 *
@@ -430,32 +445,16 @@ class Cherry_RE_Assets {
 	public function enqueue_admin_styles( $hook_suffix ) {
 
 		wp_register_style(
-			'cherry-re-admin-styles',
-			plugins_url( 'admin/assets/css/admin-style.css', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			'cherry-re-admin-style',
+			plugins_url( 'admin/assets/css/admin.css', CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array(),
 			CHERRY_REAL_ESTATE_VERSION,
 			'all'
 		);
 
 		if ( in_array( $hook_suffix, array( 'user-edit.php', 'profile.php' ) ) ) {
-			wp_enqueue_style( 'cherry-re-admin-styles' );
+			wp_enqueue_style( 'cherry-re-admin-style' );
 		}
-
-		wp_register_style(
-			'cherry-re-settings-page',
-			plugins_url( 'admin/assets/css/settings-page.css', CHERRY_REAL_ESTATE_MAIN_FILE ),
-			array(),
-			CHERRY_REAL_ESTATE_VERSION,
-			'all'
-		);
-
-		wp_register_style(
-			'cherry-re-tinymce',
-			plugins_url( 'admin/assets/css/tinymce.css', CHERRY_REAL_ESTATE_MAIN_FILE ),
-			array(),
-			CHERRY_REAL_ESTATE_VERSION,
-			'all'
-		);
 
 		/**
 		 * Hook to dequeue the stylesheets or add custom.

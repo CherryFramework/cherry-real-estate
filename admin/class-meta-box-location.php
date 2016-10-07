@@ -1,20 +1,18 @@
 <?php
 /**
- * Handles the author avatars meta box.
+ * Handles the location meta box.
  *
  * @package    Cherry_Real_Estate
  * @subpackage Admin
- * @version    1.0.0
- * @author     Justin Tadlock <justin@justintadlock.com>
- * @copyright  Copyright (c) 2015, Justin Tadlock
- * @link       http://themehybrid.com/plugins/avatars-meta-box
- * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @author     Template Monster
+ * @license    GPL-3.0+
+ * @copyright  2002-2016, Template Monster
  */
 
 /**
  * Meta box class.
  *
- * @since  1.0.0
+ * @since  1.1.0
  * @access public
  */
 class Cherry_RE_Meta_Box_Location {
@@ -22,9 +20,7 @@ class Cherry_RE_Meta_Box_Location {
 	/**
 	 * Sets up the appropriate actions.
 	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @return void
+	 * @since 1.1.0
 	 */
 	protected function __construct() {
 		add_action( 'load-post.php',     array( $this, 'load' ) );
@@ -35,9 +31,7 @@ class Cherry_RE_Meta_Box_Location {
 	 * Fires on the page load hook to add actions specifically for the post and
 	 * new post screens.
 	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
+	 * @since 1.1.0
 	 */
 	public function load() {
 		$current_screen = get_current_screen();
@@ -55,9 +49,7 @@ class Cherry_RE_Meta_Box_Location {
 	/**
 	 * Adds the meta box.
 	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
+	 * @since 1.1.0
 	 */
 	public function add_meta_boxes( $post_type ) {
 
@@ -75,61 +67,47 @@ class Cherry_RE_Meta_Box_Location {
 	/**
 	 * Outputs the meta box HTML.
 	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @param  WP_Post $post
-	 * @param  object  $box Contains the callback arguments along with other data on the current meta box
-	 * @return void
+	 * @since 1.1.0
+	 * @param WP_Post $post Post object.
+	 * @param object  $box  Contains the callback arguments along with other data on the current meta box
 	 */
 	public function meta_box( $post, $box ) {
 
 		// Add an nonce field so we can check for it later.
 		wp_nonce_field( plugin_basename( __FILE__ ), 'cherry_re_location_meta_nonce' );
 
-		wp_enqueue_script( 'jquery-geocomplete' );
+		if ( false === apply_filters( 'cherry_re_deenqueue_location_metabox', false ) ) {
+			$this->enqueue_assets();
+		}
 
-		include( CHERRY_REAL_ESTATE_DIR . 'views/metabox/location.php' );
+		$values = get_post_meta( get_the_ID(), '', true );
+		$values = ! empty( $values ) ? $values : array();
 
-		// $value = get_post_meta( $post->ID, $this->get_meta_key(), true );
-		// $value = ! empty( $value ) ? $value : $post->post_author;
-
-		// // Set up the main arguments for `get_users()`.
-		// $args = array( 'who' => 'authors' );
-
-		// // WP version 4.4.0 check. User `role__in` if we can.
-		// if ( method_exists( 'WP_User_Query', 'fill_query_vars' ) ) {
-		// 	$args = array( 'role__in' => $this->get_roles( $post->post_type ) );
-		// }
-
-		// // Get the users allowed to be post author.
-		// $users = get_users( apply_filters( 'cherry_re_authors_metabox_get_users_args', $args ) );
-
-		// cherry_re_get_template(
-		// 	'authors',
-		// 	array(
-		// 		'key'   => $this->get_meta_key(),
-		// 		'value' => $value,
-		// 		'users' => $users,
-		// 		'nonce' => wp_create_nonce( plugin_basename( __FILE__ ) ),
-		// 	),
-		// 	cherry_real_estate()->template_path(),
-		// 	CHERRY_REAL_ESTATE_DIR . 'views/metabox/'
-		// );
+		cherry_re_get_template(
+			'location',
+			array(
+				'key'    => $this->get_meta_key(),
+				'values' => $values,
+				'nonce'  => wp_create_nonce( plugin_basename( __FILE__ ) ),
+			),
+			cherry_real_estate()->template_path(),
+			CHERRY_REAL_ESTATE_DIR . 'views/metabox/'
+		);
 	}
 
 	/**
-	 * Saves the custom post meta for the menu item.
+	 * Saves the custom post meta.
 	 *
-	 * @since  1.0.0
-	 * @access public
+	 * @since  1.1.0
 	 * @param  int    $post_id The post ID.
 	 * @param  object $post    The post object.
-	 * @return void
 	 */
 	public function save_post( $post_id, $post ) {
 
 		/* Verify the nonce. */
-		if ( ! isset( $_POST['cherry_re_location_meta_nonce'] ) || ! wp_verify_nonce( $_POST['cherry_re_location_meta_nonce'], plugin_basename( __FILE__ ) ) ) {
+		if ( ! isset( $_POST['cherry_re_location_meta_nonce'] )
+			|| ! wp_verify_nonce( $_POST['cherry_re_location_meta_nonce'], plugin_basename( __FILE__ ) ) )
+		{
 			return;
 		}
 
@@ -152,11 +130,19 @@ class Cherry_RE_Meta_Box_Location {
 			return;
 		}
 
-		$meta = array(
-			$this->get_meta_key() => intval( strip_tags( $_POST[ $this->get_meta_key() ] ) ),
-		);
+		$fields = $this->get_fields();
 
-		foreach ( $meta as $meta_key => $new_meta_value ) {
+		foreach ( (array) $fields as $meta_key => $sanitize_callback ) {
+
+			if ( ! isset( $_POST[ $meta_key ] ) ) {
+				continue;
+			}
+
+			if ( ! is_callable( $sanitize_callback ) ) {
+				continue;
+			}
+
+			$new_meta_value = call_user_func( $sanitize_callback, $_POST[ $meta_key ] );
 
 			/* Get the meta value of the custom field key. */
 			$meta_value = get_post_meta( $post_id, $meta_key, true );
@@ -177,20 +163,44 @@ class Cherry_RE_Meta_Box_Location {
 	}
 
 	/**
+	 * Enqueue metabox assets.
+	 */
+	public function enqueue_assets() {
+		wp_enqueue_style( 'cherry-re-admin-style' );
+		wp_enqueue_script( 'cherry-re-geocomplete-init' );
+	}
+
+	/**
 	 * Retrieve a meta key.
 	 *
-	 * @since 1.0.0
-	 * @author Template Monster
+	 * @since 1.1.0
 	 * @return string
 	 */
 	public function get_meta_key() {
-		return cherry_real_estate()->get_meta_prefix() . 'location';
+		return cherry_real_estate()->get_meta_prefix();
+	}
+
+	/**
+	 * Retrieve a metabox fields data - `meta_key_field` => `sanitize_callback`
+	 * with WordPress Geodata recommendation - https://codex.wordpress.org/Geodata
+	 *
+	 * @since  1.1.0
+	 * @return array
+	 */
+	public function get_fields() {
+		$meta_key = $this->get_meta_key();
+
+		return apply_filters( 'cherry_re_get_location_metabox_fields' ,array(
+			'geo_latitude'         => 'sanitize_text_field',
+			'geo_longitude'        => 'sanitize_text_field',
+			$meta_key . 'location' => 'sanitize_text_field',
+		) );
 	}
 
 	/**
 	 * Returns the instance.
 	 *
-	 * @since  1.0.0
+	 * @since  1.1.0
 	 * @access public
 	 * @return object
 	 */
