@@ -408,10 +408,13 @@ class Cherry_RE_Property_Data {
 			$item_classes   = array_map( 'esc_attr', $item_classes );
 			$item_classes   = apply_filters( 'cherry_re_property_item_classes', $item_classes, $property_id );
 
-			$meta_prefix = cherry_real_estate()->get_meta_prefix();
+			$latlng    = $callbacks->get_property_latlng();
+			$location  = $callbacks->get_property_location();
+
 			$data_atts   = apply_filters( 'cherry_re_property_item_data_atts', array(
 				'property-id'      => esc_attr( $property_id ),
-				'property-address' => esc_attr( get_post_meta( $property_id, $meta_prefix . 'location', true ) ),
+				'property-address' => esc_attr( $location ),
+				'property-latlng'  => $latlng,
 			), $property_id );
 
 			$output .= '<div class="' . join( ' ', array_unique( $item_classes ) ) . '" ' . cherry_re_return_data_atts( $data_atts ) . '><div class="tm-property__inner">';

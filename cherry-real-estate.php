@@ -102,6 +102,9 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			add_action( 'after_setup_theme', array( $this, 'get_core' ), 1 );
 			add_action( 'after_setup_theme', array( 'Cherry_Core', 'load_all_modules' ), 2 );
 
+			// Adds supported features.
+			add_action( 'after_setup_theme', array( $this, 'support' ), 9 );
+
 			// Initialization of Cherry's modules.
 			add_action( 'after_setup_theme', array( $this, 'launch' ), 10 );
 
@@ -263,6 +266,15 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			) );
 
 			return $this->core;
+		}
+
+		/**
+		 * Adds supported features.
+		 *
+		 * @since 1.1.0
+		 */
+		public function support() {
+			add_theme_support( 'cherry-real-estate-geodata' );
 		}
 
 		/**

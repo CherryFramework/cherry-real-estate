@@ -16,9 +16,10 @@ if ( empty( $passed_vars['callbacks'] ) ) {
 }
 
 $callbacks = $passed_vars['callbacks'];
+$latlng    = $callbacks->get_property_latlng();
 $location  = $callbacks->get_property_location();
 
-if ( empty( $location ) ) {
+if ( ! ( $latlng || $location ) ) {
 	return;
 }
 
@@ -29,7 +30,7 @@ $instance = 'tm-re-map-' . uniqid();
 $defaults = Cherry_RE_Tools::get_google_map_defaults();
 $atts     = array(
 	'id'      => $instance,
-	'address' => array( $location ),
+	'address' => ! empty( $latlng ) ? $latlng : $location,
 );
 
 $atts = wp_parse_args( $atts, $defaults );

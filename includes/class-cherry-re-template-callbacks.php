@@ -378,7 +378,6 @@ class Cherry_RE_Template_Callbacks {
 	public function the_property_data() {
 		global $post;
 
-		$prefix              = cherry_real_estate()->get_meta_prefix();
 		$this->property_data = get_post_meta( $post->ID, '', true );
 	}
 
@@ -536,6 +535,23 @@ class Cherry_RE_Template_Callbacks {
 		) );
 
 		return $this->macros_wrap( $args, esc_attr( $location ) );
+	}
+
+	/**
+	 * Get property coordinates.
+	 *
+	 * @since  1.1.0
+	 * @return string
+	 */
+	public function get_property_latlng() {
+		$lat = $this->get_the_property_data( 'latitude' );
+		$lng = $this->get_the_property_data( 'longitude' );
+
+		if ( ! ( $lat && $lng ) ) {
+			return;
+		}
+
+		return array( $lat, $lng );
 	}
 
 	/**

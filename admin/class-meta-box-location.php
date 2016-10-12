@@ -160,6 +160,34 @@ class Cherry_RE_Meta_Box_Location {
 				delete_post_meta( $post_id, $meta_key, $meta_value );
 			}
 		}
+
+		if ( current_theme_supports( 'cherry-real-estate-geodata' ) ) {
+			$this->_save_geo_data( $post_id );
+		}
+	}
+
+	/**
+	 * Set WordPress GeoData.
+	 *
+	 * @link  http://codex.wordpress.org/Geodata
+	 * @param $post_id
+	 */
+	public function _save_geo_data( $post_id ) {
+		$meta_key  = $this->get_meta_key();
+		$latitude  = get_post_meta( $post_id, $meta_key . 'latitude', true );
+		$longitude = get_post_meta( $post_id, $meta_key . 'longitude', true );
+
+		if ( $latitude ) {
+			update_post_meta( $post_id, 'geo_latitude', floatval( $latitude ) );
+		} else {
+			delete_post_meta( $post_id, 'geo_latitude' );
+		}
+
+		if ( $longitude ) {
+			update_post_meta( $post_id, 'geo_longitude', floatval( $longitude ) );
+		} else {
+			delete_post_meta( $post_id, 'geo_longitude' );
+		}
 	}
 
 	/**
@@ -191,9 +219,10 @@ class Cherry_RE_Meta_Box_Location {
 		$meta_key = $this->get_meta_key();
 
 		return apply_filters( 'cherry_re_get_location_metabox_fields' ,array(
-			'geo_latitude'         => 'sanitize_text_field',
-			'geo_longitude'        => 'sanitize_text_field',
-			$meta_key . 'location' => 'sanitize_text_field',
+			$meta_key . 'place_id'  => 'sanitize_text_field',
+			$meta_key . 'latitude'  => 'sanitize_text_field',
+			$meta_key . 'longitude' => 'sanitize_text_field',
+			$meta_key . 'location'  => 'sanitize_text_field',
 		) );
 	}
 
