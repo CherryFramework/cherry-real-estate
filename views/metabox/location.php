@@ -12,10 +12,10 @@
 $meta_key    = $passed_vars['key'];
 $meta_values = $passed_vars['values'];
 
-$location  = ! empty( $meta_values[ $meta_key . 'location'] )  ? $meta_values[ $meta_key . 'location'][0]  : '';
-$latitude  = ! empty( $meta_values[ $meta_key . 'latitude'] )  ? $meta_values[ $meta_key . 'latitude'][0]  : '';
-$longitude = ! empty( $meta_values[ $meta_key . 'longitude'] ) ? $meta_values[ $meta_key . 'longitude'][0] : '';
-$place_id  = ! empty( $meta_values[ $meta_key . 'place_id'] )  ? $meta_values[ $meta_key . 'place_id'][0]  : '';
+$location  = ! empty( $meta_values[ $meta_key . 'location' ] )  ? $meta_values[ $meta_key . 'location' ][0]  : '';
+$latitude  = ! empty( $meta_values[ $meta_key . 'latitude' ] )  ? $meta_values[ $meta_key . 'latitude' ][0]  : '';
+$longitude = ! empty( $meta_values[ $meta_key . 'longitude' ] ) ? $meta_values[ $meta_key . 'longitude' ][0] : '';
+$place_id  = ! empty( $meta_values[ $meta_key . 'place_id' ] )  ? $meta_values[ $meta_key . 'place_id' ][0]  : '';
 $search    = ( $latitude && $longitude ) ? '' : $location; ?>
 
 <div class="cherry-re-location-place">

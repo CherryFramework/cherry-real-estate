@@ -69,7 +69,7 @@ class Cherry_RE_Meta_Box_Location {
 	 *
 	 * @since 1.1.0
 	 * @param WP_Post $post Post object.
-	 * @param object  $box  Contains the callback arguments along with other data on the current meta box
+	 * @param object  $box  Contains the callback arguments along with other data on the current meta box.
 	 */
 	public function meta_box( $post, $box ) {
 
@@ -106,8 +106,8 @@ class Cherry_RE_Meta_Box_Location {
 
 		/* Verify the nonce. */
 		if ( ! isset( $_POST['cherry_re_location_meta_nonce'] )
-			|| ! wp_verify_nonce( $_POST['cherry_re_location_meta_nonce'], plugin_basename( __FILE__ ) ) )
-		{
+			|| ! wp_verify_nonce( $_POST['cherry_re_location_meta_nonce'], plugin_basename( __FILE__ ) )
+		) {
 			return;
 		}
 
@@ -170,7 +170,7 @@ class Cherry_RE_Meta_Box_Location {
 	 * Set WordPress GeoData.
 	 *
 	 * @link  http://codex.wordpress.org/Geodata
-	 * @param $post_id
+	 * @param $post_id Post ID.
 	 */
 	public function _save_geo_data( $post_id ) {
 		$meta_key  = $this->get_meta_key();

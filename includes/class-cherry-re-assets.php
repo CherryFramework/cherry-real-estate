@@ -130,7 +130,7 @@ class Cherry_RE_Assets {
 
 		wp_register_script(
 			'jquery-load-image',
-			plugins_url( "assets/js/file-upload/load-image.all.min.js", CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( 'assets/js/file-upload/load-image.all.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array(),
 			'2.6.1',
 			true

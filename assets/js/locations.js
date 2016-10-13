@@ -29,7 +29,7 @@
 		 */
 		function initMap() {
 			var loading = 'tm-re-map-loading',
-				map, geocoder, bounds, key, position;
+				map, geocoder, bounds, position;
 
 			prepareMapOptions();
 
@@ -76,7 +76,7 @@
 				return 1;
 			}
 
-			if ( 'object' == typeof data.address ) {
+			if ( 'object' === typeof data.address ) {
 				position = getLatLng( data.address );
 				setMarker( map, bounds, position );
 
@@ -120,7 +120,8 @@
 		 * @param string html
 		 */
 		function setMarker( map, bounds, position, html ) {
-			var animationType = data.hasOwnProperty( 'animation' ) ? data.animation : '';
+			var animationType = data.hasOwnProperty( 'animation' ) ? data.animation : ''
+				marker;
 
 			bounds.extend( position );
 
@@ -148,8 +149,9 @@
 		}
 
 		function prepareMapOptions() {
+
 			// Sanitize & parse styles.
-			if ( data.hasOwnProperty( 'styles' ) && ( 'string' == typeof data.styles ) ) {
+			if ( data.hasOwnProperty( 'styles' ) && ( 'string' === typeof data.styles ) ) {
 				data.styles = $.parseJSON( data.styles );
 			}
 

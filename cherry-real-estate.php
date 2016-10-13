@@ -314,12 +314,6 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 						'left_label' => esc_html__( 'Property status', 'cherry-real-estate' ),
 						'options'    => Model_Properties::get_allowed_property_statuses(),
 					),
-					// $prefix . 'location' => array(
-					// 	'type'       => 'text',
-					// 	'id'         => $prefix . 'location',
-					// 	'name'       => $prefix . 'location',
-					// 	'left_label' => esc_html__( 'Location', 'cherry-real-estate' ),
-					// ),
 					$prefix . 'bedrooms' => array(
 						'type'       => 'stepper',
 						'id'         => $prefix . 'bedrooms',
