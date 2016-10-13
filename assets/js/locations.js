@@ -120,7 +120,7 @@
 		 * @param string html
 		 */
 		function setMarker( map, bounds, position, html ) {
-			var animationType = data.hasOwnProperty( 'animation' ) ? data.animation : ''
+			var animationType = data.hasOwnProperty( 'animation' ) ? data.animation : '',
 				marker;
 
 			bounds.extend( position );

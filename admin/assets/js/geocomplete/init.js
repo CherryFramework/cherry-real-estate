@@ -1,4 +1,4 @@
-/* global CherryREGeocompleteData */
+/* global CherryREGeocompleteData, google */
 ( function( doc, $ ) {
 	$( doc ).ready( function() {
 		var options = {
