@@ -63,4 +63,4 @@ $property_callbacks = cherry_re_templater()->setup_template_data(); ?>
 		do_action( 'cherry_re_after_single_property_summary', $property_callbacks );
 	?>
 
-</article><!-- #tm-property-<?php the_ID(); ?> -->
+</article>

@@ -16,12 +16,24 @@ $heading = esc_html( apply_filters(
 	esc_html__( 'Related Properties', 'cherry-real-estate' )
 ) );
 
-$data       = Cherry_RE_Property_Data::get_instance();
+$data = Cherry_RE_Property_Data::get_instance();
+
+$meta_key   = cherry_real_estate()->get_meta_prefix() . 'status';
+$meta_query = array(
+	array(
+		'key'     => $meta_key,
+		'value'   => get_post_meta( get_the_ID(), $meta_key, true ),
+		'compare' => '=',
+	),
+);
+
 $query_args = apply_filters( 'cherry_re_property_related_args', array(
 	'post__not_in'        => array( get_the_ID() ),
+	'meta_query'          => $meta_query,
 	'ignore_sticky_posts' => true,
-	'number'              => 2,
+	'number'              => 3,
 	'echo'                => false,
+	'item_class'          => 'tm-property-related__item',
 	'author'              => get_the_author_meta( 'ID' ),
 	'css_class'           => 'tm-property-related__wrap tm-property__wrap--related',
 	'template'            => 'related.tmpl',
