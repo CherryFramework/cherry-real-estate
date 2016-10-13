@@ -52,7 +52,7 @@ $search    = ( $latitude && $longitude ) ? '' : $location; ?>
 			</label>
 		</div>
 
-		<input type="hidden" data-geo="place_id" name="<?php echo esc_attr( $meta_key ); ?>place_id" class="cherry-ui-text" value="<?php echo esc_attr( $place_id); ?>">
+		<input type="hidden" data-geo="place_id" name="<?php echo esc_attr( $meta_key ); ?>place_id" class="cherry-ui-text" value="<?php echo esc_attr( $place_id ); ?>">
 	</div>
 
 </div>

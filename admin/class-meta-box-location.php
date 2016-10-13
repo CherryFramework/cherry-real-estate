@@ -170,7 +170,7 @@ class Cherry_RE_Meta_Box_Location {
 	 * Set WordPress GeoData.
 	 *
 	 * @link  http://codex.wordpress.org/Geodata
-	 * @param $post_id Post ID.
+	 * @param int $post_id Post ID.
 	 */
 	public function _save_geo_data( $post_id ) {
 		$meta_key  = $this->get_meta_key();
