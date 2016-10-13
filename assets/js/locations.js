@@ -59,7 +59,6 @@
 			});
 
 			if ( null === data.address ) {
-				console.log( 'source' );
 
 				$source.each( function( i, el ) {
 					var address = $( el ).data( 'property-address' ),
@@ -76,8 +75,6 @@
 
 				return 1;
 			}
-
-			console.log( 'address' );
 
 			if ( 'object' == typeof data.address ) {
 				position = getLatLng( data.address );
@@ -99,8 +96,9 @@
 		 * @param  string location
 		 * @param  string html
 		 */
-		function geocodeAddress( resultsMap, geocoder, bounds, location, html = '' ) {
-			console.log('geocodeAddress');
+		function geocodeAddress( resultsMap, geocoder, bounds, location, html ) {
+			html = html || '';
+
 			geocoder.geocode({
 				'address': location
 			}, function( results, status ) {
@@ -121,7 +119,7 @@
 		 * @param object position
 		 * @param string html
 		 */
-		function setMarker( map, bounds, position, html = '' ) {
+		function setMarker( map, bounds, position, html ) {
 			var animationType = data.hasOwnProperty( 'animation' ) ? data.animation : '';
 
 			bounds.extend( position );
