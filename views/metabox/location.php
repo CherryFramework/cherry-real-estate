@@ -22,6 +22,8 @@ $search    = ( $latitude && $longitude ) ? '' : $location; ?>
 
 	<input id="cherry-re-geocode-input" class="cherry-re-location-place__input" type="text" name="<?php echo esc_attr( $meta_key ); ?>search_location" placeholder="<?php esc_html_e( 'Search', 'cherry-real-estate' ); ?>" value="<?php echo esc_attr( $search ); ?>">
 
+	<input id="cherry-re-geocode-info" class="cherry-re-location-place__info" data-geo="location" name="location" type="text" value="" readonly>
+
 	<div class="cherry-re-location-place__map">
 		<div id="cherry-re-location-place-map" class="cherry-re-location-place__map-wrap"></div>
 	</div>
@@ -38,20 +40,8 @@ $search    = ( $latitude && $longitude ) ? '' : $location; ?>
 			<p class="cherry-re-location-place__desc description"><?php esc_html_e( 'You may format and specify address.', 'cherry-real-estate' ); ?></p>
 		</div>
 
-		<div class="cherry-re-location-place__field cherry-re-location-place__field--lat">
-			<label>
-				<span class="cherry-re-location-place__field-label"><?php esc_html_e( 'Latitude', 'cherry-real-estate' ); ?></span>
-				<input type="text" data-geo="lat" name="<?php echo esc_attr( $meta_key ); ?>latitude" id="cherry-re-location-place-lat" class="cherry-ui-text" value="<?php echo esc_attr( $latitude ); ?>" readonly>
-			</label>
-		</div>
-
-		<div class="cherry-re-location-place__field cherry-re-location-place__field--lng">
-			<label>
-				<span class="cherry-re-location-place__field-label"><?php esc_html_e( 'Longitude', 'cherry-real-estate' ); ?></span>
-				<input type="text" data-geo="lng" name="<?php echo esc_attr( $meta_key ); ?>longitude" id="cherry-re-location-place-lng" class="cherry-ui-text" value="<?php echo esc_attr( $longitude ); ?>" readonly>
-			</label>
-		</div>
-
+		<input type="hidden" data-geo="lat" name="<?php echo esc_attr( $meta_key ); ?>latitude" id="cherry-re-location-place-lat" class="cherry-ui-text" value="<?php echo esc_attr( $latitude ); ?>">
+		<input type="hidden" data-geo="lng" name="<?php echo esc_attr( $meta_key ); ?>longitude" id="cherry-re-location-place-lng" class="cherry-ui-text" value="<?php echo esc_attr( $longitude ); ?>">
 		<input type="hidden" data-geo="place_id" name="<?php echo esc_attr( $meta_key ); ?>place_id" class="cherry-ui-text" value="<?php echo esc_attr( $place_id ); ?>">
 	</div>
 

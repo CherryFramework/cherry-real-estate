@@ -367,9 +367,13 @@ class Cherry_RE_Assets {
 			true
 		);
 
+		$meta_key = cherry_real_estate()->get_meta_prefix();
+
 		$data = apply_filters( 'cherry_re_geocomplete_data_script', array(
-			'lat' => esc_js( get_post_meta( get_the_ID(), 'geo_latitude', true ) ),
-			'lng' => esc_js( get_post_meta( get_the_ID(), 'geo_longitude', true ) ),
+			'lat'     => esc_js( get_post_meta( get_the_ID(), $meta_key . 'latitude', true ) ),
+			'lng'     => esc_js( get_post_meta( get_the_ID(), $meta_key . 'longitude', true ) ),
+			'address' => esc_js( get_post_meta( get_the_ID(), $meta_key . 'location', true ) ),
+			'styles'  => Model_Settings::get_map_style(),
 		) );
 
 		wp_localize_script( 'cherry-re-geocomplete-init', 'CherryREGeocompleteData', $data );

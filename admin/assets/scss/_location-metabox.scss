@@ -10,7 +10,7 @@
 	height: 350px;
 }
 
-.cherry-re-location-place .cherry-re-location-place__input {
+.cherry-re-location-place__input {
 	font-size: 14px;
 	box-sizing: border-box;
 	width: 400px;
@@ -22,6 +22,25 @@
 	border-radius: 2px;
 	outline: none;
 	background-color: #fff;
+	box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+}
+
+.cherry-re-location-place__info[readonly] {
+	font-size: 14px;
+	overflow: hidden;
+	box-sizing: border-box;
+	width: 300px;
+	height: 30px;
+	margin-top: 10px;
+	margin-right: 10px;
+	padding: 5px 15px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	color: #b2b3b5;
+	border: 1px solid transparent;
+	border-radius: 2px;
+	outline: none;
+	background-color: #f9f9f9;
 	box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
 }
 
@@ -48,26 +67,6 @@
 	}
 }
 
-.cherry-re-location-place__field .cherry-ui-text {
-	&:read-only {
-		border-color: #e5e5e5;
-		background-color: #e5e5e5;
-		&:focus {
-			border-color: #e5e5e5;
-			box-shadow: none;
-		}
-	}
-}
-
 .cherry-re-location-place__field--formatted-address .cherry-ui-text {
 	width: 100%;
-}
-
-.cherry-re-location-place__field--lat label,
-.cherry-re-location-place__field--lng label {
-	cursor: default;
-}
-
-.cherry-re-location-place--hidden {
-	display: none;
 }
