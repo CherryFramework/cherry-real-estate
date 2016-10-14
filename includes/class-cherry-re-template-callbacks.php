@@ -902,7 +902,7 @@ class Cherry_RE_Template_Callbacks {
 
 		$output = sprintf( $format, $tag, $class, $string );
 
-		return apply_filters( "cherry_re_{$context}_masroc_output", $output, $args, $string );
+		return apply_filters( "cherry_re_{$context}_macros_output", $output, $args, $string );
 	}
 
 	/**
