@@ -34,6 +34,7 @@
 
 		$el.geocomplete( options )
 			.on( 'geocode:dragged', function( event, latlng ) {
+				$(this).val( '' )
 				$( 'input[data-geo=lat]' ).val( latlng.lat() );
 				$( 'input[data-geo=lng]' ).val( latlng.lng() );
 				$info.val( latlng.lat() + ', ' + latlng.lng() );
