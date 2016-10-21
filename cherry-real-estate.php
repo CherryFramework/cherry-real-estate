@@ -3,7 +3,7 @@
  * Plugin Name: Cherry Real Estate
  * Plugin URI:  http://www.templatemonster.com/
  * Description: Plugin for adding real estate functionality to the site.
- * Version:     1.0.2-beta
+ * Version:     1.0.2
  * Author:      Template Monster
  * Author URI:  http://www.templatemonster.com/
  * Text Domain: cherry-real-estate
@@ -170,7 +170,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			 *
 			 * @since 1.0.0
 			 */
-			define( 'CHERRY_REAL_ESTATE_VERSION', '1.0.2-beta' );
+			define( 'CHERRY_REAL_ESTATE_VERSION', '1.0.2' );
 		}
 
 		/**
