@@ -37,3 +37,8 @@ The plugin is absolutely free and has no any hidden fees. Use Cherry Real Estate
 * FIX: bug with dialog's height on laptop
 * FIX: bug with pagination on term page
 
+= 1.0.2 =
+
+* ADD: unique filter to the callback-methods
+* UPD: cherry-framework to v1.3.0
+* DEL: unused `grid.tmpl` template
