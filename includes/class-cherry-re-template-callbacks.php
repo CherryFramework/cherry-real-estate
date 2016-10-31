@@ -53,7 +53,7 @@ class Cherry_RE_Template_Callbacks {
 		}
 
 		// VIP actions - set and clear data on single property page.
-		add_action( 'cherry_re_before_single_property_summary', array( $this, 'the_property_data' ), 0 );
+		// add_action( 'cherry_re_before_single_property_summary', array( $this, 'the_property_data' ), 0 );
 		add_action( 'cherry_re_after_single_property_summary', array( $this, 'clear_data' ), 999999 );
 	}
 
@@ -390,13 +390,11 @@ class Cherry_RE_Template_Callbacks {
 	 * @return bool|string
 	 */
 	public function get_the_property_data( $key ) {
-		$key = cherry_real_estate()->get_meta_prefix() . $key;
+		global $post;
 
-		if ( ! isset( $this->property_data[ $key ] ) ) {
-			return false;
-		}
+		$prefix = cherry_real_estate()->get_meta_prefix();
 
-		return $this->property_data[ $key ][0];
+		return get_post_meta( $post->ID, $prefix . $key, true );
 	}
 
 	/**
