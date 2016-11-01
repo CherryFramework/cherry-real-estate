@@ -13,6 +13,7 @@ cherry-framework/modules/cherry-ui-elements/inc/ui-elements/ui-stepper/assets/ui
 cherry-framework/modules/cherry-ui-elements/inc/ui-elements/ui-switcher/assets/ui-switcher.js
 cherry-framework/modules/cherry-ui-elements/inc/ui-elements/ui-collection/assets/js/jquery.collection.js
 cherry-framework/modules/cherry-ui-elements/inc/ui-elements/ui-collection/assets/js/ui-collection.js
+cherry-framework/modules/cherry-interface-builder/inc/assets/cherry-interface-builder.js
 assets/js/file-upload/*.js
 assets/js/magnific-popup/*.js
 assets/js/swiper/*.js

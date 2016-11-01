@@ -378,7 +378,6 @@ class Cherry_RE_Template_Callbacks {
 	public function the_property_data() {
 		global $post;
 
-		$prefix              = cherry_real_estate()->get_meta_prefix();
 		$this->property_data = get_post_meta( $post->ID, '', true );
 	}
 
@@ -390,11 +389,10 @@ class Cherry_RE_Template_Callbacks {
 	 * @return bool|string
 	 */
 	public function get_the_property_data( $key ) {
-		global $post;
-
 		$prefix = cherry_real_estate()->get_meta_prefix();
+		$meta   = get_post_meta( get_the_ID(), $prefix . $key, true );
 
-		return get_post_meta( $post->ID, $prefix . $key, true );
+		return ! empty( $meta ) ? $meta : false;
 	}
 
 	/**
