@@ -17,6 +17,9 @@ php:
     # Current $required_php_version for WordPress: 5.2.4
     - "5.2"
 
+notifications:
+    email: false
+
 # Ditch sudo and use containers.
 # @link http://docs.travis-ci.com/user/migrating-from-legacy/#Why-migrate-to-container-based-infrastructure%3F
 # @link http://docs.travis-ci.com/user/workers/container-based-infrastructure/#Routing-your-build-to-container-based-infrastructure
