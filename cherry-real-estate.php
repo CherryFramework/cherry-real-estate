@@ -293,7 +293,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 				'id'     => 'cherry-re-property-data',
 				'title'  => esc_html__( 'Property Data', 'cherry-real-estate' ),
 				'page'   => array( $this->get_post_type_name() ),
-				'fields' => array(
+				'fields' => apply_filters( 'cherry_re_prorerty_data_metabox_fields', array(
 					$prefix . 'state' => array(
 						'type'    => 'select',
 						'id'      => $prefix . 'state',
@@ -359,7 +359,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 						'multi_upload' => true,
 						'title'        => esc_html__( 'Gallery', 'cherry-real-estate' ),
 					),
-				),
+				) ),
 			) );
 			$this->get_core()->init_module( 'cherry-widget-factory' );
 
