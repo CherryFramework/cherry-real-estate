@@ -7,7 +7,7 @@
 			details: '#cherry-re-location-place-details',
 			detailsAttribute: 'data-geo',
 			mapOptions: {
-				zoom: 14,
+				zoom: 14
 			},
 			markerOptions: {
 				draggable: true
@@ -34,7 +34,7 @@
 
 		$el.geocomplete( options )
 			.on( 'geocode:dragged', function( event, latlng ) {
-				$(this).val( '' )
+				$( this ).val( '' );
 				$( 'input[data-geo=lat]' ).val( latlng.lat() );
 				$( 'input[data-geo=lng]' ).val( latlng.lng() );
 				$info.val( latlng.lat() + ', ' + latlng.lng() );
@@ -52,16 +52,14 @@
 
 		// Map styles.
 		if ( CherryREGeocompleteData.hasOwnProperty( 'styles' ) && ( 'string' === typeof CherryREGeocompleteData.styles ) ) {
-			styles = $.parseJSON( CherryREGeocompleteData.styles );
-			styledMapType = new google.maps.StyledMapType( styles, { name: "Styled Map" } );
+			styles        = $.parseJSON( CherryREGeocompleteData.styles );
+			styledMapType = new google.maps.StyledMapType( styles, { name: 'Styled Map' } );
 
 			if ( styledMapType instanceof google.maps.StyledMapType ) {
 				map.mapTypes.set( 'map_style', styledMapType );
 				map.setMapTypeId( 'map_style' );
 			}
 		}
-
-		// console.log(map.getZoom());
 	} );
 
 })( document, jQuery );
