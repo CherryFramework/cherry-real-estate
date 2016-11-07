@@ -578,6 +578,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 
 			$this->add_user_roles();
 			$this->update_caps();
+			flush_rewrite_rules();
 
 			do_action( 'cherry_re_plugin_activation' );
 		}
@@ -589,6 +590,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		 */
 		public function deactivation() {
 			$this->remove_user_roles();
+			flush_rewrite_rules();
 
 			do_action( 'cherry_re_plugin_deactivation' );
 		}
