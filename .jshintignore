@@ -19,3 +19,5 @@ assets/js/magnific-popup/*.js
 assets/js/swiper/*.js
 assets/js/validate/*.js
 assets/js/*.min.js
+admin/assets/js/geocomplete/jquery.geocomplete.js
+admin/assets/js/geocomplete/*.min.js

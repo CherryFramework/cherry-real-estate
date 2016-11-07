@@ -102,6 +102,9 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			add_action( 'after_setup_theme', array( $this, 'get_core' ), 1 );
 			add_action( 'after_setup_theme', array( 'Cherry_Core', 'load_all_modules' ), 2 );
 
+			// Adds supported features.
+			add_action( 'after_setup_theme', array( $this, 'support' ), 9 );
+
 			// Initialization of Cherry's modules.
 			add_action( 'after_setup_theme', array( $this, 'launch' ), 10 );
 
@@ -208,6 +211,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			if ( is_admin() ) {
 				include_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-cherry-re-options-page.php' );
 				include_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-meta-box-authors.php' );
+				include_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-meta-box-location.php' );
 			}
 		}
 
@@ -268,6 +272,15 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		}
 
 		/**
+		 * Adds supported features.
+		 *
+		 * @since 1.1.0
+		 */
+		public function support() {
+			add_theme_support( 'cherry-real-estate-geodata' );
+		}
+
+		/**
 		 * Run initialization of modules.
 		 *
 		 * @since 1.0.0
@@ -277,6 +290,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 
 			$this->get_core()->init_module( 'cherry-js-core' );
 			$this->get_core()->init_module( 'cherry-post-meta', array(
+				'id'     => 'cherry-re-property-data',
 				'title'  => esc_html__( 'Property Data', 'cherry-real-estate' ),
 				'page'   => array( $this->get_post_type_name() ),
 				'fields' => array(
@@ -302,12 +316,6 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 						'name'    => $prefix . 'status',
 						'title'   => esc_html__( 'Property status', 'cherry-real-estate' ),
 						'options' => Model_Properties::get_allowed_property_statuses(),
-					),
-					$prefix . 'location' => array(
-						'type'  => 'text',
-						'id'    => $prefix . 'location',
-						'name'  => $prefix . 'location',
-						'title' => esc_html__( 'Location', 'cherry-real-estate' ),
 					),
 					$prefix . 'bedrooms' => array(
 						'type'       => 'stepper',

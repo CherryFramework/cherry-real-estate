@@ -535,6 +535,23 @@ class Cherry_RE_Template_Callbacks {
 	}
 
 	/**
+	 * Get property coordinates.
+	 *
+	 * @since  1.1.0
+	 * @return string
+	 */
+	public function get_property_latlng() {
+		$lat = $this->get_the_property_data( 'latitude' );
+		$lng = $this->get_the_property_data( 'longitude' );
+
+		if ( ! ( $lat && $lng ) ) {
+			return;
+		}
+
+		return array( $lat, $lng );
+	}
+
+	/**
 	 * Get property bedrooms.
 	 *
 	 * @since  1.0.0

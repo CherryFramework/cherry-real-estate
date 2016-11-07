@@ -151,7 +151,7 @@ class Cherry_RE_Meta_Box_Authors {
 	}
 
 	/**
-	 * Saves the custom post meta for the menu item.
+	 * Saves the custom post meta.
 	 *
 	 * @since  1.0.0
 	 * @access public
@@ -184,8 +184,6 @@ class Cherry_RE_Meta_Box_Authors {
 		if ( 'revision' == $post->post_type ) {
 			return;
 		}
-
-		$prefix = cherry_real_estate()->get_meta_prefix();
 
 		$meta = array(
 			$this->get_meta_key() => intval( strip_tags( $_POST[ $this->get_meta_key() ] ) ),
