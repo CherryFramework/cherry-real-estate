@@ -123,7 +123,7 @@ class Cherry_RE_Options_Page {
 						'desc'    => sprintf(
 							'%1$s<br>%2$s',
 							esc_html__( "Agency &mdash; all property submissions are assigned to real estate agents by administrator. Property owner information won't be visible for site visitors.", 'cherry-real-estate' ),
-							esc_html__( "Portal &mdash; all property submissions are assigned to property owners. Site visitors will be able to contact property owners directly.", 'cherry-real-estate' )
+							esc_html__( 'Portal &mdash; all property submissions are assigned to property owners. Site visitors will be able to contact property owners directly.', 'cherry-real-estate' )
 						),
 						'options' => array(
 							'agency' => esc_html__( 'Agency', 'cherry-real-estate' ),
