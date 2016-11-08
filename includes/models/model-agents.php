@@ -251,7 +251,17 @@ class Model_Agents {
 		$type      = get_post_type_object( $post_type );
 		$caps      = $type->cap->delete_published_posts;
 
-		// Output only for RE agents.
+		// Don't output if portal mode enabled.
+		if ( 'portal' == Model_Settings::get_mode() ) {
+			return false;
+		}
+
+		// Don't output on admin profile.
+		if ( user_can( $user, 'administrator' ) ) {
+			return false;
+		}
+
+		// Output only for RE agents profile.
 		if ( ! user_can( $user, $caps ) ) {
 			return false;
 		}
@@ -341,6 +351,12 @@ class Model_Agents {
 	 * @param int $user_id The user ID.
 	 */
 	public function _save_trusted( $user_id ) {
+
+		// Don't use if portal mode enabled.
+		if ( 'portal' == Model_Settings::get_mode() ) {
+			return false;
+		}
+
 		$post_type = cherry_real_estate()->get_post_type_name();
 		$type      = get_post_type_object( $post_type );
 		$caps      = $type->cap->edit_posts;
@@ -589,6 +605,12 @@ class Model_Agents {
 	 * @return mixed
 	 */
 	public static function get_agent_trust( $agent_id ) {
+
+		// If portal mode enabled - always admin approved a new property.
+		if ( 'portal' == Model_Settings::get_mode() ) {
+			return false;
+		}
+
 		$prefix = cherry_real_estate()->get_meta_prefix();
 
 		return get_the_author_meta( $prefix . 'agent_trust', $agent_id );
