@@ -112,6 +112,25 @@ class Cherry_RE_Options_Page {
 	public function get_options() {
 		return apply_filters( 'cherry_re_plugin_options', array(
 			'cherry-re-options-main' => array(
+				'mode' => array(
+					'slug'  => 'mode',
+					'type'  => 'select',
+					'title' => esc_html__( 'Mode', 'cherry-real-estate' ),
+					'field' => array(
+						'id'      => 'mode',
+						'size'    => 1,
+						'value'   => 'agency',
+						'desc'    => sprintf(
+							'%1$s<br>%2$s',
+							esc_html__( "Agency &mdash; all property submissions are assigned to real estate agents by administrator. Property owner information won't be visible for site visitors.", 'cherry-real-estate' ),
+							esc_html__( 'Portal &mdash; all property submissions are assigned to property owners. Site visitors will be able to contact property owners directly.', 'cherry-real-estate' )
+						),
+						'options' => array(
+							'agency' => esc_html__( 'Agency', 'cherry-real-estate' ),
+							'portal' => esc_html__( 'Portal', 'cherry-real-estate' ),
+						),
+					),
+				),
 				'area-unit' => array(
 					'slug'  => 'area-unit',
 					'type'  => 'select',

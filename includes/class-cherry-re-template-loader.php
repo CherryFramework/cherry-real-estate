@@ -133,6 +133,22 @@ class Cherry_RE_Templater {
 
 			// CSS class.
 			self::$classes[] = 'tm-property--agent';
+
+		} elseif ( cherry_re_is_contributor() ) {
+
+			$file = 're-agent.php';
+
+			$find[] = 're-contributor.php';
+			$find[] = cherry_real_estate()->template_path() . 're-contributor.php';
+
+			$find[] = $file;
+			$find[] = cherry_real_estate()->template_path() . $file;
+
+			$find[] = 'archive-property.php';
+			$find[] = cherry_real_estate()->template_path() . 'archive-property.php';
+
+			// CSS class.
+			self::$classes[] = 'tm-property--agent tm-property--contributor';
 		}
 
 		if ( $file ) {

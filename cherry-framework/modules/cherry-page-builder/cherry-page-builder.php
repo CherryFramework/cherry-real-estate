@@ -361,6 +361,10 @@ if ( ! class_exists( 'Cherry_Page_Builder' ) ) {
 				// Display the field.
 				echo $ui_element->render();
 			}
+
+			if ( ! empty( $setting['field']['desc'] ) ) {
+				printf( '<p class="description">%s</p>', $setting['field']['desc'] );
+			}
 		}
 
 		/**

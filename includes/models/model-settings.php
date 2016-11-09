@@ -68,6 +68,18 @@ class Model_Settings {
 	}
 
 	/**
+	 * Get plugin mode.
+	 *
+	 * @since  1.1.0
+	 * @return string
+	 */
+	public static function get_mode() {
+		$main_settings = self::get_main_settings();
+
+		return ! empty( $main_settings['mode'] ) ? $main_settings['mode'] : 'agency';
+	}
+
+	/**
 	 * Get are unit.
 	 *
 	 * @since 1.0.0
