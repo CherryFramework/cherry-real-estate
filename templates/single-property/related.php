@@ -41,18 +41,20 @@ if ( 'price' == $related_by ) {
 	$max_range   = ( 100 + $price_range ) / 100; // +$price_range (%)
 	$price_key   = cherry_real_estate()->get_meta_prefix() . 'price';
 
-	$meta_query = array( array(
-		'relation' => 'OR',
+	$meta_query = array(
 		array(
-			'key'   => $price_key,
-			'value' => array(
-				(float) get_post_meta( $property_id, $price_key, true ) * $min_range,
-				(float) get_post_meta( $property_id, $price_key, true ) * $max_range,
+			'relation' => 'OR',
+			array(
+				'key'   => $price_key,
+				'value' => array(
+					(float) get_post_meta( $property_id, $price_key, true ) * $min_range,
+					(float) get_post_meta( $property_id, $price_key, true ) * $max_range,
+				),
+				'compare' => 'BETWEEN',
+				'type'    => 'DECIMAL',
 			),
-			'compare' => 'BETWEEN',
-			'type'    => 'DECIMAL',
 		),
-	) );
+	);
 
 	$query_args = wp_parse_args( $query_args, array(
 		'meta_query' => $meta_query,
