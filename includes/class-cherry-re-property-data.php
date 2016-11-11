@@ -289,6 +289,7 @@ class Cherry_RE_Property_Data {
 		}
 
 		$state_query = array(
+			'relation' => 'AND',
 			array(
 				'key'     => cherry_real_estate()->get_meta_prefix() . 'state',
 				'value'   => $args['state'],
