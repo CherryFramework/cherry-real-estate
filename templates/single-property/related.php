@@ -16,9 +16,14 @@ $heading = esc_html( apply_filters(
 	esc_html__( 'Related Properties', 'cherry-real-estate' )
 ) );
 
-$property_id    = get_the_ID();
-$related_by     = Model_Settings::get_related_by();
 $related_amount = absint( Model_Settings::get_related_amount() );
+
+if ( 0 === $related_amount ) {
+	return;
+}
+
+$property_id = get_the_ID();
+$related_by  = Model_Settings::get_related_by();
 
 if ( ! in_array( $related_by, array( 'price', 'author' ) ) ) {
 	$related_by = 'author';

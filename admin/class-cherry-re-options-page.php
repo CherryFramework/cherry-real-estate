@@ -214,7 +214,7 @@ class Cherry_RE_Options_Page {
 					'field' => array(
 						'id'         => 'related_posts_price_range',
 						'max_value'  => '100',
-						'min_value'  => '0',
+						'min_value'  => '1',
 						'step_value' => '1',
 						'value'      => '20',
 					),
