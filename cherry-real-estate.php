@@ -49,14 +49,6 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		private $core = null;
 
 		/**
-		 * Default options.
-		 *
-		 * @since 1.0.0
-		 * @var array
-		 */
-		private static $default_options = array();
-
-		/**
 		 * The post type name.
 		 *
 		 * @since 1.0.0
