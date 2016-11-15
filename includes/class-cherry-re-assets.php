@@ -61,7 +61,8 @@ class Cherry_RE_Assets {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ), 0 );
 
 		// Google Map API - fix conflict.
-		add_action( 'wp_footer', array( __CLASS__, 'googleapis_conflict' ), 11 );
+		add_action( 'wp_footer',    array( __CLASS__, 'googleapis_conflict' ), 11 );
+		add_action( 'admin_footer', array( __CLASS__, 'googleapis_conflict' ), 11 );
 	}
 
 	/**
