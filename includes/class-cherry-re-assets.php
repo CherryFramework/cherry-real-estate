@@ -190,7 +190,7 @@ class Cherry_RE_Assets {
 		$data = apply_filters( 'cherry_re_main_data_script', array(
 			'ajaxurl'           => esc_url( admin_url( 'admin-ajax.php' ) ),
 			'popupid'           => esc_attr( Model_Submit_Form::get_popup_id() ),
-			'js_field_html_img' => esc_js( str_replace( PHP_EOL, '', $js_field_html_img ) ),
+			'js_field_html_img' => esc_js( str_replace( "\n", '', $js_field_html_img ) ),
 			'sortName'          => 'properties_sort',
 			'messages'          => array(
 				'required' => esc_html_x(
