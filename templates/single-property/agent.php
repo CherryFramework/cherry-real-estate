@@ -32,7 +32,7 @@ $photo = $callbacks->get_agent_photo( apply_filters( 'cherry_re_single_property_
 ) ) );
 
 $name = $callbacks->get_agent_name( apply_filters( 'cherry_re_single_property_agent_name_args', array(
-	'wrap'  => 'h1',
+	'wrap'  => 'h6',
 	'class' => 'tm-agent-info__title',
 	'link'  => false,
 ) ) );

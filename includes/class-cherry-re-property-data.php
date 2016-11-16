@@ -207,16 +207,18 @@ class Cherry_RE_Property_Data {
 	 * Get properties.
 	 *
 	 * @since  1.0.0
+	 * @since  1.1.0 Added `ignore_sticky_posts` default argunemt.
 	 * @param  array $args Arguments to be passed to the query.
 	 * @return array|bool  Array if true, boolean if false.
 	 */
 	public function get_properties( $args = array() ) {
 		$defaults = array(
-			'number'   => 5,
-			'orderby'  => 'date',
-			'order'    => 'desc',
-			'ids'      => 0,
-			'state'    => 'active',
+			'number'              => 5,
+			'orderby'             => 'date',
+			'order'               => 'desc',
+			'ids'                 => 0,
+			'state'               => 'active',
+			'ignore_sticky_posts' => false,
 		);
 
 		$args = wp_parse_args( $args, $defaults );
@@ -231,14 +233,19 @@ class Cherry_RE_Property_Data {
 
 		// The Query Arguments.
 		$post_type = cherry_real_estate()->get_post_type_name();
-		$query_args['post_type']        = $post_type;
-		$query_args['posts_per_page']   = $args['number'];
-		$query_args['orderby']          = $args['orderby'];
-		$query_args['order']            = $args['order'];
-		$query_args['suppress_filters'] = false;
+		$query_args['post_type']           = $post_type;
+		$query_args['posts_per_page']      = $args['number'];
+		$query_args['orderby']             = $args['orderby'];
+		$query_args['order']               = $args['order'];
+		$query_args['suppress_filters']    = false;
+		$query_args['ignore_sticky_posts'] = $args['ignore_sticky_posts'];
 
 		if ( ! empty( $args['author'] ) ) {
 			$query_args['author'] = $args['author'];
+		}
+
+		if ( ! empty( $args['post__not_in'] ) ) {
+			$query_args['post__not_in'] = $args['post__not_in'];
 		}
 
 		// Tax Query.
@@ -282,6 +289,7 @@ class Cherry_RE_Property_Data {
 		}
 
 		$state_query = array(
+			'relation' => 'AND',
 			array(
 				'key'     => cherry_real_estate()->get_meta_prefix() . 'state',
 				'value'   => $args['state'],

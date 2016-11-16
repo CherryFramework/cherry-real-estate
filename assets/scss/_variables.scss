@@ -1,9 +1,14 @@
-$property-border: 1px solid rgba( 0, 0, 0, 0.2 );
-$map-height: 400px;
+$property-border:    1px solid rgba( 0, 0, 0, 0.2 );
+$map-height:         400px;
 $sidebar-map-height: 600px;
-$gap-size: 40px;
+$gap-size:           40px;
 
-/* Colors */
+// Colors
 $black: #222222;
 $white: #ffffff;
-$blue: #00afff;
+$blue:  #00afff;
+
+// Grid
+$gutter-width:  30px;
+$tablet-width:  768px;
+$desktop-width: 1200px;

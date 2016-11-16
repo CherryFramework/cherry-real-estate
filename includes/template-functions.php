@@ -137,12 +137,24 @@ if ( ! function_exists( 'cherry_real_estate_property_map' ) ) {
 if ( ! function_exists( 'cherry_real_estate_property_agent' ) ) {
 
 	/**
-	 * Output the property map.
+	 * Output the property agent.
 	 *
 	 * @since 1.0.0
 	 */
 	function cherry_real_estate_property_agent( $callbacks ) {
 		cherry_re_get_template( 'single-property/agent', array( 'callbacks' => $callbacks ) );
+	}
+}
+
+if ( ! function_exists( 'cherry_real_estate_property_related' ) ) {
+
+	/**
+	 * Output the related properties.
+	 *
+	 * @since 1.1.0
+	 */
+	function cherry_real_estate_property_related() {
+		cherry_re_get_template( 'single-property/related' );
 	}
 }
 

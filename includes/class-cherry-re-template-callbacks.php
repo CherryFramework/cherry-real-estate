@@ -745,7 +745,7 @@ class Cherry_RE_Template_Callbacks {
 		$args = wp_parse_args( $args, array(
 			'wrap'  => 'div',
 			'class' => '',
-			'size'  => ! empty( $this->atts['image_size'] ) ? esc_attr( $this->atts['image_size'] ) : 'thumbnail',
+			'size'  => ! empty( $this->atts['image_size'] ) ? esc_attr( $this->atts['image_size'] ) : 'post-thumbnail',
 			'link'  => true,
 		) );
 

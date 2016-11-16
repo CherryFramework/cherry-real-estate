@@ -68,6 +68,16 @@ class Model_Settings {
 	}
 
 	/**
+	 * Get settings for Related posts.
+	 *
+	 * @since 1.1.0
+	 * @return mixed
+	 */
+	public static function get_related_settings() {
+		return get_option( 'cherry-re-options-related-posts' );
+	}
+
+	/**
 	 * Get plugin mode.
 	 *
 	 * @since  1.1.0
@@ -355,7 +365,43 @@ class Model_Settings {
 	public static function get_listing_per_page() {
 		$listing_options = self::get_listing_settings();
 
-		return ! empty( $listing_options['posts_per_page'] ) ? $listing_options['posts_per_page'] : 10;
+		return isset( $listing_options['posts_per_page'] ) ? $listing_options['posts_per_page'] : 10;
+	}
+
+	/**
+	 * Get related posts amount.
+	 *
+	 * @since 1.1.0
+	 * @return string
+	 */
+	public static function get_related_amount() {
+		$related_options = self::get_related_settings();
+
+		return isset( $related_options['related_posts_amount'] ) ? $related_options['related_posts_amount'] : 2;
+	}
+
+	/**
+	 * Get related posts by.
+	 *
+	 * @since 1.1.0
+	 * @return string
+	 */
+	public static function get_related_by() {
+		$related_options = self::get_related_settings();
+
+		return ! empty( $related_options['related_posts_query'] ) ? $related_options['related_posts_query'] : 'author';
+	}
+
+	/**
+	 * Get related posts by.
+	 *
+	 * @since 1.1.0
+	 * @return string
+	 */
+	public static function get_related_price_range() {
+		$related_options = self::get_related_settings();
+
+		return isset( $related_options['related_posts_price_range'] ) ? $related_options['related_posts_price_range'] : '20';
 	}
 
 	/**
