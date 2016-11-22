@@ -60,6 +60,10 @@ class Cherry_RE_Assets {
 		add_action( 'wp_enqueue_scripts',    array( $this, 'enqueue_public_styles' ), 9 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ), 0 );
 
+		// Move Google Map API script to the footer (only on backend) - fix for plugin like a `dsIDXpress` etc.
+		add_action( 'admin_print_scripts-post.php',     array( __CLASS__, 'googleapis_to_footer' ), 10 );
+		add_action( 'admin_print_scripts-post-new.php', array( __CLASS__, 'googleapis_to_footer' ), 10 );
+
 		// Google Map API - fix conflict.
 		add_action( 'wp_footer',    array( __CLASS__, 'googleapis_conflict' ), 11 );
 		add_action( 'admin_footer', array( __CLASS__, 'googleapis_conflict' ), 11 );
@@ -343,7 +347,7 @@ class Cherry_RE_Assets {
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
 		wp_register_script(
-			'google-maps-js-api-places-library',
+			self::get_googleapis_handle(),
 			esc_url( Cherry_RE_Tools::get_google_map_url( array(
 				'libraries' => 'places',
 			) ) ),
@@ -355,7 +359,7 @@ class Cherry_RE_Assets {
 		wp_register_script(
 			'jquery-geocomplete',
 			plugins_url( "/admin/assets/js/geocomplete/jquery.geocomplete{$suffix}.js", CHERRY_REAL_ESTATE_MAIN_FILE ),
-			array( 'jquery', 'google-maps-js-api-places-library' ),
+			array( 'jquery' ),
 			'1.7.0',
 			true
 		);
@@ -499,14 +503,58 @@ class Cherry_RE_Assets {
 	}
 
 	/**
+	 * Move Google Map API script to the footer.
+	 *
+	 * @since 1.1.0
+	 */
+	public static function googleapis_to_footer() {
+		$current_screen = get_current_screen();
+		$post_type_name = cherry_real_estate()->get_post_type_name();
+
+		if ( empty( $current_screen->post_type ) || $post_type_name !== $current_screen->post_type ) {
+			return;
+		}
+
+		$pre = apply_filters( 'cherry_re_admin_pre_googleapis_to_footer', false );
+
+		if ( false !== $pre ) {
+			return;
+		}
+
+		global $wp_scripts;
+
+		foreach ( $wp_scripts->registered as $r ) {
+
+			if ( self::get_googleapis_handle() == $r->handle ) {
+				continue;
+			}
+
+			if ( preg_match( '/maps.google.com/i', $r->src ) || preg_match( '/maps.googleapis.com/i', $r->src ) ) {
+
+				if ( empty( $r->extra['group'] ) ) {
+					$r->extra = array_merge( $r->extra, array( 'group' => 1 ) );
+				}
+			}
+		}
+	}
+
+	/**
 	 * Solution for including a Google Map API javascript.
 	 *
 	 * @since 1.0.0
 	 */
 	public static function googleapis_conflict() {
-		$remove_fix = apply_filters( 'cherry_re_remove_googleapis_conflict', false );
 
-		if ( false !== $remove_fix ) {
+		if ( 'wp_footer' == current_filter() ) {
+			$filter_name = 'cherry_re_public_pre_googleapis_conflict';
+
+		} else {
+			$filter_name = 'cherry_re_admin_pre_googleapis_conflict';
+		}
+
+		$pre = apply_filters( $filter_name, false );
+
+		if ( false !== $pre ) {
 			return;
 		}
 
@@ -522,6 +570,7 @@ class Cherry_RE_Assets {
 
 				if ( in_array( $r->handle, $wp_scripts->done ) ) {
 					wp_dequeue_script( self::get_googleapis_handle() );
+					continue;
 				}
 
 				if ( in_array( $r->handle, $wp_scripts->queue ) ) {

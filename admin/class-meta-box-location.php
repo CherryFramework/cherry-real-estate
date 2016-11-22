@@ -195,6 +195,7 @@ class Cherry_RE_Meta_Box_Location {
 	 */
 	public function enqueue_assets() {
 		wp_enqueue_style( 'cherry-re-admin-style' );
+		wp_enqueue_script( Cherry_RE_Assets::get_googleapis_handle() );
 		wp_enqueue_script( 'cherry-re-geocomplete-init' );
 	}
 
