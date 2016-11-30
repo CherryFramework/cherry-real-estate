@@ -40,7 +40,9 @@
 				$info.val( latlng.lat() + ', ' + latlng.lng() );
 			} )
 			.on( 'geocode:idle', function( event, latlng ) {
-				$info.val( latlng.lat() + ', ' + latlng.lng() );
+				if ( ! $info.val() && ( latlng instanceof google.maps.LatLng ) ) {
+					$info.val( latlng.lat() + ', ' + latlng.lng() );
+				}
 			} );
 
 		// Get map object.
