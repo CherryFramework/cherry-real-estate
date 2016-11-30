@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cherry Real Estate\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/plugins/plugin-name\n"
-"POT-Creation-Date: 2016-08-09 11:14+0300\n"
+"POT-Creation-Date: 2016-11-30 14:02+0200\n"
 "PO-Revision-Date: 2014-08-20 15:31+0200\n"
 "Last-Translator: FULL NAME <email@example.com>\n"
 "Language-Team: Cherry Team <translations@example.com >\n"
@@ -13,278 +13,289 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 1.8.11\n"
 "X-Poedit-KeywordsList: __;_e;_n;_x;esc_html_e;esc_html__;esc_attr_e;"
 "esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_x:1,2c;_n:1,2\n"
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../admin/class-cherry-re-options-page.php:58
-msgid "Settings"
-msgstr ""
-
-#: ../admin/class-cherry-re-options-page.php:79
-msgid "Main"
-msgstr ""
-
-#: ../admin/class-cherry-re-options-page.php:83
-#: ../templates/single-property/map.php:24
-msgid "Map"
-msgstr ""
-
-#: ../admin/class-cherry-re-options-page.php:87
-msgid "E-mails"
-msgstr ""
-
-#: ../admin/class-cherry-re-options-page.php:104
-msgid "Area unit"
-msgstr ""
-
-#: ../admin/class-cherry-re-options-page.php:115
-msgid "Currency"
-msgstr ""
-
-#: ../admin/class-cherry-re-options-page.php:124
-msgid "Currency Position"
-msgstr ""
-
-#: ../admin/class-cherry-re-options-page.php:130
-msgid "Left"
-msgstr ""
-
-#: ../admin/class-cherry-re-options-page.php:131
-msgid "Right"
-msgstr ""
-
-#: ../admin/class-cherry-re-options-page.php:132
-msgid "Left with space"
-msgstr ""
-
-#: ../admin/class-cherry-re-options-page.php:133
-msgid "Right with space"
-msgstr ""
-
-#: ../admin/class-cherry-re-options-page.php:140
-msgid "Thousand Separator"
-msgstr ""
-
-#: ../admin/class-cherry-re-options-page.php:149
-msgid "Decimal Separator"
-msgstr ""
-
-#: ../admin/class-cherry-re-options-page.php:158
-msgid "Number of Decimals"
-msgstr ""
-
-#: ../admin/class-cherry-re-options-page.php:168
-msgid "Api Key"
-msgstr ""
-
-#: ../admin/class-cherry-re-options-page.php:177
-msgid "Style"
-msgstr ""
-
-#: ../admin/class-cherry-re-options-page.php:186
-msgid "Marker"
-msgstr ""
-
-#: ../admin/class-cherry-re-options-page.php:192
-msgid "Upload"
-msgstr ""
-
-#: ../admin/class-cherry-re-options-page.php:199
-msgid "Confirm E-mail subject"
-msgstr ""
-
-#: ../admin/class-cherry-re-options-page.php:203
-msgid "Confirmation e-mail"
-msgstr ""
-
-#: ../admin/class-cherry-re-options-page.php:208
-msgid "Confirm E-mail message"
-msgstr ""
-
-#: ../admin/class-cherry-re-options-page.php:212
-msgid ""
-"Hi. You submit a new property. Please, to confirm your ads go to "
-"the link "
-msgstr ""
-
-#: ../admin/class-cherry-re-options-page.php:217
-msgid "Notification E-mail subject"
-msgstr ""
-
-#: ../admin/class-cherry-re-options-page.php:221
-msgid "Notification e-mail"
-msgstr ""
-
-#: ../admin/class-cherry-re-options-page.php:226
-msgid "Notification E-mail message"
-msgstr ""
-
-#: ../admin/class-cherry-re-options-page.php:230
-msgid ""
-"Your request has been successfully queued for moderation. Expect an "
-"e-mail on the publication of your propery."
-msgstr ""
-
-#: ../admin/class-cherry-re-options-page.php:235
-msgid "Congratulation E-mail subject"
-msgstr ""
-
-#: ../admin/class-cherry-re-options-page.php:239
-msgid "Congratulation e-mail"
-msgstr ""
-
-#: ../admin/class-cherry-re-options-page.php:244
-msgid "Congratulation E-mail message"
-msgstr ""
-
-#: ../admin/class-cherry-re-options-page.php:248
-msgid "Congratulations! Your property has been published."
-msgstr ""
-
-#: ../cherry-real-estate.php:247
+#: ../admin/class-cherry-re-admin.php:64
 msgid "Property Data"
 msgstr ""
 
-#: ../cherry-real-estate.php:255
+#: ../admin/class-cherry-re-admin.php:71
 msgid "State of progress"
 msgstr ""
 
-#: ../cherry-real-estate.php:266
-#: ../templates/shortcodes/submit_form/form.php:29
-#: ../templates/widgets/search/form.php:67
+#: ../admin/class-cherry-re-admin.php:81
+#: ../admin/class-cherry-re-options-page.php:223
+#: ../templates/widgets/search/form.php:78
+#: ../widgets/class-cherry-re-properties-widget.php:122
 msgid "Price"
 msgstr ""
 
-#: ../cherry-real-estate.php:273
-#: ../templates/widgets/search/form.php:39
+#: ../admin/class-cherry-re-admin.php:87
+#: ../templates/widgets/search/form.php:40
 msgid "Property status"
 msgstr ""
 
-#: ../cherry-real-estate.php:281
-#: ../templates/widgets/search/form.php:62
-msgid "Location"
-msgstr ""
-
-#: ../cherry-real-estate.php:291
-#: ../templates/shortcodes/submit_form/form.php:66
-#: ../templates/widgets/search/form.php:75
+#: ../admin/class-cherry-re-admin.php:97
+#: ../templates/shortcodes/submission_form/form.php:66
+#: ../templates/widgets/search/form.php:86
 msgid "Bedrooms"
 msgstr ""
 
-#: ../cherry-real-estate.php:301
-#: ../templates/shortcodes/submit_form/form.php:71
-#: ../templates/widgets/search/form.php:83
+#: ../admin/class-cherry-re-admin.php:106
+#: ../templates/shortcodes/submission_form/form.php:71
+#: ../templates/widgets/search/form.php:94
 msgid "Bathrooms"
 msgstr ""
 
-#: ../cherry-real-estate.php:311
-#: ../templates/shortcodes/submit_form/form.php:76
-#: ../templates/widgets/search/form.php:91
+#: ../admin/class-cherry-re-admin.php:115
+#: ../templates/widgets/search/form.php:102
 msgid "Area"
 msgstr ""
 
-#: ../cherry-real-estate.php:320
-#: ../templates/shortcodes/submit_form/form.php:81
+#: ../admin/class-cherry-re-admin.php:123
+#: ../templates/shortcodes/submission_form/form.php:81
 msgid "Parking places"
 msgstr ""
 
-#: ../cherry-real-estate.php:327
+#: ../admin/class-cherry-re-admin.php:130
+#: ../templates/shortcodes/submission_form/form.php:92
 msgid "Gallery"
 msgstr ""
 
-#: ../cherry-real-estate.php:446
+#: ../admin/class-cherry-re-admin.php:135
+msgid "State"
+msgstr ""
+
+#: ../admin/class-cherry-re-admin.php:140
+#: ../templates/shortcodes/submission_form/form.php:29
+#, php-format
+msgid "Price, %s"
+msgstr ""
+
+#: ../admin/class-cherry-re-admin.php:145
+#: ../templates/shortcodes/submission_form/form.php:43
+msgid "Status"
+msgstr ""
+
+#: ../admin/class-cherry-re-admin.php:150
+msgid "Featured Image"
+msgstr ""
+
+#: ../admin/class-cherry-re-meta-box-authors.php:72
+#: ../admin/class-cherry-re-options-page.php:222
+msgid "Author"
+msgstr ""
+
+#: ../admin/class-cherry-re-meta-box-location.php:59
+#: ../templates/widgets/search/form.php:67
+msgid "Location"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:68
+#: ../cherry-real-estate.php:596
+msgid "Settings"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:89
+msgid "Main"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:93
+msgid "Listing"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:97
+msgid "Related"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:101
+#: ../templates/single-property/map.php:26
+msgid "Map"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:105
+msgid "E-mails"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:122
+msgid "Mode"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:129
+msgid ""
+"Agency &mdash; all property submissions are assigned to real estate "
+"agents by administrator. Property owner information won't be "
+"visible for site visitors."
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:130
+msgid ""
+"Portal &mdash; all property submissions are assigned to property "
+"owners. Site visitors will be able to contact property owners "
+"directly."
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:133
+msgid "Agency"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:134
+msgid "Portal"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:141
+msgid "Area unit"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:152
+msgid "Currency"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:161
+msgid "Currency Position"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:167
+msgid "Left"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:168
+msgid "Right"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:169
+msgid "Left with space"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:170
+msgid "Right with space"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:177
+msgid "Thousand Separator"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:186
+msgid "Decimal Separator"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:195
+msgid "Number of Decimals"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:205
+msgid "Amount"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:217
+msgid "By"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:232
+msgid "Price Range, in % (+/-)"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:245
+msgid "Api Key"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:254
+msgid "Style"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:263
+msgid "Marker"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:269
+#: ../includes/models/model-agents.php:217
+#: ../templates/form-fields/uploaded-file-html.php:20
+msgid "Upload"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:276
+msgid "Notification E-mail subject"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:280
+msgid "Notification e-mail"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:285
+msgid "Notification E-mail message"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:289
+msgid ""
+"Your request has been successfully queued for moderation. Expect an "
+"e-mail on the publication of your property."
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:294
+msgid "Congratulation E-mail subject"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:298
+msgid "Congratulation e-mail"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:303
+msgid "Congratulation E-mail message"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:307
+msgid "Congratulations! Your property has been published."
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:314
+msgid "Page"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:325
+msgid "Layout"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:330
+#: ../templates/misc/switch-layout.php:22
+msgid "Grid"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:331
+#: ../templates/misc/switch-layout.php:23
+msgid "List"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:339
+msgid "Listings Per Page"
+msgstr ""
+
+#: ../admin/class-cherry-re-options-page.php:435
+msgid "&mdash;&nbsp;Select&nbsp;&mdash;"
+msgstr ""
+
+#: ../cherry-real-estate.php:376
 msgid "RE Agent"
 msgstr ""
 
-#: ../cherry-real-estate.php:515
+#: ../cherry-real-estate.php:377
+msgid "RE Contributor"
+msgstr ""
+
+#: ../cherry-real-estate.php:533
 msgid "Properties search"
 msgstr ""
 
-#: ../cherry-real-estate.php:548
+#: ../cherry-real-estate.php:566
 msgid "Properties search results"
 msgstr ""
 
-#: ../includes/class-cherry-re-agent-data.php:283
-msgctxt "previous post"
-msgid "Previous"
-msgstr ""
-
-#: ../includes/class-cherry-re-agent-data.php:284
-msgctxt "next post"
-msgid "Next"
-msgstr ""
-
-#: ../includes/class-cherry-re-agent-data.php:285
+#: ../includes/class-cherry-re-agent-data.php:286
 msgid "Posts navigation"
-msgstr ""
-
-#: ../includes/class-cherry-re-assets.php:124
-msgid "This field is required"
-msgstr ""
-
-#: ../includes/class-cherry-re-assets.php:129
-msgid "Please fix this field"
-msgstr ""
-
-#: ../includes/class-cherry-re-assets.php:134
-msgid "Please enter a valid email address"
-msgstr ""
-
-#: ../includes/class-cherry-re-assets.php:139
-msgid "Please enter a valid URL"
-msgstr ""
-
-#: ../includes/class-cherry-re-assets.php:144
-msgid "Please enter a valid date"
-msgstr ""
-
-#: ../includes/class-cherry-re-assets.php:149
-#: ../includes/class-cherry-re-assets.php:154
-msgid "Please enter a valid date ( ISO )"
-msgstr ""
-
-#: ../includes/class-cherry-re-assets.php:159
-msgid "Please enter a valid number"
-msgstr ""
-
-#: ../includes/class-cherry-re-assets.php:164
-msgid "Please enter only digits"
-msgstr ""
-
-#: ../includes/class-cherry-re-assets.php:169
-msgid "Please enter the same value again"
-msgstr ""
-
-#: ../includes/class-cherry-re-assets.php:174
-msgid "Please enter no more than {0} characters"
-msgstr ""
-
-#: ../includes/class-cherry-re-assets.php:179
-msgid "Please enter at least {0} characters"
-msgstr ""
-
-#: ../includes/class-cherry-re-assets.php:184
-msgid "Please enter a value between {0} and {1} characters long"
-msgstr ""
-
-#: ../includes/class-cherry-re-assets.php:189
-msgid "Please enter a value between {0} and {1}"
-msgstr ""
-
-#: ../includes/class-cherry-re-assets.php:194
-msgid "Please enter a value less than or equal to {0}"
-msgstr ""
-
-#: ../includes/class-cherry-re-assets.php:199
-msgid "Please enter a value greater than or equal to {0}"
-msgstr ""
-
-#: ../includes/class-cherry-re-assets.php:204
-msgid "Please enter a multiple of {0}"
 msgstr ""
 
 #: ../includes/class-cherry-re-registration.php:48
@@ -342,184 +353,187 @@ msgstr ""
 msgid "Properties list"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:174
+#: ../includes/class-cherry-re-registration.php:148
 msgid "Property Types"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:175
+#: ../includes/class-cherry-re-registration.php:149
 msgid "Property Type"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:176
+#: ../includes/class-cherry-re-registration.php:150
+#: ../widgets/class-cherry-re-properties-widget.php:58
 msgid "Types"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:177
-#: ../templates/shortcodes/submit_form/form.php:59
+#: ../includes/class-cherry-re-registration.php:151
+#: ../templates/shortcodes/submission_form/form.php:59
 msgid "Type"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:178
+#: ../includes/class-cherry-re-registration.php:152
 msgid "Search Types"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:179
+#: ../includes/class-cherry-re-registration.php:153
 msgid "Popular Types"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:180
+#: ../includes/class-cherry-re-registration.php:154
 msgid "All Types"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:181
+#: ../includes/class-cherry-re-registration.php:155
 msgid "Edit Type"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:182
+#: ../includes/class-cherry-re-registration.php:156
 msgid "View Type"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:183
+#: ../includes/class-cherry-re-registration.php:157
 msgid "Update Type"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:184
+#: ../includes/class-cherry-re-registration.php:158
 msgid "Add New Type"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:185
+#: ../includes/class-cherry-re-registration.php:159
 msgid "New Type Name"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:186
-#: ../includes/class-cherry-re-registration.php:236
+#: ../includes/class-cherry-re-registration.php:160
+#: ../includes/class-cherry-re-registration.php:210
 msgid "Separate tags with commas"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:187
-#: ../includes/class-cherry-re-registration.php:237
+#: ../includes/class-cherry-re-registration.php:161
+#: ../includes/class-cherry-re-registration.php:211
 msgid "Add or remove tags"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:188
-#: ../includes/class-cherry-re-registration.php:238
+#: ../includes/class-cherry-re-registration.php:162
+#: ../includes/class-cherry-re-registration.php:212
 msgid "Choose from the most used tags"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:189
-#: ../includes/class-cherry-re-registration.php:239
+#: ../includes/class-cherry-re-registration.php:163
+#: ../includes/class-cherry-re-registration.php:213
 msgid "No tags found"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:224
+#: ../includes/class-cherry-re-registration.php:198
 msgid "Property Tags"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:225
+#: ../includes/class-cherry-re-registration.php:199
 msgid "Property Tag"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:226
+#: ../includes/class-cherry-re-registration.php:200
+#: ../widgets/class-cherry-re-properties-widget.php:62
 msgid "Tags"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:227
+#: ../includes/class-cherry-re-registration.php:201
 msgid "Tag"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:228
+#: ../includes/class-cherry-re-registration.php:202
 msgid "Search Tags"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:229
+#: ../includes/class-cherry-re-registration.php:203
 msgid "Popular Tags"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:230
+#: ../includes/class-cherry-re-registration.php:204
 msgid "All Tags"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:231
+#: ../includes/class-cherry-re-registration.php:205
 msgid "Edit Tag"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:232
+#: ../includes/class-cherry-re-registration.php:206
 msgid "View Tag"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:233
+#: ../includes/class-cherry-re-registration.php:207
 msgid "Update Tag"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:234
+#: ../includes/class-cherry-re-registration.php:208
 msgid "Add New Tag"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:235
+#: ../includes/class-cherry-re-registration.php:209
 msgid "New Tag Name"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:274
+#: ../includes/class-cherry-re-registration.php:248
 msgid "Property Features"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:275
+#: ../includes/class-cherry-re-registration.php:249
 msgid "Property Feature"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:276
+#: ../includes/class-cherry-re-registration.php:250
+#: ../widgets/class-cherry-re-properties-widget.php:66
 msgid "Features"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:277
+#: ../includes/class-cherry-re-registration.php:251
 msgid "Feature"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:278
+#: ../includes/class-cherry-re-registration.php:252
 msgid "Search Features"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:279
+#: ../includes/class-cherry-re-registration.php:253
 msgid "Popular Features"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:280
+#: ../includes/class-cherry-re-registration.php:254
 msgid "All Features"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:281
+#: ../includes/class-cherry-re-registration.php:255
 msgid "Edit Feature"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:282
+#: ../includes/class-cherry-re-registration.php:256
 msgid "View Feature"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:283
+#: ../includes/class-cherry-re-registration.php:257
 msgid "Update Feature"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:284
+#: ../includes/class-cherry-re-registration.php:258
 msgid "Add New Feature"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:285
+#: ../includes/class-cherry-re-registration.php:259
 msgid "New Feature Name"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:286
+#: ../includes/class-cherry-re-registration.php:260
 msgid "Separate features with commas"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:287
+#: ../includes/class-cherry-re-registration.php:261
 msgid "Add or remove features"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:288
+#: ../includes/class-cherry-re-registration.php:262
 msgid "Choose from the most used features"
 msgstr ""
 
-#: ../includes/class-cherry-re-registration.php:289
+#: ../includes/class-cherry-re-registration.php:263
 msgid "No features found"
 msgstr ""
 
@@ -550,6 +564,7 @@ msgid "Name"
 msgstr ""
 
 #: ../includes/class-cherry-re-shortcodes-data.php:80
+#: ../templates/auth/login.php:27 ../templates/auth/popup.php:22
 msgid "Login"
 msgstr ""
 
@@ -653,11 +668,11 @@ msgstr ""
 
 #: ../includes/class-cherry-re-shortcodes-data.php:171
 #: ../includes/class-cherry-re-shortcodes-data.php:365
-#: ../includes/class-cherry-re-shortcodes-data.php:439
-#: ../includes/class-cherry-re-shortcodes-data.php:507
-#: ../includes/class-cherry-re-shortcodes-data.php:579
+#: ../includes/class-cherry-re-shortcodes-data.php:437
+#: ../includes/class-cherry-re-shortcodes-data.php:505
 #: ../includes/class-cherry-re-template-callbacks.php:313
-#: ../includes/class-cherry-re-template-callbacks.php:702
+#: ../includes/class-cherry-re-template-callbacks.php:721
+#: ../widgets/class-cherry-re-properties-widget.php:199
 msgid "read more"
 msgstr ""
 
@@ -721,6 +736,7 @@ msgid "Property slug"
 msgstr ""
 
 #: ../includes/class-cherry-re-shortcodes-data.php:232
+#: ../widgets/class-cherry-re-properties-widget.php:121
 msgid "Date"
 msgstr ""
 
@@ -781,59 +797,75 @@ msgid "Show Excerpt"
 msgstr ""
 
 #: ../includes/class-cherry-re-shortcodes-data.php:350
-msgid "Excerpt Length (in words)"
+msgid "Auto-generated excerpt length (in words)"
 msgstr ""
 
 #: ../includes/class-cherry-re-shortcodes-data.php:406
-msgid "Submit Form"
+msgid "Submission Form"
 msgstr ""
 
-#: ../includes/class-cherry-re-shortcodes-data.php:622
+#: ../includes/class-cherry-re-shortcodes-data.php:585
+msgid "User registration is currently not allowed."
+msgstr ""
+
+#: ../includes/class-cherry-re-shortcodes-data.php:629
 msgid "Insert RE shortcodes"
 msgstr ""
 
-#: ../includes/models/model-agents.php:77
+#: ../includes/models/model-agents.php:113
 msgid "Contacts"
 msgstr ""
 
-#: ../includes/models/model-agents.php:78
+#: ../includes/models/model-agents.php:114
 msgid "Add contact"
 msgstr ""
 
-#: ../includes/models/model-agents.php:85
-#: ../includes/models/model-agents.php:120
+#: ../includes/models/model-agents.php:121
+#: ../includes/models/model-agents.php:156
 msgid "Choose icon"
 msgstr ""
 
-#: ../includes/models/model-agents.php:98
-#: ../includes/models/model-agents.php:133
 #: ../includes/models/model-agents.php:134
+#: ../includes/models/model-agents.php:169
+#: ../includes/models/model-agents.php:170
 msgid "Label"
 msgstr ""
 
-#: ../includes/models/model-agents.php:104
+#: ../includes/models/model-agents.php:140
 msgid "Value"
 msgstr ""
 
-#: ../includes/models/model-agents.php:112
+#: ../includes/models/model-agents.php:148
 msgid "Social profiles"
 msgstr ""
 
-#: ../includes/models/model-agents.php:113
+#: ../includes/models/model-agents.php:149
 msgid "Add Social Network"
 msgstr ""
 
-#: ../includes/models/model-agents.php:140
-#: ../includes/models/model-agents.php:141
+#: ../includes/models/model-agents.php:176
+#: ../includes/models/model-agents.php:177
 msgid "URL"
 msgstr ""
 
-#: ../includes/models/model-agents.php:181
-msgid "Upload Photo"
+#: ../includes/models/model-agents.php:219
+msgid "Change"
 msgstr ""
 
-#: ../includes/models/model-agents.php:183
-msgid "Change Photo"
+#: ../includes/models/model-agents.php:284
+#: ../widgets/class-cherry-re-search-widget.php:43
+#: ../widgets/class-cherry-re-search-widget.php:63
+msgid "Yes"
+msgstr ""
+
+#: ../includes/models/model-agents.php:285
+#: ../widgets/class-cherry-re-search-widget.php:44
+#: ../widgets/class-cherry-re-search-widget.php:64
+msgid "No"
+msgstr ""
+
+#: ../includes/models/model-agents.php:518
+msgid "Agent"
 msgstr ""
 
 #: ../includes/models/model-properties.php:27
@@ -853,123 +885,243 @@ msgid "Active"
 msgstr ""
 
 #: ../includes/models/model-properties.php:42
-msgid "Finished"
+msgid "Sold"
 msgstr ""
 
-#: ../includes/models/model-settings.php:80
+#: ../includes/models/model-settings.php:112
 msgid "feets"
 msgstr ""
 
-#: ../includes/models/model-settings.php:81
+#: ../includes/models/model-settings.php:113
 msgid "meters"
 msgstr ""
 
-#: ../includes/models/model-submit-form.php:255
+#: ../includes/models/model-submit-form.php:69
+#: ../includes/models/model-submit-form.php:188
+msgid "Security validation failed"
+msgstr ""
+
+#: ../includes/models/model-submit-form.php:75
+#: ../includes/models/model-submit-form.php:193
+#: ../includes/models/model-submit-form.php:202
+msgid "Internal error. Please, try again later"
+msgstr ""
+
+#: ../includes/models/model-submit-form.php:139
+msgid "Request not created. Please, try again later"
+msgstr ""
+
+#: ../includes/models/model-submit-form.php:165
+msgid "Request are created. But we can't send your message."
+msgstr ""
+
+#: ../includes/models/model-submit-form.php:319
 #, php-format
 msgid "<br>View: %s<br><br>"
 msgstr ""
 
-#: ../includes/models/model-submit-form.php:260
+#: ../includes/models/model-submit-form.php:341
+#: ../includes/models/model-submit-form.php:393
+#: ../widgets/class-cherry-re-search-widget.php:170
+msgid "Internal error. Please, try again later."
+msgstr ""
+
+#: ../includes/models/model-submit-form.php:347
+msgid "The username and password fields must not be empty."
+msgstr ""
+
+#: ../includes/models/model-submit-form.php:356
+#: ../includes/models/model-submit-form.php:399
+#: ../includes/models/model-submit-form.php:408
+msgid "All fields must not be empty."
+msgstr ""
+
+#: ../includes/models/model-submit-form.php:371
+msgid ""
+"Authorization error. Please, check your personal data and try again."
+msgstr ""
+
+#: ../includes/models/model-submit-form.php:456
+msgid "<br>Your personal agent:<br><br>"
+msgstr ""
+
+#: ../includes/models/model-submit-form.php:462
 #, php-format
-msgid "Dashboard: <a href=\"%1$s\" target=\"_blank\">%1$s</a><br><br>"
+msgid "<br>Email: %s"
 msgstr ""
 
-#: ../includes/models/model-submit-form.php:265
+#: ../includes/models/model-submit-form.php:519
+msgid "Price (Low to High)"
+msgstr ""
+
+#: ../includes/models/model-submit-form.php:520
+msgid "Price (High to Low)"
+msgstr ""
+
+#: ../includes/models/model-submit-form.php:521
+msgid "Date Old to New"
+msgstr ""
+
+#: ../includes/models/model-submit-form.php:522
+msgid "Date New to Old"
+msgstr ""
+
+#: ../templates/auth/login.php:19 ../templates/auth/register.php:19
+msgid "User Name"
+msgstr ""
+
+#: ../templates/auth/login.php:23
+msgid "Password"
+msgstr ""
+
+#: ../templates/auth/login.php:31 ../templates/auth/register.php:31
+#: ../templates/shortcodes/submission_form/form.php:121
+msgid "Success"
+msgstr ""
+
+#: ../templates/auth/message-link.php:20
 #, php-format
-msgid "Login: %s <br> Password: %s"
+msgid ""
+"Please <a class=\"%1$s\" href=\"#%2$s\" data-tab=\"0\">login</a> or "
+"<a class=\"%1$s\" href=\"#%2$s\" data-tab=\"1\">register</a> to "
+"create a new listing"
 msgstr ""
 
-#: ../includes/models/model-submit-form.php:336
-msgid "Security validation failed"
+#: ../templates/auth/popup.php:23 ../templates/auth/register.php:27
+msgid "Register"
 msgstr ""
 
-#: ../includes/models/model-submit-form.php:337
-msgid "Internal error. Please, try again later"
+#: ../templates/auth/register.php:23
+msgid "Email"
+msgstr ""
+
+#: ../templates/form-fields/file-field.php:31
+msgid "Browse file"
+msgstr ""
+
+#: ../templates/form-fields/file-field.php:39
+#, php-format
+msgid "Maximum file size: %s."
+msgstr ""
+
+#: ../templates/misc/sort.php:19
+msgid "Default"
+msgstr ""
+
+#: ../templates/misc/sort.php:25
+msgid "Sort by:"
 msgstr ""
 
 #: ../templates/search/no-properties-found.php:14
 msgid "No properties were found matching your selection."
 msgstr ""
 
-#: ../templates/shortcodes/submit_form/form.php:19
+#: ../templates/shortcodes/submission_form/form.php:19
 msgid "Title"
 msgstr ""
 
-#: ../templates/shortcodes/submit_form/form.php:24
+#: ../templates/shortcodes/submission_form/form.php:20
+msgid "Enter your property title"
+msgstr ""
+
+#: ../templates/shortcodes/submission_form/form.php:24
 msgid "Description"
 msgstr ""
 
-#: ../templates/shortcodes/submit_form/form.php:36
-#: ../templates/shortcodes/submit_form/form.php:52
+#: ../templates/shortcodes/submission_form/form.php:30
+msgid "Enter price"
+msgstr ""
+
+#: ../templates/shortcodes/submission_form/form.php:36
+#: ../templates/shortcodes/submission_form/form.php:52
 msgid "Choose"
 msgstr ""
 
-#: ../templates/shortcodes/submit_form/form.php:43
-msgid "Status"
+#: ../templates/shortcodes/submission_form/form.php:67
+msgid "Enter number of bedrooms"
 msgstr ""
 
-#: ../templates/shortcodes/submit_form/form.php:86
+#: ../templates/shortcodes/submission_form/form.php:72
+msgid "Enter number of bathrooms"
+msgstr ""
+
+#: ../templates/shortcodes/submission_form/form.php:76
+#, php-format
+msgid "Area Size, %s"
+msgstr ""
+
+#: ../templates/shortcodes/submission_form/form.php:77
+msgid "Enter property area size"
+msgstr ""
+
+#: ../templates/shortcodes/submission_form/form.php:82
+msgid "Enter number of parking places"
+msgstr ""
+
+#: ../templates/shortcodes/submission_form/form.php:86
+#: ../views/metabox/location.php:37
 msgid "Address"
 msgstr ""
 
-#: ../templates/shortcodes/submit_form/form.php:92
-msgid "Your e-mail"
+#: ../templates/shortcodes/submission_form/form.php:87
+msgid "Enter your property address"
 msgstr ""
 
-#: ../templates/shortcodes/submit_form/form.php:97
-msgid "Your phone"
-msgstr ""
-
-#: ../templates/shortcodes/submit_form/form.php:104
+#: ../templates/shortcodes/submission_form/form.php:109
 msgid "Submit"
 msgstr ""
 
-#: ../templates/single-agent/info.php:24
-#: ../templates/single-property/agent.php:24
+#: ../templates/single-agent/info.php:25
+#: ../templates/single-property/agent.php:25
 msgid "Contact Agent"
 msgstr ""
 
-#: ../templates/single-agent/map.php:29
+#: ../templates/single-agent/map.php:14
 msgid "This Agent's Active Listings:"
 msgstr ""
 
-#: ../templates/single-property/attributes.php:20
+#: ../templates/single-agent/map.php:23
+#: ../templates/widgets/search/map.php:44
+msgid "loading..."
+msgstr ""
+
+#: ../templates/single-property/attributes.php:21
 msgid "Quick Summary"
 msgstr ""
 
-#: ../templates/single-property/attributes.php:58
+#: ../templates/single-property/attributes.php:59
 msgid "Property ID:"
 msgstr ""
 
-#: ../templates/single-property/attributes.php:64
+#: ../templates/single-property/attributes.php:65
 msgid "Property status:"
 msgstr ""
 
-#: ../templates/single-property/attributes.php:71
+#: ../templates/single-property/attributes.php:72
 msgid "Property type:"
 msgstr ""
 
-#: ../templates/single-property/attributes.php:78
+#: ../templates/single-property/attributes.php:79
 msgid "Location:"
 msgstr ""
 
-#: ../templates/single-property/attributes.php:85
+#: ../templates/single-property/attributes.php:86
 msgid "Bedrooms:"
 msgstr ""
 
-#: ../templates/single-property/attributes.php:92
+#: ../templates/single-property/attributes.php:93
 msgid "Bathrooms:"
 msgstr ""
 
-#: ../templates/single-property/attributes.php:99
+#: ../templates/single-property/attributes.php:100
 msgid "Area:"
 msgstr ""
 
-#: ../templates/single-property/attributes.php:106
+#: ../templates/single-property/attributes.php:107
 msgid "Parking place:"
 msgstr ""
 
-#: ../templates/single-property/attributes.php:113
+#: ../templates/single-property/attributes.php:114
 msgid "Property Features:"
 msgstr ""
 
@@ -977,52 +1129,65 @@ msgstr ""
 msgid "Property Description"
 msgstr ""
 
-#: ../templates/single-property/price.php:26
+#: ../templates/single-property/price.php:28
 #, php-format
 msgid "Price: %s"
 msgstr ""
 
-#: ../templates/widgets/search/form.php:25
+#: ../templates/single-property/related.php:16
+msgid "Related Properties"
+msgstr ""
+
+#: ../templates/widgets/search/form.php:24
 msgid "Keyword"
 msgstr ""
 
-#: ../templates/widgets/search/form.php:26
+#: ../templates/widgets/search/form.php:25
 #: ../templates/widgets/search/form.php:31
-#: ../templates/widgets/search/form.php:47
-#: ../templates/widgets/search/form.php:63
+#: ../templates/widgets/search/form.php:49
+#: ../templates/widgets/search/form.php:68
 msgid "Any"
 msgstr ""
 
-#: ../templates/widgets/search/form.php:55
+#: ../templates/widgets/search/form.php:58
 msgid "Property type"
 msgstr ""
 
-#: ../templates/widgets/search/form.php:69
-#: ../templates/widgets/search/form.php:77
-#: ../templates/widgets/search/form.php:85
-#: ../templates/widgets/search/form.php:93
-#: ../templates/widgets/search/form.php:101
+#: ../templates/widgets/search/form.php:80
+#: ../templates/widgets/search/form.php:88
+#: ../templates/widgets/search/form.php:96
+#: ../templates/widgets/search/form.php:104
+#: ../templates/widgets/search/form.php:112
 msgid "Min"
 msgstr ""
 
-#: ../templates/widgets/search/form.php:70
-#: ../templates/widgets/search/form.php:78
-#: ../templates/widgets/search/form.php:86
-#: ../templates/widgets/search/form.php:94
-#: ../templates/widgets/search/form.php:102
+#: ../templates/widgets/search/form.php:81
+#: ../templates/widgets/search/form.php:89
+#: ../templates/widgets/search/form.php:97
+#: ../templates/widgets/search/form.php:105
+#: ../templates/widgets/search/form.php:113
 msgid "Max"
 msgstr ""
 
-#: ../templates/widgets/search/form.php:99
+#: ../templates/widgets/search/form.php:110
 msgid "Parking spots"
 msgstr ""
 
-#: ../templates/widgets/search/form.php:106
+#: ../templates/widgets/search/form.php:119
+msgid "More"
+msgstr ""
+
+#: ../templates/widgets/search/form.php:124
+#: ../views/metabox/location.php:23
 msgid "Search"
 msgstr ""
 
-#: ../templates/widgets/search/map.php:47
-msgid "loading..."
+#: ../views/metabox/location.php:31
+msgid "Drag marker to reposition."
+msgstr ""
+
+#: ../views/metabox/location.php:40
+msgid "You may format and specify address."
 msgstr ""
 
 #: ../views/profile/contacts-field.php:13
@@ -1034,33 +1199,193 @@ msgid "Photo"
 msgstr ""
 
 #: ../views/profile/photo-field.php:18
-msgid "Agent Photo"
+msgid "Custom Photo"
 msgstr ""
 
-#: ../widgets/class-cherry-re-search-widget.php:15
+#: ../views/profile/photo-field.php:22
+msgid ""
+"Only for Real Estate roles and have a higher priority than `Profile "
+"Picture` option"
+msgstr ""
+
+#: ../views/profile/trust-field.php:16
+msgid "Trusted User"
+msgstr ""
+
+#: ../views/profile/trust-field.php:20
+msgid "Automatically mark submitted properties as approved"
+msgstr ""
+
+#: ../widgets/class-cherry-re-properties-widget.php:28
+#: ../widgets/class-cherry-re-search-widget.php:28
 msgid "Display a search form with map."
 msgstr ""
 
-#: ../widgets/class-cherry-re-search-widget.php:17
-msgid "Cherry RE Search"
+#: ../widgets/class-cherry-re-properties-widget.php:30
+msgid "Cherry RE Properites"
 msgstr ""
 
-#: ../widgets/class-cherry-re-search-widget.php:22
+#: ../widgets/class-cherry-re-properties-widget.php:41
+#: ../widgets/class-cherry-re-search-widget.php:35
 msgid "Title:"
 msgstr ""
 
-#: ../widgets/class-cherry-re-search-widget.php:28
-msgid "Show map"
+#: ../widgets/class-cherry-re-properties-widget.php:48
+msgid "Posts Number:"
+msgstr ""
+
+#: ../widgets/class-cherry-re-properties-widget.php:55
+#: ../widgets/class-cherry-re-properties-widget.php:115
+msgid "All"
+msgstr ""
+
+#: ../widgets/class-cherry-re-properties-widget.php:70
+msgid "IDs"
+msgstr ""
+
+#: ../widgets/class-cherry-re-properties-widget.php:74
+msgid "Source:"
+msgstr ""
+
+#: ../widgets/class-cherry-re-properties-widget.php:81
+#: ../widgets/class-cherry-re-properties-widget.php:83
+msgid "Select types:"
+msgstr ""
+
+#: ../widgets/class-cherry-re-properties-widget.php:91
+#: ../widgets/class-cherry-re-properties-widget.php:93
+msgid "Select tags:"
+msgstr ""
+
+#: ../widgets/class-cherry-re-properties-widget.php:101
+#: ../widgets/class-cherry-re-properties-widget.php:103
+msgid "Select features:"
+msgstr ""
+
+#: ../widgets/class-cherry-re-properties-widget.php:109
+msgid "Type posts ID (for a custom sorting):"
+msgstr ""
+
+#: ../widgets/class-cherry-re-properties-widget.php:110
+msgid "Type posts ID:"
+msgstr ""
+
+#: ../widgets/class-cherry-re-properties-widget.php:116
+msgid "Agent:"
+msgstr ""
+
+#: ../widgets/class-cherry-re-properties-widget.php:125
+msgid "Order by:"
+msgstr ""
+
+#: ../widgets/class-cherry-re-properties-widget.php:130
+msgid "ASC"
+msgstr ""
+
+#: ../widgets/class-cherry-re-properties-widget.php:131
+msgid "DESC"
+msgstr ""
+
+#: ../widgets/class-cherry-re-properties-widget.php:134
+msgid "Order:"
+msgstr ""
+
+#: ../widgets/class-cherry-re-properties-widget.php:140
+msgid "Show Title:"
+msgstr ""
+
+#: ../widgets/class-cherry-re-properties-widget.php:142
+#: ../widgets/class-cherry-re-properties-widget.php:152
+#: ../widgets/class-cherry-re-properties-widget.php:171
+#: ../widgets/class-cherry-re-properties-widget.php:191
+#: ../widgets/class-cherry-re-properties-widget.php:209
+#: ../widgets/class-cherry-re-properties-widget.php:219
+#: ../widgets/class-cherry-re-properties-widget.php:229
+#: ../widgets/class-cherry-re-properties-widget.php:239
+#: ../widgets/class-cherry-re-properties-widget.php:249
+#: ../widgets/class-cherry-re-properties-widget.php:259
+msgid "On"
+msgstr ""
+
+#: ../widgets/class-cherry-re-properties-widget.php:143
+#: ../widgets/class-cherry-re-properties-widget.php:153
+#: ../widgets/class-cherry-re-properties-widget.php:172
+#: ../widgets/class-cherry-re-properties-widget.php:192
+#: ../widgets/class-cherry-re-properties-widget.php:210
+#: ../widgets/class-cherry-re-properties-widget.php:220
+#: ../widgets/class-cherry-re-properties-widget.php:230
+#: ../widgets/class-cherry-re-properties-widget.php:240
+#: ../widgets/class-cherry-re-properties-widget.php:250
+#: ../widgets/class-cherry-re-properties-widget.php:260
+msgid "Off"
+msgstr ""
+
+#: ../widgets/class-cherry-re-properties-widget.php:150
+msgid "Show Image:"
+msgstr ""
+
+#: ../widgets/class-cherry-re-properties-widget.php:162
+msgid "Image Size:"
+msgstr ""
+
+#: ../widgets/class-cherry-re-properties-widget.php:169
+msgid "Show Excerpt:"
+msgstr ""
+
+#: ../widgets/class-cherry-re-properties-widget.php:182
+msgid ""
+"Length (in words) only for auto-generated excerpt, and not apply "
+"for user-defined excerpt:"
+msgstr ""
+
+#: ../widgets/class-cherry-re-properties-widget.php:189
+msgid "Show More Button:"
+msgstr ""
+
+#: ../widgets/class-cherry-re-properties-widget.php:200
+msgid "More Button Text:"
+msgstr ""
+
+#: ../widgets/class-cherry-re-properties-widget.php:207
+msgid "Show Status:"
+msgstr ""
+
+#: ../widgets/class-cherry-re-properties-widget.php:217
+msgid "Show Area:"
+msgstr ""
+
+#: ../widgets/class-cherry-re-properties-widget.php:227
+msgid "Show Bedrooms:"
+msgstr ""
+
+#: ../widgets/class-cherry-re-properties-widget.php:237
+msgid "Show Bathrooms:"
+msgstr ""
+
+#: ../widgets/class-cherry-re-properties-widget.php:247
+msgid "Show Price:"
+msgstr ""
+
+#: ../widgets/class-cherry-re-properties-widget.php:257
+msgid "Show Location:"
+msgstr ""
+
+#: ../widgets/class-cherry-re-properties-widget.php:267
+msgid "Template:"
 msgstr ""
 
 #: ../widgets/class-cherry-re-search-widget.php:30
-msgid "Yes"
-msgstr ""
-
-#: ../widgets/class-cherry-re-search-widget.php:31
-msgid "No"
+msgid "Cherry RE Search"
 msgstr ""
 
 #: ../widgets/class-cherry-re-search-widget.php:41
+msgid "Show map"
+msgstr ""
+
+#: ../widgets/class-cherry-re-search-widget.php:54
 msgid "Visible markers on map"
+msgstr ""
+
+#: ../widgets/class-cherry-re-search-widget.php:61
+msgid "Show form"
 msgstr ""
