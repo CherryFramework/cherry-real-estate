@@ -1,7 +1,7 @@
 <?php
 /**
  * Class Cherry Core
- * Version: 1.3.0
+ * Version: 1.3.1
  *
  * @package    Cherry_Framework
  * @subpackage Class
@@ -87,6 +87,9 @@ if ( ! class_exists( 'Cherry_Core' ) ) {
 			add_action( 'after_setup_theme', array( 'Cherry_Core', 'load_all_modules' ), 2 );
 			add_action( 'after_setup_theme', array( $this, 'init_required_modules' ),    2 );
 
+			// Load the framework textdomain.
+			add_action( 'after_setup_theme', array( $this, 'load_textdomain' ),         10 );
+
 			// Init modules with autoload seted up into true.
 			add_action( 'after_setup_theme', array( $this, 'init_autoload_modules' ), 9999 );
 
@@ -163,6 +166,17 @@ if ( ! class_exists( 'Cherry_Core' ) ) {
 					continue;
 				}
 			}
+		}
+
+		/**
+		 * Load the framework textdomain.
+		 *
+		 * @since 1.3.2
+		 */
+		public function load_textdomain() {
+			$mo_file_path = dirname( __FILE__ ) . '/languages/' . get_locale() . '.mo';
+
+			load_textdomain( 'cherry-framework', $mo_file_path );
 		}
 
 		/**
@@ -286,7 +300,7 @@ if ( ! class_exists( 'Cherry_Core' ) ) {
 			$class_name = self::get_class_name( $module );
 
 			if ( ! class_exists( $class_name ) ) {
-				echo '<p>Class <b>' . $class_name . '</b> not exist!</p>';
+				echo '<p>Class <b>' . esc_html( $class_name ) . '</b> not exist!</p>';
 				return false;
 			}
 
