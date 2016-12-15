@@ -579,8 +579,6 @@ class Cherry_RE_Shortcodes_Data {
 
 		if ( ! is_user_logged_in() ) {
 
-			$register_form = '';
-
 			if ( get_option( 'users_can_register' ) ) {
 				$register_form = cherry_re_get_template_html( 'auth/register' );
 			} else {
@@ -626,7 +624,7 @@ class Cherry_RE_Shortcodes_Data {
 	 * @since 1.0.0
 	 */
 	public static function localize_script() {
-		wp_enqueue_style( 'cherry-re-tinymce' );
+		wp_enqueue_style( 'cherry-re-admin-style' );
 
 		$title      = esc_html__( 'Insert RE shortcodes', 'cherry-real-estate' );
 		$prefix     = cherry_real_estate()->get_shortcode_prefix();
@@ -652,9 +650,10 @@ var CherryRETinyMCE = {
 	 * @return array $plugin_array.
 	 */
 	public static function mce_external_plugins( $plugin_array ) {
+		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 		$button = self::get_mce_button();
 
-		$plugin_array[ $button ] = CHERRY_REAL_ESTATE_URI . 'assets/js/tinymce-button.min.js';
+		$plugin_array[ $button ] = CHERRY_REAL_ESTATE_URI . "assets/js/tinymce-button{$suffix}.js";
 
 		return $plugin_array;
 	}

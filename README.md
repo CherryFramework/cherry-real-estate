@@ -42,3 +42,13 @@ The plugin is absolutely free and has no any hidden fees. Use Cherry Real Estate
 * ADD: unique filter to the callback-methods
 * UPD: cherry-framework to v1.3.0
 * DEL: unused `grid.tmpl` template
+
+= 1.1.0 =
+
+* ADD: mode for plugin - agency or portal
+* ADD: related properties (by price, by author) on single property page
+* ADD: location metabox in add new property page (dashboard)
+* ADD: flush rewrite rules
+* UPD: cherry-framework (v.1.3.1)
+* UPD: admin columns in view all properties page (dashboard)
+* FIX: conflict with dsIDXpress plugin

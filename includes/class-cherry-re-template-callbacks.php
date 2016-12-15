@@ -53,7 +53,7 @@ class Cherry_RE_Template_Callbacks {
 		}
 
 		// VIP actions - set and clear data on single property page.
-		add_action( 'cherry_re_before_single_property_summary', array( $this, 'the_property_data' ), 0 );
+		// add_action( 'cherry_re_before_single_property_summary', array( $this, 'the_property_data' ), 0 );
 		add_action( 'cherry_re_after_single_property_summary', array( $this, 'clear_data' ), 999999 );
 	}
 
@@ -378,7 +378,6 @@ class Cherry_RE_Template_Callbacks {
 	public function the_property_data() {
 		global $post;
 
-		$prefix              = cherry_real_estate()->get_meta_prefix();
 		$this->property_data = get_post_meta( $post->ID, '', true );
 	}
 
@@ -390,13 +389,10 @@ class Cherry_RE_Template_Callbacks {
 	 * @return bool|string
 	 */
 	public function get_the_property_data( $key ) {
-		$key = cherry_real_estate()->get_meta_prefix() . $key;
+		$prefix = cherry_real_estate()->get_meta_prefix();
+		$meta   = get_post_meta( get_the_ID(), $prefix . $key, true );
 
-		if ( ! isset( $this->property_data[ $key ] ) ) {
-			return false;
-		}
-
-		return $this->property_data[ $key ][0];
+		return ! empty( $meta ) ? $meta : false;
 	}
 
 	/**
@@ -536,6 +532,23 @@ class Cherry_RE_Template_Callbacks {
 		) );
 
 		return $this->macros_wrap( $args, esc_attr( $location ), 'property_location' );
+	}
+
+	/**
+	 * Get property coordinates.
+	 *
+	 * @since  1.1.0
+	 * @return string
+	 */
+	public function get_property_latlng() {
+		$lat = $this->get_the_property_data( 'latitude' );
+		$lng = $this->get_the_property_data( 'longitude' );
+
+		if ( ! ( $lat && $lng ) ) {
+			return;
+		}
+
+		return array( $lat, $lng );
 	}
 
 	/**
@@ -732,7 +745,7 @@ class Cherry_RE_Template_Callbacks {
 		$args = wp_parse_args( $args, array(
 			'wrap'  => 'div',
 			'class' => '',
-			'size'  => ! empty( $this->atts['image_size'] ) ? esc_attr( $this->atts['image_size'] ) : 'thumbnail',
+			'size'  => ! empty( $this->atts['image_size'] ) ? esc_attr( $this->atts['image_size'] ) : 'post-thumbnail',
 			'link'  => true,
 		) );
 

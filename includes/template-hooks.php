@@ -17,11 +17,13 @@
 add_action( 'cherry_re_before_main_content', 'cherry_real_estate_output_content_wrapper', 10 );
 add_action( 'cherry_re_after_main_content',  'cherry_real_estate_output_content_wrapper_end', 10 );
 
+
 /**
  * Sidebar.
  */
 add_action( 'cherry_re_property_sidebar', 'cherry_real_estate_get_property_sidebar', 10 );
 add_action( 'cherry_re_search_sidebar', 'cherry_real_estate_get_search_sidebar', 10 );
+
 
 /**
  * Single Property.
@@ -33,6 +35,8 @@ add_action( 'cherry_re_single_property_summary',        'cherry_real_estate_prop
 add_action( 'cherry_re_single_property_summary',        'cherry_real_estate_property_attributes', 15 );
 add_action( 'cherry_re_after_single_property_summary',  'cherry_real_estate_property_map', 5 );
 add_action( 'cherry_re_after_single_property_summary',  'cherry_real_estate_property_agent', 10 );
+add_action( 'cherry_re_after_single_property',          'cherry_real_estate_property_related', 5 );
+
 
 /**
  * Agent Archive.
@@ -55,6 +59,7 @@ add_action( 'cherry_re_before_property_loop', 'cherry_real_estate_listing_contro
 add_action( 'cherry_re_before_main_content', 'cherry_real_estate_search_map_result', 5 );
 add_action( 'cherry_re_output_search_result_map', 'cherry_real_estate_search_map_result', 10 );
 add_action( 'cherry_re_before_search_loop', 'cherry_real_estate_listing_controls', 10 );
+
 
 /**
  * Submission Form.

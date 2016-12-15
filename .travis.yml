@@ -17,6 +17,9 @@ php:
     # Current $required_php_version for WordPress: 5.2.4
     - "5.2"
 
+notifications:
+    email: false
+
 # Ditch sudo and use containers.
 # @link http://docs.travis-ci.com/user/migrating-from-legacy/#Why-migrate-to-container-based-infrastructure%3F
 # @link http://docs.travis-ci.com/user/workers/container-based-infrastructure/#Routing-your-build-to-container-based-infrastructure
@@ -93,3 +96,6 @@ script:
     # --standard: Use WordPress as the standard.
     # --extensions: Only sniff PHP files.
     - $WP_DEVELOP_DIR/php-codesniffer/scripts/phpcs -p -s -v -n . --standard=./codesniffer.ruleset.xml --extensions=php
+
+notifications:
+    email: false

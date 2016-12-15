@@ -3,7 +3,7 @@
  * Plugin Name: Cherry Real Estate
  * Plugin URI:  http://www.templatemonster.com/
  * Description: Plugin for adding real estate functionality to the site.
- * Version:     1.0.2
+ * Version:     1.1.0
  * Author:      Template Monster
  * Author URI:  http://www.templatemonster.com/
  * Text Domain: cherry-real-estate
@@ -47,14 +47,6 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		 * @var object
 		 */
 		private $core = null;
-
-		/**
-		 * Default options.
-		 *
-		 * @since 1.0.0
-		 * @var array
-		 */
-		private static $default_options = array();
 
 		/**
 		 * The post type name.
@@ -101,6 +93,9 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			add_action( 'after_setup_theme', require( trailingslashit( __DIR__ ) . 'cherry-framework/setup.php' ), 0 );
 			add_action( 'after_setup_theme', array( $this, 'get_core' ), 1 );
 			add_action( 'after_setup_theme', array( 'Cherry_Core', 'load_all_modules' ), 2 );
+
+			// Adds supported features.
+			add_action( 'after_setup_theme', array( $this, 'support' ), 9 );
 
 			// Initialization of Cherry's modules.
 			add_action( 'after_setup_theme', array( $this, 'launch' ), 10 );
@@ -170,7 +165,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			 *
 			 * @since 1.0.0
 			 */
-			define( 'CHERRY_REAL_ESTATE_VERSION', '1.0.2' );
+			define( 'CHERRY_REAL_ESTATE_VERSION', '1.1.0' );
 		}
 
 		/**
@@ -206,8 +201,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 
 			// Admin.
 			if ( is_admin() ) {
-				include_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-cherry-re-options-page.php' );
-				include_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-meta-box-authors.php' );
+				include_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-cherry-re-admin.php' );
 			}
 		}
 
@@ -268,91 +262,21 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		}
 
 		/**
+		 * Adds supported features.
+		 *
+		 * @since 1.1.0
+		 */
+		public function support() {
+			add_theme_support( 'cherry-real-estate-geodata' );
+		}
+
+		/**
 		 * Run initialization of modules.
 		 *
 		 * @since 1.0.0
 		 */
 		public function launch() {
-			$prefix = $this->get_meta_prefix();
-
 			$this->get_core()->init_module( 'cherry-js-core' );
-			$this->get_core()->init_module( 'cherry-post-meta', array(
-				'title'  => esc_html__( 'Property Data', 'cherry-real-estate' ),
-				'page'   => array( $this->get_post_type_name() ),
-				'fields' => array(
-					$prefix . 'state' => array(
-						'type'    => 'select',
-						'id'      => $prefix . 'state',
-						'name'    => $prefix . 'state',
-						'title'   => esc_html__( 'State of progress', 'cherry-real-estate' ),
-						'options' => Model_Properties::get_allowed_property_states(),
-					),
-					$prefix . 'price' => array(
-						'type'       => 'stepper',
-						'id'         => $prefix . 'price',
-						'name'       => $prefix . 'price',
-						'max_value'  => 9999999999,
-						'min_value'  => 0,
-						'step_value' => 0.01,
-						'title'      => esc_html__( 'Price', 'cherry-real-estate' ),
-					),
-					$prefix . 'status' => array(
-						'type'    => 'select',
-						'id'      => $prefix . 'status',
-						'name'    => $prefix . 'status',
-						'title'   => esc_html__( 'Property status', 'cherry-real-estate' ),
-						'options' => Model_Properties::get_allowed_property_statuses(),
-					),
-					$prefix . 'location' => array(
-						'type'  => 'text',
-						'id'    => $prefix . 'location',
-						'name'  => $prefix . 'location',
-						'title' => esc_html__( 'Location', 'cherry-real-estate' ),
-					),
-					$prefix . 'bedrooms' => array(
-						'type'       => 'stepper',
-						'id'         => $prefix . 'bedrooms',
-						'name'       => $prefix . 'bedrooms',
-						'max_value'  => 99999,
-						'min_value'  => 0,
-						'step_value' => 1,
-						'title'      => esc_html__( 'Bedrooms', 'cherry-real-estate' ),
-					),
-					$prefix . 'bathrooms' => array(
-						'type'       => 'stepper',
-						'id'         => $prefix . 'bathrooms',
-						'name'       => $prefix . 'bathrooms',
-						'max_value'  => 99999,
-						'min_value'  => 0,
-						'step_value' => 1,
-						'title'      => esc_html__( 'Bathrooms', 'cherry-real-estate' ),
-					),
-					$prefix . 'area' => array(
-						'type'       => 'stepper',
-						'id'         => $prefix . 'area',
-						'name'       => $prefix . 'area',
-						'max_value'  => 999999,
-						'min_value'  => 0,
-						'step_value' => 0.01,
-						'title'      => esc_html__( 'Area', 'cherry-real-estate' ),
-					),
-					$prefix . 'parking_places' => array(
-						'type'      => 'stepper',
-						'id'        => $prefix . 'parking_places',
-						'name'      => $prefix . 'parking_places',
-						'max_value' => 99999,
-						'min_value' => 0,
-						'title'     => esc_html__( 'Parking places', 'cherry-real-estate' ),
-					),
-					$prefix . 'gallery' => array(
-						'type'         => 'media',
-						'id'           => $prefix . 'gallery',
-						'name'         => $prefix . 'gallery',
-						'multi_upload' => true,
-						'title'        => esc_html__( 'Gallery', 'cherry-real-estate' ),
-					),
-				),
-			) );
 			$this->get_core()->init_module( 'cherry-widget-factory' );
 
 			if ( is_admin() ) {
@@ -570,6 +494,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 
 			$this->add_user_roles();
 			$this->update_caps();
+			flush_rewrite_rules();
 
 			do_action( 'cherry_re_plugin_activation' );
 		}
@@ -581,6 +506,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		 */
 		public function deactivation() {
 			$this->remove_user_roles();
+			flush_rewrite_rules();
 
 			do_action( 'cherry_re_plugin_deactivation' );
 		}

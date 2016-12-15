@@ -1,9 +1,9 @@
 === Cherry Real Estate ===
 Contributors: TemplateMonster 2002
-Tags: custom post type
-Requires at least: 4.6
-Tested up to: 4.5
-Stable tag: 1.0.1
+Tags: realestate, custom post type, properties, cherry framework
+Requires at least: 4.5
+Tested up to: 4.6.1
+Stable tag: 1.0.2
 License: GPL-3.0+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -17,9 +17,9 @@ Cherry Real Estate plugin is a one stop tool allowing to create real estate cata
 The plugin is absolutely free and has no any hidden fees. Use Cherry Real Estate plugin to build your catalog, real estate agency website or real estate personal web page
 
 == Installation ==
-1. Upload \"Cherry Real Estate\" folder to the \"/wp-content/plugins/\" directory
-2. Activate the plugin through the \"Plugins\" menu in WordPress
-3. Navigate to the \"Properties\" page available through the left menu
+1. Upload "Cherry Real Estate" folder to the "/wp-content/plugins/" directory
+2. Activate the plugin through the "Plugins" menu in WordPress
+3. Navigate to the "Properties" page available through the left menu
 
 == Changelog ==
 = 1.0.1 =
@@ -31,3 +31,13 @@ The plugin is absolutely free and has no any hidden fees. Use Cherry Real Estate
 * ADD: unique filter to the callback-methods
 * UPD: cherry-framework to v1.3.0
 * DEL: unused `grid.tmpl` template
+
+= 1.1.0 =
+
+* ADD: mode for plugin - agency or portal
+* ADD: related properties (by price, by author) on single property page
+* ADD: location metabox in add new property page (dashboard)
+* ADD: flush rewrite rules
+* UPD: cherry-framework (v.1.3.1)
+* UPD: admin columns in view all properties page (dashboard)
+* FIX: conflict with dsIDXpress plugin

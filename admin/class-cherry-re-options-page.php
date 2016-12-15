@@ -92,6 +92,10 @@ class Cherry_RE_Options_Page {
 				'slug' => 'cherry-re-options-listing',
 				'name' => esc_html__( 'Listing', 'cherry-real-estate' ),
 			),
+			'cherry-re-options-related-posts' => array(
+				'slug' => 'cherry-re-options-related-posts',
+				'name' => esc_html__( 'Related', 'cherry-real-estate' ),
+			),
 			'cherry-re-options-map' => array(
 				'slug' => 'cherry-re-options-map',
 				'name' => esc_html__( 'Map', 'cherry-real-estate' ),
@@ -112,6 +116,25 @@ class Cherry_RE_Options_Page {
 	public function get_options() {
 		return apply_filters( 'cherry_re_plugin_options', array(
 			'cherry-re-options-main' => array(
+				'mode' => array(
+					'slug'  => 'mode',
+					'type'  => 'select',
+					'title' => esc_html__( 'Mode', 'cherry-real-estate' ),
+					'field' => array(
+						'id'      => 'mode',
+						'size'    => 1,
+						'value'   => 'agency',
+						'desc'    => sprintf(
+							'%1$s<br>%2$s',
+							esc_html__( "Agency &mdash; all property submissions are assigned to real estate agents by administrator. Property owner information won't be visible for site visitors.", 'cherry-real-estate' ),
+							esc_html__( 'Portal &mdash; all property submissions are assigned to property owners. Site visitors will be able to contact property owners directly.', 'cherry-real-estate' )
+						),
+						'options' => array(
+							'agency' => esc_html__( 'Agency', 'cherry-real-estate' ),
+							'portal' => esc_html__( 'Portal', 'cherry-real-estate' ),
+						),
+					),
+				),
 				'area-unit' => array(
 					'slug'  => 'area-unit',
 					'type'  => 'select',
@@ -173,6 +196,46 @@ class Cherry_RE_Options_Page {
 					'field' => array(
 						'id'    => 'decimal-numb',
 						'value' => '2',
+					),
+				),
+			),
+			'cherry-re-options-related-posts' => array(
+				'related_posts_amount' => array(
+					'slug'  => 'related_posts_amount',
+					'title' => esc_html__( 'Amount', 'cherry-real-estate' ),
+					'type'  => 'stepper',
+					'field' => array(
+						'id'         => 'related_posts_amount',
+						'max_value'  => '6',
+						'min_value'  => '0',
+						'step_value' => '1',
+						'value'      => '2',
+					),
+				),
+				'related_posts_query' => array(
+					'slug'  => 'related_posts_query',
+					'title' => esc_html__( 'By', 'cherry-real-estate' ),
+					'type'  => 'select',
+					'field' => array(
+						'id'           => 'related_posts_query',
+						'options'      => array(
+							'author' => esc_html__( 'Author', 'cherry-real-estate' ),
+							'price'  => esc_html__( 'Price', 'cherry-real-estate' ),
+						),
+						'inline_style' => 'width:auto',
+						'value'        => 'author',
+					),
+				),
+				'related_posts_price_range' => array(
+					'slug'  => 'related_posts_price_range',
+					'type'  => 'stepper',
+					'title' => esc_html__( 'Price Range, in % (+/-)', 'cherry-real-estate' ),
+					'field' => array(
+						'id'         => 'related_posts_price_range',
+						'max_value'  => '100',
+						'min_value'  => '1',
+						'step_value' => '1',
+						'value'      => '20',
 					),
 				),
 			),
@@ -332,7 +395,7 @@ class Cherry_RE_Options_Page {
 			return null;
 		}
 
-		wp_enqueue_style( 'cherry-re-settings-page' );
+		wp_enqueue_style( 'cherry-re-admin-style' );
 	}
 
 	/**

@@ -60,8 +60,13 @@ class Cherry_RE_Assets {
 		add_action( 'wp_enqueue_scripts',    array( $this, 'enqueue_public_styles' ), 9 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ), 0 );
 
+		// Move Google Map API script to the footer (only on backend) - fix for plugin like a `dsIDXpress` etc.
+		add_action( 'admin_print_scripts-post.php',     array( __CLASS__, 'googleapis_to_footer' ), 10 );
+		add_action( 'admin_print_scripts-post-new.php', array( __CLASS__, 'googleapis_to_footer' ), 10 );
+
 		// Google Map API - fix conflict.
-		add_action( 'wp_footer', array( __CLASS__, 'googleapis_conflict' ), 11 );
+		add_action( 'wp_footer',    array( __CLASS__, 'googleapis_conflict' ), 11 );
+		add_action( 'admin_footer', array( __CLASS__, 'googleapis_conflict' ), 11 );
 	}
 
 	/**
@@ -70,17 +75,19 @@ class Cherry_RE_Assets {
 	 * @since 1.0.0
 	 */
 	public static function register_public_scripts() {
+		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
 		wp_register_script(
 			self::get_googleapis_handle(),
 			esc_url( Cherry_RE_Tools::get_google_map_url() ),
 			array(),
-			false,
+			null, // false
 			true
 		);
 
 		wp_register_script(
 			'cherry-re-locations',
-			plugins_url( 'assets/js/locations.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( "assets/js/locations{$suffix}.js", CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array( 'jquery' ),
 			CHERRY_REAL_ESTATE_VERSION,
 			true
@@ -88,7 +95,7 @@ class Cherry_RE_Assets {
 
 		wp_register_script(
 			'jquery-swiper',
-			plugins_url( 'assets/js/swiper/swiper.jquery.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( "assets/js/swiper/swiper.jquery{$suffix}.js", CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array( 'jquery' ),
 			'3.3.1',
 			true
@@ -96,7 +103,7 @@ class Cherry_RE_Assets {
 
 		wp_register_script(
 			'jquery-validate-core',
-			plugins_url( 'assets/js/validate/jquery.validate.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( "assets/js/validate/jquery.validate{$suffix}.js", CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array( 'jquery' ),
 			'1.15.0',
 			true
@@ -104,7 +111,7 @@ class Cherry_RE_Assets {
 
 		wp_register_script(
 			'jquery-validate-methods',
-			plugins_url( 'assets/js/validate/additional-methods.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( "assets/js/validate/additional-methods{$suffix}.js", CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array( 'jquery' ),
 			'1.15.0',
 			true
@@ -120,7 +127,7 @@ class Cherry_RE_Assets {
 
 		wp_register_script(
 			'jquery-magnific-popup',
-			plugins_url( 'assets/js/magnific-popup/jquery.magnific-popup.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( "assets/js/magnific-popup/jquery.magnific-popup{$suffix}.js", CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array( 'jquery' ),
 			'1.1.0',
 			true
@@ -136,7 +143,7 @@ class Cherry_RE_Assets {
 
 		wp_register_script(
 			'jquery-iframe-transport',
-			plugins_url( 'assets/js/file-upload/jquery.iframe-transport.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( "assets/js/file-upload/jquery.iframe-transport{$suffix}.js", CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array( 'jquery' ),
 			'9.12.5',
 			true
@@ -144,7 +151,7 @@ class Cherry_RE_Assets {
 
 		wp_register_script(
 			'jquery-fileupload-core',
-			plugins_url( 'assets/js/file-upload/jquery.fileupload.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( "assets/js/file-upload/jquery.fileupload{$suffix}.js", CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array( 'jquery', 'jquery-ui-widget', 'jquery-iframe-transport' ),
 			'9.12.5',
 			true
@@ -152,7 +159,7 @@ class Cherry_RE_Assets {
 
 		wp_register_script(
 			'jquery-fileupload-image',
-			plugins_url( 'assets/js/file-upload/jquery.fileupload-image.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( "assets/js/file-upload/jquery.fileupload-image{$suffix}.js", CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array( 'jquery-load-image' ),
 			'9.12.5',
 			true
@@ -160,7 +167,7 @@ class Cherry_RE_Assets {
 
 		wp_register_script(
 			'jquery-fileupload-process',
-			plugins_url( 'assets/js/file-upload/jquery.fileupload-process.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( "assets/js/file-upload/jquery.fileupload-process{$suffix}.js", CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array(),
 			'9.12.5',
 			true
@@ -176,7 +183,7 @@ class Cherry_RE_Assets {
 
 		wp_register_script(
 			self::get_main_handle(),
-			plugins_url( 'assets/js/real-estate.min.js', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			plugins_url( "assets/js/real-estate{$suffix}.js", CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array( 'cherry-js-core' ),
 			CHERRY_REAL_ESTATE_VERSION,
 			true
@@ -184,10 +191,10 @@ class Cherry_RE_Assets {
 
 		$js_field_html_img = cherry_re_get_template_html( 'form-fields/uploaded-file-html' );
 
-		$data = apply_filters( 'cherry_re_data_script', array(
+		$data = apply_filters( 'cherry_re_main_data_script', array(
 			'ajaxurl'           => esc_url( admin_url( 'admin-ajax.php' ) ),
 			'popupid'           => esc_attr( Model_Submit_Form::get_popup_id() ),
-			'js_field_html_img' => esc_js( str_replace( PHP_EOL, '', $js_field_html_img ) ),
+			'js_field_html_img' => esc_js( str_replace( "\n", '', $js_field_html_img ) ),
 			'sortName'          => 'properties_sort',
 			'messages'          => array(
 				'required' => esc_html_x(
@@ -337,6 +344,45 @@ class Cherry_RE_Assets {
 	 * @since 1.0.0
 	 */
 	public static function enqueue_admin_scripts( $hook_suffix ) {
+		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
+		wp_register_script(
+			self::get_googleapis_handle(),
+			esc_url( Cherry_RE_Tools::get_google_map_url( array(
+				'libraries' => 'places',
+			) ) ),
+			array(),
+			null,
+			true
+		);
+
+		wp_register_script(
+			'jquery-geocomplete',
+			plugins_url( "/admin/assets/js/geocomplete/jquery.geocomplete{$suffix}.js", CHERRY_REAL_ESTATE_MAIN_FILE ),
+			array( 'jquery' ),
+			'1.7.0',
+			true
+		);
+
+		wp_register_script(
+			'cherry-re-geocomplete-init',
+			plugins_url( "/admin/assets/js/geocomplete/init{$suffix}.js", CHERRY_REAL_ESTATE_MAIN_FILE ),
+			array( 'jquery-geocomplete' ),
+			CHERRY_REAL_ESTATE_VERSION,
+			true
+		);
+
+		$meta_key = cherry_real_estate()->get_meta_prefix();
+
+		$data = apply_filters( 'cherry_re_geocomplete_data_script', array(
+			'lat'     => esc_js( get_post_meta( get_the_ID(), $meta_key . 'latitude', true ) ),
+			'lng'     => esc_js( get_post_meta( get_the_ID(), $meta_key . 'longitude', true ) ),
+			'address' => esc_js( get_post_meta( get_the_ID(), $meta_key . 'location', true ) ),
+			'styles'  => Model_Settings::get_map_style(),
+		) );
+
+		wp_localize_script( 'cherry-re-geocomplete-init', 'CherryREGeocompleteData', $data );
+
 		/**
 		 * Hook to dequeue the javascripts or add custom.
 		 *
@@ -408,32 +454,16 @@ class Cherry_RE_Assets {
 	public function enqueue_admin_styles( $hook_suffix ) {
 
 		wp_register_style(
-			'cherry-re-admin-styles',
-			plugins_url( 'admin/assets/css/admin-style.css', CHERRY_REAL_ESTATE_MAIN_FILE ),
+			'cherry-re-admin-style',
+			plugins_url( 'admin/assets/css/admin.css', CHERRY_REAL_ESTATE_MAIN_FILE ),
 			array(),
 			CHERRY_REAL_ESTATE_VERSION,
 			'all'
 		);
 
 		if ( in_array( $hook_suffix, array( 'user-edit.php', 'profile.php' ) ) ) {
-			wp_enqueue_style( 'cherry-re-admin-styles' );
+			wp_enqueue_style( 'cherry-re-admin-style' );
 		}
-
-		wp_register_style(
-			'cherry-re-settings-page',
-			plugins_url( 'admin/assets/css/settings-page.css', CHERRY_REAL_ESTATE_MAIN_FILE ),
-			array(),
-			CHERRY_REAL_ESTATE_VERSION,
-			'all'
-		);
-
-		wp_register_style(
-			'cherry-re-tinymce',
-			plugins_url( 'admin/assets/css/tinymce.css', CHERRY_REAL_ESTATE_MAIN_FILE ),
-			array(),
-			CHERRY_REAL_ESTATE_VERSION,
-			'all'
-		);
 
 		/**
 		 * Hook to dequeue the stylesheets or add custom.
@@ -473,14 +503,58 @@ class Cherry_RE_Assets {
 	}
 
 	/**
+	 * Move Google Map API script to the footer.
+	 *
+	 * @since 1.1.0
+	 */
+	public static function googleapis_to_footer() {
+		$current_screen = get_current_screen();
+		$post_type_name = cherry_real_estate()->get_post_type_name();
+
+		if ( empty( $current_screen->post_type ) || $post_type_name !== $current_screen->post_type ) {
+			return;
+		}
+
+		$pre = apply_filters( 'cherry_re_admin_pre_googleapis_to_footer', false );
+
+		if ( false !== $pre ) {
+			return;
+		}
+
+		global $wp_scripts;
+
+		foreach ( $wp_scripts->registered as $r ) {
+
+			if ( self::get_googleapis_handle() == $r->handle ) {
+				continue;
+			}
+
+			if ( preg_match( '/maps.google.com/i', $r->src ) || preg_match( '/maps.googleapis.com/i', $r->src ) ) {
+
+				if ( empty( $r->extra['group'] ) ) {
+					$r->extra = array_merge( $r->extra, array( 'group' => 1 ) );
+				}
+			}
+		}
+	}
+
+	/**
 	 * Solution for including a Google Map API javascript.
 	 *
 	 * @since 1.0.0
 	 */
 	public static function googleapis_conflict() {
-		$remove_fix = apply_filters( 'cherry_re_remove_googleapis_conflict', false );
 
-		if ( false !== $remove_fix ) {
+		if ( 'wp_footer' == current_filter() ) {
+			$filter_name = 'cherry_re_public_pre_googleapis_conflict';
+
+		} else {
+			$filter_name = 'cherry_re_admin_pre_googleapis_conflict';
+		}
+
+		$pre = apply_filters( $filter_name, false );
+
+		if ( false !== $pre ) {
 			return;
 		}
 
@@ -496,6 +570,7 @@ class Cherry_RE_Assets {
 
 				if ( in_array( $r->handle, $wp_scripts->done ) ) {
 					wp_dequeue_script( self::get_googleapis_handle() );
+					continue;
 				}
 
 				if ( in_array( $r->handle, $wp_scripts->queue ) ) {

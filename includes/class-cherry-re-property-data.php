@@ -207,16 +207,18 @@ class Cherry_RE_Property_Data {
 	 * Get properties.
 	 *
 	 * @since  1.0.0
+	 * @since  1.1.0 Added `ignore_sticky_posts` default argunemt.
 	 * @param  array $args Arguments to be passed to the query.
 	 * @return array|bool  Array if true, boolean if false.
 	 */
 	public function get_properties( $args = array() ) {
 		$defaults = array(
-			'number'   => 5,
-			'orderby'  => 'date',
-			'order'    => 'desc',
-			'ids'      => 0,
-			'state'    => 'active',
+			'number'              => 5,
+			'orderby'             => 'date',
+			'order'               => 'desc',
+			'ids'                 => 0,
+			'state'               => 'active',
+			'ignore_sticky_posts' => false,
 		);
 
 		$args = wp_parse_args( $args, $defaults );
@@ -231,14 +233,19 @@ class Cherry_RE_Property_Data {
 
 		// The Query Arguments.
 		$post_type = cherry_real_estate()->get_post_type_name();
-		$query_args['post_type']        = $post_type;
-		$query_args['posts_per_page']   = $args['number'];
-		$query_args['orderby']          = $args['orderby'];
-		$query_args['order']            = $args['order'];
-		$query_args['suppress_filters'] = false;
+		$query_args['post_type']           = $post_type;
+		$query_args['posts_per_page']      = $args['number'];
+		$query_args['orderby']             = $args['orderby'];
+		$query_args['order']               = $args['order'];
+		$query_args['suppress_filters']    = false;
+		$query_args['ignore_sticky_posts'] = $args['ignore_sticky_posts'];
 
 		if ( ! empty( $args['author'] ) ) {
 			$query_args['author'] = $args['author'];
+		}
+
+		if ( ! empty( $args['post__not_in'] ) ) {
+			$query_args['post__not_in'] = $args['post__not_in'];
 		}
 
 		// Tax Query.
@@ -282,6 +289,7 @@ class Cherry_RE_Property_Data {
 		}
 
 		$state_query = array(
+			'relation' => 'AND',
 			array(
 				'key'     => cherry_real_estate()->get_meta_prefix() . 'state',
 				'value'   => $args['state'],
@@ -408,10 +416,13 @@ class Cherry_RE_Property_Data {
 			$item_classes   = array_map( 'esc_attr', $item_classes );
 			$item_classes   = apply_filters( 'cherry_re_property_item_classes', $item_classes, $property_id );
 
-			$meta_prefix = cherry_real_estate()->get_meta_prefix();
+			$latlng    = $callbacks->get_property_latlng();
+			$location  = $callbacks->get_property_location();
+
 			$data_atts   = apply_filters( 'cherry_re_property_item_data_atts', array(
 				'property-id'      => esc_attr( $property_id ),
-				'property-address' => esc_attr( get_post_meta( $property_id, $meta_prefix . 'location', true ) ),
+				'property-address' => esc_attr( $location ),
+				'property-latlng'  => $latlng,
 			), $property_id );
 
 			$output .= '<div class="' . join( ' ', array_unique( $item_classes ) ) . '" ' . cherry_re_return_data_atts( $data_atts ) . '><div class="tm-property__inner">';
