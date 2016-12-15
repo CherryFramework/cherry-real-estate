@@ -157,9 +157,9 @@ class Cherry_Real_Estate_Admin {
 	/**
 	 * Show thumbnail in admin columns.
 	 *
-	 * @since  1.1.0
-	 * @param  string $column
-	 * @param  int    $post_id
+	 * @since 1.1.0
+	 * @param string $column  The name of the column to display.
+	 * @param int    $post_id The ID of the current post.
 	 */
 	public function _show_thumb( $column, $post_id ) {
 
@@ -171,9 +171,9 @@ class Cherry_Real_Estate_Admin {
 	/**
 	 * Show price in admin columns.
 	 *
-	 * @since  1.1.0
-	 * @param  string $column
-	 * @param  int    $post_id
+	 * @since 1.1.0
+	 * @param string $column  The name of the column to display.
+	 * @param int    $post_id The ID of the current post.
 	 */
 	public function _show_price( $column, $post_id ) {
 		$decimals           = Model_Settings::get_decimal_numb();
@@ -188,9 +188,9 @@ class Cherry_Real_Estate_Admin {
 	/**
 	 * Show status in admin columns.
 	 *
-	 * @since  1.1.0
-	 * @param  string $column
-	 * @param  int    $post_id
+	 * @since 1.1.0
+	 * @param string $column  The name of the column to display.
+	 * @param int    $post_id The ID of the current post.
 	 */
 	public function _show_status( $column, $post_id ) {
 		$status  = get_post_meta( $post_id, $this->meta_prefix . 'status', true );
@@ -208,9 +208,9 @@ class Cherry_Real_Estate_Admin {
 	/**
 	 * Show state in admin columns.
 	 *
-	 * @since  1.1.0
-	 * @param  string $column
-	 * @param  int    $post_id
+	 * @since 1.1.0
+	 * @param string $column  The name of the column to display.
+	 * @param int    $post_id The ID of the current post.
 	 */
 	public function _show_state( $column, $post_id ) {
 		$state   = get_post_meta( $post_id, $this->meta_prefix . 'state', true );
