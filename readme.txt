@@ -41,3 +41,7 @@ The plugin is absolutely free and has no any hidden fees. Use Cherry Real Estate
 * UPD: cherry-framework (v.1.3.1)
 * UPD: admin columns in view all properties page (dashboard)
 * FIX: conflict with dsIDXpress plugin
+
+= 1.1.1 =
+
+* FIX: problem with previous update
