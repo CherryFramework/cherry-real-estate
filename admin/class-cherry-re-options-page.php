@@ -242,11 +242,17 @@ class Cherry_RE_Options_Page {
 			'cherry-re-options-map' => array(
 				'api_key' => array(
 					'slug'  => 'api_key',
-					'title' => esc_html__( 'Api Key', 'cherry-real-estate' ),
+					'title' => esc_html__( 'Google Maps API Key', 'cherry-real-estate' ),
 					'type'  => 'text',
 					'field' => array(
 						'id'    => 'api_key',
 						'value' => '',
+						'desc'  => sprintf(
+							'%2$s <a href="%1$s" target="_blank">%3$s</a>',
+							esc_url( 'https://console.developers.google.com/' ),
+							esc_html__( 'This API key can be obtained from the', 'cherry-real-estate' ),
+							esc_html__( 'Google Developers Console', 'cherry-real-estate' )
+						),
 					),
 				),
 				'style' => array(
