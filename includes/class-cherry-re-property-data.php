@@ -588,7 +588,7 @@ class Cherry_RE_Property_Data {
 
 		if ( ! empty( $atts['min_parking_place'] ) ) {
 			$args['meta_query'][] = array(
-				'key'     => $prefix . 'parking_place',
+				'key'     => $prefix . 'parking_places',
 				'value'   => (int) $atts['min_parking_place'],
 				'type'    => 'numeric',
 				'compare' => '>=',
@@ -597,7 +597,7 @@ class Cherry_RE_Property_Data {
 
 		if ( ! empty( $atts['max_parking_place'] ) ) {
 			$args['meta_query'][] = array(
-				'key'     => $prefix . 'parking_place',
+				'key'     => $prefix . 'parking_places',
 				'value'   => (int) $atts['max_parking_place'],
 				'type'    => 'numeric',
 				'compare' => '<=',
