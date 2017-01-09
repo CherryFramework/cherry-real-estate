@@ -1,14 +1,14 @@
 <?php
 /**
  * Class Cherry Core
- * Version: 1.3.1
+ * Version: 1.4.0
  *
  * @package    Cherry_Framework
  * @subpackage Class
  * @author     Cherry Team <cherryframework@gmail.com>
  * @copyright  Copyright (c) 2012 - 2016, Cherry Team
  * @link       http://www.cherryframework.com/
- * @license    http://www.gnu.org/licenses/old-licenses/gpl-3.0.html
+ * @license    http://www.gnu.org/licenses/gpl-3.0.en.html
  */
 
 // If this file is called directly, abort.
@@ -171,7 +171,7 @@ if ( ! class_exists( 'Cherry_Core' ) ) {
 		/**
 		 * Load the framework textdomain.
 		 *
-		 * @since 1.3.2
+		 * @since 1.4.0
 		 */
 		public function load_textdomain() {
 			$mo_file_path = dirname( __FILE__ ) . '/languages/' . get_locale() . '.mo';
