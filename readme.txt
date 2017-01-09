@@ -49,4 +49,5 @@ The plugin is absolutely free and has no any hidden fees. Use Cherry Real Estate
 = 1.1.2 =
 
 * ADD: description to the api key option (settings page)
+* UPD: cherry-framework (v.1.4.0)
 * FIX: searching by `Parking places`
