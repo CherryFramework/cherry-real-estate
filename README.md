@@ -1,8 +1,8 @@
 # Cherry Real Estate #
-* Tags: custom post type
-* Requires at least: 4.6
-* Tested up to: 4.5
-* Stable tag: 1.0.1
+* Tags: realestate, custom post type, properties, cherry framework
+* Requires at least: 4.5
+* Tested up to: 4.7
+* Stable tag: 1.1.2
 * License: GPL-3.0+
 * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -56,3 +56,8 @@ The plugin is absolutely free and has no any hidden fees. Use Cherry Real Estate
 = 1.1.1 =
 
 * FIX: problem with previous update
+
+= 1.1.2 =
+
+* ADD: description to the api key option (settings page)
+* FIX: searching by `Parking places`
