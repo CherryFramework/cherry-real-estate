@@ -1,8 +1,8 @@
 # Cherry Real Estate #
-* Tags: custom post type
+* Tags: realestate, custom post type, properties, cherry framework
 * Requires at least: 4.5
 * Tested up to: 4.7
-* Stable tag: 1.1.0
+* Stable tag: 1.1.2
 * License: GPL-3.0+
 * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -52,3 +52,13 @@ The plugin is absolutely free and has no any hidden fees. Use Cherry Real Estate
 * UPD: cherry-framework (v.1.3.1)
 * UPD: admin columns in view all properties page (dashboard)
 * FIX: conflict with dsIDXpress plugin
+
+= 1.1.1 =
+
+* FIX: problem with previous update
+
+= 1.1.2 =
+
+* ADD: description to the api key option (settings page)
+* UPD: cherry-framework (v.1.4.0)
+* FIX: searching by `Parking places`
