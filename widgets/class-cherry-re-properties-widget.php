@@ -301,7 +301,7 @@ if ( ! class_exists( 'Cherry_RE_Properties_Widget' ) ) {
 			$order            = ! empty( $instance['order'] ) ? sanitize_text_field( $instance['order'] ) : $this->settings['order']['value'];
 			$image_size       = ! empty( $instance['image_size'] ) ? sanitize_text_field( $instance['image_size'] ) : $this->settings['image_size']['value'];
 			$excerpt_length   = ! empty( $instance['excerpt_length'] ) ? sanitize_text_field( $instance['excerpt_length'] ) : $this->settings['excerpt_length']['value'];
-			$more_button_text = ! empty( $instance['more_button_text'] ) ? sanitize_text_field( $instance['more_button_text'] ) : $this->settings['more_button_text']['value'];
+			$more_button_text = $this->use_wpml_translate( 'more_button_text' );
 			$template         = ! empty( $instance['template'] ) ? sanitize_text_field( $instance['template'] ) : $this->settings['template']['value'];
 
 			// Visibility options.
