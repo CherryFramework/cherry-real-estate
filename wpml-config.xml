@@ -11,7 +11,7 @@
 		<custom-field action="copy">_tm_property_state</custom-field>
 		<custom-field action="copy">_tm_property_price</custom-field>
 		<custom-field action="copy">_tm_property_status</custom-field>
-		<custom-field action="copy">_tm_property_location</custom-field>
+		<custom-field action="translate">_tm_property_location</custom-field>
 		<custom-field action="copy">_tm_property_bedrooms</custom-field>
 		<custom-field action="copy">_tm_property_bathrooms</custom-field>
 		<custom-field action="copy">_tm_property_area</custom-field>
