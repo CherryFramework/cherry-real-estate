@@ -593,7 +593,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			$actions[] = sprintf(
 				'<a href="%s">%s</a>',
 				esc_url( get_admin_url( null, $path ) ),
-				esc_html__( 'Settings', 'cherry-real-esatate' )
+				esc_html__( 'Settings', 'cherry-real-estate' )
 			);
 
 			return $actions;
