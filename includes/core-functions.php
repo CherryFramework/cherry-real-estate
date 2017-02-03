@@ -244,6 +244,7 @@ function cherry_re_is_property_search() {
 function cherry_re_is_property_listing() {
 	$post_type    = cherry_real_estate()->get_post_type_name();
 	$listing_page = Model_Settings::get_listing_page();
+	$listing_page = apply_filters( 'wpml_object_id', $listing_page, 'page', true );
 
 	return is_post_type_archive( $post_type ) || ( is_page( $listing_page ) && '' !== $listing_page );
 }

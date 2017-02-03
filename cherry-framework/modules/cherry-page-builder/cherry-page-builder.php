@@ -343,7 +343,11 @@ if ( ! class_exists( 'Cherry_Page_Builder' ) ) {
 			$value = get_option( $setting['section'] );
 
 			if ( isset( $value[ $setting['slug'] ] ) ) {
-				$setting['field']['value'] = $value[ $setting['slug'] ];
+
+				$_value = $value[ $setting['slug'] ];
+				$setting['field']['value'] = $_value;
+				$setting['field']['value'] = ( 'page' == $setting['slug'] ) ? apply_filters( 'wpml_object_id', $_value, 'page', true ) : $_value;
+
 			} else {
 				$setting['field']['value'] = '';
 			}
