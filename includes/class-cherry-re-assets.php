@@ -350,6 +350,7 @@ class Cherry_RE_Assets {
 			self::get_googleapis_handle(),
 			esc_url( Cherry_RE_Tools::get_google_map_url( array(
 				'libraries' => 'places',
+				'v'         => 3,
 			) ) ),
 			array(),
 			null,
@@ -529,7 +530,7 @@ class Cherry_RE_Assets {
 				continue;
 			}
 
-			if ( preg_match( '/maps.google.com/i', $r->src ) || preg_match( '/maps.googleapis.com/i', $r->src ) ) {
+			if ( Cherry_RE_Tools::is_googlemaps_script( $r ) ) {
 
 				if ( empty( $r->extra['group'] ) ) {
 					$r->extra = array_merge( $r->extra, array( 'group' => 1 ) );
@@ -566,7 +567,7 @@ class Cherry_RE_Assets {
 				continue;
 			}
 
-			if ( preg_match( '/maps.google.com/i', $r->src ) || preg_match( '/maps.googleapis.com/i', $r->src ) ) {
+			if ( Cherry_RE_Tools::is_googlemaps_script( $r ) ) {
 
 				if ( in_array( $r->handle, $wp_scripts->done ) ) {
 					wp_dequeue_script( self::get_googleapis_handle() );
