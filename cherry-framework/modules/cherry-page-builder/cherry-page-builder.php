@@ -113,7 +113,7 @@ if ( ! class_exists( 'Cherry_Page_Builder' ) ) {
 				)
 			);
 
-			$this->views = __DIR__ . '/views/';
+			$this->views = dirname( __FILE__ ) . '/views/';
 			add_action( 'admin_enqueue_scripts', array( $this, 'assets' ) );
 		}
 
