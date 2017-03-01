@@ -197,6 +197,11 @@ class Cherry_RE_Templater {
 	 * @param array $atts Output attributes.
 	 */
 	public function setup_template_data( $atts = array() ) {
+
+		if ( ! class_exists( 'Cherry_RE_Template_Callbacks' ) ) {
+			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-template-callbacks.php' );
+		}
+
 		$callbacks = new Cherry_RE_Template_Callbacks( $atts );
 
 		$data = array(
