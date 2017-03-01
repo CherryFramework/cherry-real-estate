@@ -116,7 +116,7 @@ class Cherry_RE_Tools {
 	 * Perform a regular expression match
 	 *
 	 * @since  1.1.3
-	 * @param  object $script
+	 * @param  WP_Scripts $script WP_Scripts object
 	 * @return bool
 	 */
 	public static function is_googlemaps_script( $script ) {
