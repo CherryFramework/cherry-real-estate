@@ -1,8 +1,8 @@
 # Cherry Real Estate #
 * Tags: realestate, custom post type, properties, cherry framework
 * Requires at least: 4.5
-* Tested up to: 4.7
-* Stable tag: 1.1.2
+* Tested up to: 4.7.3
+* Stable tag: 1.1.3
 * License: GPL-3.0+
 * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -62,3 +62,11 @@ The plugin is absolutely free and has no any hidden fees. Use Cherry Real Estate
 * ADD: description to the api key option (settings page)
 * UPD: cherry-framework (v.1.4.0)
 * FIX: searching by `Parking places`
+
+= 1.1.3 =
+
+* ADD: compatibility with WPML-package
+* FIX: text-domain
+* FIX: js-conflict on ssl-based sites (pair with Power Builder plugin)
+* FIX: stop using constant __DIR__
+* FIX: Fatal error when edit page/post (pair with Power Builder and Yoast SEO plugins)
