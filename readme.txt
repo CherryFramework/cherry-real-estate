@@ -59,6 +59,7 @@ The plugin is absolutely free and has no any hidden fees. Use Cherry Real Estate
 = 1.1.3 =
 
 * ADD: compatibility with WPML-package
+* UPD: cherry-framework to 1.4.2 version
 * FIX: text-domain
 * FIX: js-conflict on ssl-based sites (pair with Power Builder plugin)
 * FIX: stop using constant __DIR__
