@@ -183,25 +183,25 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 
 			// Classes.
 			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-registration.php' );
-			include_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-assets.php' );
-			include_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-agent-data.php' );
-			include_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-property-data.php' );
-			include_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-shortcodes-data.php' );
-			include_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-template-loader.php' );
+			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-assets.php' );
+			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-agent-data.php' );
+			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-property-data.php' );
+			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-shortcodes-data.php' );
+			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-template-loader.php' );
 			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-tools.php' );
 
 			// Functions.
-			include_once( CHERRY_REAL_ESTATE_DIR . 'includes/core-functions.php' );
+			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/core-functions.php' );
 
 			// Frontend.
 			if ( ( ! is_admin() || defined( 'DOING_AJAX' ) ) && ! defined( 'DOING_CRON' ) ) {
-				include_once( CHERRY_REAL_ESTATE_DIR . 'includes/template-hooks.php' );
+				require_once( CHERRY_REAL_ESTATE_DIR . 'includes/template-hooks.php' );
 				require_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-template-callbacks.php' );
 			}
 
 			// Admin.
 			if ( is_admin() ) {
-				include_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-cherry-re-admin.php' );
+				require_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-cherry-re-admin.php' );
 			}
 		}
 
@@ -322,7 +322,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		 * @since 1.0.0
 		 */
 		public function template_functions() {
-			include_once( 'includes/template-functions.php' );
+			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/template-functions.php' );
 		}
 
 		/**
@@ -354,8 +354,8 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		 * @since 1.0.0
 		 */
 		public function add_widgets() {
-			require_once( CHERRY_REAL_ESTATE_DIR . '/widgets/class-cherry-re-search-widget.php' );
-			require_once( CHERRY_REAL_ESTATE_DIR . '/widgets/class-cherry-re-properties-widget.php' );
+			require_once( CHERRY_REAL_ESTATE_DIR . 'widgets/class-cherry-re-search-widget.php' );
+			require_once( CHERRY_REAL_ESTATE_DIR . 'widgets/class-cherry-re-properties-widget.php' );
 		}
 
 		/**
