@@ -373,11 +373,24 @@ class Cherry_RE_Assets {
 			true
 		);
 
-		$meta_key = cherry_real_estate()->get_meta_prefix();
+		$property_id = get_the_ID();
+		$meta_key    = cherry_real_estate()->get_meta_prefix();
+		$lat_value   = get_post_meta( $property_id, $meta_key . 'latitude', true );
+		$lng_value   = get_post_meta( $property_id, $meta_key . 'longitude', true );
+
+		if ( empty( $lat_value ) || empty( $lng_value ) ) {
+			$center_value = Model_Settings::get_map_center();
+			$center_value = explode( ',', $center_value );
+
+			if ( sizeof( $center_value ) > 1 ) {
+				$lat_value = floatval( $center_value[0] );
+				$lng_value = floatval( $center_value[1] );
+			}
+		}
 
 		$data = apply_filters( 'cherry_re_geocomplete_data_script', array(
-			'lat'     => esc_js( get_post_meta( get_the_ID(), $meta_key . 'latitude', true ) ),
-			'lng'     => esc_js( get_post_meta( get_the_ID(), $meta_key . 'longitude', true ) ),
+			'lat'     => esc_js( $lat_value ),
+			'lng'     => esc_js( $lng_value ),
 			'address' => esc_js( get_post_meta( get_the_ID(), $meta_key . 'location', true ) ),
 			'styles'  => Model_Settings::get_map_style(),
 		) );

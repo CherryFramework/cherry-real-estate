@@ -262,6 +262,12 @@ class Cherry_RE_Options_Page {
 					'field' => array(
 						'id'    => 'style',
 						'value' => '',
+						'desc'  => sprintf(
+							'%s <a href="%s" target="_blank">%s</a>',
+							esc_html__( 'Copy and paste style on JSON-format from', 'cherry-real-estate' ),
+							esc_url( 'https://snazzymaps.com/' ),
+							esc_html__( 'snazzymaps.com', 'cherry-real-estate' )
+						),
 					),
 				),
 				'marker' => array(
@@ -273,6 +279,22 @@ class Cherry_RE_Options_Page {
 						'value'              => '',
 						'multi_upload'       => false,
 						'upload_button_text' => esc_html__( 'Upload', 'cherry-real-estate' ),
+					),
+				),
+				'latlng' => array(
+					'slug'  => 'latlng',
+					'title' => esc_html__( 'Default center position (latitude and longitude)', 'cherry-real-estate' ),
+					'type'  => 'text',
+					'field' => array(
+						'id'    => 'latlng',
+						'value' => '',
+						'desc'  => sprintf(
+							'%2$s <a href="%1$s" target="_blank">%3$s</a> %4$s',
+							esc_url( 'https://google-developers.appspot.com/maps/documentation/utils/geocoder/' ),
+							esc_html__( 'Copy location coordinates by address using the', 'cherry-real-estate' ),
+							esc_html__( 'tool.', 'cherry-real-estate' ),
+							esc_html__( 'E.g. -33.867,151.195', 'cherry-real-estate' )
+						),
 					),
 				),
 			),
