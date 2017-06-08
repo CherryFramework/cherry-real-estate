@@ -313,6 +313,13 @@ class Cherry_RE_Template_Callbacks {
 			'text'  => ! empty( $this->atts['more_button_text'] ) ? esc_attr( $this->atts['more_button_text'] ) : esc_html__( 'read more', 'cherry-real-estate' ),
 		) );
 
+		/**
+		 * Filters arguments for more button.
+		 *
+		 * @since 1.1.4
+		 * @var array
+		 */
+		$args = apply_filters( 'cherry_re_agent_more_args', $args, $this->atts );
 		$link = $this->get_agent_permalink();
 
 		return sprintf(
@@ -720,6 +727,14 @@ class Cherry_RE_Template_Callbacks {
 			'class' => '',
 			'text'  => ! empty( $this->atts['more_button_text'] ) ? esc_attr( $this->atts['more_button_text'] ) : esc_html__( 'read more', 'cherry-real-estate' ),
 		) );
+
+		/**
+		 * Filters arguments for more button.
+		 *
+		 * @since 1.1.4
+		 * @var array
+		 */
+		$args = apply_filters( 'cherry_re_property_more_args', $args, $this->atts );
 
 		return sprintf(
 			'<a href="%s" class="%s">%s</a>',
