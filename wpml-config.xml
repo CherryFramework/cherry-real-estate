@@ -1,0 +1,35 @@
+<wpml-config>
+	<custom-types>
+		<custom-type translate="1">tm-property</custom-type>
+	</custom-types>
+	<taxonomies>
+		<taxonomy translate="1">tm-property_type</taxonomy>
+		<taxonomy translate="1">tm-property_tag</taxonomy>
+		<taxonomy translate="1">tm-property_feature</taxonomy>
+	</taxonomies>
+	<custom-fields>
+		<custom-field action="copy">_tm_property_state</custom-field>
+		<custom-field action="copy">_tm_property_price</custom-field>
+		<custom-field action="copy">_tm_property_status</custom-field>
+		<custom-field action="translate">_tm_property_location</custom-field>
+		<custom-field action="copy">_tm_property_bedrooms</custom-field>
+		<custom-field action="copy">_tm_property_bathrooms</custom-field>
+		<custom-field action="copy">_tm_property_area</custom-field>
+		<custom-field action="copy">_tm_property_parking_places</custom-field>
+		<custom-field action="copy">_tm_property_gallery</custom-field>
+		<custom-field action="copy">_tm_property_author</custom-field>
+		<custom-field action="copy">_tm_property_place_id</custom-field>
+		<custom-field action="copy">_tm_property_latitude</custom-field>
+		<custom-field action="copy">_tm_property_longitude</custom-field>
+		<custom-field action="copy">geo_latitude</custom-field>
+		<custom-field action="copy">geo_longitude</custom-field>
+	</custom-fields>
+	<admin-texts>
+	<key name="cherry-re-options-emails">
+		<key name="notification-subject"/>
+		<key name="notification-message"/>
+		<key name="congratulate-subject"/>
+		<key name="congratulate-message"/>
+	</key>
+	</admin-texts>
+</wpml-config>

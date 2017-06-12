@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Cherry Real Estate
- * Plugin URI:  http://www.cherryframework.com/plugins/
+ * Plugin URI:  https://wordpress.org/plugins/cherry-real-estate/
  * Description: Plugin for adding real estate functionality to the site.
- * Version:     1.1.2
+ * Version:     1.1.4
  * Author:      Template Monster
- * Author URI:  http://www.cherryframework.com/
+ * Author URI:  http://www.cherryframework.com/plugins/
  * Text Domain: cherry-real-estate
  * License:     GPL-3.0+
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -90,7 +90,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			add_action( 'plugins_loaded', array( $this, 'i18n' ) );
 
 			// Set up a Cherry core.
-			add_action( 'after_setup_theme', require( trailingslashit( __DIR__ ) . 'cherry-framework/setup.php' ), 0 );
+			add_action( 'after_setup_theme', require( trailingslashit( dirname( __FILE__ ) ) . 'cherry-framework/setup.php' ), 0 );
 			add_action( 'after_setup_theme', array( $this, 'get_core' ), 1 );
 			add_action( 'after_setup_theme', array( 'Cherry_Core', 'load_all_modules' ), 2 );
 
@@ -165,7 +165,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			 *
 			 * @since 1.0.0
 			 */
-			define( 'CHERRY_REAL_ESTATE_VERSION', '1.1.2' );
+			define( 'CHERRY_REAL_ESTATE_VERSION', '1.1.4' );
 		}
 
 		/**
@@ -183,25 +183,25 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 
 			// Classes.
 			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-registration.php' );
-			include_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-assets.php' );
-			include_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-agent-data.php' );
-			include_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-property-data.php' );
-			include_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-shortcodes-data.php' );
-			include_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-template-loader.php' );
+			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-assets.php' );
+			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-agent-data.php' );
+			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-property-data.php' );
+			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-shortcodes-data.php' );
+			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-template-loader.php' );
 			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-tools.php' );
 
 			// Functions.
-			include_once( CHERRY_REAL_ESTATE_DIR . 'includes/core-functions.php' );
+			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/core-functions.php' );
 
 			// Frontend.
 			if ( ( ! is_admin() || defined( 'DOING_AJAX' ) ) && ! defined( 'DOING_CRON' ) ) {
-				include_once( CHERRY_REAL_ESTATE_DIR . 'includes/template-hooks.php' );
+				require_once( CHERRY_REAL_ESTATE_DIR . 'includes/template-hooks.php' );
 				require_once( CHERRY_REAL_ESTATE_DIR . 'includes/class-cherry-re-template-callbacks.php' );
 			}
 
 			// Admin.
 			if ( is_admin() ) {
-				include_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-cherry-re-admin.php' );
+				require_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-cherry-re-admin.php' );
 			}
 		}
 
@@ -322,7 +322,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		 * @since 1.0.0
 		 */
 		public function template_functions() {
-			include_once( 'includes/template-functions.php' );
+			require_once( CHERRY_REAL_ESTATE_DIR . 'includes/template-functions.php' );
 		}
 
 		/**
@@ -354,8 +354,8 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 		 * @since 1.0.0
 		 */
 		public function add_widgets() {
-			require_once( CHERRY_REAL_ESTATE_DIR . '/widgets/class-cherry-re-search-widget.php' );
-			require_once( CHERRY_REAL_ESTATE_DIR . '/widgets/class-cherry-re-properties-widget.php' );
+			require_once( CHERRY_REAL_ESTATE_DIR . 'widgets/class-cherry-re-search-widget.php' );
+			require_once( CHERRY_REAL_ESTATE_DIR . 'widgets/class-cherry-re-properties-widget.php' );
 		}
 
 		/**
@@ -593,7 +593,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			$actions[] = sprintf(
 				'<a href="%s">%s</a>',
 				esc_url( get_admin_url( null, $path ) ),
-				esc_html__( 'Settings', 'cherry-real-esatate' )
+				esc_html__( 'Settings', 'cherry-real-estate' )
 			);
 
 			return $actions;

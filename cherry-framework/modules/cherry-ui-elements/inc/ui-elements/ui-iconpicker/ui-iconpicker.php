@@ -39,6 +39,7 @@ if ( ! class_exists( 'UI_Iconpicker' ) ) {
 			'label'       => '',
 			'class'       => '',
 			'master'      => '',
+			'width'       => 'fixed', // full, fixed
 			'required'    => false,
 		);
 
@@ -110,7 +111,7 @@ if ( ! class_exists( 'UI_Iconpicker' ) ) {
 		 */
 		public function render() {
 			$html = '';
-			$class = $this->settings['class'];
+			$class = $this->settings['class'] . $this->settings['width'] ;
 			$class .= ' ' . $this->settings['master'];
 
 			$html .= '<div class="cherry-ui-container ' . esc_attr( $class ) . '">';
@@ -122,8 +123,6 @@ if ( ! class_exists( 'UI_Iconpicker' ) ) {
 					$this->settings['icon_data'],
 					$this->default_icon_data
 				);
-
-				$this->maybe_parse_set_from_css();
 
 				$html .= '<div class="cherry-ui-iconpicker-group">';
 
@@ -168,6 +167,10 @@ if ( ! class_exists( 'UI_Iconpicker' ) ) {
 		 */
 		public function prepare_icon_set() {
 
+			if ( empty( $this->settings['icon_data']['icons'] ) ) {
+				$this->maybe_parse_set_from_css();
+			}
+
 			if ( ! array_key_exists( $this->settings['icon_data']['icon_set'], self::$sets ) ) {
 				self::$sets[ $this->settings['icon_data']['icon_set'] ] = array(
 					'iconCSS'    => $this->settings['icon_data']['icon_css'],
@@ -198,7 +201,7 @@ if ( ! class_exists( 'UI_Iconpicker' ) ) {
 
 			$result = ob_get_clean();
 
-			preg_match_all( '/\.([-a-zA-Z0-9]+):before[, {]/', $result, $matches );
+			preg_match_all( '/\.([-_a-zA-Z0-9]+):before[, {]/', $result, $matches );
 
 			if ( ! is_array( $matches ) || empty( $matches[1] ) ) {
 				return;
@@ -277,7 +280,7 @@ if ( ! class_exists( 'UI_Iconpicker' ) ) {
 				self::$printed_sets[] = $set;
 				$json = json_encode( $data );
 
-				printf( '<script> if ( ! window.сherry5IconSets ) { window.сherry5IconSets = {} } window.сherry5IconSets.%1$s = %2$s</script>', $set, $json );
+				printf( '<script> if ( ! window.cherry5IconSets ) { window.cherry5IconSets = {} } window.cherry5IconSets.%1$s = %2$s</script>', $set, $json );
 			}
 
 		}

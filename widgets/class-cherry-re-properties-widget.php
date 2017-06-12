@@ -52,35 +52,35 @@ if ( ! class_exists( 'Cherry_RE_Properties_Widget' ) ) {
 					'value'   => 'all',
 					'options' => array(
 						'all' => array(
-							'label' => esc_html__( 'All', 'cherry-real-esate' ),
+							'label' => esc_html__( 'All', 'cherry-real-estate' ),
 						),
 						$post_type . '_type' => array(
-							'label' => esc_html__( 'Types', 'cherry-real-esate' ),
+							'label' => esc_html__( 'Types', 'cherry-real-estate' ),
 							'slave' => 'types_relation',
 						),
 						$post_type . '_tag' => array(
-							'label' => esc_html__( 'Tags', 'cherry-real-esate' ),
+							'label' => esc_html__( 'Tags', 'cherry-real-estate' ),
 							'slave' => 'tags_relation',
 						),
 						$post_type . '_feature' => array(
-							'label' => esc_html__( 'Features', 'cherry-real-esate' ),
+							'label' => esc_html__( 'Features', 'cherry-real-estate' ),
 							'slave' => 'features_relation',
 						),
 						'ids' => array(
-							'label' => esc_html__( 'IDs', 'cherry-real-esate' ),
+							'label' => esc_html__( 'IDs', 'cherry-real-estate' ),
 							'slave' => 'ids_relation',
 						),
 					),
-					'label' => esc_html__( 'Source:', 'cherry-real-esate' ),
+					'label' => esc_html__( 'Source:', 'cherry-real-estate' ),
 				),
 				$post_type . '_type' => array(
 					'type'             => 'select',
 					'value'            => '',
 					'options_callback' => array( 'Model_Properties', 'get_property_types', array( 'id' ) ),
 					'options'          => false,
-					'label'            => esc_html__( 'Select types:', 'cherry-real-esate' ),
+					'label'            => esc_html__( 'Select types:', 'cherry-real-estate' ),
 					'multiple'         => true,
-					'placeholder'      => esc_html__( 'Select types:', 'cherry-real-esate' ),
+					'placeholder'      => esc_html__( 'Select types:', 'cherry-real-estate' ),
 					'master'           => 'types_relation',
 				),
 				$post_type . '_tag' => array(
@@ -88,9 +88,9 @@ if ( ! class_exists( 'Cherry_RE_Properties_Widget' ) ) {
 					'value'            => '',
 					'options_callback' => array( 'Model_Properties', 'get_property_tags', array( 'id' ) ),
 					'options'          => false,
-					'label'            => esc_html__( 'Select tags:', 'cherry-real-esate' ),
+					'label'            => esc_html__( 'Select tags:', 'cherry-real-estate' ),
 					'multiple'         => true,
-					'placeholder'      => esc_html__( 'Select tags:', 'cherry-real-esate' ),
+					'placeholder'      => esc_html__( 'Select tags:', 'cherry-real-estate' ),
 					'master'           => 'tags_relation',
 				),
 				$post_type . '_feature' => array(
@@ -98,16 +98,16 @@ if ( ! class_exists( 'Cherry_RE_Properties_Widget' ) ) {
 					'value'            => '',
 					'options_callback' => array( 'Model_Properties', 'get_property_features', array( 'id' ) ),
 					'options'          => false,
-					'label'            => esc_html__( 'Select features:', 'cherry-real-esate' ),
+					'label'            => esc_html__( 'Select features:', 'cherry-real-estate' ),
 					'multiple'         => true,
-					'placeholder'      => esc_html__( 'Select features:', 'cherry-real-esate' ),
+					'placeholder'      => esc_html__( 'Select features:', 'cherry-real-estate' ),
 					'master'           => 'features_relation',
 				),
 				'ids' => array(
 					'type'        => 'text',
 					'value'       => '',
-					'label'       => esc_html__( 'Type posts ID (for a custom sorting):', 'cherry-real-esate' ),
-					'placeholder' => esc_html__( 'Type posts ID:', 'cherry-real-esate' ),
+					'label'       => esc_html__( 'Type posts ID (for a custom sorting):', 'cherry-real-estate' ),
+					'placeholder' => esc_html__( 'Type posts ID:', 'cherry-real-estate' ),
 					'master'      => 'ids_relation',
 				),
 				'agent' => array(
@@ -301,7 +301,7 @@ if ( ! class_exists( 'Cherry_RE_Properties_Widget' ) ) {
 			$order            = ! empty( $instance['order'] ) ? sanitize_text_field( $instance['order'] ) : $this->settings['order']['value'];
 			$image_size       = ! empty( $instance['image_size'] ) ? sanitize_text_field( $instance['image_size'] ) : $this->settings['image_size']['value'];
 			$excerpt_length   = ! empty( $instance['excerpt_length'] ) ? sanitize_text_field( $instance['excerpt_length'] ) : $this->settings['excerpt_length']['value'];
-			$more_button_text = ! empty( $instance['more_button_text'] ) ? sanitize_text_field( $instance['more_button_text'] ) : $this->settings['more_button_text']['value'];
+			$more_button_text = $this->use_wpml_translate( 'more_button_text' );
 			$template         = ! empty( $instance['template'] ) ? sanitize_text_field( $instance['template'] ) : $this->settings['template']['value'];
 
 			// Visibility options.

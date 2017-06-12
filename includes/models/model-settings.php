@@ -275,6 +275,12 @@ class Model_Settings {
 		return ! empty( $map_settings['marker'] ) ? $map_settings['marker'] : '';
 	}
 
+	public static function get_map_center() {
+		$map_settings = self::get_map_settings();
+
+		return ! empty( $map_settings['latlng'] ) ? $map_settings['latlng'] : '-33.867, 151.195';
+	}
+
 	/**
 	 * Get notification subject.
 	 *

@@ -103,13 +103,32 @@ class Cherry_RE_Tools {
 		$api_key = Model_Settings::get_map_api_key();
 
 		$query = wp_parse_args( $args, array(
-			'key' => $api_key,
+			'key' => esc_attr( $api_key ),
 		) );
 
 		$query = apply_filters( 'cherry_re_google_map_url_query', $query, $args );
 		$url   = add_query_arg( $query, $url );
 
 		return apply_filters( 'cherry_re_google_map_url', $url, $query, $args );
+	}
+
+	/**
+	 * Perform a regular expression match
+	 *
+	 * @since  1.1.3
+	 * @param  WP_Scripts $script WP_Scripts object.
+	 * @return bool
+	 */
+	public static function is_googlemaps_script( $script ) {
+
+		if ( preg_match( '/maps.google.com/i', $script->src )
+			|| preg_match( '/maps.googleapis.com/i', $script->src )
+			|| preg_match( '/maps-api-ssl/i', $script->src )
+			) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

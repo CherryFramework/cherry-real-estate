@@ -13,7 +13,7 @@
 
 $values = $passed_vars['values']; ?>
 
-<form role="search" method="get" class="widget-tm-re-search__form" action="<?php echo home_url( '/' ); ?>">
+<form role="search" method="get" class="widget-tm-re-search__form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
 
 	<?php if ( ! empty( $passed_vars['title'] ) ) {
 		echo $passed_vars['title'];
@@ -120,6 +120,10 @@ $values = $passed_vars['values']; ?>
 	</div>
 
 	<input type="hidden" name="post_type" value="<?php echo cherry_real_estate()->get_post_type_name(); ?>">
+
+	<?php if ( function_exists( 'wpml_the_language_input_field' ) ) {
+		wpml_the_language_input_field();
+	} ?>
 
 	<button type="submit" class="tm-re-search-form__submit"><?php esc_html_e( 'Search', 'cherry-real-estate' ); ?></button>
 </form>
