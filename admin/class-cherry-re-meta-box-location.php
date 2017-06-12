@@ -80,13 +80,24 @@ class Cherry_RE_Meta_Box_Location {
 			$this->enqueue_assets();
 		}
 
-		$values = get_post_meta( get_the_ID(), '', true );
-		$values = ! empty( $values ) ? $values : array();
+		$meta_key = $this->get_meta_key();
+		$values   = get_post_meta( get_the_ID(), '', true );
+		$values   = ! empty( $values ) ? $values : array();
+
+		if ( empty( $values[ $meta_key . 'latitude' ] ) || empty( $values[ $meta_key . 'longitude' ] ) ) {
+			$center_value = Model_Settings::get_map_center();
+			$center_value = explode( ',', $center_value );
+
+			if ( sizeof( $center_value ) > 1 ) {
+				$values[ $meta_key . 'latitude' ][]  = floatval( $center_value[0] );
+				$values[ $meta_key . 'longitude' ][] = floatval( $center_value[1] );
+			}
+		}
 
 		cherry_re_get_template(
 			'location',
 			array(
-				'key'    => $this->get_meta_key(),
+				'key'    => $meta_key,
 				'values' => $values,
 				'nonce'  => wp_create_nonce( plugin_basename( __FILE__ ) ),
 			),
