@@ -2,8 +2,8 @@
 Contributors: TemplateMonster 2002
 Tags: realestate, custom post type, properties, cherry framework
 Requires at least: 4.5
-Tested up to: 4.7.2
-Stable tag: 1.1.3
+Tested up to: 4.8
+Stable tag: 1.1.4
 License: GPL-3.0+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -26,15 +26,30 @@ The plugin is absolutely free and has no any hidden fees. Use Cherry Real Estate
 3. Navigate to the "Properties" page available through the left menu
 
 == Changelog ==
-= 1.0.1 =
 
-* Initial release
+= 1.1.4 =
 
-= 1.0.2 =
+* ADD: option for map center
+* ADD: filters for more button arguments
 
-* ADD: unique filter to the callback-methods
-* UPD: cherry-framework to v1.3.0
-* DEL: unused `grid.tmpl` template
+= 1.1.3 =
+
+* ADD: compatibility with WPML-package
+* UPD: cherry-framework to 1.4.2 version
+* FIX: text-domain
+* FIX: js-conflict on ssl-based sites (pair with Power Builder plugin)
+* FIX: stop using constant __DIR__
+* FIX: Fatal error when edit page/post (pair with Power Builder and Yoast SEO plugins)
+
+= 1.1.2 =
+
+* ADD: description to the api key option (settings page)
+* UPD: cherry-framework (v.1.4.0)
+* FIX: searching by `Parking places`
+
+= 1.1.1 =
+
+* FIX: problem with previous update
 
 = 1.1.0 =
 
@@ -46,21 +61,12 @@ The plugin is absolutely free and has no any hidden fees. Use Cherry Real Estate
 * UPD: admin columns in view all properties page (dashboard)
 * FIX: conflict with dsIDXpress plugin
 
-= 1.1.1 =
+= 1.0.2 =
 
-* FIX: problem with previous update
+* ADD: unique filter to the callback-methods
+* UPD: cherry-framework to v1.3.0
+* DEL: unused `grid.tmpl` template
 
-= 1.1.2 =
+= 1.0.1 =
 
-* ADD: description to the api key option (settings page)
-* UPD: cherry-framework (v.1.4.0)
-* FIX: searching by `Parking places`
-
-= 1.1.3 =
-
-* ADD: compatibility with WPML-package
-* UPD: cherry-framework to 1.4.2 version
-* FIX: text-domain
-* FIX: js-conflict on ssl-based sites (pair with Power Builder plugin)
-* FIX: stop using constant __DIR__
-* FIX: Fatal error when edit page/post (pair with Power Builder and Yoast SEO plugins)
+* Initial release
