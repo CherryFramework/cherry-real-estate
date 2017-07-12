@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Cherry Real Estate
- * Plugin URI:  https://wordpress.org/plugins/cherry-real-estate/
+ * Plugin URI:
  * Description: Plugin for adding real estate functionality to the site.
  * Version:     1.1.5
- * Author:      Template Monster
- * Author URI:  http://www.cherryframework.com/plugins/
+ * Author:      JetImpex
+ * Author URI:  https://jetimpex.com/wordpress/
  * Text Domain: cherry-real-estate
  * License:     GPL-3.0+
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
