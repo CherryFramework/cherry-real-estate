@@ -63,7 +63,9 @@ class Cherry_RE_Options_Page {
 			return;
 		}
 
-		cherry_real_estate()->get_core()->modules['cherry-page-builder']->make(
+		$page_builder = Cherry_RE_Page_Builder::get_instance();
+
+		$page_builder->make(
 			$this->get_page_slug(),
 			esc_html__( 'Settings', 'cherry-real-estate' ),
 			'edit.php?post_type=' . cherry_real_estate()->get_post_type_name()

@@ -47,6 +47,7 @@ class Cherry_Real_Estate_Admin {
 	public function includes() {
 		include_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-cherry-re-options-page.php' );
 		include_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-cherry-re-meta-box-location.php' );
+		include_once( CHERRY_REAL_ESTATE_DIR . 'admin/page-builder/class-cherry-re-page-builder.php' );
 
 		if ( 'agency' == Model_Settings::get_mode() ) {
 			include_once( CHERRY_REAL_ESTATE_DIR . 'admin/class-cherry-re-meta-box-authors.php' );
