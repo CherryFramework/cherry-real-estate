@@ -41,7 +41,18 @@ if ( ! class_exists( 'UI_Iconpicker' ) ) {
 			'master'      => '',
 			'width'       => 'fixed', // full, fixed
 			'required'    => false,
+			'lock'        => false,
 		);
+
+		/**
+		 * Instance of this Cherry5_Lock_Element class.
+		 *
+		 * @since 1.0.0
+		 * @var object
+		 * @access private
+		 */
+		private $lock_element = null;
+
 
 		/**
 		 * Default icon data settings.
@@ -77,6 +88,8 @@ if ( ! class_exists( 'UI_Iconpicker' ) ) {
 		 */
 		public static $printed_sets = array();
 
+		public $temp_icons = null;
+
 		/**
 		 * Constructor method for the UI_Iconpicker class.
 		 *
@@ -85,6 +98,7 @@ if ( ! class_exists( 'UI_Iconpicker' ) ) {
 		function __construct( $args = array() ) {
 			$this->defaults_settings['id'] = 'cherry-ui-input-icon-' . uniqid();
 			$this->settings = wp_parse_args( $args, $this->defaults_settings );
+			$this->lock_element = new Cherry5_Lock_Element( $this->settings );
 
 			add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_assets' ) );
 			add_action( 'admin_footer', array( $this, 'print_icon_set' ), 1 );
@@ -110,9 +124,16 @@ if ( ! class_exists( 'UI_Iconpicker' ) ) {
 		 * @since 1.0.0
 		 */
 		public function render() {
-			$html = '';
-			$class = $this->settings['class'] . $this->settings['width'] ;
-			$class .= ' ' . $this->settings['master'];
+			$html       = '';
+			$lock_lable = ! empty( $this->settings['lock']['label'] )? sprintf('<div class="cherry-lock-label">%1$s</div>', $this->settings['lock']['label'] ) : '' ;
+			$class      = implode( ' ',
+				array(
+					$this->settings['class'],
+					$this->settings['master'],
+					$this->settings['width'],
+					$this->lock_element->get_class( 'inline-block' ),
+				)
+			);
 
 			$html .= '<div class="cherry-ui-container ' . esc_attr( $class ) . '">';
 				if ( '' !== $this->settings['label'] ) {
@@ -133,9 +154,45 @@ if ( ! class_exists( 'UI_Iconpicker' ) ) {
 				}
 
 				$html .= '</div>';
+				$html .= $this->lock_element->get_html();
 			$html .= '</div>';
 
+			/**
+			 * Maybe add js repeater template to response
+			 *
+			 * @var bool
+			 */
+			$add_js_to_response = apply_filters( 'cherry_ui_add_data_to_element', false );
+
+			if ( $add_js_to_response ) {
+
+				ob_start();
+				$this->print_icon_set();
+				$icons = ob_get_clean();
+
+				$in_repeater = apply_filters( 'cherry_ui_is_repeater', false );
+
+				if ( $in_repeater ) {
+					$this->temp_icons = $icons;
+					add_filter( 'cherry_ui_add_repater_data', array( $this, 'store_icons' ) );
+				} else {
+					$html .= $icons;
+				}
+
+			}
+
 			return $html;
+		}
+
+		public function store_icons( $data = array() ) {
+
+			if ( ! is_array( $data ) ) {
+				$data = array();
+			}
+
+			$data[] = $this->temp_icons;
+
+			return $data;
 		}
 
 		/**
@@ -294,25 +351,25 @@ if ( ! class_exists( 'UI_Iconpicker' ) ) {
 
 			wp_enqueue_style(
 				'ui-iconpicker',
-				esc_url( Cherry_Core::base_url( 'assets/min/ui-iconpicker.min.css', __FILE__ ) ),
+				esc_url( Cherry_Core::base_url( 'inc/ui-elements/ui-iconpicker/assets/min/ui-iconpicker.min.css', Cherry_UI_Elements::$module_path ) ),
 				array(),
-				'1.3.2',
+				Cherry_UI_Elements::$core_version,
 				'all'
 			);
 
 			wp_enqueue_script(
 				'jquery-iconpicker',
-				esc_url( Cherry_Core::base_url( 'assets/min/jquery-iconpicker.min.js', __FILE__ ) ),
+				esc_url( Cherry_Core::base_url( 'inc/ui-elements/ui-iconpicker/assets/min/jquery-iconpicker.min.js', Cherry_UI_Elements::$module_path ) ),
 				array( 'jquery' ),
-				'1.3.2',
+				Cherry_UI_Elements::$core_version,
 				true
 			);
 
 			wp_enqueue_script(
 				'ui-iconpicker',
-				esc_url( Cherry_Core::base_url( 'assets/min/ui-iconpicker.min.js', __FILE__ ) ),
+				esc_url( Cherry_Core::base_url( 'inc/ui-elements/ui-iconpicker/assets/min/ui-iconpicker.min.js', Cherry_UI_Elements::$module_path ) ),
 				array( 'jquery' ),
-				'1.3.2',
+				Cherry_UI_Elements::$core_version,
 				true
 			);
 		}

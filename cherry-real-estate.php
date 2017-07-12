@@ -3,7 +3,7 @@
  * Plugin Name: Cherry Real Estate
  * Plugin URI:  https://wordpress.org/plugins/cherry-real-estate/
  * Description: Plugin for adding real estate functionality to the site.
- * Version:     1.1.4
+ * Version:     1.1.5
  * Author:      Template Monster
  * Author URI:  http://www.cherryframework.com/plugins/
  * Text Domain: cherry-real-estate
@@ -165,7 +165,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			 *
 			 * @since 1.0.0
 			 */
-			define( 'CHERRY_REAL_ESTATE_VERSION', '1.1.4' );
+			define( 'CHERRY_REAL_ESTATE_VERSION', '1.1.5' );
 		}
 
 		/**
@@ -240,9 +240,6 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 					'cherry-js-core' => array(
 						'autoload' => false,
 					),
-					'cherry-page-builder' => array(
-						'autoload' => false,
-					),
 					'cherry-ui-elements' => array(
 						'autoload' => false,
 					),
@@ -280,7 +277,6 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			$this->get_core()->init_module( 'cherry-widget-factory' );
 
 			if ( is_admin() ) {
-				$this->get_core()->init_module( 'cherry-page-builder' );
 				$this->get_core()->init_module( 'cherry-ui-elements', array(
 					'ui_elements' => array(
 						'text',

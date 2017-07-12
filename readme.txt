@@ -3,7 +3,7 @@ Contributors: TemplateMonster 2002
 Tags: realestate, custom post type, properties, cherry framework
 Requires at least: 4.5
 Tested up to: 4.8
-Stable tag: 1.1.4
+Stable tag: 1.1.5
 License: GPL-3.0+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -26,6 +26,10 @@ The plugin is absolutely free and has no any hidden fees. Use Cherry Real Estate
 3. Navigate to the "Properties" page available through the left menu
 
 == Changelog ==
+
+= 1.1.5 =
+
+* FIX: Prevent PHP errors with Page_Builder class
 
 = 1.1.4 =
 

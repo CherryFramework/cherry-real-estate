@@ -22,12 +22,12 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-if ( ! class_exists( 'Cherry_Page_Builder' ) ) {
+if ( ! class_exists( 'Cherry_RE_Page_Builder' ) ) {
 
 	/**
 	 * Create options page
 	 */
-	class Cherry_Page_Builder {
+	class Cherry_RE_Page_Builder {
 
 		/**
 		 * Module version
@@ -56,13 +56,6 @@ if ( ! class_exists( 'Cherry_Page_Builder' ) ) {
 		 * @var array
 		 */
 		public $data = array();
-
-		/**
-		 * Core instance
-		 *
-		 * @var object
-		 */
-		public $core = null;
 
 		/**
 		 * Current nonce name to check
@@ -95,9 +88,8 @@ if ( ! class_exists( 'Cherry_Page_Builder' ) ) {
 		/**
 		 * Constructor for the module
 		 */
-		function __construct( $core, $args = array() ) {
+		function __construct( $args = array() ) {
 
-			$this->core = $core;
 			$this->args = wp_parse_args(
 				$args,
 				array(
@@ -145,7 +137,7 @@ if ( ! class_exists( 'Cherry_Page_Builder' ) ) {
 		 * @return object
 		 */
 		public function make( $slug, $title, $parent = null ) {
-			$page = new Cherry_Page_Builder( $this->core, $this->args );
+			$page = new Cherry_RE_Page_Builder( $this->args );
 
 			// Set the page properties.
 			$page->data['slug']   = $slug;
@@ -407,8 +399,8 @@ if ( ! class_exists( 'Cherry_Page_Builder' ) ) {
 		 * @since  1.0.0
 		 * @return object
 		 */
-		public static function get_instance( $core, $args ) {
-			return new self( $core, $args );
+		public static function get_instance( $args = array() ) {
+			return new self( $args );
 		}
 	}
 }
