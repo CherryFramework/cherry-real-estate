@@ -3,9 +3,9 @@
  * Plugin Name: Cherry Real Estate
  * Plugin URI:
  * Description: Plugin for adding real estate functionality to the site.
- * Version:     1.1.5
- * Author:      JetImpex
- * Author URI:  https://jetimpex.com/wordpress/
+ * Version:     1.1.5.1
+ * Author:      Zemez
+ * Author URI:  https://zemez.io/wordpress/
  * Text Domain: cherry-real-estate
  * License:     GPL-3.0+
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -165,7 +165,7 @@ if ( ! class_exists( 'Cherry_Real_Estate' ) ) {
 			 *
 			 * @since 1.0.0
 			 */
-			define( 'CHERRY_REAL_ESTATE_VERSION', '1.1.5' );
+			define( 'CHERRY_REAL_ESTATE_VERSION', '1.1.5.1' );
 		}
 
 		/**
