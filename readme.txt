@@ -27,6 +27,10 @@ The plugin is absolutely free and has no any hidden fees. Use Cherry Real Estate
 
 == Changelog ==
 
+= 1.1.5.2 =
+
+* FIX: search widget / info window styles
+
 = 1.1.5 =
 
 * FIX: Prevent PHP errors with Page_Builder class

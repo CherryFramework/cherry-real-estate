@@ -63,7 +63,7 @@
 				$source.each( function( i, el ) {
 					var address = $( el ).data( 'property-address' ),
 						latlng  = $( el ).data( 'property-latlng' ),
-						html    = $( el )[0].outerHTML;
+						html    = $( el ).html();
 
 					if ( undefined === latlng ) {
 						geocodeAddress( map, geocoder, bounds, address, html );
@@ -125,13 +125,14 @@
 
 			bounds.extend( position );
 
+			var infowindow = new google.maps.InfoWindow();
+
 			marker = new google.maps.Marker({
 				map: map,
 				draggable: false,
 				animation: google.maps.Animation[ animationType ],
 				position: position,
-				icon: data.hasOwnProperty( 'icon' ) ? data.icon : '',
-				html: html
+				icon: data.hasOwnProperty( 'icon' ) ? data.icon : ''
 			});
 
 			if ( null === data.infowindow ) {
@@ -140,7 +141,7 @@
 
 			google.maps.event.addListener( marker, 'click', function() {
 				infowindow.setContent( html );
-				infowindow.open( map, this );
+				infowindow.open( map, marker );
 			});
 
 			google.maps.event.addListener( infowindow, 'domready', function() {
