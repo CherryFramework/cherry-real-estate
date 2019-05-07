@@ -1,7 +1,7 @@
 <?php
 /**
  * Class Cherry Core
- * Version: 1.5.1
+ * Version: 1.5.11
  *
  * @package    Cherry_Framework
  * @subpackage Class
@@ -265,6 +265,15 @@ if ( ! class_exists( 'Cherry_Core' ) ) {
 		 * @return bool
 		 */
 		public static function load_module( $module, $path ) {
+
+			if (
+				'cherry-interface-builder' === $module
+				&& file_exists( str_replace( 'cherry-interface-builder', 'cherry5-interface-builder', $path ) )
+			) {
+				$module = 'cherry5-interface-builder';
+				$path   = str_replace( 'cherry-interface-builder', 'cherry5-interface-builder', $path );
+			}
+
 			$class_name = self::get_class_name( $module );
 
 			if ( ! $path ) {
@@ -289,7 +298,14 @@ if ( ! class_exists( 'Cherry_Core' ) ) {
 		 * @return object
 		 */
 		public function get_module_instance( $module, $args = array() ) {
+
 			$class_name = self::get_class_name( $module );
+
+			if (
+				'cherry-interface-builder' === $module
+				&& class_exists( self::get_class_name( 'cherry5-interface-builder' ) ) ) {
+				$class_name = self::get_class_name( 'cherry5-interface-builder' );
+			}
 
 			if ( ! class_exists( $class_name ) ) {
 				echo '<p>Class <b>' . esc_html( $class_name ) . '</b> not exist!</p>';
@@ -378,9 +394,9 @@ if ( ! class_exists( 'Cherry_Core' ) ) {
 			$theme_dir   = "$theme_root/$stylesheet";
 
 			if ( 0 === strpos( $module_dir, $plugin_dir ) ) {
-				$home_url = home_url();
+				$site_url = site_url();
 				$abs_path = wp_normalize_path( ABSPATH );
-				$url      = str_replace( untrailingslashit( $abs_path ), $home_url, $module_dir );
+				$url      = str_replace( untrailingslashit( $abs_path ), $site_url, $module_dir );
 			} else if ( false !== strpos( $module_path, $theme_dir ) ) {
 				$explode = explode( $theme_dir, $module_dir );
 				$url     = get_stylesheet_directory_uri() . end( $explode );
